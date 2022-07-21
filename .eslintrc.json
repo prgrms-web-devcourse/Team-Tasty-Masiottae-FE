@@ -1,3 +1,17 @@
 {
-  "extends": "next/core-web-vitals"
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 2022, // 최신 문법 지원
+    "sourceType": "module", // 모듈 시스템 사용시
+    "ecmaFeatures": {
+      "jsx": true // react jsx parsing
+    }
+  },
+  "plugins": ["@typescript-eslint"],
+  "extends": [
+    "next/core-web-vitals",
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier"
+  ]
 }
