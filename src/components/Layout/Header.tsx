@@ -54,7 +54,7 @@ const Logo = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 20px;
+  font-size: 2rem;
   font-weight: 700;
   white-space: nowrap;
   cursor: pointer;
