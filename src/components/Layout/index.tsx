@@ -34,6 +34,10 @@ const Container = styled.div`
   background-color: '#FFFFFF';
   -ms-overflow-style: none;
 
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
   @media screen and (max-width: 500px) {
     width: 100%;
   }
