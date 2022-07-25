@@ -7,7 +7,7 @@ import Link from 'next/link'
 interface Props {
   id: string
   title: string
-  thumbnailImageUrl: string
+  imageUrl: string
   avatarImageUrl: string
   author: string
   likes: number
@@ -19,7 +19,7 @@ const IMAGE_ALT = 'NO IMAGE'
 const PostCard = ({
   id,
   title,
-  thumbnailImageUrl,
+  imageUrl,
   avatarImageUrl,
   author,
   likes,
