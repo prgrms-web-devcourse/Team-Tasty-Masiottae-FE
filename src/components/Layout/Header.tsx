@@ -25,8 +25,6 @@ export const Header = () => {
   )
 }
 
-export default Header
-
 const HeaderContainer = styled.div`
   height: ${headerHeight};
   position: fixed;
@@ -82,3 +80,5 @@ const StyledLoginIcon = styled(FiLogIn)`
   height: 30px;
   cursor: pointer;
 `
+
+export default Header
