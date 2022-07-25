@@ -4,16 +4,18 @@ import { useState } from 'react'
 interface Prop {
   name: string
   size: number
+  onClick: (clickedTag: string) => void
 }
 
-const Tag = ({ name, size }: Prop) => {
+const Tag = ({ name, size, onClick }: Prop) => {
   const [clicked, setClicked] = useState(false)
-  const handleClick = () => {
+  const handleClick = (name: string) => {
     setClicked(!clicked)
+    onClick(name)
   }
 
   return (
-    <Item size={size} isClicked={clicked} onClick={handleClick}>
+    <Item size={size} isClicked={clicked} onClick={() => handleClick(name)}>
       {name}
     </Item>
   )

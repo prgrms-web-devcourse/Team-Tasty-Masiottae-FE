@@ -1,32 +1,30 @@
 import Tag from '@components/Tag'
 import styled from '@emotion/styled'
-import { useState } from 'react'
 
 const TASTE_TAG = [
   '차가운',
   '뜨거운',
-  '달달한',
-  '짠',
+  '달콤한',
   '매콤한',
-  '아주 매운',
-  '새큼한',
-  '쌈싸름한',
-  '아주 단',
-  '감칠맛나는',
-  '톡쏘는',
-  '아주매운',
-  '얼얼한',
-  '구수한',
-  '밍밍한',
-  '아주 쓴',
-  '아주 신',
-  '새콤달콤',
-  '진한'
+  '새콤한',
+  '쌉싸름한',
+  '짭짜름한'
 ]
 
-const AddMenu = () => {
+const CreateMenu = () => {
   const handleImageBoxClick = () => {
     console.log('click')
+  }
+
+  let selectedTags: string[] = []
+  const handleClick = (clickedTag: string) => {
+    console.log(selectedTags)
+    if (selectedTags.includes(clickedTag)) {
+      selectedTags = selectedTags.filter((tag) => tag !== clickedTag)
+    } else {
+      selectedTags.push(clickedTag)
+    }
+    console.log(selectedTags)
   }
 
   return (
@@ -36,13 +34,13 @@ const AddMenu = () => {
       <FileInput type="file"></FileInput>
       <TagContainer>
         {TASTE_TAG.map((taste, idx) => (
-          <Tag key={idx} name={taste} size={2}></Tag>
+          <Tag key={idx} name={taste} size={2} onClick={handleClick}></Tag>
         ))}
       </TagContainer>
     </FlexContainer>
   )
 }
-export default AddMenu
+export default CreateMenu
 
 const FlexContainer = styled.div`
   display: flex;
@@ -73,6 +71,7 @@ const TagContainer = styled.div`
   height: 10rem;
   display: flex;
   flex-wrap: wrap;
+  padding: 0 0.5rem;
   background-color: #d9d9d9;
   overflow-y: scroll;
   gap: 0.5rem;
