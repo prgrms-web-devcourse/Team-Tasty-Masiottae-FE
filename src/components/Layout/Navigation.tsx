@@ -29,8 +29,6 @@ export const Navigation = () => {
   )
 }
 
-export default Navigation
-
 const NavContainer = styled.div`
   height: ${navHeight};
   position: fixed;
@@ -91,3 +89,5 @@ const StyledMenu = styled(VscBook)`
   width: 30px;
   height: 30px;
 `
+
+export default Navigation
