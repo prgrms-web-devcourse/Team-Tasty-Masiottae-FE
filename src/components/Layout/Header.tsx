@@ -2,10 +2,10 @@ import styled from '@emotion/styled'
 import { useRouter } from 'next/router'
 import { VscChevronLeft } from 'react-icons/vsc'
 import { FiLogIn, FiUser } from 'react-icons/fi'
+import theme from '@constants/theme'
 
-const headerHeight = '75px'
-const pagePadding = '20px'
-const borderLight = '#F1F1F1'
+const { mainPink, mainWhite, borderLight } = theme.color
+const { headerHeight, pagePadding } = theme.layout
 
 export const Header = () => {
   const router = useRouter()
@@ -33,12 +33,13 @@ const HeaderContainer = styled.div`
   left: 0;
   right: 0;
   z-index: 100;
-  background-color: #ffffff;
+  background-color: ${mainPink};
   border-bottom: 1px solid ${borderLight};
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 ${pagePadding};
+  color: ${mainWhite};
 `
 
 const StyledBackIcon = styled(VscChevronLeft)`
