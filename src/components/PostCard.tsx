@@ -29,7 +29,7 @@ const PostCard = ({
     <Link href={`/detail/${id}`}>
       <CardContainer>
         <Title>{title}</Title>
-        <ThumbnailImage src={thumbnailImageUrl} alt={IMAGE_ALT} />
+        <ThumbnailImage src={imageUrl} alt={IMAGE_ALT} />
         <CardFooter>
           <UserInfoWrapper>
             <Avatar size={5} src={avatarImageUrl} isLoading={false} />
