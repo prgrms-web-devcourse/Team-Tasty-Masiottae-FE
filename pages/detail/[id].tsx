@@ -19,10 +19,10 @@ const Detail = () => {
         </ImageWrapper>
 
         <PostSummaryWrapper>
-          <Flex>
+          <UserWrapper>
             <AAAAAAAAAAvatar />
-            <span>유저 이름</span>
-          </Flex>
+            <UserNameText>유저 이름</UserNameText>
+          </UserWrapper>
           <Flex>
             <Heart onClick={(e) => console.log(e)} />
             <span>200</span>
@@ -30,6 +30,7 @@ const Detail = () => {
         </PostSummaryWrapper>
 
         <OptionsWrapper>
+          <FranchiseText>스타벅스</FranchiseText>
           <div>기본: 프라푸치노</div>
           <div>+ 에스프레소 1샷</div>
           <div>+ 통 자바칩</div>
@@ -48,31 +49,35 @@ const Detail = () => {
       </PostContainer>
 
       <CommentWriteContainer>
-        <Input type="text" placeholder={COMMENT_INPUT_PLACEHOLDER} />
+        <Input
+          type="text"
+          placeholder={COMMENT_INPUT_PLACEHOLDER}
+          onChange={(e) => console.log(e.target.value)}
+        />
         <AddCommentButton onClick={(e) => console.log(e)}>
           등록
         </AddCommentButton>
       </CommentWriteContainer>
 
       <CommentListContainer>
-        <div>댓글 10 개</div>
+        <CommnetCountText>댓글 10 개</CommnetCountText>
 
-        <Flex>
+        <UserWrapper>
           <AAAAAAAAAAvatar />
           <Comment>너무 달아서 별로임</Comment>
-        </Flex>
-        <Flex>
+        </UserWrapper>
+        <UserWrapper>
           <AAAAAAAAAAvatar />
           <Comment>너무 달아서 별로임</Comment>
-        </Flex>
-        <Flex>
+        </UserWrapper>
+        <UserWrapper>
           <AAAAAAAAAAvatar />
           <Comment>너무 달아서 별로임</Comment>
-        </Flex>
-        <Flex>
+        </UserWrapper>
+        <UserWrapper>
           <AAAAAAAAAAvatar />
           <Comment>너무 달아서 별로임</Comment>
-        </Flex>
+        </UserWrapper>
       </CommentListContainer>
     </>
   )
@@ -94,6 +99,7 @@ const PostSummaryWrapper = styled(Flex)`
 const TitleWrapper = styled(Flex)`
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 2rem;
 `
 
 const Title = styled.span`
@@ -111,15 +117,20 @@ const ImageWrapper = styled.div`
   max-width: 50rem;
   height: 100vw;
   max-height: 50rem;
+  margin-bottom: -16rem;
 `
 
 const OptionsWrapper = styled.div`
   background-color: #d9d9d9;
   margin-bottom: 1rem;
 
-  & > div:first-child {
+  & > div:first-of-type {
     margin-bottom: 1rem;
   }
+`
+
+const FranchiseText = styled.span`
+  font-weight: 700;
 `
 
 const AAAAAAAImageBox = styled.div`
@@ -127,6 +138,27 @@ const AAAAAAAImageBox = styled.div`
   height: 50%;
   background-color: skyblue;
 `
+
+const AAAAAAAAAAvatar = styled.div`
+  width: 3rem;
+  height: 3rem;
+  background-color: gray;
+  margin-right: 1rem;
+`
+
+const UserWrapper = styled(Flex)`
+  align-items: center;
+  margin-bottom: 1rem;
+`
+
+const UserNameText = styled.div``
+
+const Heart = styled(AiFillHeart)`
+  color: red;
+  cursor: pointer;
+`
+
+const EmptyHeart = styled(AiOutlineHeart)``
 
 const Tag = styled.span`
   font-weight: 700;
@@ -151,13 +183,6 @@ const BitterTag = styled(Tag)`
   background-color: #c4c4c4;
 `
 
-const Heart = styled(AiFillHeart)`
-  color: red;
-  cursor: pointer;
-`
-
-const EmptyHeart = styled(AiOutlineHeart)``
-
 // 댓글 입력
 const CommentWriteContainer = styled(Flex)`
   align-items: center;
@@ -169,6 +194,7 @@ const Input = styled.input`
   height: 4rem;
   border: 1px solid rgba(0, 0, 0, 0.4);
   border-radius: 1rem;
+  padding-left: 1rem;
   padding-right: 7rem;
 
   &:focus {
@@ -190,16 +216,17 @@ const AddCommentButton = styled.button`
 // 댓글 리스트
 const CommentListContainer = styled.div``
 
-const AAAAAAAAAAvatar = styled.div`
-  width: 3rem;
-  height: 3rem;
-  background-color: gray;
+const CommnetCountText = styled.div`
+  margin-bottom: 2rem;
 `
 
 const Comment = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
+  height: 3rem;
+  border-radius: 5px;
+  padding-left: 1rem;
   background-color: rgba(0, 0, 0, 0.03);
 `
 
