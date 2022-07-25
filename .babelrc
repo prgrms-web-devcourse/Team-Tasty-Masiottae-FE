@@ -6,10 +6,13 @@
       {
         "root": ["./src"],
         "alias": {
-          "@constants": "./src/constants",
-          "@utils": "./src/utils",
-          "@hooks": "./src/hooks",
-          "@components": "./src/components"
+          "@components": ".src/components",
+          "@constants": "src/constants",
+          "@hooks": "src/hooks",
+          "@interfaces": "src/interfaces",
+          "@mutations": "src/mutations",
+          "@queries": "src/queries",
+          "@utils": "src/utils"
         }
       }
     ]
