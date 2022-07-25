@@ -31,14 +31,14 @@ export default Tag
 const Item = styled.div<{ name: string; size: number; isClicked: boolean }>`
   display: inline-flex;
   width: fit-content;
-  height: ${({ size }) => `${size}rem`}
+  height: ${({ size }) => `${size}rem`};
   justify-content: center;
   align-items: center;
   font-size: ${({ size }) => `${size * 0.7}rem`};
-  border-radius : ${({ size }) => `${size}rem`};
-  padding: 1rem;
+  border-radius: ${({ size }) => `${size}rem`};
+  padding: 1rem 2rem;
   background-color: ${(props) => props.theme.taste[`${props.name}`]};
-  opacity : ${({ isClicked }) => `${isClicked ? `1` : `0.5`}`};
+  opacity: ${({ isClicked }) => `${isClicked ? `1` : `0.5`}`};
   color: white;
   &:hover {
     cursor: pointer;

@@ -28,7 +28,7 @@ const CreateMenu = () => {
       <FileInput type="file"></FileInput>
       <TagContainer>
         {TASTE_TAG.map((taste, idx) => (
-          <Tag key={idx} name={taste} size={2} onClick={handleClick}></Tag>
+          <Tag key={idx} name={taste} size={3.2} onClick={handleClick}></Tag>
         ))}
       </TagContainer>
     </FlexContainer>
