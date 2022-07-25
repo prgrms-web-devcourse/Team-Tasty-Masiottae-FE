@@ -1,12 +1,11 @@
 import styled from '@emotion/styled'
-import { GrHomeRounded, GrSearch } from 'react-icons/gr'
 import { AiOutlinePlusSquare } from 'react-icons/ai'
+import { BiHomeAlt, BiSearch } from 'react-icons/bi'
 import { VscBook } from 'react-icons/vsc'
+import theme from '@constants/theme'
 
-const navHeight = '75px'
-const mainWhite = '#FFFFFF'
-const borderLight = '#F1F1F1'
-const pagePadding = '20px'
+const { mainPink, mainWhite, borderLight } = theme.color
+const { navHeight, pagePadding } = theme.layout
 
 export const Navigation = () => {
   return (
@@ -69,20 +68,24 @@ const NavItem = styled.li`
   text-align: center;
   cursor: pointer;
   list-style: none;
+
+  &:hover {
+    color: ${mainPink};
+  }
 `
 
-const StyledHome = styled(GrHomeRounded)`
-  width: 25px;
-  height: 25px;
+const StyledHome = styled(BiHomeAlt)`
+  width: 30px;
+  height: 30px;
 `
 const StyledPlus = styled(AiOutlinePlusSquare)`
   width: 30px;
   height: 30px;
 `
 
-const StyledSearch = styled(GrSearch)`
-  width: 25px;
-  height: 25px;
+const StyledSearch = styled(BiSearch)`
+  width: 30px;
+  height: 30px;
 `
 
 const StyledMenu = styled(VscBook)`
