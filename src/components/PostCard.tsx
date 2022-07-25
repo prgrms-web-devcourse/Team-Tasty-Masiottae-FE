@@ -29,7 +29,7 @@ const PostCard = ({
     <Link href={`/detail/${id}`}>
       <CardContainer>
         <Title>{title}</Title>
-        <ThumbnailImage src={imageUrl} alt={IMAGE_ALT} />
+        <Image src={imageUrl} alt={IMAGE_ALT} />
         <CardFooter>
           <UserInfoWrapper>
             <Avatar size={5} src={avatarImageUrl} isLoading={false} />
@@ -59,7 +59,7 @@ const Title = styled.div`
   box-sizing: border-box;
 `
 
-const ThumbnailImage = styled.img`
+const Image = styled.img`
   width: 100%;
 `
 
