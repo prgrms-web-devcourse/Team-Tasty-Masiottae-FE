@@ -31,19 +31,19 @@ export const Navigation = () => {
 const NavContainer = styled.div`
   height: ${navHeight};
   position: fixed;
-  max-width: 500px;
+  max-width: 50rem;
   margin: 0 auto;
   left: 0;
   right: 0;
   bottom: 0;
   z-index: 100;
   background-color: #ffffff;
-  border-bottom: 1px solid ${borderLight};
+  border-bottom: 0.1rem solid ${borderLight};
   padding: 0 ${pagePadding};
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-top: 1px solid ${borderLight};
+  border-top: 0.1rem solid ${borderLight};
   background-color: ${mainWhite};
 `
 
@@ -75,22 +75,22 @@ const NavItem = styled.li`
 `
 
 const StyledHome = styled(BiHomeAlt)`
-  width: 30px;
-  height: 30px;
+  width: 3rem;
+  height: 3rem;
 `
 const StyledPlus = styled(AiOutlinePlusSquare)`
-  width: 30px;
-  height: 30px;
+  width: 3rem;
+  height: 3rem;
 `
 
 const StyledSearch = styled(BiSearch)`
-  width: 30px;
-  height: 30px;
+  width: 3rem;
+  height: 3rem;
 `
 
 const StyledMenu = styled(VscBook)`
-  width: 30px;
-  height: 30px;
+  width: 3rem;
+  height: 3rem;
 `
 
 export default Navigation

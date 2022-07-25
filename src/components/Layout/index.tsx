@@ -19,7 +19,7 @@ const Layout = ({ children }: Props) => {
 
 const StyledMain = styled.main`
   flex: 1;
-  padding: 75px 0;
+  padding: 7.5rem 0;
   background-color: #ffffff;
 `
 
@@ -27,7 +27,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
-  width: 500px;
+  width: 50rem;
   min-height: 100vh;
   overflow-x: hidden;
   margin: 0 auto;

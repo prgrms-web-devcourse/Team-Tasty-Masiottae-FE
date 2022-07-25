@@ -14,9 +14,9 @@ const theme = {
     mainWhite: '#FFFFFF'
   },
   layout: {
-    headerHeight: '80px',
-    navHeight: '75px',
-    pagePadding: '20px'
+    headerHeight: '7.5rem',
+    navHeight: '7.5rem',
+    pagePadding: '2rem'
   },
   taste: {
     매콤함: '#df2020'
