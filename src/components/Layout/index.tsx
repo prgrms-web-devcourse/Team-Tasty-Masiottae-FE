@@ -7,7 +7,7 @@ interface Props {
   children: ReactNode
 }
 
-const DefaultTemplate = ({ children }: Props) => {
+const Layout = ({ children }: Props) => {
   return (
     <Container id="default-template-container">
       <Header />
@@ -43,4 +43,4 @@ const Container = styled.div`
   }
 `
 
-export default DefaultTemplate
+export default Layout
