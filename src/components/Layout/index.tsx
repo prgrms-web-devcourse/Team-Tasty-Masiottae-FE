@@ -38,7 +38,7 @@ const Container = styled.div`
     display: none;
   }
 
-  @media screen and (max-width: 500px) {
+  @media screen and (max-width: 31.25rem) {
     width: 100%;
   }
 `
