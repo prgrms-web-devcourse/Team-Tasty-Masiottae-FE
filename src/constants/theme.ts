@@ -1,3 +1,28 @@
+declare module '@emotion/react' {
+  export interface Theme {
+    color: {
+      mainPink: string
+      mainYellow: string
+      mainOrange: string
+      mainRed: string
+      fontBlack: string
+      fontDark: string
+      fontNormal: string
+      borderNormal: string
+      borderLight: string
+      backgroundLight: string
+      backgroundNormal: string
+      mainWhite: string
+    }
+    layout: {
+      headerHeight: string
+      navHeight: string
+      pagePadding: string
+    }
+    taste: any
+  }
+}
+
 const theme = {
   color: {
     mainPink: '#E7404A',
@@ -19,13 +44,13 @@ const theme = {
     pagePadding: '2rem'
   },
   taste: {
-    차가운: '#df2020',
-    뜨거운: '#df2020',
-    달콤한: '#df2020',
+    차가운: '#00B5E3',
+    뜨거운: '#FF3333',
+    달콤한: '#CC0099',
     매콤한: '#df2020',
-    새콤한: '#df2020',
-    쌉싸름한: '#df2020',
-    짭짜름한: '#df2020'
+    새콤한: '#FFDD33',
+    쌉싸름한: '#339966',
+    짭짜름한: '#FF5533'
   }
 }
 

@@ -15,7 +15,12 @@ const Tag = ({ name, size, onClick }: Prop) => {
   }
 
   return (
-    <Item size={size} isClicked={clicked} onClick={() => handleClick(name)}>
+    <Item
+      name={name}
+      size={size}
+      isClicked={clicked}
+      onClick={() => handleClick(name)}
+    >
       {name}
     </Item>
   )
@@ -23,7 +28,7 @@ const Tag = ({ name, size, onClick }: Prop) => {
 
 export default Tag
 
-const Item = styled.div<{ size: number; isClicked: boolean }>`
+const Item = styled.div<{ name: string; size: number; isClicked: boolean }>`
   display: inline-flex;
   width: fit-content;
   height: ${({ size }) => `${size}rem`}
@@ -32,7 +37,7 @@ const Item = styled.div<{ size: number; isClicked: boolean }>`
   font-size: ${({ size }) => `${size * 0.7}rem`};
   border-radius : ${({ size }) => `${size}rem`};
   padding: 1rem;
-  background-color: blue;
+  background-color: ${(props) => props.theme.taste[`${props.name}`]};
   opacity : ${({ isClicked }) => `${isClicked ? `1` : `0.5`}`};
   color: white;
   &:hover {
