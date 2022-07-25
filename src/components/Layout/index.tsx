@@ -7,7 +7,7 @@ interface Props {
   children: ReactNode
 }
 
-const DefaultTemplate = ({ children }: Props) => {
+const Layout = ({ children }: Props) => {
   return (
     <Container id="default-template-container">
       <Header />
@@ -19,7 +19,7 @@ const DefaultTemplate = ({ children }: Props) => {
 
 const StyledMain = styled.main`
   flex: 1;
-  padding: 75px 0;
+  padding: 7.5rem 0;
   background-color: #ffffff;
 `
 
@@ -27,7 +27,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
-  width: 500px;
+  width: 50rem;
   min-height: 100vh;
   overflow-x: hidden;
   margin: 0 auto;
@@ -38,9 +38,9 @@ const Container = styled.div`
     display: none;
   }
 
-  @media screen and (max-width: 500px) {
+  @media screen and (max-width: 31.25rem) {
     width: 100%;
   }
 `
 
-export default DefaultTemplate
+export default Layout
