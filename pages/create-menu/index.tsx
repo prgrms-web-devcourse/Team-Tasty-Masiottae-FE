@@ -12,25 +12,19 @@ const TASTE_TAG = [
 ]
 
 const CreateMenu = () => {
-  const handleImageBoxClick = () => {
-    console.log('click')
-  }
-
   let selectedTags: string[] = []
   const handleClick = (clickedTag: string) => {
-    console.log(selectedTags)
     if (selectedTags.includes(clickedTag)) {
       selectedTags = selectedTags.filter((tag) => tag !== clickedTag)
     } else {
       selectedTags.push(clickedTag)
     }
-    console.log(selectedTags)
   }
 
   return (
     <FlexContainer>
       <Title>메뉴 등록</Title>
-      <ImageBox onClick={handleImageBoxClick}></ImageBox>
+      <ImageBox></ImageBox>
       <FileInput type="file"></FileInput>
       <TagContainer>
         {TASTE_TAG.map((taste, idx) => (
@@ -79,9 +73,3 @@ const TagContainer = styled.div`
     display: none;
   }
 `
-
-/*
-  ::-webkit-scrollbar {
-    display: none;
-  }
-*/
