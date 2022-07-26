@@ -10,7 +10,7 @@ interface Props {
   required?: boolean
   placeholder: string
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
-  onBlur?: (e: React.ChangeEvent<HTMLInputElement>) => void
+  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void
 }
 
 const Input = ({
@@ -32,7 +32,7 @@ const Input = ({
   )
 
   const handleBlur = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
+    (e: React.FocusEvent<HTMLInputElement>) => {
       onBlur && onBlur(e)
     },
     [onBlur]
