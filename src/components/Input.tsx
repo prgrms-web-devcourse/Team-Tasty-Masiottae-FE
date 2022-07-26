@@ -2,6 +2,8 @@ import { useCallback } from 'react'
 import styled from '@emotion/styled'
 
 interface Props {
+  width: string
+  height: string
   type: string
   name: string
   accept?: string
@@ -12,6 +14,8 @@ interface Props {
 }
 
 const Input = ({
+  width,
+  height,
   type,
   name,
   accept,
@@ -36,6 +40,8 @@ const Input = ({
 
   return (
     <StyledInput
+      width={width}
+      height={height}
       type={type}
       name={name}
       accept={accept}
@@ -48,7 +54,9 @@ const Input = ({
 }
 
 const StyledInput = styled.input`
-  width: 100%;
+  width: ${({ width }) => width};
+  height: ${({ height }) => height};
+  border: 0.1rem solid ${({ theme }) => theme.color.borderNormal};
   padding: 2.2rem 2.2rem;
   border-radius: 1rem;
   box-sizing: border-box;
