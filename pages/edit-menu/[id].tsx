@@ -2,17 +2,29 @@ import styled from '@emotion/styled'
 import Input from '@components/Input'
 import { useState } from 'react'
 import { TASTE_LIST } from '@constants/taste'
+import { FRANCHISE_LIST } from '@constants/franchise'
 import Tag from '@components/Tag'
 import { TasteType } from '@customTypes/index'
 
-const dummyBrands = [
-  '스타벅스',
-  '이디야',
-  '공차',
-  '아마스빈',
-  '피자헛',
-  '서브웨이'
-]
+const dummyMenu = {
+  id: '1',
+  franchise: '스타벅스',
+  image: '',
+  title: '메뉴명',
+  originalTitle: '실제 메뉴명',
+  author: {},
+  content: '설명' || null,
+  options: [
+    { name: '에스프레소샷', description: '1' },
+    { name: '자바칩', description: '약간' },
+    { name: '아이스크림', description: '한스쿱' }
+  ],
+  expectedPrice: 5000,
+  tastes: ['매콤함', '느끼함'],
+  likes: 100,
+  createdAt: String,
+  updatedAt: String
+}
 
 interface Option {
   name: string
@@ -20,7 +32,7 @@ interface Option {
 }
 
 const CreateMenu = () => {
-  const [options, setOptions] = useState<Option[]>([])
+  const [options, setOptions] = useState<Option[]>(dummyMenu.options)
   let selectedTags: TasteType[] = []
   const handleOptionBtnClick = () => {
     console.log(options)
@@ -43,9 +55,9 @@ const CreateMenu = () => {
       <FileInput id="image-input" type="file"></FileInput>
       <InputWrapper>
         <Select name="brand">
-          {dummyBrands.map((brand, idx) => (
-            <option key={idx} value={brand}>
-              {brand}
+          {FRANCHISE_LIST.map((franchise, idx) => (
+            <option key={idx} value={franchise}>
+              {franchise}
             </option>
           ))}
         </Select>
