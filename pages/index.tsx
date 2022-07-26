@@ -1,5 +1,4 @@
-import styled from '@emotion/styled'
-import PostCard from '..components/PostCard'
+import PostCard from '@components/PostCard'
 
 const PostCardDummy = Array.from({ length: 5 }, (_, idx) => {
   return {
@@ -15,36 +14,21 @@ const PostCardDummy = Array.from({ length: 5 }, (_, idx) => {
 
 const Main = () => {
   return (
-    <TempLayout>
-      {PostCardDummy.map((cardData) => {
-        return (
-          <PostCard
-            id={cardData.id}
-            key={cardData.id}
-            title={cardData.title}
-            imageUrl={cardData.imageUrl}
-            avatarImageUrl={cardData.avatarImageUrl}
-            author={cardData.author}
-            likes={cardData.likes}
-            comments={cardData.comments}
-          />
-        )
-      })}
-    </TempLayout>
+    <>
+      {PostCardDummy.map((cardData) => (
+        <PostCard
+          id={cardData.id}
+          key={cardData.id}
+          title={cardData.title}
+          imageUrl={cardData.imageUrl}
+          avatarImageUrl={cardData.avatarImageUrl}
+          author={cardData.author}
+          likes={cardData.likes}
+          comments={cardData.comments}
+        />
+      ))}
+    </>
   )
 }
-
-const TempLayout = styled.div`
-  position: relative;
-  left: 20%;
-  width: 37.5rem;
-  height: 81.2rem;
-  border: 1px solid black;
-  overflow-y: scroll;
-
-  ::-webkit-scrollbar {
-    display: none;
-  }
-`
 
 export default Main
