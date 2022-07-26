@@ -1,15 +1,15 @@
 import styled from '@emotion/styled'
 import { useState } from 'react'
-
+import { TastesType } from '@customTypes/index'
 interface Props {
-  name: string
+  name: TastesType
   height: number
-  onClick: (clickedTag: string) => void
+  onClick: (clickedTag: TastesType) => void
 }
 
 const Tag = ({ name, height, onClick }: Props) => {
   const [clicked, setClicked] = useState(false)
-  const handleClick = (name: string) => {
+  const handleClick = (name: TastesType) => {
     setClicked((clicked) => !clicked)
     onClick(name)
   }
@@ -26,7 +26,11 @@ const Tag = ({ name, height, onClick }: Props) => {
   )
 }
 
-const Item = styled.div<{ name: string; height: number; isClicked: boolean }>`
+const Item = styled.div<{
+  name: TastesType
+  height: number
+  isClicked: boolean
+}>`
   display: inline-flex;
   width: fit-content;
   height: ${({ height }) => `${height}rem`};
@@ -35,7 +39,7 @@ const Item = styled.div<{ name: string; height: number; isClicked: boolean }>`
   font-size: ${({ height }) => `${height * 0.7}rem`};
   border-radius: ${({ height }) => `${height}rem`};
   padding: 1rem 2rem;
-  background-color: ${(props) => props.theme.taste[`${props.name}`]};
+  background-color: ${(props) => props.theme.taste[props.name]};
   opacity: ${({ isClicked }) => `${isClicked ? `1` : `0.5`}`};
   color: white;
   &:hover {

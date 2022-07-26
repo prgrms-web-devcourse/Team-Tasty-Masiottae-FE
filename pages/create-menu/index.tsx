@@ -1,10 +1,11 @@
 import Tag from '@components/Tag'
 import styled from '@emotion/styled'
+import { TastesType } from '@customTypes/index'
 import { TASTE_LIST } from '@constants/taste'
 
 const CreateMenu = () => {
-  let selectedTags: string[] = []
-  const handleClick = (clickedTag: string) => {
+  let selectedTags: TastesType[] = []
+  const handleClick = (clickedTag: TastesType) => {
     if (selectedTags.includes(clickedTag)) {
       selectedTags = selectedTags.filter((tag) => tag !== clickedTag)
     } else {
