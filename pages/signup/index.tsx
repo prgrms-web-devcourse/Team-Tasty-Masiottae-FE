@@ -22,10 +22,11 @@ import {
   PLACEHOLDER_PASSWORD_CONFIRM,
   PLACEHOLDER_SNS,
   MESSAGE_NICKNAME,
-  MESSAGE_PASSWORD
+  MESSAGE_PASSWORD,
+  ERROR_EMAIL
 } from '@constants/inputConstant'
 
-const handleSignupSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+const handleSignupSubmit: React.MouseEventHandler<HTMLButtonElement> = (e) => {
   e.preventDefault()
 }
 
@@ -34,17 +35,9 @@ const Signup = () => {
   const [isShowConfirmPassword, setIsShowConfirmPassword] = useState(false)
   const imageInputRef = useRef<HTMLInputElement>(null)
   return (
-    <SignupForm onSubmit={handleSignupSubmit}>
+    <SignupForm>
       <Title>회원 가입</Title>
-      <ImageContainer
-        onClick={() => imageInputRef.current && imageInputRef.current.click()}
-      >
-        <ImageLoad>
-          <ImageInner />
-        </ImageLoad>
-        <StyledPlus />
-        <ImageInput type={FILE} accept={FILE_TYPE} ref={imageInputRef} />
-      </ImageContainer>
+      {/* //TODO신영: 내영님의 이미지 업로드 컴포넌트로 교체 */}
       <InputContainer>
         <InputWrapper>
           <TextInput
@@ -52,7 +45,7 @@ const Signup = () => {
             name={INPUT_EMAIL}
             placeholder={PLACEHOLDER_EMAIL}
           />
-          <InputMessage message={PLACEHOLDER_NICKNAME} />
+          <InputMessage message={ERROR_EMAIL} isValid={false} />
         </InputWrapper>
         <InputWrapper>
           <TextInput
@@ -88,6 +81,7 @@ const Signup = () => {
               )
             }
           />
+          <InputMessage />
         </InputWrapper>
         <InputWrapper>
           <TextInput
@@ -99,7 +93,7 @@ const Signup = () => {
         </InputWrapper>
       </InputContainer>
 
-      <StyledButton height={7} onClick={() => console.log()}>
+      <StyledButton height={7} onClick={handleSignupSubmit}>
         회원 가입
       </StyledButton>
     </SignupForm>
