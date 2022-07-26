@@ -8,6 +8,7 @@ interface Props {
   name?: string
   accept?: string
   required?: boolean
+  isValid?: boolean
   placeholder: string
   onChange?: React.ChangeEventHandler<HTMLInputElement>
   onBlur?: React.FocusEventHandler<HTMLInputElement>
@@ -21,6 +22,7 @@ const Input = ({
   name,
   accept,
   required = false,
+  isValid = true,
   placeholder,
   onChange,
   onBlur,
@@ -48,6 +50,7 @@ const Input = ({
       name={name}
       accept={accept}
       required={required}
+      isValid={isValid}
       placeholder={placeholder}
       onChange={handleChange}
       onBlur={handleBlur}
@@ -56,10 +59,12 @@ const Input = ({
   )
 }
 
-const StyledInput = styled.input`
+const StyledInput = styled.input<Props>`
   width: ${({ width }) => `${width}rem`};
   height: ${({ height }) => `${height}rem`};
-  border: 0.1rem solid ${({ theme }) => theme.color.borderNormal};
+  border: 0.1rem solid
+    ${({ theme, isValid }) =>
+      isValid ? theme.color.borderNormal : theme.color.mainRed};
   padding: 2.2rem 2.2rem;
   border-radius: 1rem;
   box-sizing: border-box;
