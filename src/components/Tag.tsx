@@ -1,23 +1,23 @@
 import styled from '@emotion/styled'
 import { useState } from 'react'
 
-interface Prop {
+interface Props {
   name: string
-  size: number
+  height: number
   onClick: (clickedTag: string) => void
 }
 
-const Tag = ({ name, size, onClick }: Prop) => {
+const Tag = ({ name, height, onClick }: Props) => {
   const [clicked, setClicked] = useState(false)
   const handleClick = (name: string) => {
-    setClicked(!clicked)
+    setClicked((clicked) => !clicked)
     onClick(name)
   }
 
   return (
     <Item
       name={name}
-      size={size}
+      height={height}
       isClicked={clicked}
       onClick={() => handleClick(name)}
     >
@@ -26,16 +26,14 @@ const Tag = ({ name, size, onClick }: Prop) => {
   )
 }
 
-export default Tag
-
-const Item = styled.div<{ name: string; size: number; isClicked: boolean }>`
+const Item = styled.div<{ name: string; height: number; isClicked: boolean }>`
   display: inline-flex;
   width: fit-content;
-  height: ${({ size }) => `${size}rem`};
+  height: ${({ height }) => `${height}rem`};
   justify-content: center;
   align-items: center;
-  font-size: ${({ size }) => `${size * 0.7}rem`};
-  border-radius: ${({ size }) => `${size}rem`};
+  font-size: ${({ height }) => `${height * 0.7}rem`};
+  border-radius: ${({ height }) => `${height}rem`};
   padding: 1rem 2rem;
   background-color: ${(props) => props.theme.taste[`${props.name}`]};
   opacity: ${({ isClicked }) => `${isClicked ? `1` : `0.5`}`};
@@ -44,3 +42,5 @@ const Item = styled.div<{ name: string; size: number; isClicked: boolean }>`
     cursor: pointer;
   }
 `
+
+export default Tag

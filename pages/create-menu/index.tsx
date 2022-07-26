@@ -1,15 +1,6 @@
 import Tag from '@components/Tag'
 import styled from '@emotion/styled'
-
-const TASTE_TAG = [
-  '차가운',
-  '뜨거운',
-  '달콤한',
-  '매콤한',
-  '새콤한',
-  '쌉싸름한',
-  '짭짜름한'
-]
+import { TASTE_LIST } from '@constants/taste'
 
 const CreateMenu = () => {
   let selectedTags: string[] = []
@@ -27,8 +18,8 @@ const CreateMenu = () => {
       <ImageBox></ImageBox>
       <FileInput type="file"></FileInput>
       <TagContainer>
-        {TASTE_TAG.map((taste, idx) => (
-          <Tag key={idx} name={taste} size={3.2} onClick={handleClick}></Tag>
+        {TASTE_LIST.map((taste, idx) => (
+          <Tag key={idx} name={taste} height={3.2} onClick={handleClick}></Tag>
         ))}
       </TagContainer>
     </FlexContainer>
