@@ -1,3 +1,3 @@
 import theme from './theme'
-
-export const TASTE_LIST = Object.keys(theme.taste)
+import { TastesType } from '@customTypes/index'
+export const TASTE_LIST: TastesType[] = Object.keys(theme.taste) as TastesType[]

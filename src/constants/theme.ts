@@ -1,28 +1,3 @@
-declare module '@emotion/react' {
-  export interface Theme {
-    color: {
-      mainPink: string
-      mainYellow: string
-      mainOrange: string
-      mainRed: string
-      fontBlack: string
-      fontDark: string
-      fontNormal: string
-      borderNormal: string
-      borderLight: string
-      backgroundLight: string
-      backgroundNormal: string
-      mainWhite: string
-    }
-    layout: {
-      headerHeight: string
-      navHeight: string
-      pagePadding: string
-    }
-    taste: any
-  }
-}
-
 const theme = {
   color: {
     mainPink: '#E7404A',
