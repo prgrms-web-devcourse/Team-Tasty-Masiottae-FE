@@ -11,7 +11,6 @@ const StyledNotFound = styled.div`
   font-weight: 700;
   top: 50%;
   left: 50%;
-  margin: 0 auto 0 auto;
   transform: translateX(-50%);
 `
 
