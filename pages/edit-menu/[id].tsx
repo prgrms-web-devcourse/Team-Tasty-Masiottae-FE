@@ -35,7 +35,6 @@ const CreateMenu = () => {
   const [options, setOptions] = useState<Option[]>(dummyMenu.options)
   let selectedTags: TasteType[] = []
   const handleOptionBtnClick = () => {
-    console.log(options)
     setOptions((options) => {
       const newOptions = [...options, { name: '', description: '' }]
       return newOptions
@@ -112,6 +111,7 @@ const CreateMenu = () => {
           ></Tag>
         ))}
       </TagContainer>
+      <button>메뉴 수정</button>
     </FlexContainer>
   )
 }
