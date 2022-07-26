@@ -1,33 +1,36 @@
 import styled from '@emotion/styled'
-import React from 'react'
+import React, { useState } from 'react'
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai'
 import { BiDotsHorizontalRounded } from 'react-icons/bi'
 
-const COMMENT_INPUT_PLACEHOLDER = '로그인한 회원만 댓글을 달 수 있습니다.'
+const GUEST_INPUT_PLACEHOLDER = '로그인한 회원만 댓글을 달 수 있습니다.'
+const LOGGEDIN_INPUT_PLACEHOLDER = '댓글을 입력해주세요.'
 
 const Detail = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+
   return (
     <>
       <PostContainer>
-        <TitleWrapper>
+        <Header>
           <Title>슈렉 프라푸치노</Title>
-          <Dots size={30} onClick={(e) => console.log(e)} />
-        </TitleWrapper>
+          <Dots size={30} />
+        </Header>
 
         <ImageWrapper>
           <AAAAAAAImageBox />
         </ImageWrapper>
 
-        <PostSummaryWrapper>
+        <PostInfoBox>
           <UserWrapper>
             <AAAAAAAAAAvatar />
             <UserNameText>유저 이름</UserNameText>
           </UserWrapper>
-          <Flex>
-            <Heart onClick={(e) => console.log(e)} />
+          <LikeWrapper>
+            <Heart />
             <span>200</span>
-          </Flex>
-        </PostSummaryWrapper>
+          </LikeWrapper>
+        </PostInfoBox>
 
         <OptionsWrapper>
           <FranchiseText>스타벅스</FranchiseText>
@@ -37,7 +40,7 @@ const Detail = () => {
           <div>+ 카라멜 드리즐</div>
         </OptionsWrapper>
 
-        <PostSummaryWrapper>
+        <PostInfoBox>
           <TagContainer>
             <SweetTag>매우 단</SweetTag>
             <HotTag>맵</HotTag>
@@ -45,18 +48,17 @@ const Detail = () => {
             <BitterTag>쓴</BitterTag>
           </TagContainer>
           <span>예상 가격: 9000 원</span>
-        </PostSummaryWrapper>
+        </PostInfoBox>
       </PostContainer>
 
       <CommentWriteContainer>
         <Input
           type="text"
-          placeholder={COMMENT_INPUT_PLACEHOLDER}
-          onChange={(e) => console.log(e.target.value)}
+          placeholder={
+            isLoggedIn ? LOGGEDIN_INPUT_PLACEHOLDER : GUEST_INPUT_PLACEHOLDER
+          }
         />
-        <AddCommentButton onClick={(e) => console.log(e)}>
-          등록
-        </AddCommentButton>
+        <AddCommentButton>등록</AddCommentButton>
       </CommentWriteContainer>
 
       <CommentListContainer>
@@ -92,11 +94,11 @@ const PostContainer = styled.div`
   margin-bottom: 2rem;
 `
 
-const PostSummaryWrapper = styled(Flex)`
+const PostInfoBox = styled(Flex)`
   justify-content: space-between;
 `
 
-const TitleWrapper = styled(Flex)`
+const Header = styled(Flex)`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 2rem;
@@ -110,8 +112,7 @@ const Dots = styled(BiDotsHorizontalRounded)`
   cursor: pointer;
 `
 
-const ImageWrapper = styled.div`
-  display: flex;
+const ImageWrapper = styled(Flex)`
   justify-content: center;
   width: 100vw;
   max-width: 50rem;
@@ -153,6 +154,8 @@ const UserWrapper = styled(Flex)`
 
 const UserNameText = styled.div``
 
+const LikeWrapper = styled(Flex)``
+
 const Heart = styled(AiFillHeart)`
   color: red;
   cursor: pointer;
@@ -192,7 +195,7 @@ const CommentWriteContainer = styled(Flex)`
 const Input = styled.input`
   width: 100%;
   height: 4rem;
-  border: 1px solid rgba(0, 0, 0, 0.4);
+  border: 0.1rem solid rgba(0, 0, 0, 0.4);
   border-radius: 1rem;
   padding-left: 1rem;
   padding-right: 7rem;
@@ -220,12 +223,11 @@ const CommnetCountText = styled.div`
   margin-bottom: 2rem;
 `
 
-const Comment = styled.div`
-  display: flex;
+const Comment = styled(Flex)`
   align-items: center;
   width: 100%;
   height: 3rem;
-  border-radius: 5px;
+  border-radius: 0.5rem;
   padding-left: 1rem;
   background-color: rgba(0, 0, 0, 0.03);
 `
