@@ -1,3 +1,4 @@
+import type { NextPage } from 'next'
 import PostCard from '@components/PostCard'
 import { useState } from 'react'
 import useIntersectionObserver from '../src/hooks/useIntersectionObserver'
@@ -24,7 +25,7 @@ const PostCardDummy = Array.from({ length: 4 }, (_, idx) => {
   }
 })
 
-const Main = () => {
+const Home: NextPage = () => {
   const [cards, setCards] = useState(PostCardDummy)
   const ref = useIntersectionObserver(
     async (entry, observer) => {
@@ -53,6 +54,5 @@ const Main = () => {
       })}
     </>
   )
-}
 
-export default Main
+export default Home
