@@ -1,13 +1,13 @@
 import styled from '@emotion/styled'
 
-interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface Props {
   width?: number
   height: number
   color?: string
   backgroundColor?: string
   fontSize?: number
   children: React.ReactNode
-  onClick?: React.MouseEventHandler<HTMLButtonElement>
+  onClick: React.MouseEventHandler<HTMLButtonElement>
   disabled?: boolean
   className?: string
 }
