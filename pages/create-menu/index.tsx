@@ -1,5 +1,6 @@
 import Tag from '@components/Tag'
 import styled from '@emotion/styled'
+import TagContainer from '@components/TagContainer'
 import { TasteType } from '@customTypes/index'
 import { TASTE_LIST } from '@constants/taste'
 
@@ -18,7 +19,7 @@ const CreateMenu = () => {
       <Title>메뉴 등록</Title>
       <ImageBox></ImageBox>
       <FileInput type="file"></FileInput>
-      <TagContainer>
+      <TagContainer width={30} height={10}>
         {TASTE_LIST.map((taste, idx) => (
           <Tag key={idx} name={taste} height={3.2} onClick={handleClick}></Tag>
         ))}
@@ -50,18 +51,4 @@ const ImageBox = styled.div`
 
 const FileInput = styled.input`
   visibility: hidden;
-`
-
-const TagContainer = styled.div`
-  width: 80%;
-  height: 10rem;
-  display: flex;
-  flex-wrap: wrap;
-  padding: 0 0.5rem;
-  background-color: #d9d9d9;
-  overflow-y: scroll;
-  gap: 0.5rem;
-  ::-webkit-scrollbar {
-    display: none;
-  }
 `
