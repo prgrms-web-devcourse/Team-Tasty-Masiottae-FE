@@ -4,7 +4,6 @@ import { IoMdHeartEmpty } from 'react-icons/io'
 import { BiComment } from 'react-icons/bi'
 import Link from 'next/link'
 import { RefObject } from 'react'
-import { FiSearch } from 'react-icons/fi'
 
 interface Props {
   id: string
@@ -19,7 +18,7 @@ interface Props {
 
 const IMAGE_ALT = 'NO IMAGE'
 
-const PostCard = ({
+const MenuCard = ({
   id,
   title,
   imageUrl,
@@ -102,4 +101,4 @@ const Text = styled.div`
   user-select: none;
 `
 
-export default PostCard
+export default MenuCard

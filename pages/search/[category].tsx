@@ -1,5 +1,5 @@
 import Input from '@components/Input'
-import PostCard from '@components/PostCard'
+import MenuCard from '@components/MenuCard'
 import styled from '@emotion/styled'
 import useIntersectionObserver from '@hooks/useIntersectionObserver'
 import { Card, PostCardDummy } from '@constants/cardData'
@@ -47,10 +47,10 @@ const Search = () => {
             ))}
           </select>
         </FilterContainer>
-        <Wrapper>
+        <CardListWrapper>
           {cards.map((cardData, idx) => {
             return (
-              <PostCard
+              <MenuCard
                 id={cardData.id}
                 key={idx}
                 title={cardData.title}
@@ -63,7 +63,7 @@ const Search = () => {
               />
             )
           })}
-        </Wrapper>
+        </CardListWrapper>
       </Container>
     </>
   )
@@ -108,7 +108,7 @@ const FilterIcon = styled(BsFilterLeft)`
   font-weight: bold;
 `
 
-const Wrapper = styled.div`
+const CardListWrapper = styled.div`
   display: flex;
   flex-direction: column;
   height: 100vh;

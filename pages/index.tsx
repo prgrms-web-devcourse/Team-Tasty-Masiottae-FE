@@ -1,8 +1,9 @@
 import type { NextPage } from 'next'
-import PostCard from '@components/PostCard'
+import MenuCard from '@components/MenuCard'
 import { useState } from 'react'
 import useIntersectionObserver from '@hooks/useIntersectionObserver'
 import { Card, PostCardDummy } from '@constants/cardData'
+import styled from '@emotion/styled'
 
 const Home: NextPage = () => {
   const [cards, setCards] = useState(PostCardDummy)
@@ -15,10 +16,10 @@ const Home: NextPage = () => {
   )
 
   return (
-    <>
+    <CardListWrapper>
       {cards.map((cardData, idx) => {
         return (
-          <PostCard
+          <MenuCard
             id={cardData.id}
             key={idx}
             title={cardData.title}
@@ -31,8 +32,20 @@ const Home: NextPage = () => {
           />
         )
       })}
-    </>
+    </CardListWrapper>
   )
 }
+
+const CardListWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: scroll;
+  row-gap: 1rem;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+`
 
 export default Home
