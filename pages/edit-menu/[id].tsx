@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import Input from '@components/Input'
 import { useState } from 'react'
 import Tag from '@components/Tag'
-import { TasteNameType } from '@customTypes/index'
+import { Taste } from '@customTypes/index'
 
 const dummyFranchiseList = [
   { id: 0, name: '스타벅스' },
@@ -12,20 +12,14 @@ const dummyFranchiseList = [
   { id: 4, name: '서브웨이' }
 ]
 
-interface TasteType {
-  id: number
-  name: TasteNameType
-  color : string 
-}
-
-const dummyTasteList: TasteType[] = [
-  { id: 0, name: '차가운', color : '#00B5E3'},
-  { id: 1, name: '뜨거운', color : '#FF3333'},
-  { id: 2, name: '달콤한', color : '#CC0099'},
-  { id: 3, name: '매콤한', color : '#df2020'},
-  { id: 4, name: '새콤한', color : '#FFDD33'},
-  { id: 5, name: '쌉쌀한', color : '#339966'},
-  { id: 6, name: '짭짤한', color : '#FF5533'}
+const dummyTasteList: Taste[] = [
+  { id: 0, name: '차가운', color: '#00B5E3' },
+  { id: 1, name: '뜨거운', color: '#FF3333' },
+  { id: 2, name: '달콤한', color: '#CC0099' },
+  { id: 3, name: '매콤한', color: '#df2020' },
+  { id: 4, name: '새콤한', color: '#FFDD33' },
+  { id: 5, name: '쌉쌀한', color: '#339966' },
+  { id: 6, name: '짭짤한', color: '#FF5533' }
 ]
 
 const dummyMenu = {
@@ -43,8 +37,8 @@ const dummyMenu = {
   ],
   expectedPrice: 6700,
   tastes: [
-    { id: 'taste1', name: '차가운', color :  "#00B5E3" },
-    { id: 'taste2', name: '달콤한', color : "#CC0099"}
+    { id: 0, name: '차가운', color: '#00B5E3' },
+    { id: 2, name: '달콤한', color: '#CC0099' }
   ],
   likes: 100,
   createdAt: String,
@@ -58,15 +52,15 @@ interface Option {
 
 const CreateMenu = () => {
   const [options, setOptions] = useState<Option[]>(dummyMenu.options)
-  let selectedTags = dummyMenu.tastes
+  const selectedTags = dummyMenu.tastes
   const handleOptionBtnClick = () => {
     setOptions((options) => {
       const newOptions = [...options, { name: '', description: '' }]
       return newOptions
     })
   }
-  const handleClickTag = (clickedTag: TasteNameType) => {
-    selectedTags.map(({id, name}) => );
+  const handleClickTag = (clickedTagId: number) => {
+    selectedTags.map(({ id, name }) => id === clickedTagId)
   }
   return (
     <FlexContainer>
@@ -131,7 +125,9 @@ const CreateMenu = () => {
         {dummyTasteList.map((taste, idx) => (
           <Tag
             key={taste.id}
+            id={taste.id}
             name={taste.name}
+            color={taste.color}
             height={3.2}
             onClick={handleClickTag}
           ></Tag>

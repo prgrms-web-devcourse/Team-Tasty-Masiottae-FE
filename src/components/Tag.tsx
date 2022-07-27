@@ -1,26 +1,35 @@
 import styled from '@emotion/styled'
 import { useState } from 'react'
-import { TasteNameType } from '@customTypes/index'
 interface Props {
-  name: TasteNameType
+  id: number
+  name: string
+  color: string
   height: number
   isClicked?: boolean
-  onClick: (clickedTag: TasteNameType) => void
+  onClick: (clickedTag: number) => void
 }
 
-const Tag = ({ name, height, isClicked = false, onClick }: Props) => {
+const Tag = ({
+  id,
+  name,
+  height,
+  color,
+  isClicked = false,
+  onClick
+}: Props) => {
   const [clicked, setClicked] = useState(isClicked)
-  const handleClick = (name: TasteNameType) => {
+  const handleClick = (id: number) => {
     setClicked((clicked) => !clicked)
-    onClick(name)
+    onClick(id)
   }
 
   return (
     <Item
       name={name}
+      color={color}
       height={height}
       isClicked={clicked}
-      onClick={() => handleClick(name)}
+      onClick={() => handleClick(id)}
     >
       {name}
     </Item>
@@ -28,7 +37,8 @@ const Tag = ({ name, height, isClicked = false, onClick }: Props) => {
 }
 
 const Item = styled.div<{
-  name: TasteNameType
+  name: string
+  color: string
   height: number
   isClicked: boolean
 }>`
@@ -40,7 +50,7 @@ const Item = styled.div<{
   font-size: ${({ height }) => `${height * 0.7}rem`};
   border-radius: ${({ height }) => `${height}rem`};
   padding: 1rem 2rem;
-  background-color: ${(props) => props.theme.taste[props.name]};
+  background-color: ${({ color }) => `${color}`};
   opacity: ${({ isClicked }) => `${isClicked ? `1` : `0.5`}`};
   color: white;
   &:hover {
