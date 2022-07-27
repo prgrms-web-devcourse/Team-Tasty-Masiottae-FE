@@ -11,4 +11,4 @@ type Color = typeof theme.color
 type Layout = typeof theme.layout
 type Taste = typeof theme.taste
 
-export type TasteType = keyof Taste
+export type TasteNameType = keyof Taste

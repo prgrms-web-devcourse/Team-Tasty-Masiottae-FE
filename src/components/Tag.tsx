@@ -1,16 +1,16 @@
 import styled from '@emotion/styled'
 import { useState } from 'react'
-import { TasteType } from '@customTypes/index'
+import { TasteNameType } from '@customTypes/index'
 interface Props {
-  name: TasteType
+  name: TasteNameType
   height: number
   isClicked?: boolean
-  onClick: (clickedTag: TasteType) => void
+  onClick: (clickedTag: TasteNameType) => void
 }
 
 const Tag = ({ name, height, isClicked = false, onClick }: Props) => {
   const [clicked, setClicked] = useState(isClicked)
-  const handleClick = (name: TasteType) => {
+  const handleClick = (name: TasteNameType) => {
     setClicked((clicked) => !clicked)
     onClick(name)
   }
@@ -28,7 +28,7 @@ const Tag = ({ name, height, isClicked = false, onClick }: Props) => {
 }
 
 const Item = styled.div<{
-  name: TasteType
+  name: TasteNameType
   height: number
   isClicked: boolean
 }>`

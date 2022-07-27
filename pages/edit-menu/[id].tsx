@@ -1,26 +1,51 @@
 import styled from '@emotion/styled'
 import Input from '@components/Input'
 import { useState } from 'react'
-import { TASTE_LIST } from '@constants/taste'
-import { FRANCHISE_LIST } from '@constants/franchise'
 import Tag from '@components/Tag'
-import { TasteType } from '@customTypes/index'
+import { TasteNameType } from '@customTypes/index'
+
+const dummyFranchiseList = [
+  { id: 0, name: '스타벅스' },
+  { id: 1, name: '이디야' },
+  { id: 2, name: '공차' },
+  { id: 3, name: '아마스빈' },
+  { id: 4, name: '서브웨이' }
+]
+
+interface TasteType {
+  id: number
+  name: TasteNameType
+  color : string 
+}
+
+const dummyTasteList: TasteType[] = [
+  { id: 0, name: '차가운', color : '#00B5E3'},
+  { id: 1, name: '뜨거운', color : '#FF3333'},
+  { id: 2, name: '달콤한', color : '#CC0099'},
+  { id: 3, name: '매콤한', color : '#df2020'},
+  { id: 4, name: '새콤한', color : '#FFDD33'},
+  { id: 5, name: '쌉쌀한', color : '#339966'},
+  { id: 6, name: '짭짤한', color : '#FF5533'}
+]
 
 const dummyMenu = {
   id: '1',
-  franchise: '스타벅스',
+  franchise: { id: 'franchise1', name: '스타벅스' },
   image: '',
-  title: '메뉴명',
-  originalTitle: '실제 메뉴명',
-  author: {},
+  title: '슈렉 프라푸치노',
+  originalTitle: '제주 유기농 말차로 만든 크림 프라푸치노',
+  author: { id: 'user1' },
   content: '설명' || null,
   options: [
     { name: '에스프레소샷', description: '1' },
     { name: '자바칩', description: '약간' },
-    { name: '아이스크림', description: '한스쿱' }
+    { name: '아이스크림', description: '한 스쿱' }
   ],
-  expectedPrice: 5000,
-  tastes: ['매콤함', '느끼함'],
+  expectedPrice: 6700,
+  tastes: [
+    { id: 'taste1', name: '차가운', color :  "#00B5E3" },
+    { id: 'taste2', name: '달콤한', color : "#CC0099"}
+  ],
   likes: 100,
   createdAt: String,
   updatedAt: String
@@ -33,19 +58,15 @@ interface Option {
 
 const CreateMenu = () => {
   const [options, setOptions] = useState<Option[]>(dummyMenu.options)
-  let selectedTags: TasteType[] = []
+  let selectedTags = dummyMenu.tastes
   const handleOptionBtnClick = () => {
     setOptions((options) => {
       const newOptions = [...options, { name: '', description: '' }]
       return newOptions
     })
   }
-  const handleClickTag = (clickedTag: TasteType) => {
-    if (selectedTags.includes(clickedTag)) {
-      selectedTags = selectedTags.filter((tag) => tag !== clickedTag)
-    } else {
-      selectedTags.push(clickedTag)
-    }
+  const handleClickTag = (clickedTag: TasteNameType) => {
+    selectedTags.map(({id, name}) => );
   }
   return (
     <FlexContainer>
@@ -54,9 +75,9 @@ const CreateMenu = () => {
       <FileInput id="image-input" type="file"></FileInput>
       <InputWrapper>
         <Select name="brand">
-          {FRANCHISE_LIST.map((franchise, idx) => (
-            <option key={idx} value={franchise}>
-              {franchise}
+          {dummyFranchiseList.map((franchise, idx) => (
+            <option key={franchise.id} value={franchise.name}>
+              {franchise.name}
             </option>
           ))}
         </Select>
@@ -64,6 +85,7 @@ const CreateMenu = () => {
           height={2.4}
           type="text"
           name="title"
+          value={dummyMenu.title}
           required={true}
           placeholder="커스텀 메뉴의 제목을 지어주세요"
         />
@@ -71,6 +93,7 @@ const CreateMenu = () => {
           height={2.4}
           type="text"
           name="original-title"
+          value={dummyMenu.originalTitle}
           required={true}
           placeholder="기본이 되는 메뉴의 제목을 적어주세요"
         />
@@ -82,12 +105,14 @@ const CreateMenu = () => {
               height={2.4}
               type="text"
               name="option-name"
+              value={option.name}
               placeholder="옵션 명"
             />
             <OptionDescription
               height={2.4}
               type="text"
               name="option-name"
+              value={option.description}
               placeholder="옵션 단위, 또는 설명"
             />
           </Flex>
@@ -97,15 +122,16 @@ const CreateMenu = () => {
           height={2.4}
           type="text"
           name="price"
+          value={dummyMenu.expectedPrice.toString()}
           placeholder="최종 가격을 입력해주세요"
         />
       </InputWrapper>
       <SubTitle>맛</SubTitle>
       <TagContainer>
-        {TASTE_LIST.map((taste, idx) => (
+        {dummyTasteList.map((taste, idx) => (
           <Tag
-            key={idx}
-            name={taste}
+            key={taste.id}
+            name={taste.name}
             height={3.2}
             onClick={handleClickTag}
           ></Tag>
