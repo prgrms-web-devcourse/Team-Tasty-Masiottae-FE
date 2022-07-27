@@ -1,29 +1,9 @@
 import type { NextPage } from 'next'
-import PostCard from '@components/PostCard'
+import MenuCard from '@components/MenuCard'
 import { useState } from 'react'
-import useIntersectionObserver from '../src/hooks/useIntersectionObserver'
-
-const Card = {
-  id: '12341324',
-  title: '참치마요',
-  imageUrl: 'https://via.placeholder.com/300x150',
-  avatarImageUrl: 'https://via.placeholder.com/50',
-  author: 'Lee',
-  likes: 10,
-  comments: 20
-}
-
-const PostCardDummy = Array.from({ length: 4 }, (_, idx) => {
-  return {
-    id: idx.toString(),
-    title: '참치마요',
-    imageUrl: 'https://via.placeholder.com/300x150',
-    avatarImageUrl: 'https://via.placeholder.com/50',
-    author: 'Lee',
-    likes: 10,
-    comments: 20
-  }
-})
+import useIntersectionObserver from '@hooks/useIntersectionObserver'
+import { Card, PostCardDummy } from '@constants/cardData'
+import styled from '@emotion/styled'
 
 const Home: NextPage = () => {
   const [cards, setCards] = useState(PostCardDummy)
@@ -36,12 +16,12 @@ const Home: NextPage = () => {
   )
 
   return (
-    <>
+    <CardListWrapper>
       {cards.map((cardData, idx) => {
         return (
-          <PostCard
+          <MenuCard
             id={cardData.id}
-            key={idx.toString()}
+            key={idx}
             title={cardData.title}
             imageUrl={cardData.imageUrl}
             avatarImageUrl={cardData.avatarImageUrl}
@@ -52,8 +32,20 @@ const Home: NextPage = () => {
           />
         )
       })}
-    </>
+    </CardListWrapper>
   )
 }
+
+const CardListWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: scroll;
+  row-gap: 1rem;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+`
 
 export default Home
