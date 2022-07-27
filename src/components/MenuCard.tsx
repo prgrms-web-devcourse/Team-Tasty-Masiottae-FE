@@ -18,7 +18,7 @@ interface Props {
 
 const IMAGE_ALT = 'NO IMAGE'
 
-const PostCard = ({
+const MenuCard = ({
   id,
   title,
   imageUrl,
@@ -52,6 +52,8 @@ const PostCard = ({
 
 const CardContainer = styled.div`
   width: 100%;
+  border-radius: 1rem;
+  box-shadow: 0 0.25rem 0.75rem rgba(55, 31, 31, 0.2);
   cursor: pointer;
 `
 
@@ -60,6 +62,7 @@ const Title = styled.div`
   font-size: 2rem;
   text-align: center;
   box-sizing: border-box;
+  user-select: none;
 `
 
 const Image = styled.img`
@@ -82,6 +85,7 @@ const UserInfoWrapper = styled.div`
 const Author = styled.div`
   font-size: 1.6rem;
   font-weight: bold;
+  user-select: none;
 `
 
 const PostInfoWrapper = styled.div`
@@ -94,6 +98,7 @@ const PostInfoWrapper = styled.div`
 
 const Text = styled.div`
   font-size: 2rem;
+  user-select: none;
 `
 
-export default PostCard
+export default MenuCard
