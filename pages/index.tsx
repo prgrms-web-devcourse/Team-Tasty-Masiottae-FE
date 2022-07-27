@@ -20,7 +20,7 @@ const Home: NextPage = () => {
         return (
           <PostCard
             id={cardData.id}
-            key={idx.toString()}
+            key={idx}
             title={cardData.title}
             imageUrl={cardData.imageUrl}
             avatarImageUrl={cardData.avatarImageUrl}
