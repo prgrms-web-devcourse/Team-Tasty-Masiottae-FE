@@ -5,13 +5,15 @@ import { VscBook } from 'react-icons/vsc'
 import theme from '@constants/theme'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import {
+  CREATE_MENU_URL,
+  USER_URL,
+  SEARCH_URL,
+  HOME_URL
+} from '@constants/pageUrl'
 
 const { mainPink, mainWhite, borderLight } = theme.color
 const { navHeight, pagePadding } = theme.layout
-const CREATE_MENU_URL = '/create-menu'
-const USER_URL = '/user'
-const SEARCH_URL = '/search'
-const HOME_URL = '/'
 
 type IconType = {
   isactive?: number

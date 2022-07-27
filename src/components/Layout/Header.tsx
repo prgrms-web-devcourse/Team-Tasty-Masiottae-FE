@@ -5,13 +5,11 @@ import { FiLogIn, FiUser } from 'react-icons/fi'
 import theme from '@constants/theme'
 import Link from 'next/link'
 import { useEffect, useState, useCallback } from 'react'
+import { MYINFO_URL, LOGIN_URL, USER_URL, HOME_URL } from '@constants/pageUrl'
 
 const { mainPink, mainWhite, borderLight } = theme.color
 const { headerHeight, pagePadding } = theme.layout
-const MYINFO_URL = '/myInfo'
-const USER_URL = '/user'
-const HOME_URL = '/'
-const LOGIN_URL = '/login'
+
 const MYINFO = '내정보'
 const USER = '메뉴판'
 
