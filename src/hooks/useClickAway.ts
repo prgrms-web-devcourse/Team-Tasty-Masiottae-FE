@@ -1,8 +1,6 @@
 import { useEffect, useRef } from 'react'
 
 const events = ['mousedown', 'touchstart']
-// addEventListener('mousedown', (e) => console.log(e))
-// addEventListener('touchstart', (e) => console.log(e))
 
 const useClickAway = (handler: () => void) => {
   const ref = useRef<HTMLDivElement>(null)
@@ -20,7 +18,7 @@ const useClickAway = (handler: () => void) => {
 
     return () => {
       for (const event of events) {
-        document.addEventListener(event, handleEvent)
+        document.removeEventListener(event, handleEvent)
       }
     }
   }, [handler])
