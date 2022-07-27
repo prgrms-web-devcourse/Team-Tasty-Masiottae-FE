@@ -1,13 +1,10 @@
 import styled from '@emotion/styled'
-import theme from '@constants/theme'
-import { useRef, useState } from 'react'
-import { BsPlusLg } from 'react-icons/bs'
+import { useCallback, useState } from 'react'
 import Input from '@components/Input'
 import Button from '@components/Button'
 import { BsEye } from 'react-icons/bs'
 import InputMessage from './InputMessage'
 import {
-  FILE,
   TEXT,
   PASSWORD,
   INPUT_EMAIL,
@@ -15,7 +12,6 @@ import {
   INPUT_PASSWORD,
   INPUT_PASSWORD_CONFIRM,
   INPUT_SNS,
-  FILE_TYPE,
   PLACEHOLDER_EMAIL,
   PLACEHOLDER_NICKNAME,
   PLACEHOLDER_PASSWORD,
@@ -31,9 +27,17 @@ const handleSignupSubmit: React.MouseEventHandler<HTMLButtonElement> = (e) => {
 }
 
 const Signup = () => {
-  const [isShowPassword, setIsShowPassword] = useState(false)
-  const [isShowConfirmPassword, setIsShowConfirmPassword] = useState(false)
-  const imageInputRef = useRef<HTMLInputElement>(null)
+  const [isTypePassword, setIsTypePassword] = useState(false)
+  const [isTypeConfirmPassword, setIsTypeConfirmPassword] = useState(false)
+
+  const handleEyeClick = useCallback((name: string) => {
+    name === INPUT_PASSWORD
+      ? setIsTypePassword((isTypePassword) => !isTypePassword)
+      : setIsTypeConfirmPassword(
+          (isTypeConfirmPassword) => !isTypeConfirmPassword
+        )
+  }, [])
+
   return (
     <SignupForm>
       <Title>회원 가입</Title>
@@ -57,29 +61,27 @@ const Signup = () => {
         </InputWrapper>
         <InputWrapper>
           <TextInput
-            type={isShowPassword ? TEXT : PASSWORD}
+            type={isTypePassword ? TEXT : PASSWORD}
             name={INPUT_PASSWORD}
             placeholder={PLACEHOLDER_PASSWORD}
           />
-          <StyledEye
-            onClick={() =>
-              setIsShowPassword((isShowPassword) => !isShowPassword)
-            }
+          <ShowPasswordIcon
+            onClick={() => {
+              handleEyeClick(INPUT_PASSWORD)
+            }}
           />
           <InputMessage message={MESSAGE_PASSWORD} />
         </InputWrapper>
         <InputWrapper>
           <TextInput
-            type={isShowConfirmPassword ? TEXT : PASSWORD}
+            type={isTypeConfirmPassword ? TEXT : PASSWORD}
             name={INPUT_PASSWORD_CONFIRM}
             placeholder={PLACEHOLDER_PASSWORD_CONFIRM}
           />
-          <StyledEye
-            onClick={() =>
-              setIsShowConfirmPassword(
-                (isShowConfirmPassword) => !isShowConfirmPassword
-              )
-            }
+          <ShowPasswordIcon
+            onClick={() => {
+              handleEyeClick(INPUT_PASSWORD_CONFIRM)
+            }}
           />
           <InputMessage />
         </InputWrapper>
@@ -93,14 +95,14 @@ const Signup = () => {
         </InputWrapper>
       </InputContainer>
 
-      <StyledButton height={7} onClick={handleSignupSubmit}>
+      <SignupButton height={7} onClick={handleSignupSubmit}>
         회원 가입
-      </StyledButton>
+      </SignupButton>
     </SignupForm>
   )
 }
 
-const StyledButton = styled(Button)`
+const SignupButton = styled(Button)`
   width: 100%;
   height: 7rem;
   margin-top: 1rem;
@@ -125,49 +127,6 @@ const Title = styled.div`
   font-weight: 700;
 `
 
-const ImageContainer = styled.div`
-  margin-top: 1rem;
-  width: 50%;
-  position: relative;
-  border-radius: 50%;
-`
-
-const ImageLoad = styled.div`
-  width: 100%;
-  border-radius: 50%;
-  background-color: ${theme.color.backgroundNormal};
-  cursor: pointer;
-
-  &:after {
-    content: '';
-    display: block;
-    padding-bottom: 100%;
-    border-radius: 50%;
-  }
-`
-
-const ImageInner = styled.div`
-  position: absolute;
-  width: 100%;
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-`
-
-const ImageInput = styled.input`
-  display: none;
-`
-
-const StyledPlus = styled(BsPlusLg)`
-  width: 5rem;
-  height: 5rem;
-  position: absolute;
-  top: 35%;
-  left: 50%;
-  transform: translateX(-50%);
-  cursor: pointer;
-`
-
 const InputContainer = styled.div`
   width: 100%;
   margin-top: 3rem;
@@ -188,7 +147,7 @@ const TextInput = styled(Input)`
   font-size: 1.7rem;
 `
 
-const StyledEye = styled(BsEye)`
+const ShowPasswordIcon = styled(BsEye)`
   width: 2.5rem;
   height: 2.5rem;
   position: absolute;
