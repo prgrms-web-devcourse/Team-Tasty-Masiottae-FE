@@ -8,6 +8,8 @@ import { useState } from 'react'
 import { FiSearch } from 'react-icons/fi'
 import { BsFilterLeft } from 'react-icons/bs'
 
+const SORT_OPTIONS = ['최신순', '좋아요순', '댓글순']
+
 const Search = () => {
   const [cards, setCards] = useState(PostCardDummy)
   const ref = useIntersectionObserver(
@@ -24,7 +26,11 @@ const Search = () => {
     <>
       <Container>
         <SearchWrapper>
-          <SearchInput height={5} type="text" placeholder="검색해라" />
+          <SearchInput
+            height={5}
+            type="text"
+            placeholder={`${category} 메뉴 검색`}
+          />
           <SearchIcon />
         </SearchWrapper>
         <CategoryHeader>{category}</CategoryHeader>
@@ -34,9 +40,11 @@ const Search = () => {
             <Text>필터</Text>
           </FilterWrapper>
           <select>
-            <option>최신순</option>
-            <option>좋아요순</option>
-            <option>댓글순</option>
+            {SORT_OPTIONS.map((value) => (
+              <option key={value} value={value}>
+                {value}
+              </option>
+            ))}
           </select>
         </FilterContainer>
         <Wrapper>
