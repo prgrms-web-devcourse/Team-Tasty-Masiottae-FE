@@ -69,7 +69,7 @@ const CreateMenu = () => {
       <FileInput id="image-input" type="file"></FileInput>
       <InputWrapper>
         <Select name="brand">
-          {dummyFranchiseList.map((franchise, idx) => (
+          {dummyFranchiseList.map((franchise) => (
             <option key={franchise.id} value={franchise.name}>
               {franchise.name}
             </option>
@@ -122,7 +122,7 @@ const CreateMenu = () => {
       </InputWrapper>
       <SubTitle>맛</SubTitle>
       <TagContainer>
-        {dummyTasteList.map((taste, idx) => (
+        {dummyTasteList.map((taste) => (
           <Tag
             key={taste.id}
             id={taste.id}
