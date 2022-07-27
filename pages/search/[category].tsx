@@ -23,49 +23,47 @@ const Search = () => {
   const { category } = router.query
 
   return (
-    <>
-      <Container>
-        <SearchWrapper>
-          <SearchInput
-            height={5}
-            type="text"
-            placeholder={`${category} 메뉴 검색`}
-          />
-          <SearchIcon />
-        </SearchWrapper>
-        <CategoryHeader>{category}</CategoryHeader>
-        <FilterContainer>
-          <FilterWrapper>
-            <FilterIcon />
-            <Text>필터</Text>
-          </FilterWrapper>
-          <select>
-            {SORT_OPTIONS.map((value) => (
-              <option key={value} value={value}>
-                {value}
-              </option>
-            ))}
-          </select>
-        </FilterContainer>
-        <CardListWrapper>
-          {cards.map((cardData, idx) => {
-            return (
-              <MenuCard
-                id={cardData.id}
-                key={idx}
-                title={cardData.title}
-                imageUrl={cardData.imageUrl}
-                avatarImageUrl={cardData.avatarImageUrl}
-                author={cardData.author}
-                likes={cardData.likes}
-                comments={cardData.comments}
-                divRef={cards.length === idx + 1 ? ref : null}
-              />
-            )
-          })}
-        </CardListWrapper>
-      </Container>
-    </>
+    <Container>
+      <SearchWrapper>
+        <SearchInput
+          height={5}
+          type="text"
+          placeholder={`${category} 메뉴 검색`}
+        />
+        <SearchIcon />
+      </SearchWrapper>
+      <CategoryHeader>{category}</CategoryHeader>
+      <OptionContainer>
+        <FilterWrapper>
+          <FilterIcon />
+          <Text>필터</Text>
+        </FilterWrapper>
+        <select>
+          {SORT_OPTIONS.map((value) => (
+            <option key={value} value={value}>
+              {value}
+            </option>
+          ))}
+        </select>
+      </OptionContainer>
+      <CardListWrapper>
+        {cards.map((cardData, idx) => {
+          return (
+            <MenuCard
+              id={cardData.id}
+              key={idx}
+              title={cardData.title}
+              imageUrl={cardData.imageUrl}
+              avatarImageUrl={cardData.avatarImageUrl}
+              author={cardData.author}
+              likes={cardData.likes}
+              comments={cardData.comments}
+              divRef={cards.length === idx + 1 ? ref : null}
+            />
+          )
+        })}
+      </CardListWrapper>
+    </Container>
   )
 }
 
@@ -90,7 +88,7 @@ const SearchIcon = styled(FiSearch)`
   margin-left: -3.5rem;
 `
 
-const FilterContainer = styled.div`
+const OptionContainer = styled.div`
   display: flex;
   justify-content: flex-end;
   gap: 1rem;
