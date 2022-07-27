@@ -94,10 +94,9 @@ const Signup = () => {
           <InputMessage message={MESSAGE_NICKNAME} />
         </InputWrapper>
       </InputContainer>
-
       <SignupButton height={7} onClick={handleSignupSubmit}>
         회원 가입
-      </SignupButton>
+      </SignupButton>{' '}
     </SignupForm>
   )
 }
