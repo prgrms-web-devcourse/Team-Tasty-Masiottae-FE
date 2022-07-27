@@ -1,5 +1,6 @@
 import Tag from '@components/Tag'
 import styled from '@emotion/styled'
+import ImageUploader from '@components/ImageUploader'
 import { TasteType } from '@customTypes/index'
 import { TASTE_LIST } from '@constants/taste'
 
@@ -16,8 +17,7 @@ const CreateMenu = () => {
   return (
     <FlexContainer>
       <Title>메뉴 등록</Title>
-      <ImageBox></ImageBox>
-      <FileInput type="file"></FileInput>
+      <ImageUploader />
       <TagContainer>
         {TASTE_LIST.map((taste, idx) => (
           <Tag key={idx} name={taste} height={3.2} onClick={handleClick}></Tag>
