@@ -53,9 +53,15 @@ interface Option {
 const CreateMenu = () => {
   const [options, setOptions] = useState<Option[]>(dummyMenu.options)
   const selectedTags = dummyMenu.tastes
-  const handleOptionBtnClick = () => {
+  const handleOptionAddBtnClick = () => {
     setOptions((options) => {
       const newOptions = [...options, { name: '', description: '' }]
+      return newOptions
+    })
+  }
+  const handleOptionDelBtnClick = (deletedIdx: number) => {
+    setOptions((options) => {
+      const newOptions = options.filter((_, idx) => deletedIdx !== idx)
       return newOptions
     })
   }
@@ -91,7 +97,7 @@ const CreateMenu = () => {
           required={true}
           placeholder="기본이 되는 메뉴의 제목을 적어주세요"
         />
-        <OptionButton onClick={handleOptionBtnClick}>+ 옵션</OptionButton>
+        <OptionButton onClick={handleOptionAddBtnClick}>+ 옵션</OptionButton>
 
         {options.map((option, idx) => (
           <Flex key={idx}>
@@ -109,6 +115,9 @@ const CreateMenu = () => {
               value={option.description}
               placeholder="옵션 단위, 또는 설명"
             />
+            <OptionDeleteButton onClick={() => handleOptionDelBtnClick(idx)}>
+              삭제
+            </OptionDeleteButton>
           </Flex>
         ))}
         <PriceInput
@@ -204,7 +213,11 @@ const OptionName = styled(Input)`
   width: 30%;
 `
 const OptionDescription = styled(Input)`
-  width: 70%;
+  width: 60%;
+`
+
+const OptionDeleteButton = styled.button`
+  width: 10%;
 `
 
 const PriceInput = styled(Input)`
