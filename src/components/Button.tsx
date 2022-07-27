@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 
 interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   width?: number
-  height: number
+  height?: number
   color?: string
   backgroundColor?: string
   fontSize?: number
