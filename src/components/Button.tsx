@@ -12,6 +12,11 @@ interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   className?: string
 }
 
+type StyleType = Pick<
+  Props,
+  'width' | 'height' | 'color' | 'backgroundColor' | 'fontSize'
+>
+
 const Button = ({
   width,
   height = 7,
@@ -39,11 +44,15 @@ const Button = ({
   )
 }
 
-const StyledButton = styled.button<Props>`
+const StyledButton = styled.button<StyleType>`
   width: ${({ width }) => `${width}rem`};
   height: ${({ height }) => `${height}rem`};
   color: ${({ color }) => color};
   background-color: ${({ backgroundColor }) => backgroundColor};
+  font-size: ${({ fontSize }) => `${fontSize}rem`};
+
+  border: none;
+  border-radius: 1rem;
 
   cursor: pointer;
   padding: 0 1.6rem;
