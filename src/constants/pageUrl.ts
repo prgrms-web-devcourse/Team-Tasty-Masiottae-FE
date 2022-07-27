@@ -1,0 +1,6 @@
+export const MYINFO_URL = '/myInfo'
+export const USER_URL = '/user'
+export const HOME_URL = '/'
+export const LOGIN_URL = '/login'
+export const CREATE_MENU_URL = '/create-menu'
+export const SEARCH_URL = '/search'
