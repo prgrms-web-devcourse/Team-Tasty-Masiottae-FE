@@ -3,6 +3,7 @@ import Avatar from './Avatar'
 import { IoMdHeartEmpty } from 'react-icons/io'
 import { BiComment } from 'react-icons/bi'
 import Link from 'next/link'
+import { RefObject } from 'react'
 
 interface Props {
   id: string
@@ -12,6 +13,7 @@ interface Props {
   author: string
   likes: number
   comments: number
+  divRef: RefObject<HTMLDivElement> | null
 }
 
 const IMAGE_ALT = 'NO IMAGE'
@@ -23,11 +25,12 @@ const PostCard = ({
   avatarImageUrl,
   author,
   likes,
-  comments
+  comments,
+  divRef
 }: Props) => {
   return (
     <Link href={`/detail/${id}`}>
-      <CardContainer>
+      <CardContainer ref={divRef}>
         <Title>{title}</Title>
         <Image src={imageUrl} alt={IMAGE_ALT} />
         <CardFooter>
