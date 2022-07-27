@@ -25,7 +25,32 @@ const MyInfoEditPage = () => {
   }
 
   const validate = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log('확인')
+    const { value, name } = e.target
+
+    const newErrors: Errors = {}
+    if (name === 'password') {
+      if (value.length > 10) {
+        e.target.value = value.slice(0, 10)
+      }
+      if (!regex.test(value)) {
+        newErrors.password = '! 8-10자 사이로 공백없이 입력해주세요'
+        setPasswordIsValid(true)
+      }
+      setPassword(e.target.value)
+    }
+    if (name === 'confirm') {
+      if (value.length > 10) {
+        e.target.value = value.slice(0, 10)
+      }
+      if (password !== e.target.value) {
+        newErrors.passwordConfirm = '! 비밀번호와 일치하지 않습니다.'
+        setConfirmIsValid(true)
+      }
+    }
+
+    setErrors(newErrors)
+    !newErrors.password && setPasswordIsValid(false)
+    !newErrors.passwordConfirm && setConfirmIsValid(false)
   }
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
