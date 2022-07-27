@@ -18,8 +18,8 @@ const BoxContainer = styled.div<{ imageUrl: string }>`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 10rem;
-  height: 10rem;
+  width: 12rem;
+  height: 12rem;
 
   position: relative;
   z-index: 1;
@@ -30,7 +30,7 @@ const BoxContainer = styled.div<{ imageUrl: string }>`
     width: 100%;
     height: 100%;
     content: '';
-    border-radius: 1rem;
+    border-radius: 2rem;
     background: ${({ imageUrl }) => `no-repeat top center url(${imageUrl})`};
     position: absolute;
     top: 0;

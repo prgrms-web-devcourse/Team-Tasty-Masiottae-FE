@@ -1,11 +1,47 @@
 import CategoryBox from '@components/CategoryBox'
+import styled from '@emotion/styled'
+import Link from 'next/link'
+
+const CATEGORY_LIST = [
+  '전체',
+  '스타벅스',
+  '공차',
+  '맥도날드',
+  '서브웨이',
+  '버거킹'
+]
 
 const Category = () => {
   return (
-    <CategoryBox imageUrl="https://picsum.photos/seed/picsum/100/100">
-      스타벅스
-    </CategoryBox>
+    <>
+      <Header>카테고리</Header>
+      <BoxContainer>
+        {CATEGORY_LIST.map((val) => (
+          <Link key={val} href={`/search/${val}`}>
+            <a>
+              <CategoryBox imageUrl="https://picsum.photos/seed/picsum/120/120">
+                {val}
+              </CategoryBox>
+            </a>
+          </Link>
+        ))}
+      </BoxContainer>
+    </>
   )
 }
+
+const Header = styled.h2`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3rem;
+`
+
+const BoxContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+`
 
 export default Category
