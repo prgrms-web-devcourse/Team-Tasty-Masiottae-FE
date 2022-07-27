@@ -2,30 +2,11 @@ import Input from '@components/Input'
 import PostCard from '@components/PostCard'
 import styled from '@emotion/styled'
 import useIntersectionObserver from '@hooks/useIntersectionObserver'
+import { Card, PostCardDummy } from '@constants/cardData'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
-
-const Card = {
-  id: '12341324',
-  title: '참치마요',
-  imageUrl: 'https://via.placeholder.com/300x150',
-  avatarImageUrl: 'https://via.placeholder.com/50',
-  author: 'Lee',
-  likes: 10,
-  comments: 20
-}
-
-const PostCardDummy = Array.from({ length: 4 }, (_, idx) => {
-  return {
-    id: idx.toString(),
-    title: '참치마요',
-    imageUrl: 'https://via.placeholder.com/300x150',
-    avatarImageUrl: 'https://via.placeholder.com/50',
-    author: 'Lee',
-    likes: 10,
-    comments: 20
-  }
-})
+import { FiSearch } from 'react-icons/fi'
+import { BsFilterLeft } from 'react-icons/bs'
 
 const Search = () => {
   const [cards, setCards] = useState(PostCardDummy)
@@ -38,11 +19,26 @@ const Search = () => {
   )
   const router = useRouter()
   const { category } = router.query
+
   return (
     <>
       <Container>
-        <Input height={5} type="text" placeholder="검색해라" />
-        <CategoryHeader>스타벅스</CategoryHeader>
+        <SearchWrapper>
+          <SearchInput height={5} type="text" placeholder="검색해라" />
+          <SearchIcon />
+        </SearchWrapper>
+        <CategoryHeader>{category}</CategoryHeader>
+        <FilterContainer>
+          <FilterWrapper>
+            <FilterIcon />
+            <Text>필터</Text>
+          </FilterWrapper>
+          <select>
+            <option>최신순</option>
+            <option>좋아요순</option>
+            <option>댓글순</option>
+          </select>
+        </FilterContainer>
         <Wrapper>
           {cards.map((cardData, idx) => {
             return (
@@ -73,6 +69,37 @@ const Container = styled.div`
   height: 100%;
 `
 
+const SearchWrapper = styled.div`
+  display: flex;
+  align-items: center;
+`
+const SearchInput = styled(Input)`
+  width: 100%;
+`
+
+const SearchIcon = styled(FiSearch)`
+  font-size: 2.5rem;
+  margin-left: -3.5rem;
+`
+
+const FilterContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+`
+
+const FilterWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+`
+
+const FilterIcon = styled(BsFilterLeft)`
+  font-size: 3.5rem;
+  font-weight: bold;
+`
+
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -92,6 +119,11 @@ const CategoryHeader = styled.div`
   padding: 3rem;
   background-color: gray;
   box-sizing: border-box;
+  user-select: none;
+`
+
+const Text = styled.span`
+  font-size: 2rem;
   user-select: none;
 `
 
