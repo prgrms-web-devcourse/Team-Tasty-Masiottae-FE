@@ -1,17 +1,13 @@
+import { useState } from 'react'
 import styled from '@emotion/styled'
 import Input from '@components/Input'
-import { useState } from 'react'
 import Tag from '@components/Tag'
+import { Option } from '@customTypes/index'
 import {
   dummyFranchiseList,
   dummyTasteList,
   dummyMenu
 } from '@constants/dummyMenu'
-
-interface Option {
-  name: string
-  description: string
-}
 
 const CreateMenu = () => {
   const [options, setOptions] = useState<Option[]>(dummyMenu.options)

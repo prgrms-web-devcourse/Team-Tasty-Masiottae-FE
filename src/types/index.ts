@@ -11,6 +11,10 @@ export interface Taste {
   name: string
   color: string
 }
+export interface Option {
+  name: string
+  description: string
+}
 
 type Color = typeof theme.color
 type Layout = typeof theme.layout
