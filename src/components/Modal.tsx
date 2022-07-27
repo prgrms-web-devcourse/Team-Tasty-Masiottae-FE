@@ -33,7 +33,7 @@ const Modal = ({
   }
 
   return ReactDOM.createPortal(
-    <BackgroundDim visible={visible}>
+    <BackgroundDim visible={visible} onClick={(e) => e.stopPropagation()}>
       <ModalContainer ref={ref} width={width} height={height} option={option}>
         {children}
         <div></div>
@@ -51,7 +51,7 @@ const BackgroundDim = styled.div<{ visible: boolean }>`
   width: 100vw;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 999;
+  z-index: 1000;
 `
 
 const ModalContainer = styled.div<{
@@ -66,7 +66,7 @@ const ModalContainer = styled.div<{
   transform: translate(-50%, -50%);
   width: ${({ width }) => `${width}rem`};
   height: ${({ height }) => `${height}rem`};
-  padding: 0.8rem;
+  padding: 1rem 0;
   background-color: white;
   box-shadow: 0 0.3rem 0.6rem rgba(0, 0, 0, 0.2);
   animation: ${({ option }) => (option === 'drawer' ? 'drawer-show 0.3s' : '')};
