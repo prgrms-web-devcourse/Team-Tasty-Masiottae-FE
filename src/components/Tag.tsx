@@ -4,11 +4,12 @@ import { TasteType } from '@customTypes/index'
 interface Props {
   name: TasteType
   height: number
+  isClicked?: boolean
   onClick: (clickedTag: TasteType) => void
 }
 
-const Tag = ({ name, height, onClick }: Props) => {
-  const [clicked, setClicked] = useState(false)
+const Tag = ({ name, height, isClicked = false, onClick }: Props) => {
+  const [clicked, setClicked] = useState(isClicked)
   const handleClick = (name: TasteType) => {
     setClicked((clicked) => !clicked)
     onClick(name)
