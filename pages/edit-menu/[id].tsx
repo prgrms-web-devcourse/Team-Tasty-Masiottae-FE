@@ -137,7 +137,6 @@ const CreateMenu = () => {
     </FlexContainer>
   )
 }
-export default CreateMenu
 
 const Flex = styled.div`
   display: flex;
@@ -217,3 +216,5 @@ const SubTitle = styled.h3`
   font-size: 2.4rem;
   align-self: start;
 `
+
+export default CreateMenu
