@@ -6,6 +6,7 @@ interface Props {
   height?: number
   type: string
   name?: string
+  value?: string
   accept?: string
   required?: boolean
   isValid?: boolean
@@ -20,6 +21,7 @@ const Input = ({
   height,
   type,
   name,
+  value,
   accept,
   required = false,
   isValid = true,
@@ -48,6 +50,7 @@ const Input = ({
       height={height}
       type={type}
       name={name}
+      value={value}
       accept={accept}
       required={required}
       isValid={isValid}
