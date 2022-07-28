@@ -45,7 +45,7 @@ const Button = ({
 }
 
 const StyledButton = styled.button<StyleType>`
-  width: ${({ width }) => `${width}rem`};
+  width: ${({ width }) => (width ? `${width}rem` : '100%')};
   height: ${({ height }) => `${height}rem`};
   color: ${({ color }) => color};
   background-color: ${({ backgroundColor }) => backgroundColor};
