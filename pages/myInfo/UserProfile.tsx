@@ -9,10 +9,10 @@ import useClickAway from '@hooks/useClickAway'
 const CHANGE_NICKNAME_PLACEHOLDER = '변경할 닉네임'
 
 const UserProfile = () => {
-  const [isNameEditor, setIsNameEditor] = useState(false)
-  const [isProfileModal, setIsProfileModal] = useState(false)
+  const [isNameEditorOpen, setIsNameEditorOpen] = useState(false)
+  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false)
   const [imgSrc, setImgSrc] = useState('')
-  const nameEditRef = useClickAway(() => setIsNameEditor(false))
+  const nameEditRef = useClickAway(() => setIsNameEditorOpen(false))
 
   const onFileChange = useCallback((src: string) => {
     setImgSrc(src)
@@ -25,19 +25,20 @@ const UserProfile = () => {
   }, [imgSrc])
 
   const onCloseProfile = () => {
-    setIsProfileModal(false)
+    setIsProfileModalOpen(false)
   }
 
   const onNickNameChange = useCallback((value: string) => {
     //TODO신영: 이름변경 API 핸들러 호출
-    setIsNameEditor(false)
+    setIsNameEditorOpen(false)
   }, [])
 
   return (
     <UserProfileWrapper>
       {' '}
-      <UserImage onClick={() => setIsProfileModal(true)} />
-      {isNameEditor ? (
+      <UserImage onClick={() => setIsProfileModalOpen(true)} />
+      {isNameEditorOpen ? (
+        //TODO신영: 컴포넌트 Input+button 분리
         <NickName ref={nameEditRef}>
           <ChangeNickNameInput
             type="text"
@@ -48,10 +49,10 @@ const UserProfile = () => {
       ) : (
         <NickName>
           <Text>계란이 좋아</Text>
-          <EditNameIcon onClick={() => setIsNameEditor(true)} />
+          <EditNameIcon onClick={() => setIsNameEditorOpen(true)} />
         </NickName>
       )}{' '}
-      {isProfileModal && (
+      {isProfileModalOpen && (
         <ChangeProfileModal
           onFileChange={onFileChange}
           onProfileSubmit={onProfileSubmit}
