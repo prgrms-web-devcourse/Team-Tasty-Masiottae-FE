@@ -39,7 +39,10 @@ const UserProfile = () => {
       <UserImage onClick={() => setIsProfileModal(true)} />
       {isNameEditor ? (
         <NickName ref={nameEditRef}>
-          <Input type="text" placeholder={CHANGE_NICKNAME_PLACEHOLDER} />
+          <ChangeNickNameInput
+            type="text"
+            placeholder={CHANGE_NICKNAME_PLACEHOLDER}
+          />
           <ChangeNickNameButton>수정</ChangeNickNameButton>
         </NickName>
       ) : (
@@ -88,6 +91,12 @@ const NickName = styled.div`
   margin: 1.5rem 0 0 0;
   position: relative;
   cursor: pointer;
+`
+
+const ChangeNickNameInput = styled(Input)`
+  width: 90%;
+  height: 5rem;
+  font-size: 2rem;
 `
 
 const ChangeNickNameButton = styled(Button)`
