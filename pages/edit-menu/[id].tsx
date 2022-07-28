@@ -9,6 +9,18 @@ import {
   dummyMenu
 } from '@constants/dummyMenu'
 
+const TITLE_NAME = 'title'
+const ORIGINAL_TITLE_NAME = 'original-title'
+const OPTION_NAME_NAME = 'option-name'
+const OPTION_DESCRIPTION_NAME = 'option-description'
+const EXPECTED_PRICE_NAME = 'price'
+
+const TITLE_PLACEHOLDER = '커스텀 메뉴의 제목을 지어주세요'
+const ORIGINAL_TITLE_PLACEHOLDER = '기본이 되는 메뉴의 제목을 적어주세요'
+const OPTION_NAME_PLACEHOLDER = '옵션 명'
+const OPTION_DESCRIPTION_PLACEHOLDER = '옵션 단위, 또는 설명'
+const EXPECTED_PRICE_PLACEHOLDER = '예상되는 최종 가격을 입력해주세요'
+
 const CreateMenu = () => {
   const [options, setOptions] = useState<Option[]>(dummyMenu.options)
   const selectedTags = dummyMenu.tastes
@@ -43,18 +55,18 @@ const CreateMenu = () => {
         <TitleInput
           height={2.4}
           type="text"
-          name="title"
+          name={TITLE_NAME}
           value={dummyMenu.title}
           required={true}
-          placeholder="커스텀 메뉴의 제목을 지어주세요"
+          placeholder={TITLE_PLACEHOLDER}
         />
         <TitleInput
           height={2.4}
           type="text"
-          name="original-title"
+          name={ORIGINAL_TITLE_NAME}
           value={dummyMenu.originalTitle}
           required={true}
-          placeholder="기본이 되는 메뉴의 제목을 적어주세요"
+          placeholder={ORIGINAL_TITLE_PLACEHOLDER}
         />
         <OptionButton onClick={handleOptionAddBtnClick}>+ 옵션</OptionButton>
 
@@ -63,16 +75,16 @@ const CreateMenu = () => {
             <OptionName
               height={2.4}
               type="text"
-              name="option-name"
+              name={OPTION_NAME_NAME}
               value={option.name}
-              placeholder="옵션 명"
+              placeholder={OPTION_NAME_PLACEHOLDER}
             />
             <OptionDescription
               height={2.4}
               type="text"
-              name="option-name"
+              name={OPTION_DESCRIPTION_NAME}
               value={option.description}
-              placeholder="옵션 단위, 또는 설명"
+              placeholder={OPTION_DESCRIPTION_PLACEHOLDER}
             />
             <OptionDeleteButton onClick={() => handleOptionDelBtnClick(idx)}>
               삭제
@@ -83,9 +95,9 @@ const CreateMenu = () => {
           width={20}
           height={2.4}
           type="text"
-          name="price"
+          name={EXPECTED_PRICE_NAME}
           value={dummyMenu.expectedPrice.toString()}
-          placeholder="최종 가격을 입력해주세요"
+          placeholder={EXPECTED_PRICE_PLACEHOLDER}
         />
       </InputWrapper>
       <SubTitle>맛</SubTitle>
@@ -119,7 +131,7 @@ const InputWrapper = styled.div`
   width: 90%;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 0.8rem;
 `
 
 const Title = styled.h1`
