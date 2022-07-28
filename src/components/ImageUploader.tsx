@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { BsPlusLg } from 'react-icons/bs'
 
 const FILE_TYPE = 'image/gif, image/jpeg, image/png'
