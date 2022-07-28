@@ -18,10 +18,10 @@ const MyInfoEditPage = () => {
   const [passwordIsValid, setPasswordIsValid] = useState(true)
   const [confirmIsValid, setConfirmIsValid] = useState(true)
   const [errors, setErrors] = useState<Errors>({})
-  const [isModal, setIsModal] = useState(false)
+  const [isOpen, setIsOpen] = useState(false)
 
   const onClose = () => {
-    setIsModal(false)
+    setIsOpen(false)
   }
 
   const validate = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,7 +33,7 @@ const MyInfoEditPage = () => {
         e.target.value = value.slice(0, 10)
       }
       if (!regex.test(value)) {
-        newErrors.password = '! 8-10자 사이로 공백없이 입력해주세요'
+        newErrors.password = '8-10자 사이로 공백없이 입력해주세요'
         setPasswordIsValid(true)
       }
       setPassword(e.target.value)
@@ -43,7 +43,7 @@ const MyInfoEditPage = () => {
         e.target.value = value.slice(0, 10)
       }
       if (password !== e.target.value) {
-        newErrors.passwordConfirm = '! 비밀번호와 일치하지 않습니다.'
+        newErrors.passwordConfirm = '비밀번호와 일치하지 않습니다.'
         setConfirmIsValid(true)
       }
     }
@@ -57,7 +57,7 @@ const MyInfoEditPage = () => {
     e.preventDefault()
     if (password && !passwordIsValid && !confirmIsValid) {
       //TODO신영: API 호출 HANDLER
-      setIsModal(true)
+      setIsOpen(true)
     }
   }
   return (
@@ -87,7 +87,7 @@ const MyInfoEditPage = () => {
         </UserEditForm>
       </UserInfo>
 
-      {isModal && <>TODO신영: 모달 넣기</>}
+      {isOpen && <>TODO신영: 모달 넣기</>}
     </UserContainer>
   )
 }
@@ -119,7 +119,7 @@ const UserEditForm = styled.form`
 const Text = styled.div`
   margin: 1rem 0 0 2.5rem;
   text-align: left;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 2.8rem;
 `
 const PasswordInput = styled(Input)`
