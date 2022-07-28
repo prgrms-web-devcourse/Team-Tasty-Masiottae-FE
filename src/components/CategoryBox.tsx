@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { ReactNode } from 'react'
+import React, { ReactNode } from 'react'
 
 interface Props {
   imageUrl: string
@@ -13,6 +13,8 @@ const CategoryBox = ({ children, imageUrl }: Props) => {
     </BoxContainer>
   )
 }
+
+CategoryBox.displayName = 'CategoryBox'
 
 const BoxContainer = styled.div<{ imageUrl: string }>`
   display: flex;

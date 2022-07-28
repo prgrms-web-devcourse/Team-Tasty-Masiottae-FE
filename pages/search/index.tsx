@@ -17,13 +17,15 @@ const Category = () => {
       <Header>카테고리</Header>
       <BoxContainer>
         {CATEGORY_LIST.map((val) => (
-          <Link key={val} href={`/search/${val}`}>
-            <a>
-              <CategoryBox imageUrl="https://picsum.photos/seed/picsum/120/120">
-                {val}
-              </CategoryBox>
-            </a>
-          </Link>
+          <BoxWrapper key={val}>
+            <Link href={`/search/${val}`}>
+              <a>
+                <CategoryBox imageUrl="https://picsum.photos/seed/picsum/120/120">
+                  {val}
+                </CategoryBox>
+              </a>
+            </Link>
+          </BoxWrapper>
         ))}
       </BoxContainer>
     </>
@@ -37,11 +39,13 @@ const Header = styled.h2`
   font-size: 3rem;
 `
 
-const BoxContainer = styled.div`
+const BoxContainer = styled.ul`
   display: flex;
   justify-content: center;
   gap: 2rem;
   flex-wrap: wrap;
 `
+
+const BoxWrapper = styled.li``
 
 export default Category
