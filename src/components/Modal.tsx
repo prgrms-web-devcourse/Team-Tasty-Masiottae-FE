@@ -33,7 +33,11 @@ const Modal = ({
   }
 
   return ReactDOM.createPortal(
-    <BackgroundDim visible={visible} onClick={(e) => e.stopPropagation()}>
+    <BackgroundDim
+      visible={visible}
+      onClick={(e) => e.stopPropagation()}
+      onTouchStart={(e) => e.stopPropagation()}
+    >
       <ModalContainer ref={ref} width={width} height={height} option={option}>
         {children}
         <div></div>
@@ -64,7 +68,8 @@ const ModalContainer = styled.div<{
   bottom: ${({ option }) => (option === 'drawer' ? 0 : '')};
   left: 50%;
   transform: translate(-50%, -50%);
-  width: ${({ width }) => `${width}rem`};
+  width: ${({ width }) => (width ? `${width}rem` : '100%')};
+  max-width: 50rem;
   height: ${({ height }) => `${height}rem`};
   padding: 1rem 0;
   background-color: white;
