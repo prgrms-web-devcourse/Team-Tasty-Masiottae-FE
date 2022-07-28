@@ -22,7 +22,7 @@ const Button = ({
   height = 7,
   color,
   backgroundColor,
-  fontSize = 16,
+  fontSize = 1.6,
   children,
   onClick,
   disabled = false,
@@ -45,7 +45,7 @@ const Button = ({
 }
 
 const StyledButton = styled.button<StyleType>`
-  width: ${({ width }) => `${width}rem`};
+  width: ${({ width }) => (width ? `${width}rem` : '100%')};
   height: ${({ height }) => `${height}rem`};
   color: ${({ color }) => color};
   background-color: ${({ backgroundColor }) => backgroundColor};
