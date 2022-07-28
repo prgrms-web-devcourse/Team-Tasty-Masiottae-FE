@@ -4,6 +4,7 @@ import { ImageType } from '@customTypes/index'
 import { BsPlusLg } from 'react-icons/bs'
 
 const FILE_TYPE = 'image/gif, image/jpeg, image/png'
+const FILE_INPUT_NAME = 'image-input'
 interface Props {
   size?: number
   shape?: 'square' | 'circle'
@@ -32,11 +33,16 @@ const ImageUploader = ({
 
   return (
     <>
-      <ImageBox htmlFor="image-input" size={size} shape={shape} image={image}>
+      <ImageBox
+        htmlFor={FILE_INPUT_NAME}
+        size={size}
+        shape={shape}
+        image={image}
+      >
         <StyledPlus loaded={image ? +true : +false} />
       </ImageBox>
       <FileInput
-        id="image-input"
+        id={FILE_INPUT_NAME}
         type="file"
         onChange={handleChange}
         accept={FILE_TYPE}
