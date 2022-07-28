@@ -4,18 +4,9 @@ import UserProfile from './UserProfile'
 import Button from '@components/Button'
 import { LOGIN_URL, PASSWORD_CHANGE_URL } from '@constants/pageUrl'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
-import useClickAway from '@hooks/useClickAway'
 
 const MyInfoPage = () => {
   const router = useRouter()
-  const [isLogoutModal, setIsLogoutModal] = useState(false)
-
-  const onCloseLogout = () => {
-    setIsLogoutModal(false)
-  }
-
-  const logoutModalRef = useClickAway(onCloseLogout)
 
   return (
     <UserContainer>
@@ -30,8 +21,6 @@ const MyInfoPage = () => {
     </UserContainer>
   )
 }
-
-export default MyInfoPage
 
 const UserContainer = styled.div`
   width: 100%;
@@ -62,3 +51,5 @@ const LogoutButton = styled(Button)`
   font-weight: 500;
   cursor: pointer;
 `
+
+export default MyInfoPage

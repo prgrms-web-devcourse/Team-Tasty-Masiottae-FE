@@ -28,8 +28,6 @@ const ChangeProfileModal = ({
   )
 }
 
-export default ChangeProfileModal
-
 const Text = styled.div`
   font-size: 2rem;
   font-weight: 700;
@@ -71,3 +69,5 @@ const ModalButton = styled(Button)`
   border-radius: 1.2rem;
   margin-top: 2rem;
 `
+
+export default ChangeProfileModal

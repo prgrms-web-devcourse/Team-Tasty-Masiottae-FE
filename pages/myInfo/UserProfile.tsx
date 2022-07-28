@@ -63,8 +63,6 @@ const UserProfile = () => {
   )
 }
 
-export default UserProfile
-
 const UserProfileWrapper = styled.div`
   text-align: center;
   margin: 5rem auto 3rem auto;
@@ -118,3 +116,5 @@ const EditNameIcon = styled(BsFillPencilFill)`
   width: 2rem;
   height: 2rem;
 `
+
+export default UserProfile
