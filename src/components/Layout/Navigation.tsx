@@ -16,7 +16,7 @@ const { mainPink, mainWhite, borderLight } = theme.color
 const { navHeight, pagePadding } = theme.layout
 
 type IconType = {
-  isactive?: number
+  selected?: boolean
 }
 
 export const Navigation = () => {
@@ -29,21 +29,21 @@ export const Navigation = () => {
         <NavItem>
           <Link href={HOME_URL}>
             <a>
-              <StyledHome isactive={pathname === HOME_URL ? 1 : 0} />
+              <StyledHome selected={pathname === HOME_URL} />
             </a>
           </Link>
         </NavItem>
         <NavItem>
           <Link href={CREATE_MENU_URL}>
             <a>
-              <StyledPlus isactive={pathname === CREATE_MENU_URL ? 1 : 0} />
+              <StyledPlus selected={pathname === CREATE_MENU_URL} />
             </a>
           </Link>
         </NavItem>
         <NavItem>
           <Link href={SEARCH_URL}>
             <a>
-              <StyledSearch isactive={pathname === SEARCH_URL ? 1 : 0} />
+              <StyledSearch selected={pathname === SEARCH_URL} />
             </a>
           </Link>
         </NavItem>
@@ -51,7 +51,7 @@ export const Navigation = () => {
           {/* //todo신영 USER_URL 뒤에 /userId query param 넘겨주기 */}
           <Link href={USER_URL}>
             <a>
-              <StyledMenu isactive={pathname === USER_URL ? 1 : 0} />
+              <StyledMenu selected={pathname === USER_URL} />
             </a>
           </Link>
         </NavItem>
@@ -101,25 +101,25 @@ const NavItem = styled.li`
 const StyledHome = styled(BiHomeAlt)<IconType>`
   width: 3rem;
   height: 3rem;
-  color: ${({ isactive }) => isactive && theme.color.mainPink};
+  color: ${({ selected }) => selected && theme.color.mainPink};
 `
 
 const StyledPlus = styled(AiOutlinePlusSquare)<IconType>`
   width: 3rem;
   height: 3rem;
-  color: ${({ isactive }) => isactive && theme.color.mainPink};
+  color: ${({ selected }) => selected && theme.color.mainPink};
 `
 
 const StyledSearch = styled(BiSearch)<IconType>`
   width: 3rem;
   height: 3rem;
-  color: ${({ isactive }) => isactive && theme.color.mainPink};
+  color: ${({ selected }) => selected && theme.color.mainPink};
 `
 
 const StyledMenu = styled(VscBook)<IconType>`
   width: 3rem;
   height: 3rem;
-  color: ${({ isactive }) => isactive && theme.color.mainPink};
+  color: ${({ selected }) => selected && theme.color.mainPink};
 `
 
 export default Navigation
