@@ -1,8 +1,9 @@
 import styled from '@emotion/styled'
 import ImageUploader from '@components/ImageUploader'
+import { ImageType } from '@customTypes/index'
 
 const CreateMenu = () => {
-  const handleImageChange = (newImage: string | ArrayBuffer | null) => {
+  const handleImageChange = (newImage: ImageType) => {
     console.log(newImage) // image 받기 성공
   }
 

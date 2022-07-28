@@ -1,9 +1,9 @@
 import styled from '@emotion/styled'
 import React, { useState } from 'react'
+import { ImageType } from '@customTypes/index'
 import { BsPlusLg } from 'react-icons/bs'
 
 const FILE_TYPE = 'image/gif, image/jpeg, image/png'
-type ImageType = string | ArrayBuffer | null
 interface Props {
   size?: number
   shape?: 'square' | 'circle'

@@ -12,3 +12,5 @@ type Layout = typeof theme.layout
 type Taste = typeof theme.taste
 
 export type TasteType = keyof Taste
+
+export type ImageType = string | ArrayBuffer | null
