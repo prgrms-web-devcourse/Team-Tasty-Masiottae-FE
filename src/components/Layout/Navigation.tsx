@@ -26,39 +26,49 @@ export const Navigation = () => {
   return (
     <NavContainer>
       <NavList>
-        <NavItem>
-          <Link href={HOME_URL}>
-            <a>
+        <Link href={HOME_URL}>
+          <StyledAnchor>
+            <NavItem>
               <StyledHome selected={pathname === HOME_URL} />
-            </a>
-          </Link>
-        </NavItem>
-        <NavItem>
-          <Link href={CREATE_MENU_URL}>
-            <a>
+            </NavItem>
+          </StyledAnchor>
+        </Link>
+        <Link href={CREATE_MENU_URL}>
+          <StyledAnchor>
+            <NavItem>
               <StyledPlus selected={pathname === CREATE_MENU_URL} />
-            </a>
-          </Link>
-        </NavItem>
-        <NavItem>
-          <Link href={SEARCH_URL}>
-            <a>
+            </NavItem>
+          </StyledAnchor>
+        </Link>
+        <Link href={SEARCH_URL}>
+          <StyledAnchor>
+            <NavItem>
               <StyledSearch selected={pathname === SEARCH_URL} />
-            </a>
-          </Link>
-        </NavItem>
-        <NavItem>
-          {/* //todo신영 USER_URL 뒤에 /userId query param 넘겨주기 */}
-          <Link href={USER_URL}>
-            <a>
+            </NavItem>
+          </StyledAnchor>
+        </Link>
+        <Link href={USER_URL}>
+          <StyledAnchor>
+            <NavItem>
+              {/* //todo신영 USER_URL 뒤에 /userId query param 넘겨주기 */}
               <StyledMenu selected={pathname === USER_URL} />
-            </a>
-          </Link>
-        </NavItem>
+            </NavItem>
+          </StyledAnchor>
+        </Link>
       </NavList>
     </NavContainer>
   )
 }
+const StyledAnchor = styled.a`
+  width: 25%;
+  text-align: center;
+  cursor: pointer;
+  list-style: none;
+
+  &:hover {
+    color: ${mainPink};
+  }
+`
 
 const NavContainer = styled.div`
   height: ${navHeight};
@@ -87,16 +97,7 @@ const NavList = styled.ul`
   align-items: center;
 `
 
-const NavItem = styled.li`
-  width: 25%;
-  text-align: center;
-  cursor: pointer;
-  list-style: none;
-
-  &:hover {
-    color: ${mainPink};
-  }
-`
+const NavItem = styled.li``
 
 const StyledHome = styled(BiHomeAlt)<IconType>`
   width: 3rem;
