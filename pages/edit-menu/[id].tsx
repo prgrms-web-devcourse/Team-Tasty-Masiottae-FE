@@ -1,14 +1,10 @@
 import { useState } from 'react'
 import styled from '@emotion/styled'
 import Input from '@components/Input'
-import Tag from '@components/Tag'
+import TagContainer from '@components/TagContainer'
 import ImageUploader from '@components/ImageUploader'
-import { Option } from '@customTypes/index'
-import {
-  dummyFranchiseList,
-  dummyTasteList,
-  dummyMenu
-} from '@constants/dummyMenu'
+import { ImageType, Option } from '@customTypes/index'
+import { dummyFranchiseList, dummyMenu } from '@constants/dummyMenu'
 
 const TITLE_NAME = 'title'
 const ORIGINAL_TITLE_NAME = 'original-title'
@@ -24,7 +20,9 @@ const EXPECTED_PRICE_PLACEHOLDER = '예상되는 최종 가격을 입력해주�
 
 const CreateMenu = () => {
   const [options, setOptions] = useState<Option[]>(dummyMenu.options)
-  const selectedTags = dummyMenu.tastes
+  const handleImageChange = (image: ImageType) => {
+    console.log(image)
+  }
   const handleOptionAddBtnClick = () => {
     setOptions((options) => {
       const newOptions = [...options, { name: '', description: '' }]
@@ -37,14 +35,10 @@ const CreateMenu = () => {
       return newOptions
     })
   }
-  const handleClickTag = (clickedTagId: number) => {
-    selectedTags.map(({ id }) => id === clickedTagId)
-  }
   return (
     <FlexContainer>
       <Title>메뉴 수정</Title>
-      <ImageBox htmlFor="image-input"></ImageBox>
-      <FileInput id="image-input" type="file"></FileInput>
+      <ImageUploader onChange={handleImageChange} />
       <InputWrapper>
         <Select name="brand">
           {dummyFranchiseList.map((franchise) => (
@@ -102,19 +96,8 @@ const CreateMenu = () => {
         />
       </InputWrapper>
       <SubTitle>맛</SubTitle>
-      <TagContainer>
-        {dummyTasteList.map((taste) => (
-          <Tag
-            key={taste.id}
-            id={taste.id}
-            name={taste.name}
-            color={taste.color}
-            height={3.2}
-            onClick={handleClickTag}
-          ></Tag>
-        ))}
-      </TagContainer>
       <button>메뉴 수정</button>
+      <TagContainer selectedTasteList={dummyMenu.tastes}></TagContainer>
     </FlexContainer>
   )
 }
@@ -138,33 +121,6 @@ const InputWrapper = styled.div`
 const Title = styled.h1`
   font-size: 4rem;
   align-self: start;
-`
-
-const ImageBox = styled.label`
-  width: 30rem;
-  height: 30rem;
-  background-color: #d9d9d9;
-  &:hover {
-    cursor: pointer;
-  }
-`
-
-const FileInput = styled.input`
-  visibility: hidden;
-`
-
-const TagContainer = styled.div`
-  width: 80%;
-  height: 10rem;
-  display: flex;
-  flex-wrap: wrap;
-  padding: 0 0.5rem;
-  background-color: #d9d9d9;
-  overflow-y: scroll;
-  gap: 0.5rem;
-  ::-webkit-scrollbar {
-    display: none;
-  }
 `
 
 const Select = styled.select`

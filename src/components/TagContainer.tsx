@@ -1,18 +1,26 @@
+import { Taste } from '@customTypes/index'
 import styled from '@emotion/styled'
+import Tag from './Tag'
+import { dummyTasteList as tasteList } from '@constants/dummyMenu'
 interface Props {
   width?: number
   height?: number
   gap?: number
   backgroundColor?: string
-  children: React.ReactNode
+  selectedTasteList: Taste[]
 }
 const TagContainer = ({
+  selectedTasteList,
   width,
   height,
   gap,
-  backgroundColor = '#d9d9d9',
-  children
+  backgroundColor = '#d9d9d9'
 }: Props) => {
+  const handleClickTag = (clickedTagId: number) => {
+    console.log(clickedTagId)
+  }
+  console.log(selectedTasteList)
+
   return (
     <Container
       width={width}
@@ -20,7 +28,21 @@ const TagContainer = ({
       gap={gap}
       backgroundColor={backgroundColor}
     >
-      {children}
+      {tasteList.map((taste) => (
+        <Tag
+          key={taste.id}
+          id={taste.id}
+          name={taste.name}
+          color={taste.color}
+          height={3.2}
+          onClick={handleClickTag}
+          isClicked={
+            selectedTasteList.find((selected) => selected.id === taste.id)
+              ? true
+              : false
+          }
+        ></Tag>
+      ))}
     </Container>
   )
 }
