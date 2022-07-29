@@ -2,6 +2,7 @@ import { useState } from 'react'
 import styled from '@emotion/styled'
 import Input from '@components/Input'
 import Tag from '@components/Tag'
+import ImageUploader from '@components/ImageUploader'
 import { Option } from '@customTypes/index'
 import {
   dummyFranchiseList,
