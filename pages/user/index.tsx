@@ -78,7 +78,6 @@ const UserMenuPage = () => {
         {cards.map((cardData, idx) => {
           return (
             <MenuCard
-              id={cardData.id}
               key={idx}
               title={cardData.title}
               imageUrl={cardData.imageUrl}
