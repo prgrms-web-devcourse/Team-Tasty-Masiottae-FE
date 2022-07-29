@@ -25,6 +25,10 @@ const LoginPage = () => {
   const [errors, setErrors] = useState<Errors>({})
   const [isTypePassword, setIsTypePassword] = useState(false)
 
+  const handleEyeClick = useCallback(() => {
+    setIsTypePassword((isTypePassword) => !isTypePassword)
+  }, [])
+
   const validate = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target
     const newErrors: Errors = {}
