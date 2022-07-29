@@ -9,7 +9,6 @@ import { BsFilterLeft } from 'react-icons/bs'
 import { FiSearch } from 'react-icons/fi'
 
 const SORT_OPTIONS = ['최신순', '좋아요순', '댓글순']
-
 const dummy = ['작성한 메뉴', '좋아요한 메뉴']
 
 interface TabProps {
@@ -21,6 +20,7 @@ interface TabProps {
 const UserMenuPage = () => {
   const [option, setOption] = useState(dummy[0])
   const [cards, setCards] = useState(PostCardDummy)
+
   const ref = useIntersectionObserver(
     async (entry, observer) => {
       observer.unobserve(entry.target)
@@ -36,65 +36,92 @@ const UserMenuPage = () => {
 
   return (
     <>
-      <ProfileContainer>
-        <Avatar
-          size={10}
-          src={'https://via.placeholder.com/100'}
-          isLoading={false}
-        />
-        <Author>작성자</Author>
-      </ProfileContainer>
-      <TabContainer>
-        {dummy.map((val) => (
-          <Tab
-            key={val}
-            selected={option === val}
-            value={val}
-            onClick={handleClick}
-          >
-            {val}
-          </Tab>
-        ))}
-      </TabContainer>
-      <Container>
-        <SearchWrapper>
-          <SearchInput height={5} type="text" placeholder={`메뉴 검색`} />
-          <SearchIcon />
-        </SearchWrapper>
-        <OptionContainer>
-          <FilterWrapper>
-            <FilterIcon />
-            <Text>필터</Text>
-          </FilterWrapper>
-          <select>
-            {SORT_OPTIONS.map((value) => (
-              <option key={value} value={value}>
-                {value}
-              </option>
+      <FixedWrapper>
+        <InnerWrapper>
+          <ProfileContainer>
+            <Avatar
+              size={10}
+              src={'https://via.placeholder.com/100'}
+              isLoading={false}
+            />
+            <Author>작성자</Author>
+          </ProfileContainer>
+          <TabContainer>
+            {dummy.map((val) => (
+              <Tab
+                key={val}
+                selected={option === val}
+                value={val}
+                onClick={handleClick}
+              >
+                {val}
+              </Tab>
             ))}
-          </select>
-        </OptionContainer>
-        <CardListWrapper>
-          {cards.map((cardData, idx) => {
-            return (
-              <MenuCard
-                id={cardData.id}
-                key={idx}
-                title={cardData.title}
-                imageUrl={cardData.imageUrl}
-                avatarImageUrl={cardData.avatarImageUrl}
-                author={cardData.author}
-                likes={cardData.likes}
-                comments={cardData.comments}
-                divRef={cards.length === idx + 1 ? ref : null}
-              />
-            )
-          })}
-        </CardListWrapper>
-      </Container>
+          </TabContainer>
+          <SearchWrapper>
+            <SearchInput height={5} type="text" placeholder={`메뉴 검색`} />
+            <SearchIcon />
+          </SearchWrapper>
+          <OptionContainer>
+            <FilterWrapper>
+              <FilterIcon />
+              <Text>필터</Text>
+            </FilterWrapper>
+            <select>
+              {SORT_OPTIONS.map((value) => (
+                <option key={value} value={value}>
+                  {value}
+                </option>
+              ))}
+            </select>
+          </OptionContainer>
+        </InnerWrapper>
+      </FixedWrapper>
+
+      <CardListWrapper>
+        {cards.map((cardData, idx) => {
+          return (
+            <MenuCard
+              id={cardData.id}
+              key={idx}
+              title={cardData.title}
+              imageUrl={cardData.imageUrl}
+              avatarImageUrl={cardData.avatarImageUrl}
+              author={cardData.author}
+              likes={cardData.likes}
+              comments={cardData.comments}
+              divRef={cards.length === idx + 1 ? ref : null}
+            />
+          )
+        })}
+      </CardListWrapper>
     </>
   )
 }
+
+const FixedWrapper = styled.div`
+  position: fixed;
+  left: 0;
+  width: 100%;
+`
+
+const InnerWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-width: 33.5rem;
+  max-width: 46rem;
+  width: 100%;
+  background-color: white;
+  margin: 0 auto;
+  padding-bottom: 1rem;
+  box-sizing: border-box;
+
+  @media screen and (max-width: 31.25rem) {
+    padding: 0 2rem;
+  }
+`
+
 const ProfileContainer = styled.div`
   padding: 2rem;
   display: flex;
@@ -124,14 +151,6 @@ const Tab = styled.button<TabProps>`
   font-weight: bold;
   border-bottom: ${({ selected }) => (selected ? '3px solid red' : 'none')};
   height: 5rem;
-`
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-top: 1rem;
-  gap: 1rem;
-  height: 100%;
 `
 
 const SearchWrapper = styled.div`
@@ -166,10 +185,9 @@ const FilterIcon = styled(BsFilterLeft)`
 `
 
 const CardListWrapper = styled.div`
+  padding-top: 31.25rem;
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  overflow: scroll;
   row-gap: 1rem;
 
   ::-webkit-scrollbar {
