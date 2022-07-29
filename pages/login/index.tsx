@@ -25,6 +25,14 @@ const LoginPage = () => {
   const [errors, setErrors] = useState<Errors>({})
   const [isTypePassword, setIsTypePassword] = useState(false)
 
+  const handleLoginSubmit = async (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault()
+    const LoginIsValid = password && email && emailIsValid && passwordIsValid
+    if (LoginIsValid) {
+      //TODO신영: 로그인 API호출
+    }
+  }
+
   const handleEyeClick = useCallback(() => {
     setIsTypePassword((isTypePassword) => !isTypePassword)
   }, [])
