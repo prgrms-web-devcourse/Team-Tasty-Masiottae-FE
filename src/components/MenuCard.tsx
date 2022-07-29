@@ -2,11 +2,9 @@ import styled from '@emotion/styled'
 import Avatar from './Avatar'
 import { IoMdHeartEmpty } from 'react-icons/io'
 import { BiComment } from 'react-icons/bi'
-import Link from 'next/link'
 import { RefObject } from 'react'
 
 interface Props {
-  id: string
   title: string
   imageUrl: string
   avatarImageUrl: string
@@ -19,7 +17,6 @@ interface Props {
 const IMAGE_ALT = 'NO IMAGE'
 
 const MenuCard = ({
-  id,
   title,
   imageUrl,
   avatarImageUrl,
@@ -29,24 +26,22 @@ const MenuCard = ({
   divRef
 }: Props) => {
   return (
-    <Link href={`/detail/${id}`}>
-      <CardContainer ref={divRef}>
-        <Title>{title}</Title>
-        <Image src={imageUrl} alt={IMAGE_ALT} />
-        <CardFooter>
-          <UserInfoWrapper>
-            <Avatar size={5} src={avatarImageUrl} isLoading={false} />
-            <Author>{author}</Author>
-          </UserInfoWrapper>
-          <PostInfoWrapper>
-            <IoMdHeartEmpty size={20} />
-            <Text>{likes}</Text>
-            <BiComment size={20} />
-            <Text>{comments}</Text>
-          </PostInfoWrapper>
-        </CardFooter>
-      </CardContainer>
-    </Link>
+    <CardContainer ref={divRef}>
+      <Title>{title}</Title>
+      <Image src={imageUrl} alt={IMAGE_ALT} />
+      <CardFooter>
+        <UserInfoWrapper>
+          <Avatar size={5} src={avatarImageUrl} isLoading={false} />
+          <Author>{author}</Author>
+        </UserInfoWrapper>
+        <PostInfoWrapper>
+          <IoMdHeartEmpty size={20} />
+          <Text>{likes}</Text>
+          <BiComment size={20} />
+          <Text>{comments}</Text>
+        </PostInfoWrapper>
+      </CardFooter>
+    </CardContainer>
   )
 }
 

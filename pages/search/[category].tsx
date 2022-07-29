@@ -7,6 +7,7 @@ import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { FiSearch } from 'react-icons/fi'
 import { BsFilterLeft } from 'react-icons/bs'
+import Link from 'next/link'
 
 const SORT_OPTIONS = ['최신순', '좋아요순', '댓글순']
 
@@ -49,17 +50,22 @@ const Search = () => {
       <CardListWrapper>
         {cards.map((cardData, idx) => {
           return (
-            <MenuCard
-              id={cardData.id}
-              key={idx}
-              title={cardData.title}
-              imageUrl={cardData.imageUrl}
-              avatarImageUrl={cardData.avatarImageUrl}
-              author={cardData.author}
-              likes={cardData.likes}
-              comments={cardData.comments}
-              divRef={cards.length === idx + 1 ? ref : null}
-            />
+            <MenuCardWrapper key={idx}>
+              <Link href={`/detail/${cardData.id}`}>
+                <a>
+                  <MenuCard
+                    key={idx}
+                    title={cardData.title}
+                    imageUrl={cardData.imageUrl}
+                    avatarImageUrl={cardData.avatarImageUrl}
+                    author={cardData.author}
+                    likes={cardData.likes}
+                    comments={cardData.comments}
+                    divRef={cards.length === idx + 1 ? ref : null}
+                  />
+                </a>
+              </Link>
+            </MenuCardWrapper>
           )
         })}
       </CardListWrapper>
@@ -106,7 +112,7 @@ const FilterIcon = styled(BsFilterLeft)`
   font-weight: bold;
 `
 
-const CardListWrapper = styled.div`
+const CardListWrapper = styled.ul`
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -117,6 +123,8 @@ const CardListWrapper = styled.div`
     display: none;
   }
 `
+
+const MenuCardWrapper = styled.li``
 
 const CategoryHeader = styled.div`
   height: 8rem;
