@@ -1,16 +1,29 @@
 import Modal from '@components/Modal'
 import styled from '@emotion/styled'
-import React, { useState } from 'react'
+import React, {
+  ChangeEvent,
+  Fragment,
+  useCallback,
+  useEffect,
+  useRef,
+  useState
+} from 'react'
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai'
 import { BiDotsHorizontalRounded, BiTrash } from 'react-icons/bi'
+import menuDummy from './menuDummy.json'
+import commentListDummy from './commentsDummy.json'
 
-const GUEST_INPUT_PLACEHOLDER = '로그인한 회원만 댓글을 달 수 있습니다.'
+const GUEST_INPUT_PLACEHOLDER = '로그인 후 작성해주세요(최대 80자).'
 const LOGGEDIN_INPUT_PLACEHOLDER = '댓글을 입력해주세요.'
 
 const Detail = () => {
+  const [menu, setMenu] = useState(menuDummy)
+  const [commentList, setCommentList] = useState(commentListDummy)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+  const textareaRef = useRef<HTMLTextAreaElement>(null)
+  const [comment, setComment] = useState('')
 
   const handleEditMenuClick = (e: React.MouseEvent<SVGElement, MouseEvent>) => {
     setIsModalOpen(true)
@@ -30,11 +43,36 @@ const Detail = () => {
     setIsDeleteModalOpen(false)
   }
 
+  useEffect(() => {
+    if (textareaRef === null || textareaRef.current === null) {
+      return
+    }
+    textareaRef.current.style.height = '3rem'
+    textareaRef.current.style.height = textareaRef.current.scrollHeight + 'px'
+  }, [])
+
+  const handleChange = useCallback((e: ChangeEvent<HTMLTextAreaElement>) => {
+    if (textareaRef === null || textareaRef.current === null) {
+      return
+    }
+
+    textareaRef.current.style.height = '3rem'
+    textareaRef.current.style.height = textareaRef.current.scrollHeight + 'px'
+
+    setComment(e.target.value)
+  }, [])
+
+  const handleAddButtonClick = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    console.log(comment)
+  }
+
   return (
     <>
       <PostContainer>
         <Header>
-          <Title>슈렉 프라푸치노</Title>
+          <Title>{menu.title}</Title>
           <Dots size={30} onClick={handleEditMenuClick} />
           <Modal
             visible={isModalOpen}
@@ -47,17 +85,17 @@ const Detail = () => {
         </Header>
 
         <ImageWrapper>
-          <AAAAAAAImageBox />
+          <Image src={menu.imageUrl} alt="" />
         </ImageWrapper>
 
         <PostInfoBox>
           <UserWrapper>
-            <AAAAAAAAAAvatar />
-            <UserNameText>유저 이름</UserNameText>
+            <Avatar src={menu.author.profileImageUrl} />
+            <UserNameText>{menu.author.name}</UserNameText>
           </UserWrapper>
           <LikeWrapper>
-            <Heart />
-            <span>200</span>
+            <Heart size={30} />
+            <span>{menu.likes}</span>
           </LikeWrapper>
         </PostInfoBox>
 
@@ -76,63 +114,44 @@ const Detail = () => {
             <SaltyTag>짠</SaltyTag>
             <BitterTag>쓴</BitterTag>
           </TagContainer>
-          <span>예상 가격: 9000 원</span>
+          <span>예상 가격 {menu.expectedPrice} 원</span>
         </PostInfoBox>
       </PostContainer>
 
       <CommentWriteContainer>
-        <Input
-          type="text"
+        <Textarea
+          ref={textareaRef}
           placeholder={
             isLoggedIn ? LOGGEDIN_INPUT_PLACEHOLDER : GUEST_INPUT_PLACEHOLDER
           }
+          maxLength={80}
+          onChange={handleChange}
         />
-        <AddCommentButton>등록</AddCommentButton>
+        <AddCommentButton onClick={handleAddButtonClick}>등록</AddCommentButton>
       </CommentWriteContainer>
 
       <CommentListContainer>
-        <CommnetCountText>댓글 10 개</CommnetCountText>
-
-        <UserWrapper>
-          <AAAAAAAAAAvatar />
-          <Comment>
-            <span>너무 달아서 별로임</span>
-            <ButtonWrapper onClick={handleDeleteCommentClick}>
-              <DeleteButton size={20} />
-              <Modal
-                visible={isDeleteModalOpen}
-                onClose={handleDeleteCommentClose}
-                option="drawer"
-              >
-                <ModalItem>삭제</ModalItem>
-              </Modal>
-            </ButtonWrapper>
-          </Comment>
-        </UserWrapper>
-        <UserWrapper>
-          <AAAAAAAAAAvatar />
-          <Comment>
-            <span>
-              너무 달아서 별로임너무 달아서 별로임너무 달아서 별로임너무 달아서
-              별로임너무 달아서 별로임너무 달아서 별로임너무 달아서 별로임너무
-              height: 3rem; height: 3rem; height: 3rem; height: 3rem; height:
-              3rem; height: 3rem; height: 3rem; height: 3rem; 달아서 별로임너무
-              달아서 별로임너무 달아서 별로임
-            </span>
-
-            <ButtonWrapper>
-              <DeleteButton size={20} />
-            </ButtonWrapper>
-          </Comment>
-        </UserWrapper>
-        <UserWrapper>
-          <AAAAAAAAAAvatar />
-          <Comment>너무 달아서 별로임</Comment>
-        </UserWrapper>
-        <UserWrapper>
-          <AAAAAAAAAAvatar />
-          <Comment>너무 달아서 별로임</Comment>
-        </UserWrapper>
+        <CommnetCountText>댓글 {commentList.length} 개</CommnetCountText>
+        {commentList.map((comment) => (
+          <Fragment key={comment.id}>
+            <UserWrapper>
+              <Avatar src={comment.author.profileImageUrl} />
+              <Comment>
+                <span>{comment.comment}</span>
+                <ButtonWrapper onClick={handleDeleteCommentClick}>
+                  <DeleteButton size={20} />
+                  <Modal
+                    visible={isDeleteModalOpen}
+                    onClose={handleDeleteCommentClose}
+                    option="drawer"
+                  >
+                    <ModalItem>삭제</ModalItem>
+                  </Modal>
+                </ButtonWrapper>
+              </Comment>
+            </UserWrapper>
+          </Fragment>
+        ))}
       </CommentListContainer>
     </>
   )
@@ -149,6 +168,7 @@ const PostContainer = styled.div`
 
 const PostInfoBox = styled(Flex)`
   justify-content: space-between;
+  margin-bottom: 2rem;
 `
 
 const Header = styled(Flex)`
@@ -182,7 +202,7 @@ const ImageWrapper = styled(Flex)`
   max-width: 50rem;
   height: 100vw;
   max-height: 50rem;
-  margin-bottom: -16rem;
+  margin-bottom: -50%;
 `
 
 const OptionsWrapper = styled.div`
@@ -198,22 +218,19 @@ const FranchiseText = styled.span`
   font-weight: 700;
 `
 
-const AAAAAAAImageBox = styled.div`
+const Image = styled.img`
   width: 50%;
   height: 50%;
-  background-color: skyblue;
 `
 
-const AAAAAAAAAAvatar = styled.div`
+const Avatar = styled.img`
   width: 3rem;
   height: 3rem;
-  background-color: gray;
   margin-right: 1rem;
 `
 
 const UserWrapper = styled(Flex)`
   align-items: center;
-  margin-bottom: 1rem;
 `
 
 const UserNameText = styled.div``
@@ -254,24 +271,34 @@ const BitterTag = styled(Tag)`
 
 // 댓글 입력
 const CommentWriteContainer = styled(Flex)`
+  position: relative;
   align-items: center;
   margin-bottom: 2rem;
 `
 
-const Input = styled.input`
+const Textarea = styled.textarea`
   width: 100%;
-  height: 4rem;
+  min-height: 4rem;
+  font-size: 1.6rem;
   border: 0.1rem solid rgba(0, 0, 0, 0.4);
   border-radius: 1rem;
-  padding-left: 1rem;
-  padding-right: 7rem;
+  padding: 1rem 7rem 1rem 1rem;
+  resize: none;
+  overflow: hidden;
 
   &:focus {
     outline: none;
   }
+
+  &::placeholder {
+    font-size: 1.4rem;
+  }
 `
 
 const AddCommentButton = styled.button`
+  position: absolute;
+  bottom: 0.5rem;
+  right: 1rem;
   width: 5rem;
   height: 3rem;
   border: none;
@@ -290,6 +317,7 @@ const CommnetCountText = styled.div`
 `
 
 const Comment = styled(Flex)`
+  font-size: 1.4rem;
   justify-content: space-between;
   align-items: center;
   width: 100%;
