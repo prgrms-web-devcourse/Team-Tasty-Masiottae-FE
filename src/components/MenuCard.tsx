@@ -48,7 +48,6 @@ const MenuCard = ({
 const CardContainer = styled.div`
   width: 100%;
   border-radius: 1rem;
-  box-shadow: 0 0.25rem 0.75rem rgba(55, 31, 31, 0.2);
   cursor: pointer;
 `
 
