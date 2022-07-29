@@ -1,11 +1,5 @@
 import Tag from '@components/Tag'
 import styled from '@emotion/styled'
-<<<<<<< HEAD
-import TagContainer from '@components/TagContainer'
-import { TasteType } from '@customTypes/index'
-import { TASTE_LIST } from '@constants/taste'
-=======
->>>>>>> 6221c52edc203a7d1843da4cdb06fac96f77f401
 
 const CreateMenu = () => {
   return (
@@ -13,14 +7,6 @@ const CreateMenu = () => {
       <Title>메뉴 등록</Title>
       <ImageBox></ImageBox>
       <FileInput type="file"></FileInput>
-<<<<<<< HEAD
-      <TagContainer width={30} height={10}>
-        {TASTE_LIST.map((taste, idx) => (
-          <Tag key={idx} name={taste} height={3.2} onClick={handleClick}></Tag>
-        ))}
-      </TagContainer>
-=======
->>>>>>> 6221c52edc203a7d1843da4cdb06fac96f77f401
     </FlexContainer>
   )
 }
