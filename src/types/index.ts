@@ -18,3 +18,7 @@ export interface Option {
 
 type Color = typeof theme.color
 type Layout = typeof theme.layout
+
+export type TasteType = keyof Taste
+
+export type ImageType = string | ArrayBuffer | null
