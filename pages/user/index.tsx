@@ -9,8 +9,8 @@ import { BsFilterLeft } from 'react-icons/bs'
 import { FiSearch } from 'react-icons/fi'
 
 const SORT_OPTIONS = ['최신순', '좋아요순', '댓글순']
-const dummy = ['작성한 메뉴', '좋아요한 메뉴']
-
+const SELECT_DUMMY = ['작성한 메뉴', '좋아요한 메뉴']
+const SIZE_100_IMG_URL = 'https://via.placeholder.com/100'
 interface TabProps {
   selected: boolean
   value: string
@@ -18,7 +18,7 @@ interface TabProps {
 }
 
 const UserMenuPage = () => {
-  const [option, setOption] = useState(dummy[0])
+  const [option, setOption] = useState(SELECT_DUMMY[0])
   const [cards, setCards] = useState(PostCardDummy)
 
   const ref = useIntersectionObserver(
@@ -39,22 +39,18 @@ const UserMenuPage = () => {
       <FixedWrapper>
         <InnerWrapper>
           <ProfileContainer>
-            <Avatar
-              size={10}
-              src={'https://via.placeholder.com/100'}
-              isLoading={false}
-            />
+            <Avatar size={10} src={SIZE_100_IMG_URL} isLoading={false} />
             <Author>작성자</Author>
           </ProfileContainer>
           <TabContainer>
-            {dummy.map((val) => (
+            {SELECT_DUMMY.map((selectOption) => (
               <Tab
-                key={val}
-                selected={option === val}
-                value={val}
+                key={selectOption}
+                selected={option === selectOption}
+                value={selectOption}
                 onClick={handleClick}
               >
-                {val}
+                {selectOption}
               </Tab>
             ))}
           </TabContainer>
