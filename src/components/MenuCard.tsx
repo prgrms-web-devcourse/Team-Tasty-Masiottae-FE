@@ -2,11 +2,9 @@ import styled from '@emotion/styled'
 import Avatar from './Avatar'
 import { IoMdHeartEmpty } from 'react-icons/io'
 import { BiComment } from 'react-icons/bi'
-import Link from 'next/link'
 import { RefObject } from 'react'
 
 interface Props {
-  id: string
   title: string
   imageUrl: string
   avatarImageUrl: string
@@ -18,8 +16,7 @@ interface Props {
 
 const IMAGE_ALT = 'NO IMAGE'
 
-const PostCard = ({
-  id,
+const MenuCard = ({
   title,
   imageUrl,
   avatarImageUrl,
@@ -29,29 +26,29 @@ const PostCard = ({
   divRef
 }: Props) => {
   return (
-    <Link href={`/detail/${id}`}>
-      <CardContainer ref={divRef}>
-        <Title>{title}</Title>
-        <Image src={imageUrl} alt={IMAGE_ALT} />
-        <CardFooter>
-          <UserInfoWrapper>
-            <Avatar size={5} src={avatarImageUrl} isLoading={false} />
-            <Author>{author}</Author>
-          </UserInfoWrapper>
-          <PostInfoWrapper>
-            <IoMdHeartEmpty size={20} />
-            <Text>{likes}</Text>
-            <BiComment size={20} />
-            <Text>{comments}</Text>
-          </PostInfoWrapper>
-        </CardFooter>
-      </CardContainer>
-    </Link>
+    <CardContainer ref={divRef}>
+      <Title>{title}</Title>
+      <Image src={imageUrl} alt={IMAGE_ALT} />
+      <CardFooter>
+        <UserInfoWrapper>
+          <Avatar size={5} src={avatarImageUrl} isLoading={false} />
+          <Author>{author}</Author>
+        </UserInfoWrapper>
+        <PostInfoWrapper>
+          <IoMdHeartEmpty size={20} />
+          <Text>{likes}</Text>
+          <BiComment size={20} />
+          <Text>{comments}</Text>
+        </PostInfoWrapper>
+      </CardFooter>
+    </CardContainer>
   )
 }
 
 const CardContainer = styled.div`
   width: 100%;
+  border-radius: 1rem;
+  box-shadow: 0 0.25rem 0.75rem rgba(55, 31, 31, 0.2);
   cursor: pointer;
 `
 
@@ -60,6 +57,7 @@ const Title = styled.div`
   font-size: 2rem;
   text-align: center;
   box-sizing: border-box;
+  user-select: none;
 `
 
 const Image = styled.img`
@@ -82,6 +80,7 @@ const UserInfoWrapper = styled.div`
 const Author = styled.div`
   font-size: 1.6rem;
   font-weight: bold;
+  user-select: none;
 `
 
 const PostInfoWrapper = styled.div`
@@ -94,6 +93,7 @@ const PostInfoWrapper = styled.div`
 
 const Text = styled.div`
   font-size: 2rem;
+  user-select: none;
 `
 
-export default PostCard
+export default MenuCard
