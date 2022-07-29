@@ -17,15 +17,6 @@ const theme = {
     headerHeight: '7.5rem',
     navHeight: '7.5rem',
     pagePadding: '2rem'
-  },
-  taste: {
-    차가운: '#00B5E3',
-    뜨거운: '#FF3333',
-    달콤한: '#CC0099',
-    매콤한: '#df2020',
-    새콤한: '#FFDD33',
-    쌉쌀한: '#339966',
-    짭짤한: '#FF5533'
   }
 }
 

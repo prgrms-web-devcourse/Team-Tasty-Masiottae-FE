@@ -1,20 +1,49 @@
+import Modal from '@components/Modal'
 import styled from '@emotion/styled'
 import React, { useState } from 'react'
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai'
-import { BiDotsHorizontalRounded } from 'react-icons/bi'
+import { BiDotsHorizontalRounded, BiTrash } from 'react-icons/bi'
 
 const GUEST_INPUT_PLACEHOLDER = '로그인한 회원만 댓글을 달 수 있습니다.'
 const LOGGEDIN_INPUT_PLACEHOLDER = '댓글을 입력해주세요.'
 
 const Detail = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+
+  const handleEditMenuClick = (e: React.MouseEvent<SVGElement, MouseEvent>) => {
+    setIsModalOpen(true)
+  }
+
+  const handleEditMenuClose = () => {
+    setIsModalOpen(false)
+  }
+
+  const handleDeleteCommentClick = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => {
+    setIsDeleteModalOpen(true)
+  }
+
+  const handleDeleteCommentClose = () => {
+    setIsDeleteModalOpen(false)
+  }
 
   return (
     <>
       <PostContainer>
         <Header>
           <Title>슈렉 프라푸치노</Title>
-          <Dots size={30} />
+          <Dots size={30} onClick={handleEditMenuClick} />
+          <Modal
+            visible={isModalOpen}
+            onClose={handleEditMenuClose}
+            option="drawer"
+          >
+            <ModalItem>수정</ModalItem>
+            <ModalItem>삭제</ModalItem>
+          </Modal>
         </Header>
 
         <ImageWrapper>
@@ -66,11 +95,35 @@ const Detail = () => {
 
         <UserWrapper>
           <AAAAAAAAAAvatar />
-          <Comment>너무 달아서 별로임</Comment>
+          <Comment>
+            <span>너무 달아서 별로임</span>
+            <ButtonWrapper onClick={handleDeleteCommentClick}>
+              <DeleteButton size={20} />
+              <Modal
+                visible={isDeleteModalOpen}
+                onClose={handleDeleteCommentClose}
+                option="drawer"
+              >
+                <ModalItem>삭제</ModalItem>
+              </Modal>
+            </ButtonWrapper>
+          </Comment>
         </UserWrapper>
         <UserWrapper>
           <AAAAAAAAAAvatar />
-          <Comment>너무 달아서 별로임</Comment>
+          <Comment>
+            <span>
+              너무 달아서 별로임너무 달아서 별로임너무 달아서 별로임너무 달아서
+              별로임너무 달아서 별로임너무 달아서 별로임너무 달아서 별로임너무
+              height: 3rem; height: 3rem; height: 3rem; height: 3rem; height:
+              3rem; height: 3rem; height: 3rem; height: 3rem; 달아서 별로임너무
+              달아서 별로임너무 달아서 별로임
+            </span>
+
+            <ButtonWrapper>
+              <DeleteButton size={20} />
+            </ButtonWrapper>
+          </Comment>
         </UserWrapper>
         <UserWrapper>
           <AAAAAAAAAAvatar />
@@ -112,9 +165,20 @@ const Dots = styled(BiDotsHorizontalRounded)`
   cursor: pointer;
 `
 
-const ImageWrapper = styled(Flex)`
+const ModalItem = styled(Flex)`
+  font-size: 2rem;
   justify-content: center;
   width: 100vw;
+  max-width: 50rem;
+  cursor: pointer;
+
+  &:not(:first-of-type) {
+    margin-top: 1rem;
+  }
+`
+
+const ImageWrapper = styled(Flex)`
+  justify-content: center;
   max-width: 50rem;
   height: 100vw;
   max-height: 50rem;
@@ -154,7 +218,9 @@ const UserWrapper = styled(Flex)`
 
 const UserNameText = styled.div``
 
-const LikeWrapper = styled(Flex)``
+const LikeWrapper = styled(Flex)`
+  align-items: center;
+`
 
 const Heart = styled(AiFillHeart)`
   color: red;
@@ -224,12 +290,20 @@ const CommnetCountText = styled.div`
 `
 
 const Comment = styled(Flex)`
+  justify-content: space-between;
   align-items: center;
   width: 100%;
-  height: 3rem;
   border-radius: 0.5rem;
-  padding-left: 1rem;
+  padding: 1rem;
   background-color: rgba(0, 0, 0, 0.03);
 `
+
+const ButtonWrapper = styled.div`
+  justify-self: flex-end;
+  margin-left: 0.5rem;
+  cursor: pointer;
+`
+
+const DeleteButton = styled(BiTrash)``
 
 export default Detail
