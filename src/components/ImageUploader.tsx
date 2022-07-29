@@ -39,7 +39,7 @@ const ImageUploader = ({
         shape={shape}
         image={image}
       >
-        <StyledPlus loaded={image ? +true : +false} />
+        <StyledPlus selected={image ? true : false} />
       </ImageBox>
       <FileInput
         id={FILE_INPUT_NAME}
@@ -74,10 +74,10 @@ const ImageBox = styled.label<{
   }
 `
 
-const StyledPlus = styled(BsPlusLg)<{ loaded: number }>`
+const StyledPlus = styled(BsPlusLg)<{ selected: boolean }>`
   width: 10rem;
   height: 10rem;
-  visibility: ${({ loaded }) => (loaded ? 'hidden' : 'visible')};
+  visibility: ${({ selected }) => (selected ? 'hidden' : 'visible')};
 `
 
 const FileInput = styled.input`
