@@ -35,7 +35,6 @@ const UserProfile = () => {
 
   return (
     <UserProfileWrapper>
-      {' '}
       <UserImage onClick={() => setIsProfileModalOpen(true)} />
       {isNameEditorOpen ? (
         //TODO신영: 컴포넌트 Input+button 분리
@@ -51,7 +50,7 @@ const UserProfile = () => {
           <Text>계란이 좋아</Text>
           <EditNameIcon onClick={() => setIsNameEditorOpen(true)} />
         </NickName>
-      )}{' '}
+      )}
       {isProfileModalOpen && (
         <ChangeProfileModal
           onFileChange={onFileChange}

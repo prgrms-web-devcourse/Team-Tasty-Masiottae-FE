@@ -15,7 +15,7 @@ const UserData = () => {
           <Title>게시물 수</Title>
           <Text>200</Text>
         </UserDetail>
-      </UserDetailWrapper>{' '}
+      </UserDetailWrapper>
     </UserDataContainer>
   )
 }
