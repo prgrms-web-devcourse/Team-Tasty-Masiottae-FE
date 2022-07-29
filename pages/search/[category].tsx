@@ -25,28 +25,33 @@ const Search = () => {
 
   return (
     <Container>
-      <SearchWrapper>
-        <SearchInput
-          height={5}
-          type="text"
-          placeholder={`${category} 메뉴 검색`}
-        />
-        <SearchIcon />
-      </SearchWrapper>
-      <CategoryHeader>{category}</CategoryHeader>
-      <OptionContainer>
-        <FilterWrapper>
-          <FilterIcon />
-          <Text>필터</Text>
-        </FilterWrapper>
-        <select>
-          {SORT_OPTIONS.map((value) => (
-            <option key={value} value={value}>
-              {value}
-            </option>
-          ))}
-        </select>
-      </OptionContainer>
+      <FixedWrapper>
+        <InnerWrapper>
+          <SearchWrapper>
+            <SearchInput
+              height={5}
+              type="text"
+              placeholder={`${category} 메뉴 검색`}
+            />
+            <SearchIcon />
+          </SearchWrapper>
+          <CategoryHeader>{category}</CategoryHeader>
+          <OptionContainer>
+            <FilterWrapper>
+              <FilterIcon />
+              <Text>필터</Text>
+            </FilterWrapper>
+            <select>
+              {SORT_OPTIONS.map((value) => (
+                <option key={value} value={value}>
+                  {value}
+                </option>
+              ))}
+            </select>
+          </OptionContainer>
+        </InnerWrapper>
+      </FixedWrapper>
+
       <CardListWrapper>
         {cards.map((cardData, idx) => {
           return (
@@ -76,14 +81,37 @@ const Search = () => {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 1rem;
   gap: 1rem;
   height: 100%;
+`
+
+const FixedWrapper = styled.div`
+  position: fixed;
+  left: 0;
+  width: 100%;
+`
+
+const InnerWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-width: 33.5rem;
+  max-width: 46rem;
+  width: 100%;
+  background-color: white;
+  margin: 0 auto;
+  padding-bottom: 1rem;
+  box-sizing: border-box;
+
+  @media screen and (max-width: 31.25rem) {
+    padding: 0 2rem;
+  }
 `
 
 const SearchWrapper = styled.div`
   display: flex;
   align-items: center;
+  margin-top: 1rem;
 `
 const SearchInput = styled(Input)`
   width: 100%;
@@ -113,15 +141,10 @@ const FilterIcon = styled(BsFilterLeft)`
 `
 
 const CardListWrapper = styled.ul`
+  padding-top: 22rem;
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  overflow: scroll;
   row-gap: 1rem;
-
-  ::-webkit-scrollbar {
-    display: none;
-  }
 `
 
 const MenuCardWrapper = styled.li``
