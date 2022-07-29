@@ -16,12 +16,12 @@ const Category = () => {
     <>
       <Header>카테고리</Header>
       <BoxContainer>
-        {CATEGORY_LIST.map((val) => (
-          <BoxWrapper key={val}>
-            <Link href={`/search/${val}`}>
+        {CATEGORY_LIST.map((category) => (
+          <BoxWrapper key={category}>
+            <Link href={`/search/${category}`}>
               <a>
                 <CategoryBox imageUrl="https://picsum.photos/seed/picsum/120/120">
-                  {val}
+                  {category}
                 </CategoryBox>
               </a>
             </Link>
