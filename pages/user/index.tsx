@@ -11,6 +11,7 @@ import { FiSearch } from 'react-icons/fi'
 const SORT_OPTIONS = ['최신순', '좋아요순', '댓글순']
 const SELECT_DUMMY = ['작성한 메뉴', '좋아요한 메뉴']
 const SIZE_100_IMG_URL = 'https://via.placeholder.com/100'
+
 interface TabProps {
   selected: boolean
   value: string

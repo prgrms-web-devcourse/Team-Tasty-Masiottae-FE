@@ -20,7 +20,6 @@ const Home: NextPage = () => {
       {cards.map((cardData, idx) => {
         return (
           <MenuCard
-            id={cardData.id}
             key={idx}
             title={cardData.title}
             imageUrl={cardData.imageUrl}
@@ -39,13 +38,7 @@ const Home: NextPage = () => {
 const CardListWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  overflow: scroll;
   row-gap: 1rem;
-
-  ::-webkit-scrollbar {
-    display: none;
-  }
 `
 
 export default Home
