@@ -1,19 +1,18 @@
 import { useState } from 'react'
 import styled from '@emotion/styled'
 import Input from '@components/Input'
-import Tag from '@components/Tag'
-import { Option } from '@customTypes/index'
-import {
-  dummyFranchiseList,
-  dummyTasteList,
-  dummyMenu
-} from '@constants/dummyMenu'
+
 const NAME_SELECT = 'brand'
 const NAME_TITLE = 'title'
 const NAME_ORIGINAL_TITLE = 'original-title'
 const NAME_OPTION_NAME = 'option-name'
 const NAME_OPTION_DESCRIPTION = 'option-description'
 const NAME_EXPECTED_PRICE = 'price'
+
+import TagContainer from '@components/TagContainer'
+import ImageUploader from '@components/ImageUploader'
+import { ImageType, Option, Taste } from '@customTypes/index'
+import { dummyFranchiseList, dummyMenu } from '@constants/dummyMenu'
 
 const PLACEHOLDER_TITLE = '커스텀 메뉴의 제목을 지어주세요'
 const PLACEHOLDER_ORIGINAL_TITLE = '기본이 되는 메뉴의 제목을 적어주세요'
@@ -22,8 +21,14 @@ const PLACEHOLDER_OPTION_DESCRIPTION = '옵션 단위, 또는 설명'
 const PLACEHOLDER_EXPECTED_PRICE = '예상되는 최종 가격을 입력해주세요'
 
 const EditMenu = () => {
+  const [title, setTitle] = useState()
+  const [original, setOriginalTitle] = useState()
   const [options, setOptions] = useState<Option[]>(dummyMenu.options)
-  const selectedTags = dummyMenu.tastes
+
+  const tagList = dummyMenu.tastes
+  const handleImageChange = (image: ImageType) => {
+    console.log(image)
+  }
   const handleFranchiseChange = (e: React.FormEvent<HTMLSelectElement>) => {
     console.log(e.currentTarget.value)
   }
@@ -49,12 +54,13 @@ const EditMenu = () => {
       return newOptions
     })
   }
-  const handleClickTag = (clickedTagId: number) => {
-    selectedTags.map(({ id }) => id === clickedTagId)
+  const handleTagListChange = (tagIdList: number[]) => {
+    console.log(tagIdList)
   }
   return (
     <FlexContainer>
       <Title>메뉴 수정</Title>
+      <ImageUploader onChange={handleImageChange} />
       <InputWrapper>
         <Select name={NAME_SELECT} onChange={handleFranchiseChange}>
           {dummyFranchiseList.map((franchise) => (
@@ -82,7 +88,6 @@ const EditMenu = () => {
           onChange={handleOriginalTitleChange}
         />
         <OptionButton onClick={handleOptionAddBtnClick}>+ 옵션</OptionButton>
-
         {options.map((option, idx) => (
           <Flex key={idx}>
             <OptionName
@@ -114,18 +119,10 @@ const EditMenu = () => {
         />
       </InputWrapper>
       <SubTitle>맛</SubTitle>
-      <TagContainer>
-        {dummyTasteList.map((taste) => (
-          <Tag
-            key={taste.id}
-            id={taste.id}
-            name={taste.name}
-            color={taste.color}
-            height={3.2}
-            onClick={handleClickTag}
-          ></Tag>
-        ))}
-      </TagContainer>
+      <TagContainer
+        selectedTasteIdList={tagList.map((tag) => tag.id)}
+        onChange={handleTagListChange}
+      />
       <button>메뉴 수정</button>
     </FlexContainer>
   )
@@ -150,33 +147,6 @@ const InputWrapper = styled.div`
 const Title = styled.h1`
   font-size: 4rem;
   align-self: start;
-`
-
-const ImageBox = styled.label`
-  width: 30rem;
-  height: 30rem;
-  background-color: #d9d9d9;
-  &:hover {
-    cursor: pointer;
-  }
-`
-
-const FileInput = styled.input`
-  visibility: hidden;
-`
-
-const TagContainer = styled.div`
-  width: 80%;
-  height: 10rem;
-  display: flex;
-  flex-wrap: wrap;
-  padding: 0 0.5rem;
-  background-color: #d9d9d9;
-  overflow-y: scroll;
-  gap: 0.5rem;
-  ::-webkit-scrollbar {
-    display: none;
-  }
 `
 
 const Select = styled.select`
