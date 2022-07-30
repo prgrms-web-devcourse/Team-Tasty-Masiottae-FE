@@ -24,6 +24,7 @@ const Home: NextPage = () => {
             <Link href={`/detail/${cardData.id}`}>
               <a>
                 <MenuCard
+                  id="1234"
                   key={idx}
                   title={cardData.title}
                   imageUrl={cardData.imageUrl}
