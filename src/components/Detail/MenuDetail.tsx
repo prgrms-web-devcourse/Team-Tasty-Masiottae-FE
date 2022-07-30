@@ -1,6 +1,6 @@
 import Modal from '@components/Modal'
 import styled from '@emotion/styled'
-import React, { useState } from 'react'
+import React, { Fragment, useState } from 'react'
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai'
 import { BiDotsHorizontalRounded } from 'react-icons/bi'
 import menuDummy from './menuDummy.json'
@@ -53,11 +53,11 @@ const MenuDetail = () => {
           <span>{menu.originalTitle}</span>
         </div>
         {menu.options.map((option) => (
-          <>
+          <Fragment key={option.name}>
             <OptionText>
               + {option.name} {option.description}
             </OptionText>
-          </>
+          </Fragment>
         ))}
         <PriceText>예상 가격: {menu.expectedPrice} 원</PriceText>
       </OptionsWrapper>

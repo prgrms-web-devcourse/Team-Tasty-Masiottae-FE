@@ -3,9 +3,13 @@ import styled from '@emotion/styled'
 import React, { Fragment, useState } from 'react'
 import { BiTrash } from 'react-icons/bi'
 import commentListDummy from './commentsDummy.json'
+import userDummy from './userDummy.json'
 
 const CommentList = () => {
+  const [user, setUser] = useState(userDummy)
   const [commentList, setCommentList] = useState(commentListDummy)
+  console.log(user)
+  console.log(commentList)
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
 
   const handleDeleteCommentClick = (
@@ -23,22 +27,29 @@ const CommentList = () => {
       <CommnetCountText>댓글 {commentList.length} 개</CommnetCountText>
       {commentList.map((comment) => (
         <Fragment key={comment.id}>
-          <UserWrapper>
+          <CommentWrapper>
             <Avatar src={comment.author.profileImageUrl} />
-            <Comment>
-              <span>{comment.comment}</span>
-              <ButtonWrapper onClick={handleDeleteCommentClick}>
-                <DeleteButton size={20} />
-                <Modal
-                  visible={isDeleteModalOpen}
-                  onClose={handleDeleteCommentClose}
-                  option="drawer"
-                >
-                  <ModalItem>삭제</ModalItem>
-                </Modal>
-              </ButtonWrapper>
-            </Comment>
-          </UserWrapper>
+            <div>
+              <div>{comment.author.name}</div>
+              <Comment>
+                <CommentText>{comment.comment}</CommentText>
+                <ButtonWrapper onClick={handleDeleteCommentClick}>
+                  {user.id === comment.author.id && (
+                    <>
+                      <DeleteButton size={20} />
+                      <Modal
+                        visible={isDeleteModalOpen}
+                        onClose={handleDeleteCommentClose}
+                        option="drawer"
+                      >
+                        <ModalItem>삭제</ModalItem>
+                      </Modal>
+                    </>
+                  )}
+                </ButtonWrapper>
+              </Comment>
+            </div>
+          </CommentWrapper>
         </Fragment>
       ))}
     </CommentListContainer>
@@ -62,7 +73,7 @@ const Avatar = styled.img`
   margin-right: 1rem;
 `
 
-const UserWrapper = styled(Flex)`
+const CommentWrapper = styled(Flex)`
   align-items: center;
   margin-bottom: 1rem;
 `
@@ -71,10 +82,15 @@ const Comment = styled(Flex)`
   font-size: 1.4rem;
   justify-content: space-between;
   align-items: center;
+  min-width: 100%;
   width: 100%;
   border-radius: 0.5rem;
   padding: 1rem;
   background-color: rgba(0, 0, 0, 0.03);
+`
+
+const CommentText = styled.span`
+  padding-right: 2rem;
 `
 
 const ButtonWrapper = styled.div`
