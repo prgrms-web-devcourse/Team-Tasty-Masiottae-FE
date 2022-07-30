@@ -101,8 +101,7 @@ const CreateMenu = () => {
       </InputWrapper>
       <SubTitle>맛</SubTitle>
       <TagContainer
-        gap={0.8}
-        selectedTasteList={tagList}
+        selectedTasteIdList={tagList.map((tag) => tag.id)}
         onChange={handleTagListChange}
       ></TagContainer>
       <button>메뉴 수정</button>

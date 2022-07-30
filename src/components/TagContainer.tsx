@@ -4,7 +4,7 @@ import Tag from './Tag'
 import { dummyTasteList as tasteList } from '@constants/dummyMenu'
 import { useState } from 'react'
 interface Props {
-  selectedTasteList: Taste[]
+  selectedTasteIdList: number[]
   onChange: (selectedTagList: number[]) => void
   width?: number
   height?: number
@@ -13,7 +13,7 @@ interface Props {
   backgroundColor?: string
 }
 const TagContainer = ({
-  selectedTasteList,
+  selectedTasteIdList,
   onChange,
   width,
   height = 20,
@@ -21,9 +21,7 @@ const TagContainer = ({
   tagHeight = 3.2,
   backgroundColor = '#d9d9d9'
 }: Props) => {
-  const [tagIdList, setTagIdList] = useState(
-    selectedTasteList.map((taste) => taste.id)
-  )
+  const [tagIdList, setTagIdList] = useState(selectedTasteIdList)
   const handleClickTag = (clickedTagId: number) => {
     setTagIdList((tagIdList) => {
       let newTagList = tagIdList
@@ -52,11 +50,7 @@ const TagContainer = ({
           color={taste.color}
           height={tagHeight}
           onClick={handleClickTag}
-          isClicked={
-            selectedTasteList.find((selected) => selected.id === taste.id)
-              ? true
-              : false
-          }
+          isClicked={selectedTasteIdList.includes(taste.id) ? true : false}
         ></Tag>
       ))}
     </Container>
