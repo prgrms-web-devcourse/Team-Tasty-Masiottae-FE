@@ -25,9 +25,7 @@ const LoginPage = () => {
   const [errors, setErrors] = useState<Errors>({})
   const [isTypePassword, setIsTypePassword] = useState(false)
 
-  const handleLoginSubmit = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
+  const handleLoginSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault()
     const LoginIsValid = password && email && emailIsValid && passwordIsValid
     if (LoginIsValid) {
