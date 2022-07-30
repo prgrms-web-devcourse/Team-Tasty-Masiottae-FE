@@ -103,7 +103,7 @@ const CreateMenu = () => {
       <TagContainer
         selectedTasteIdList={tagList.map((tag) => tag.id)}
         onChange={handleTagListChange}
-      ></TagContainer>
+      />
       <button>메뉴 수정</button>
     </FlexContainer>
   )
