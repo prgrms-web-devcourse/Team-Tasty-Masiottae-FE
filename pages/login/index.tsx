@@ -25,7 +25,9 @@ const LoginPage = () => {
   const [errors, setErrors] = useState<Errors>({})
   const [isTypePassword, setIsTypePassword] = useState(false)
 
-  const handleLoginSubmit = async (e: React.MouseEvent<HTMLElement>) => {
+  const handleLoginSubmit = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     e.preventDefault()
     const LoginIsValid = password && email && emailIsValid && passwordIsValid
     if (LoginIsValid) {
@@ -111,7 +113,7 @@ const LoginForm = styled.form`
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  margin: 2rem 0 0 0;
+  margin-top: 2rem;
   padding-bottom: 9rem;
 `
 
