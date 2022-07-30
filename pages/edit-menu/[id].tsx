@@ -8,22 +8,35 @@ import {
   dummyTasteList,
   dummyMenu
 } from '@constants/dummyMenu'
+const NAME_SELECT = 'brand'
+const NAME_TITLE = 'title'
+const NAME_ORIGINAL_TITLE = 'original-title'
+const NAME_OPTION_NAME = 'option-name'
+const NAME_OPTION_DESCRIPTION = 'option-description'
+const NAME_EXPECTED_PRICE = 'price'
 
-const TITLE_NAME = 'title'
-const ORIGINAL_TITLE_NAME = 'original-title'
-const OPTION_NAME_NAME = 'option-name'
-const OPTION_DESCRIPTION_NAME = 'option-description'
-const EXPECTED_PRICE_NAME = 'price'
+const PLACEHOLDER_TITLE = '커스텀 메뉴의 제목을 지어주세요'
+const PLACEHOLDER_ORIGINAL_TITLE = '기본이 되는 메뉴의 제목을 적어주세요'
+const PLACEHOLDER_OPTION_NAME = '옵션 명'
+const PLACEHOLDER_OPTION_DESCRIPTION = '옵션 단위, 또는 설명'
+const PLACEHOLDER_EXPECTED_PRICE = '예상되는 최종 가격을 입력해주세요'
 
-const TITLE_PLACEHOLDER = '커스텀 메뉴의 제목을 지어주세요'
-const ORIGINAL_TITLE_PLACEHOLDER = '기본이 되는 메뉴의 제목을 적어주세요'
-const OPTION_NAME_PLACEHOLDER = '옵션 명'
-const OPTION_DESCRIPTION_PLACEHOLDER = '옵션 단위, 또는 설명'
-const EXPECTED_PRICE_PLACEHOLDER = '예상되는 최종 가격을 입력해주세요'
-
-const CreateMenu = () => {
+const EditMenu = () => {
   const [options, setOptions] = useState<Option[]>(dummyMenu.options)
   const selectedTags = dummyMenu.tastes
+  const handleFranchiseChange = (e: React.FormEvent<HTMLSelectElement>) => {
+    console.log(e.currentTarget.value)
+  }
+  const handleTitleChange = (e: React.FormEvent<HTMLInputElement>) => {
+    const title = e.currentTarget.value
+    console.log(title)
+  }
+
+  const handleOriginalTitleChange = (e: React.FormEvent<HTMLInputElement>) => {
+    const originalTitle = e.currentTarget.value
+    console.log(originalTitle)
+  }
+
   const handleOptionAddBtnClick = () => {
     setOptions((options) => {
       const newOptions = [...options, { name: '', description: '' }]
@@ -42,10 +55,8 @@ const CreateMenu = () => {
   return (
     <FlexContainer>
       <Title>메뉴 수정</Title>
-      <ImageBox htmlFor="image-input"></ImageBox>
-      <FileInput id="image-input" type="file"></FileInput>
       <InputWrapper>
-        <Select name="brand">
+        <Select name={NAME_SELECT} onChange={handleFranchiseChange}>
           {dummyFranchiseList.map((franchise) => (
             <option key={franchise.id} value={franchise.name}>
               {franchise.name}
@@ -55,18 +66,20 @@ const CreateMenu = () => {
         <TitleInput
           height={2.4}
           type="text"
-          name={TITLE_NAME}
+          name={NAME_TITLE}
           value={dummyMenu.title}
           required={true}
-          placeholder={TITLE_PLACEHOLDER}
+          placeholder={PLACEHOLDER_TITLE}
+          onChange={handleTitleChange}
         />
         <TitleInput
           height={2.4}
           type="text"
-          name={ORIGINAL_TITLE_NAME}
+          name={NAME_ORIGINAL_TITLE}
           value={dummyMenu.originalTitle}
           required={true}
-          placeholder={ORIGINAL_TITLE_PLACEHOLDER}
+          placeholder={PLACEHOLDER_ORIGINAL_TITLE}
+          onChange={handleOriginalTitleChange}
         />
         <OptionButton onClick={handleOptionAddBtnClick}>+ 옵션</OptionButton>
 
@@ -75,16 +88,16 @@ const CreateMenu = () => {
             <OptionName
               height={2.4}
               type="text"
-              name={OPTION_NAME_NAME}
+              name={NAME_OPTION_NAME}
               value={option.name}
-              placeholder={OPTION_NAME_PLACEHOLDER}
+              placeholder={PLACEHOLDER_OPTION_NAME}
             />
             <OptionDescription
               height={2.4}
               type="text"
-              name={OPTION_DESCRIPTION_NAME}
+              name={NAME_OPTION_DESCRIPTION}
               value={option.description}
-              placeholder={OPTION_DESCRIPTION_PLACEHOLDER}
+              placeholder={PLACEHOLDER_OPTION_DESCRIPTION}
             />
             <OptionDeleteButton onClick={() => handleOptionDelBtnClick(idx)}>
               삭제
@@ -95,9 +108,9 @@ const CreateMenu = () => {
           width={20}
           height={2.4}
           type="text"
-          name={EXPECTED_PRICE_NAME}
+          name={NAME_EXPECTED_PRICE}
           value={dummyMenu.expectedPrice.toString()}
-          placeholder={EXPECTED_PRICE_PLACEHOLDER}
+          placeholder={PLACEHOLDER_EXPECTED_PRICE}
         />
       </InputWrapper>
       <SubTitle>맛</SubTitle>
@@ -201,4 +214,4 @@ const SubTitle = styled.h3`
   align-self: start;
 `
 
-export default CreateMenu
+export default EditMenu
