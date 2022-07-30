@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 import Input from '@components/Input'
 import TagContainer from '@components/TagContainer'
 import ImageUploader from '@components/ImageUploader'
-import { ImageType, Option } from '@customTypes/index'
+import { ImageType, Option, Taste } from '@customTypes/index'
 import { dummyFranchiseList, dummyMenu } from '@constants/dummyMenu'
 
 const TITLE_NAME = 'title'
@@ -20,6 +20,8 @@ const EXPECTED_PRICE_PLACEHOLDER = '예상되는 최종 가격을 입력해주�
 
 const CreateMenu = () => {
   const [options, setOptions] = useState<Option[]>(dummyMenu.options)
+  const [tagList, setTagList] = useState<Taste[]>(dummyMenu.tastes)
+
   const handleImageChange = (image: ImageType) => {
     console.log(image)
   }
@@ -34,6 +36,9 @@ const CreateMenu = () => {
       const newOptions = options.filter((_, idx) => deletedIdx !== idx)
       return newOptions
     })
+  }
+  const handleTagListChange = (tagIdList: number[]) => {
+    console.log(tagIdList)
   }
   return (
     <FlexContainer>
@@ -64,7 +69,6 @@ const CreateMenu = () => {
           placeholder={ORIGINAL_TITLE_PLACEHOLDER}
         />
         <OptionButton onClick={handleOptionAddBtnClick}>+ 옵션</OptionButton>
-
         {options.map((option, idx) => (
           <Flex key={idx}>
             <OptionName
@@ -96,8 +100,12 @@ const CreateMenu = () => {
         />
       </InputWrapper>
       <SubTitle>맛</SubTitle>
+      <TagContainer
+        gap={0.8}
+        selectedTasteList={tagList}
+        onChange={handleTagListChange}
+      ></TagContainer>
       <button>메뉴 수정</button>
-      <TagContainer selectedTasteList={dummyMenu.tastes}></TagContainer>
     </FlexContainer>
   )
 }
