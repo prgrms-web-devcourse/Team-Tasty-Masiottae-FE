@@ -1,10 +1,9 @@
 import Avatar from '@components/Avatar'
 import Input from '@components/Input'
-import MenuCard from '@components/MenuCard'
+import MenuCardList from '@components/MenuCardList'
 import { Card, PostCardDummy } from '@constants/cardData'
 import styled from '@emotion/styled'
 import useIntersectionObserver from '@hooks/useIntersectionObserver'
-import Link from 'next/link'
 import { MouseEvent, useState } from 'react'
 import { BsFilterLeft } from 'react-icons/bs'
 import { FiSearch } from 'react-icons/fi'
@@ -47,7 +46,6 @@ const UserMenuPage = () => {
           <TabContainer>
             {SELECT_DUMMY.map((selectOption) => (
               <Tab
-                abc="abc"
                 key={selectOption}
                 selected={option === selectOption}
                 value={selectOption}
@@ -76,28 +74,9 @@ const UserMenuPage = () => {
           </OptionContainer>
         </InnerWrapper>
       </FixedWrapper>
-      <CardListWrapper>
-        {cards.map((cardData, idx) => {
-          return (
-            <MenuCardWrapper key={idx}>
-              <Link href={`/detail/${cardData.id}`}>
-                <a>
-                  <MenuCard
-                    key={idx}
-                    title={cardData.title}
-                    imageUrl={cardData.imageUrl}
-                    avatarImageUrl={cardData.avatarImageUrl}
-                    author={cardData.author}
-                    likes={cardData.likes}
-                    comments={cardData.comments}
-                    divRef={cards.length === idx + 1 ? ref : null}
-                  />
-                </a>
-              </Link>
-            </MenuCardWrapper>
-          )
-        })}
-      </CardListWrapper>
+      <CardListContainer>
+        <MenuCardList menuList={cards} divRef={ref} />
+      </CardListContainer>
     </>
   )
 }
@@ -187,14 +166,9 @@ const FilterIcon = styled(BsFilterLeft)`
   font-weight: bold;
 `
 
-const CardListWrapper = styled.ul`
+const CardListContainer = styled.ul`
   padding-top: 31.25rem;
-  display: flex;
-  flex-direction: column;
-  row-gap: 1rem;
 `
-
-const MenuCardWrapper = styled.li``
 
 const Text = styled.span`
   font-size: 2rem;
