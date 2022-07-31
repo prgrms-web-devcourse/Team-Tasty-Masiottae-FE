@@ -1,5 +1,5 @@
 import { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios'
-import { getLocalToken } from './useLocalToken'
+import { getLocalToken } from './localToken'
 
 export const onRequest = (config: AxiosRequestConfig): AxiosRequestConfig => {
   console.info(`[request] [${JSON.stringify(config)}]`)
