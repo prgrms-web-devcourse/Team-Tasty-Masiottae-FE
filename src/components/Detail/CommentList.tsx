@@ -29,8 +29,8 @@ const CommentList = () => {
         <Fragment key={comment.id}>
           <CommentWrapper>
             <Avatar src={comment.author.profileImageUrl} />
-            <div>
-              <div>{comment.author.name}</div>
+            <CommentContainer>
+              <UserNameText>{comment.author.name}</UserNameText>
               <Comment>
                 <CommentText>{comment.comment}</CommentText>
                 <ButtonWrapper onClick={handleDeleteCommentClick}>
@@ -48,7 +48,7 @@ const CommentList = () => {
                   )}
                 </ButtonWrapper>
               </Comment>
-            </div>
+            </CommentContainer>
           </CommentWrapper>
         </Fragment>
       ))}
@@ -67,30 +67,38 @@ const CommnetCountText = styled.div`
   margin-bottom: 2rem;
 `
 
+const CommentWrapper = styled(Flex)`
+  margin-bottom: 1rem;
+`
+
 const Avatar = styled.img`
   width: 3rem;
   height: 3rem;
   margin-right: 1rem;
 `
 
-const CommentWrapper = styled(Flex)`
-  align-items: center;
-  margin-bottom: 1rem;
+const CommentContainer = styled.div`
+  width: 100%;
+`
+
+const UserNameText = styled.div`
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
 `
 
 const Comment = styled(Flex)`
-  font-size: 1.4rem;
   justify-content: space-between;
-  align-items: center;
+  font-size: 1.4rem;
   min-width: 100%;
-  width: 100%;
   border-radius: 0.5rem;
   padding: 1rem;
   background-color: rgba(0, 0, 0, 0.03);
 `
 
-const CommentText = styled.span`
+const CommentText = styled.div`
   padding-right: 2rem;
+  width: 100%;
 `
 
 const ButtonWrapper = styled.div`
