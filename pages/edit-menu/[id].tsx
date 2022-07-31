@@ -1,6 +1,13 @@
 import { useState } from 'react'
 import styled from '@emotion/styled'
 import Input from '@components/Input'
+import TagContainer from '@components/TagContainer'
+import ImageUploader from '@components/ImageUploader'
+import Button from '@components/Button'
+import { ImageType, Option, Taste } from '@customTypes/index'
+
+import { dummyFranchiseList, dummyMenu } from '@constants/dummyMenu'
+import { KeyObject } from 'crypto'
 
 const NAME_SELECT = 'brand'
 const NAME_TITLE = 'title'
@@ -9,11 +16,6 @@ const NAME_OPTION_NAME = 'option-name'
 const NAME_OPTION_DESCRIPTION = 'option-description'
 const NAME_EXPECTED_PRICE = 'price'
 
-import TagContainer from '@components/TagContainer'
-import ImageUploader from '@components/ImageUploader'
-import { ImageType, Option, Taste } from '@customTypes/index'
-import { dummyFranchiseList, dummyMenu } from '@constants/dummyMenu'
-
 const PLACEHOLDER_TITLE = '커스텀 메뉴의 제목을 지어주세요'
 const PLACEHOLDER_ORIGINAL_TITLE = '기본이 되는 메뉴의 제목을 적어주세요'
 const PLACEHOLDER_OPTION_NAME = '옵션 명'
@@ -21,16 +23,22 @@ const PLACEHOLDER_OPTION_DESCRIPTION = '옵션 단위, 또는 설명'
 const PLACEHOLDER_EXPECTED_PRICE = '예상되는 최종 가격을 입력해주세요'
 
 const EditMenu = () => {
-  const [title, setTitle] = useState()
-  const [original, setOriginalTitle] = useState()
-  const [options, setOptions] = useState<Option[]>(dummyMenu.options)
+  const [image, setImage] = useState<ImageType>(dummyMenu.image)
+  const [franchiseId, setFranchiseId] = useState(dummyMenu.franchise.id)
+  const [title, setTitle] = useState(dummyMenu.title)
+  const [originalTitle, setOriginalTitle] = useState(dummyMenu.originalTitle)
+  const [optionList, setOptionList] = useState<Option[]>(dummyMenu.options)
+  const [tasteIdList, setTasteIdList] = useState<number[]>(
+    dummyMenu.tastes.map((taste) => taste.id)
+  )
 
   const tagList = dummyMenu.tastes
   const handleImageChange = (image: ImageType) => {
     console.log(image)
+    setImage(image)
   }
   const handleFranchiseChange = (e: React.FormEvent<HTMLSelectElement>) => {
-    console.log(e.currentTarget.value)
+    setFranchiseId(Number(e.currentTarget.value))
   }
   const handleTitleChange = (e: React.FormEvent<HTMLInputElement>) => {
     const title = e.currentTarget.value
@@ -39,23 +47,60 @@ const EditMenu = () => {
 
   const handleOriginalTitleChange = (e: React.FormEvent<HTMLInputElement>) => {
     const originalTitle = e.currentTarget.value
-    console.log(originalTitle)
+    setOriginalTitle(originalTitle)
   }
 
   const handleOptionAddBtnClick = () => {
-    setOptions((options) => {
-      const newOptions = [...options, { name: '', description: '' }]
+    setOptionList((optionList) => {
+      const newOptions = [...optionList, { name: '', description: '' }]
       return newOptions
     })
   }
   const handleOptionDelBtnClick = (deletedIdx: number) => {
-    setOptions((options) => {
-      const newOptions = options.filter((_, idx) => deletedIdx !== idx)
+    setOptionList((optionList) => {
+      const newOptions = optionList.filter((_, idx) => deletedIdx !== idx)
       return newOptions
     })
   }
+  const handleOptionNameChange = (
+    e: React.FormEvent<HTMLInputElement>,
+    idx: number
+  ) => {
+    const newOptionName = e.currentTarget.value
+    setOptionList((optionList) => {
+      optionList[idx].name = newOptionName
+      return optionList
+    })
+  }
+  const handleOptionDescriptionChange = (
+    e: React.FormEvent<HTMLInputElement>,
+    idx: number
+  ) => {
+    const newOptionDescription = e.currentTarget.value
+    setOptionList((optionList) => {
+      optionList[idx].description = newOptionDescription
+      return optionList
+    })
+  }
+
   const handleTagListChange = (tagIdList: number[]) => {
     console.log(tagIdList)
+    setTasteIdList(tagIdList)
+  }
+  const handleEditSubmit = (e: React.FormEvent<HTMLButtonElement>) => {
+    // form data 전송
+    const formData = new FormData()
+    formData.append('userId', '1')
+    formData.append('image', image)
+    formData.append('franchiseId', `${franchiseId}`)
+    formData.append('title', title)
+    formData.append('content', '')
+    formData.append('originalTitle', originalTitle)
+    formData.append('optionList', JSON.stringify(optionList))
+    formData.append('tasteList', JSON.stringify(tasteIdList))
+    for (const [key, value] of formData) {
+      console.log(key, ': ', value)
+    }
   }
   return (
     <FlexContainer>
@@ -64,7 +109,7 @@ const EditMenu = () => {
       <InputWrapper>
         <Select name={NAME_SELECT} onChange={handleFranchiseChange}>
           {dummyFranchiseList.map((franchise) => (
-            <option key={franchise.id} value={franchise.name}>
+            <option key={franchise.id} value={franchise.id}>
               {franchise.name}
             </option>
           ))}
@@ -87,8 +132,10 @@ const EditMenu = () => {
           placeholder={PLACEHOLDER_ORIGINAL_TITLE}
           onChange={handleOriginalTitleChange}
         />
-        <OptionButton onClick={handleOptionAddBtnClick}>+ 옵션</OptionButton>
-        {options.map((option, idx) => (
+        <Button width={10} height={4} onClick={handleOptionAddBtnClick}>
+          + 옵션
+        </Button>
+        {optionList.map((option, idx) => (
           <Flex key={idx}>
             <OptionName
               height={2.4}
@@ -96,6 +143,9 @@ const EditMenu = () => {
               name={NAME_OPTION_NAME}
               value={option.name}
               placeholder={PLACEHOLDER_OPTION_NAME}
+              onChange={(e) => {
+                handleOptionNameChange(e, idx)
+              }}
             />
             <OptionDescription
               height={2.4}
@@ -103,10 +153,17 @@ const EditMenu = () => {
               name={NAME_OPTION_DESCRIPTION}
               value={option.description}
               placeholder={PLACEHOLDER_OPTION_DESCRIPTION}
+              onChange={(e) => {
+                handleOptionDescriptionChange(e, idx)
+              }}
             />
-            <OptionDeleteButton onClick={() => handleOptionDelBtnClick(idx)}>
+            <Button
+              width={8}
+              height={4}
+              onClick={() => handleOptionDelBtnClick(idx)}
+            >
               삭제
-            </OptionDeleteButton>
+            </Button>
           </Flex>
         ))}
         <PriceInput
@@ -123,7 +180,7 @@ const EditMenu = () => {
         selectedTasteIdList={tagList.map((tag) => tag.id)}
         onChange={handleTagListChange}
       />
-      <button>메뉴 수정</button>
+      <Button onClick={handleEditSubmit}>메뉴 수정</Button>
     </FlexContainer>
   )
 }
@@ -158,20 +215,11 @@ const TitleInput = styled(Input)`
   width: 100%;
 `
 
-const OptionButton = styled.button`
-  width: 8rem;
-  height: 2.8rem;
-`
-
 const OptionName = styled(Input)`
   width: 30%;
 `
 const OptionDescription = styled(Input)`
   width: 60%;
-`
-
-const OptionDeleteButton = styled.button`
-  width: 10%;
 `
 
 const PriceInput = styled(Input)`

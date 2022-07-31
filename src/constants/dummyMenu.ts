@@ -17,8 +17,8 @@ export const dummyTasteList = [
 ]
 
 export const dummyMenu = {
-  id: '1',
-  franchise: { id: 'franchise1', name: '스타벅스' },
+  id: 1,
+  franchise: { id: 0, name: '스타벅스' },
   image: '',
   title: '슈렉 프라푸치노',
   originalTitle: '제주 유기농 말차로 만든 크림 프라푸치노',
