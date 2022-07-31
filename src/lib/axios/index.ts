@@ -1,9 +1,9 @@
 import axios from 'axios'
 import {
-  onRequest,
-  onRequestError,
-  onResponse,
-  onResponseError
+  handleRequest,
+  handleRequestError,
+  handleResponse,
+  handleResponseError
 } from './interceptors'
 
 const axiosInstance = axios.create({
@@ -11,8 +11,7 @@ const axiosInstance = axios.create({
   baseURL: process.env.REACT_APP_API_URL
 })
 
-axiosInstance.interceptors.request.use(onRequest, onRequestError)
-
-axiosInstance.interceptors.response.use(onResponse, onResponseError)
+axiosInstance.interceptors.request.use(handleRequest, handleRequestError)
+axiosInstance.interceptors.response.use(handleResponse, handleResponseError)
 
 export default axiosInstance

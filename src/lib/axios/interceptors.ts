@@ -1,7 +1,9 @@
 import { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios'
 import { getLocalToken } from './localToken'
 
-export const onRequest = (config: AxiosRequestConfig): AxiosRequestConfig => {
+export const handleRequest = (
+  config: AxiosRequestConfig
+): AxiosRequestConfig => {
   console.info(`[request] [${JSON.stringify(config)}]`)
   const token = getLocalToken()
   if (!config?.headers) {
@@ -13,17 +15,17 @@ export const onRequest = (config: AxiosRequestConfig): AxiosRequestConfig => {
   return config
 }
 
-export const onRequestError = (error: AxiosError): Promise<AxiosError> => {
+export const handleRequestError = (error: AxiosError): Promise<AxiosError> => {
   console.error(`[request error] [${JSON.stringify(error)}]`)
   return Promise.reject(error)
 }
 
-export const onResponse = (response: AxiosResponse): AxiosResponse => {
+export const handleResponse = (response: AxiosResponse): AxiosResponse => {
   console.info(`[response] [${JSON.stringify(response)}]`)
   return response
 }
 
-export const onResponseError = (error: AxiosError): Promise<AxiosError> => {
+export const handleResponseError = (error: AxiosError): Promise<AxiosError> => {
   console.error(`[response error] [${JSON.stringify(error)}]`)
   return Promise.reject(error)
 }
