@@ -47,6 +47,7 @@ const UserMenuPage = () => {
           <TabContainer>
             {SELECT_DUMMY.map((selectOption) => (
               <Tab
+                abc="abc"
                 key={selectOption}
                 selected={option === selectOption}
                 value={selectOption}

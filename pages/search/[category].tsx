@@ -10,6 +10,7 @@ import { BsFilterLeft } from 'react-icons/bs'
 import Link from 'next/link'
 
 const SORT_OPTIONS = ['최신순', '좋아요순', '댓글순']
+const PLACEHOLDER_MENU_SEARCH = " 메뉴 검색"
 
 const Search = () => {
   const [cards, setCards] = useState(PostCardDummy)
@@ -31,7 +32,7 @@ const Search = () => {
             <SearchInput
               height={5}
               type="text"
-              placeholder={`${category} 메뉴 검색`}
+              placeholder={`${category}${PLACEHOLDER_MENU_SEARCH}`}
             />
             <SearchIcon />
           </SearchWrapper>
