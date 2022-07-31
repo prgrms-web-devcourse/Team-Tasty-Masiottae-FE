@@ -1,10 +1,10 @@
-const Franchise = {
+const FranchiseDummy = {
   id: 1234,
   image: 'https://via.placeholder.com/100',
   franchise: 'starbucks'
 }
 
-const User = {
+const UserDummy = {
   id: 1234,
   image: 'https://via.placeholder.com/50',
   role: null,
@@ -14,9 +14,9 @@ const User = {
   updatedAt: 'string'
 }
 
-export const Card = {
+export const MenuDummy = {
   id: 1234132,
-  franchise: Franchise,
+  franchise: FranchiseDummy,
   title: '치킨치킨',
   originalTitle: 'string',
   image: 'https://via.placeholder.com/300x150',
@@ -24,17 +24,17 @@ export const Card = {
   optionList: [{ name: 'string', description: 'string' }],
   tasteList: [{ id: 1234, name: 'string', color: 'string' }],
   expectedPrice: 12345,
-  author: User,
+  author: UserDummy,
   likes: 10,
   comments: 20,
   createdAt: 'string',
   updatedAt: 'string'
 }
 
-export const PostCardDummy = Array.from({ length: 4 }, (_, idx) => {
+export const MenuListDummy = Array.from({ length: 4 }, (_, idx) => {
   return {
     id: idx,
-    franchise: Franchise,
+    franchise: FranchiseDummy,
     title: '참치마요',
     originalTitle: 'string',
     image: 'https://via.placeholder.com/300x150',
@@ -42,7 +42,7 @@ export const PostCardDummy = Array.from({ length: 4 }, (_, idx) => {
     optionList: [{ name: 'string', description: 'string' }],
     tasteList: [{ id: 1234, name: 'string', color: 'string' }],
     expectedPrice: 12345,
-    author: User,
+    author: UserDummy,
     likes: 10,
     comments: 20,
     createdAt: 'string',

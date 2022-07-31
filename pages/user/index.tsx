@@ -1,7 +1,7 @@
 import Avatar from '@components/Avatar'
 import Input from '@components/Input'
 import MenuCardList from '@components/MenuCardList'
-import { Card, PostCardDummy } from '@constants/cardData'
+import { MenuDummy, MenuListDummy } from '@constants/cardData'
 import styled from '@emotion/styled'
 import useIntersectionObserver from '@hooks/useIntersectionObserver'
 import { MouseEvent, useState } from 'react'
@@ -20,12 +20,12 @@ interface TabProps {
 
 const UserMenuPage = () => {
   const [option, setOption] = useState(SELECT_DUMMY[0])
-  const [cards, setCards] = useState(PostCardDummy)
+  const [menuList, setMenuList] = useState(MenuListDummy)
 
   const ref = useIntersectionObserver(
     async (entry, observer) => {
       observer.unobserve(entry.target)
-      setCards([...cards, Card])
+      setMenuList([...menuList, MenuDummy])
     },
     { threshold: 0.5 }
   )
@@ -75,7 +75,7 @@ const UserMenuPage = () => {
         </InnerWrapper>
       </FixedWrapper>
       <CardListContainer>
-        <MenuCardList menuList={cards} divRef={ref} />
+        <MenuCardList menuList={menuList} divRef={ref} />
       </CardListContainer>
     </>
   )

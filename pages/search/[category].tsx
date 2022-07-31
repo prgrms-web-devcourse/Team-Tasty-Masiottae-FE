@@ -1,7 +1,7 @@
 import Input from '@components/Input'
 import styled from '@emotion/styled'
 import useIntersectionObserver from '@hooks/useIntersectionObserver'
-import { Card, PostCardDummy } from '@constants/cardData'
+import { MenuDummy, MenuListDummy } from '@constants/cardData'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { FiSearch } from 'react-icons/fi'
@@ -12,11 +12,11 @@ const SORT_OPTIONS = ['최신순', '좋아요순', '댓글순']
 const PLACEHOLDER_MENU_SEARCH = ' 메뉴 검색'
 
 const Search = () => {
-  const [cards, setCards] = useState(PostCardDummy)
+  const [menuList, setMenuList] = useState(MenuListDummy)
   const ref = useIntersectionObserver(
     async (entry, observer) => {
       observer.unobserve(entry.target)
-      setCards([...cards, Card])
+      setMenuList([...menuList, MenuDummy])
     },
     { threshold: 0.5 }
   )
@@ -53,7 +53,7 @@ const Search = () => {
       </FixedWrapper>
 
       <CardListWrapper>
-        <MenuCardList menuList={cards} divRef={ref} />
+        <MenuCardList menuList={menuList} divRef={ref} />
       </CardListWrapper>
     </Container>
   )
