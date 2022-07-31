@@ -19,7 +19,7 @@ export interface Option {
 export interface Menu {
   id: number
   franchise: Franchise
-  image: ImageType
+  image: string
   title: string
   originalTitle: string
   author: User
@@ -35,7 +35,7 @@ export interface Menu {
 
 export interface User {
   id: number
-  image: ImageType
+  image: string
   role: string | null
   nickname: string
   email: string
@@ -45,10 +45,9 @@ export interface User {
 
 export interface Franchise {
   id: number
-  image: ImageType
+  image: string
   franchise: string
 }
-
 
 type Color = typeof theme.color
 type Layout = typeof theme.layout
