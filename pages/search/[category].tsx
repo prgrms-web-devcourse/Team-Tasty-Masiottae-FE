@@ -1,5 +1,4 @@
 import Input from '@components/Input'
-import MenuCard from '@components/MenuCard'
 import styled from '@emotion/styled'
 import useIntersectionObserver from '@hooks/useIntersectionObserver'
 import { Card, PostCardDummy } from '@constants/cardData'
@@ -7,10 +6,10 @@ import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { FiSearch } from 'react-icons/fi'
 import { BsFilterLeft } from 'react-icons/bs'
-import Link from 'next/link'
+import MenuCardList from '@components/MenuCardList'
 
 const SORT_OPTIONS = ['최신순', '좋아요순', '댓글순']
-const PLACEHOLDER_MENU_SEARCH = " 메뉴 검색"
+const PLACEHOLDER_MENU_SEARCH = ' 메뉴 검색'
 
 const Search = () => {
   const [cards, setCards] = useState(PostCardDummy)
@@ -54,26 +53,7 @@ const Search = () => {
       </FixedWrapper>
 
       <CardListWrapper>
-        {cards.map((cardData, idx) => {
-          return (
-            <MenuCardWrapper key={idx}>
-              <Link href={`/detail/${cardData.id}`}>
-                <a>
-                  <MenuCard
-                    key={idx}
-                    title={cardData.title}
-                    imageUrl={cardData.imageUrl}
-                    avatarImageUrl={cardData.avatarImageUrl}
-                    author={cardData.author}
-                    likes={cardData.likes}
-                    comments={cardData.comments}
-                    divRef={cards.length === idx + 1 ? ref : null}
-                  />
-                </a>
-              </Link>
-            </MenuCardWrapper>
-          )
-        })}
+        <MenuCardList menuList={cards} divRef={ref} />
       </CardListWrapper>
     </Container>
   )
@@ -143,12 +123,7 @@ const FilterIcon = styled(BsFilterLeft)`
 
 const CardListWrapper = styled.ul`
   padding-top: 22rem;
-  display: flex;
-  flex-direction: column;
-  row-gap: 1rem;
 `
-
-const MenuCardWrapper = styled.li``
 
 const CategoryHeader = styled.div`
   height: 8rem;
