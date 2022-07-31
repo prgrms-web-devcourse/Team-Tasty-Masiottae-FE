@@ -4,6 +4,7 @@ import { useState } from 'react'
 import useIntersectionObserver from '@hooks/useIntersectionObserver'
 import { Card, PostCardDummy } from '@constants/cardData'
 import styled from '@emotion/styled'
+import Link from 'next/link'
 
 const Home: NextPage = () => {
   const [cards, setCards] = useState(PostCardDummy)
@@ -19,33 +20,34 @@ const Home: NextPage = () => {
     <CardListWrapper>
       {cards.map((cardData, idx) => {
         return (
-          <MenuCard
-            id={cardData.id}
-            key={idx}
-            title={cardData.title}
-            imageUrl={cardData.imageUrl}
-            avatarImageUrl={cardData.avatarImageUrl}
-            author={cardData.author}
-            likes={cardData.likes}
-            comments={cardData.comments}
-            divRef={cards.length === idx + 1 ? ref : null}
-          />
+          <MenuCardWrapper key={idx}>
+            <Link href={`/detail/${cardData.id}`}>
+              <a>
+                <MenuCard
+                  key={idx}
+                  title={cardData.title}
+                  imageUrl={cardData.imageUrl}
+                  avatarImageUrl={cardData.avatarImageUrl}
+                  author={cardData.author}
+                  likes={cardData.likes}
+                  comments={cardData.comments}
+                  divRef={cards.length === idx + 1 ? ref : null}
+                />
+              </a>
+            </Link>
+          </MenuCardWrapper>
         )
       })}
     </CardListWrapper>
   )
 }
 
-const CardListWrapper = styled.div`
+const CardListWrapper = styled.ul`
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  overflow: scroll;
   row-gap: 1rem;
-
-  ::-webkit-scrollbar {
-    display: none;
-  }
 `
+
+const MenuCardWrapper = styled.li``
 
 export default Home

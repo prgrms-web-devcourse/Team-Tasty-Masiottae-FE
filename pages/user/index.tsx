@@ -4,6 +4,7 @@ import MenuCard from '@components/MenuCard'
 import { Card, PostCardDummy } from '@constants/cardData'
 import styled from '@emotion/styled'
 import useIntersectionObserver from '@hooks/useIntersectionObserver'
+import Link from 'next/link'
 import { MouseEvent, useState } from 'react'
 import { BsFilterLeft } from 'react-icons/bs'
 import { FiSearch } from 'react-icons/fi'
@@ -11,6 +12,7 @@ import { FiSearch } from 'react-icons/fi'
 const SORT_OPTIONS = ['최신순', '좋아요순', '댓글순']
 const SELECT_DUMMY = ['작성한 메뉴', '좋아요한 메뉴']
 const SIZE_100_IMG_URL = 'https://via.placeholder.com/100'
+
 interface TabProps {
   selected: boolean
   value: string
@@ -45,6 +47,7 @@ const UserMenuPage = () => {
           <TabContainer>
             {SELECT_DUMMY.map((selectOption) => (
               <Tab
+                abc="abc"
                 key={selectOption}
                 selected={option === selectOption}
                 value={selectOption}
@@ -73,20 +76,25 @@ const UserMenuPage = () => {
           </OptionContainer>
         </InnerWrapper>
       </FixedWrapper>
-
       <CardListWrapper>
         {cards.map((cardData, idx) => {
           return (
-            <MenuCard
-              key={idx}
-              title={cardData.title}
-              imageUrl={cardData.imageUrl}
-              avatarImageUrl={cardData.avatarImageUrl}
-              author={cardData.author}
-              likes={cardData.likes}
-              comments={cardData.comments}
-              divRef={cards.length === idx + 1 ? ref : null}
-            />
+            <MenuCardWrapper key={idx}>
+              <Link href={`/detail/${cardData.id}`}>
+                <a>
+                  <MenuCard
+                    key={idx}
+                    title={cardData.title}
+                    imageUrl={cardData.imageUrl}
+                    avatarImageUrl={cardData.avatarImageUrl}
+                    author={cardData.author}
+                    likes={cardData.likes}
+                    comments={cardData.comments}
+                    divRef={cards.length === idx + 1 ? ref : null}
+                  />
+                </a>
+              </Link>
+            </MenuCardWrapper>
           )
         })}
       </CardListWrapper>
@@ -179,16 +187,14 @@ const FilterIcon = styled(BsFilterLeft)`
   font-weight: bold;
 `
 
-const CardListWrapper = styled.div`
+const CardListWrapper = styled.ul`
   padding-top: 31.25rem;
   display: flex;
   flex-direction: column;
   row-gap: 1rem;
-
-  ::-webkit-scrollbar {
-    display: none;
-  }
 `
+
+const MenuCardWrapper = styled.li``
 
 const Text = styled.span`
   font-size: 2rem;
