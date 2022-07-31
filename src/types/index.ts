@@ -16,6 +16,40 @@ export interface Option {
   description: string
 }
 
+export interface Menu {
+  id: number
+  franchise: Franchise
+  image: ImageType
+  title: string
+  originalTitle: string
+  author: User
+  content: string
+  optionList: Option[]
+  expectedPrice: number
+  tasteList: Taste[]
+  comments: number
+  likes: number
+  createdAt: string
+  updatedAt: string
+}
+
+export interface User {
+  id: number
+  image: ImageType
+  role: string | null
+  nickname: string
+  email: string
+  createdAt: string
+  updatedAt: string
+}
+
+export interface Franchise {
+  id: number
+  image: ImageType
+  franchise: string
+}
+
+
 type Color = typeof theme.color
 type Layout = typeof theme.layout
 
