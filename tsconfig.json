@@ -5,6 +5,7 @@
       "@components/*": ["src/components/*"],
       "@constants/*": ["src/constants/*"],
       "@hooks/*": ["src/hooks/*"],
+      "@interfaces": ["src/interfaces/index"],
       "@interfaces/*": ["src/interfaces/*"],
       "@lib/*": ["src/lib/*"],
       "@axios/*": ["src/lib/axios/*"],
