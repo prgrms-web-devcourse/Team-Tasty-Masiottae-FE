@@ -13,7 +13,7 @@
       "@mutations/*": ["src/mutations/*"],
       "@queries/*": ["src/queries/*"],
       "@customTypes/*": ["src/types/*"],
-      "@utils/*": ["src/utils/*"],,
+      "@utils/*": ["src/utils/*"],
       "@recoil/*": ["src/recoil/*"]
     },
     "target": "es5",
