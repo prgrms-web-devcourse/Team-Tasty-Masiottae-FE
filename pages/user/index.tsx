@@ -1,10 +1,9 @@
 import Avatar from '@components/Avatar'
 import Input from '@components/Input'
-import MenuCard from '@components/MenuCard'
-import { Card, PostCardDummy } from '@constants/cardData'
+import MenuCardList from '@components/MenuCardList'
+import { MenuDummy, MenuListDummy } from '@constants/cardData'
 import styled from '@emotion/styled'
 import useIntersectionObserver from '@hooks/useIntersectionObserver'
-import Link from 'next/link'
 import { MouseEvent, useState } from 'react'
 import { BsFilterLeft } from 'react-icons/bs'
 import { FiSearch } from 'react-icons/fi'
@@ -19,14 +18,14 @@ interface TabProps {
   onClick: (e: MouseEvent<HTMLElement>) => void
 }
 
-const UserMenuPage = () => {
+const UserMenu = () => {
   const [option, setOption] = useState(SELECT_DUMMY[0])
-  const [cards, setCards] = useState(PostCardDummy)
+  const [menuList, setMenuList] = useState(MenuListDummy)
 
   const ref = useIntersectionObserver(
     async (entry, observer) => {
       observer.unobserve(entry.target)
-      setCards([...cards, Card])
+      setMenuList([...menuList, MenuDummy])
     },
     { threshold: 0.5 }
   )
@@ -47,7 +46,6 @@ const UserMenuPage = () => {
           <TabContainer>
             {SELECT_DUMMY.map((selectOption) => (
               <Tab
-                abc="abc"
                 key={selectOption}
                 selected={option === selectOption}
                 value={selectOption}
@@ -76,28 +74,9 @@ const UserMenuPage = () => {
           </OptionContainer>
         </InnerWrapper>
       </FixedWrapper>
-      <CardListWrapper>
-        {cards.map((cardData, idx) => {
-          return (
-            <MenuCardWrapper key={idx}>
-              <Link href={`/detail/${cardData.id}`}>
-                <a>
-                  <MenuCard
-                    key={idx}
-                    title={cardData.title}
-                    imageUrl={cardData.imageUrl}
-                    avatarImageUrl={cardData.avatarImageUrl}
-                    author={cardData.author}
-                    likes={cardData.likes}
-                    comments={cardData.comments}
-                    divRef={cards.length === idx + 1 ? ref : null}
-                  />
-                </a>
-              </Link>
-            </MenuCardWrapper>
-          )
-        })}
-      </CardListWrapper>
+      <CardListContainer>
+        <MenuCardList menuList={menuList} divRef={ref} />
+      </CardListContainer>
     </>
   )
 }
@@ -187,18 +166,13 @@ const FilterIcon = styled(BsFilterLeft)`
   font-weight: bold;
 `
 
-const CardListWrapper = styled.ul`
+const CardListContainer = styled.ul`
   padding-top: 31.25rem;
-  display: flex;
-  flex-direction: column;
-  row-gap: 1rem;
 `
-
-const MenuCardWrapper = styled.li``
 
 const Text = styled.span`
   font-size: 2rem;
   user-select: none;
 `
 
-export default UserMenuPage
+export default UserMenu
