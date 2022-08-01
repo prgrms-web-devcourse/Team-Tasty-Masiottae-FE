@@ -6,10 +6,14 @@
       "@constants/*": ["src/constants/*"],
       "@hooks/*": ["src/hooks/*"],
       "@interfaces/*": ["src/interfaces/*"],
+      "@lib/*": ["src/lib/*"],
+      "@axios/*": ["src/lib/axios/*"],
+      "@api/*": ["src/lib/api/*"],
       "@mutations/*": ["src/mutations/*"],
       "@queries/*": ["src/queries/*"],
+      "@customTypes/*": ["src/types/*"],
       "@utils/*": ["src/utils/*"],
-      "@customTypes/*": ["src/types/*"]
+      "@types/*": ["src/types/*"]
     },
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],

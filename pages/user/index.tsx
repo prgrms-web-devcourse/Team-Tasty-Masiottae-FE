@@ -1,7 +1,7 @@
 import Avatar from '@components/Avatar'
 import Input from '@components/Input'
-import MenuCard from '@components/MenuCard'
-import { Card, PostCardDummy } from '@constants/cardData'
+import MenuCardList from '@components/MenuCardList'
+import { MenuDummy, MenuListDummy } from '@constants/cardData'
 import styled from '@emotion/styled'
 import useIntersectionObserver from '@hooks/useIntersectionObserver'
 import { MouseEvent, useState } from 'react'
@@ -11,20 +11,21 @@ import { FiSearch } from 'react-icons/fi'
 const SORT_OPTIONS = ['최신순', '좋아요순', '댓글순']
 const SELECT_DUMMY = ['작성한 메뉴', '좋아요한 메뉴']
 const SIZE_100_IMG_URL = 'https://via.placeholder.com/100'
+
 interface TabProps {
   selected: boolean
   value: string
   onClick: (e: MouseEvent<HTMLElement>) => void
 }
 
-const UserMenuPage = () => {
+const UserMenu = () => {
   const [option, setOption] = useState(SELECT_DUMMY[0])
-  const [cards, setCards] = useState(PostCardDummy)
+  const [menuList, setMenuList] = useState(MenuListDummy)
 
   const ref = useIntersectionObserver(
     async (entry, observer) => {
       observer.unobserve(entry.target)
-      setCards([...cards, Card])
+      setMenuList([...menuList, MenuDummy])
     },
     { threshold: 0.5 }
   )
@@ -73,23 +74,9 @@ const UserMenuPage = () => {
           </OptionContainer>
         </InnerWrapper>
       </FixedWrapper>
-
-      <CardListWrapper>
-        {cards.map((cardData, idx) => {
-          return (
-            <MenuCard
-              key={idx}
-              title={cardData.title}
-              imageUrl={cardData.imageUrl}
-              avatarImageUrl={cardData.avatarImageUrl}
-              author={cardData.author}
-              likes={cardData.likes}
-              comments={cardData.comments}
-              divRef={cards.length === idx + 1 ? ref : null}
-            />
-          )
-        })}
-      </CardListWrapper>
+      <CardListContainer>
+        <MenuCardList menuList={menuList} divRef={ref} />
+      </CardListContainer>
     </>
   )
 }
@@ -179,15 +166,8 @@ const FilterIcon = styled(BsFilterLeft)`
   font-weight: bold;
 `
 
-const CardListWrapper = styled.div`
+const CardListContainer = styled.ul`
   padding-top: 31.25rem;
-  display: flex;
-  flex-direction: column;
-  row-gap: 1rem;
-
-  ::-webkit-scrollbar {
-    display: none;
-  }
 `
 
 const Text = styled.span`
@@ -195,4 +175,4 @@ const Text = styled.span`
   user-select: none;
 `
 
-export default UserMenuPage
+export default UserMenu
