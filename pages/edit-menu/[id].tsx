@@ -70,7 +70,6 @@ const EditMenu = () => {
   const handleOptionAddBtnClick = () => {
     setOptionList((optionList) => {
       const newOptionList = [...optionList, { name: '', description: '' }]
-      console.log(newOptionList)
       return newOptionList
     })
   }
@@ -78,7 +77,6 @@ const EditMenu = () => {
   const handleOptionDelBtnClick = (deletedIdx: number) => {
     setOptionList((optionList) => {
       const newOptionList = optionList.filter((_, idx) => deletedIdx !== idx)
-      console.log(newOptionList)
       return newOptionList
     })
   }
@@ -94,7 +92,6 @@ const EditMenu = () => {
         description: optionList[idx].description
       }
       const newOptionList = [...optionList]
-      console.log(newOptionList)
 
       return newOptionList
     })
@@ -110,7 +107,6 @@ const EditMenu = () => {
         description: newOptionDescription
       }
       const newOptionList = [...optionList]
-      console.log(newOptionList)
 
       return newOptionList
     })
@@ -118,7 +114,6 @@ const EditMenu = () => {
 
   const handleTagListChange = (tagIdList: number[]) => {
     const newTagIdList = tagIdList.slice(0, MAX_TAG)
-    console.log(newTagIdList)
     setTasteIdList(newTagIdList)
   }
 
@@ -169,9 +164,11 @@ const EditMenu = () => {
     formData.append('optionList', JSON.stringify(optionList))
     formData.append('tasteList', JSON.stringify(tasteIdList))
 
+    /*
     for (const [key, value] of formData) {
       console.log(key, ': ', value)
     }
+    */
   }
   return (
     <FlexContainer>
