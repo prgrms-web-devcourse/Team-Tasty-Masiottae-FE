@@ -12,7 +12,6 @@
       "@api/*": ["src/lib/api/*"],
       "@mutations/*": ["src/mutations/*"],
       "@queries/*": ["src/queries/*"],
-      "@customTypes/*": ["src/types/*"],
       "@utils/*": ["src/utils/*"],
       "@types/*": ["src/types/*"]
     },
