@@ -4,7 +4,6 @@ import { getLocalToken } from './localToken'
 export const handleRequest = (
   config: AxiosRequestConfig
 ): AxiosRequestConfig => {
-  console.info(`[request] [${JSON.stringify(config)}]`)
   const token = getLocalToken()
   if (!config?.headers) {
     throw new Error(`Axios config headers must be provided`)
@@ -21,7 +20,6 @@ export const handleRequestError = (error: AxiosError): Promise<AxiosError> => {
 }
 
 export const handleResponse = (response: AxiosResponse): AxiosResponse => {
-  console.info(`[response] [${JSON.stringify(response)}]`)
   return response
 }
 

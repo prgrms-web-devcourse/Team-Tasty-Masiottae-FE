@@ -8,7 +8,7 @@ import {
 
 const axiosInstance = axios.create({
   timeout: 5000,
-  baseURL: process.env.REACT_APP_API_URL
+  baseURL: process.env.NEXT_PUBLIC_API_URL
 })
 
 axiosInstance.interceptors.request.use(handleRequest, handleRequestError)
