@@ -1,7 +1,7 @@
-export interface UserType {
+export interface User {
   id: number
   image: string
-  role: string
+  role: 'ROLE_ACCOUNT' | 'ROLE_ADMIN'
   email: string
   nickname: string
   snsAccount: string
