@@ -153,6 +153,10 @@ const EditMenu = () => {
       return
     }
 
+    if (!tasteIdList.length) {
+      return
+    }
+
     const formData = new FormData()
     formData.append('userId', '1')
     if (image) {
