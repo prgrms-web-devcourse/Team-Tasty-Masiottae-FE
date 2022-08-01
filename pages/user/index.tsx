@@ -18,7 +18,7 @@ interface TabProps {
   onClick: (e: MouseEvent<HTMLElement>) => void
 }
 
-const UserMenuPage = () => {
+const UserMenu = () => {
   const [option, setOption] = useState(SELECT_DUMMY[0])
   const [menuList, setMenuList] = useState(MenuListDummy)
 
@@ -175,4 +175,4 @@ const Text = styled.span`
   user-select: none;
 `
 
-export default UserMenuPage
+export default UserMenu

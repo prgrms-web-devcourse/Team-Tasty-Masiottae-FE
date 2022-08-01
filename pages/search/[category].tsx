@@ -51,7 +51,6 @@ const Search = () => {
           </OptionContainer>
         </InnerWrapper>
       </FixedWrapper>
-
       <CardListWrapper>
         <MenuCardList menuList={menuList} divRef={ref} />
       </CardListWrapper>
