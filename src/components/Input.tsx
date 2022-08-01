@@ -36,7 +36,6 @@ const Input = ({
     },
     [onChange]
   )
-
   const handleBlur = useCallback(
     (e: React.FocusEvent<HTMLInputElement, Element>) => {
       onBlur && onBlur(e)
@@ -50,7 +49,7 @@ const Input = ({
       height={height}
       type={type}
       name={name}
-      defaultValue={value}
+      value={value}
       accept={accept}
       required={required}
       isValid={isValid}
