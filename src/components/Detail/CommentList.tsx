@@ -8,8 +8,6 @@ import userDummy from './userDummy.json'
 const CommentList = () => {
   const [user, setUser] = useState(userDummy)
   const [commentList, setCommentList] = useState(commentListDummy)
-  console.log(user)
-  console.log(commentList)
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
 
   const handleDeleteCommentClick = (

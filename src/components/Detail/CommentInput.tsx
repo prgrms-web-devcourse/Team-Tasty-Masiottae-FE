@@ -16,19 +16,19 @@ const CommentInput = () => {
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
   useEffect(() => {
-    if (textareaRef === null || textareaRef.current === null) {
+    if (textareaRef.current === null) {
       return
     }
-    textareaRef.current.style.height = '3rem'
+
     textareaRef.current.style.height = textareaRef.current.scrollHeight + 'px'
   }, [])
 
   const handleChange = useCallback((e: ChangeEvent<HTMLTextAreaElement>) => {
-    if (textareaRef === null || textareaRef.current === null) {
+    if (textareaRef.current === null) {
       return
     }
 
-    textareaRef.current.style.height = '3rem'
+    textareaRef.current.style.height = '4rem'
     textareaRef.current.style.height = textareaRef.current.scrollHeight + 'px'
 
     setComment(e.target.value)
@@ -65,7 +65,7 @@ const CommentWriteContainer = styled(Flex)`
 
 const Textarea = styled.textarea`
   width: 100%;
-  min-height: 4rem;
+  height: 4rem;
   font-size: 1.6rem;
   border: 0.1rem solid rgba(0, 0, 0, 0.4);
   border-radius: 1rem;
