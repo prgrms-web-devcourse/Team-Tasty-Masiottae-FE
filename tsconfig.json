@@ -7,11 +7,14 @@
       "@hooks/*": ["src/hooks/*"],
       "@interfaces": ["src/interfaces/index"],
       "@interfaces/*": ["src/interfaces/*"],
+      "@lib/*": ["src/lib/*"],
+      "@axios/*": ["src/lib/axios/*"],
+      "@api/*": ["src/lib/api/*"],
       "@mutations/*": ["src/mutations/*"],
       "@queries/*": ["src/queries/*"],
-      "@utils/*": ["src/utils/*"],
       "@customTypes/*": ["src/types/*"],
-      "@recoil/*": ["src/recoil/*"]
+      "@utils/*": ["src/utils/*"],
+      "@types/*": ["src/types/*"]
     },
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
