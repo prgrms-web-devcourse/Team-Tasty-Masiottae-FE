@@ -9,6 +9,7 @@ import { GrClose } from 'react-icons/gr'
 
 const Filter = () => {
   let selectedTags: TasteType[] = []
+  const [isOpen, setIsOpen] = useState(false)
 
   const handleClick = (clickedTag: TasteType) => {
     if (selectedTags.includes(clickedTag)) {
@@ -18,14 +19,12 @@ const Filter = () => {
     }
   }
 
-  const [isOpen, setIsOpen] = useState(false)
   const handleClose = () => {
     setIsOpen(false)
   }
 
   return (
     <>
-      <button onClick={() => setIsOpen(true)}>필터열기</button>
       <Modal visible={isOpen} onClose={handleClose}>
         <Container>
           <Header>
@@ -37,12 +36,7 @@ const Filter = () => {
           </Header>
           <TagContainer>
             {TASTE_LIST.map((taste, idx) => (
-              <FilterTag
-                key={idx}
-                name={taste}
-                height={3.2}
-                onClick={handleClick}
-              />
+              <Tag key={idx} name={taste} height={3.2} onClick={handleClick} />
             ))}
           </TagContainer>
           <ApplyButton>필터 적용</ApplyButton>
@@ -85,8 +79,6 @@ const ApplyButton = styled.button`
   margin-top: 3rem;
   cursor: pointer;
 `
-
-const FilterTag = styled(Tag)``
 
 const TagContainer = styled(Flex)`
   justify-content: center;

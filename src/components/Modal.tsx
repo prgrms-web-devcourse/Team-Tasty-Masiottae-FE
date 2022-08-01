@@ -69,6 +69,7 @@ const ModalContainer = styled.div<{
   left: 50%;
   transform: translate(-50%, -50%);
   width: ${({ width }) => (width ? `${width}rem` : '100%')};
+  width: ${({ option }) => (option === 'drawer' ? `100%` : '45rem')};
   max-width: 50rem;
   height: ${({ height }) => `${height}rem`};
   padding: 1rem 0;
@@ -85,6 +86,10 @@ const ModalContainer = styled.div<{
       opacity: 1;
       margin-bottom: 0;
     }
+  }
+
+  @media screen and (max-width: 29.375rem) {
+    width: ${({ option }) => (option === 'drawer' ? `100%` : '90%')};
   }
 `
 
