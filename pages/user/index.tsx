@@ -1,12 +1,10 @@
 import Avatar from '@components/Avatar'
-import Input from '@components/Input'
 import MenuCardList from '@components/MenuCardList'
+import SearchForm from '@components/SearchForm'
 import { MenuDummy, MenuListDummy } from '@constants/cardData'
 import styled from '@emotion/styled'
 import useIntersectionObserver from '@hooks/useIntersectionObserver'
 import { MouseEvent, useState } from 'react'
-import { BsFilterLeft } from 'react-icons/bs'
-import { FiSearch } from 'react-icons/fi'
 
 const SORT_OPTIONS = ['최신순', '좋아요순', '댓글순']
 const SELECT_DUMMY = ['작성한 메뉴', '좋아요한 메뉴']
@@ -55,23 +53,7 @@ const UserMenu = () => {
               </Tab>
             ))}
           </TabContainer>
-          <SearchWrapper>
-            <SearchInput height={5} type="text" placeholder={`메뉴 검색`} />
-            <SearchIcon />
-          </SearchWrapper>
-          <OptionContainer>
-            <FilterWrapper>
-              <FilterIcon />
-              <Text>필터</Text>
-            </FilterWrapper>
-            <select>
-              {SORT_OPTIONS.map((value) => (
-                <option key={value} value={value}>
-                  {value}
-                </option>
-              ))}
-            </select>
-          </OptionContainer>
+          <SearchForm sortOptions={SORT_OPTIONS} />
         </InnerWrapper>
       </FixedWrapper>
       <CardListContainer>
@@ -135,44 +117,8 @@ const Tab = styled.button<TabProps>`
   height: 5rem;
 `
 
-const SearchWrapper = styled.div`
-  display: flex;
-  align-items: center;
-`
-const SearchInput = styled(Input)`
-  width: 100%;
-`
-
-const SearchIcon = styled(FiSearch)`
-  font-size: 2.5rem;
-  margin-left: -3.5rem;
-`
-
-const OptionContainer = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  gap: 1rem;
-`
-
-const FilterWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  cursor: pointer;
-`
-
-const FilterIcon = styled(BsFilterLeft)`
-  font-size: 3.5rem;
-  font-weight: bold;
-`
-
 const CardListContainer = styled.ul`
   padding-top: 31.25rem;
-`
-
-const Text = styled.span`
-  font-size: 2rem;
-  user-select: none;
 `
 
 export default UserMenu
