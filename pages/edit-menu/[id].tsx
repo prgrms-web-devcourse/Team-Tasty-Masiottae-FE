@@ -69,8 +69,12 @@ const EditMenu = () => {
 
   const handleOptionAddBtnClick = () => {
     setOptionList((optionList) => {
-      const newOptionList = [...optionList, { name: '', description: '' }]
-      return newOptionList
+      if (optionList.length <= MAX_OPTION) {
+        const newOptionList = [...optionList, { name: '', description: '' }]
+        return newOptionList
+      } else {
+        return optionList
+      }
     })
   }
 
