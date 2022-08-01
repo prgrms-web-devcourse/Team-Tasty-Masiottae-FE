@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from '@emotion/styled'
 import Input from '@components/Input'
 import TagContainer from '@components/TagContainer'
@@ -7,7 +7,10 @@ import Button from '@components/Button'
 import { ImageType, Option, Taste } from '@customTypes/index'
 
 import { dummyFranchiseList, dummyMenu } from '@constants/dummyMenu'
-import { KeyObject } from 'crypto'
+
+const MIN_OPTION = 1
+const MAX_OPTION = 20
+const MAX_TAG = 3
 
 const NAME_SELECT = 'brand'
 const NAME_TITLE = 'title'
@@ -23,6 +26,7 @@ const PLACEHOLDER_OPTION_DESCRIPTION = '옵션 단위, 또는 설명'
 const PLACEHOLDER_EXPECTED_PRICE = '예상되는 최종 가격을 입력해주세요'
 
 const EditMenu = () => {
+  // 필드 값
   const [image, setImage] = useState<ImageType>(dummyMenu.image)
   const [franchiseId, setFranchiseId] = useState(dummyMenu.franchise.id)
   const [title, setTitle] = useState(dummyMenu.title)
@@ -31,18 +35,35 @@ const EditMenu = () => {
   const [tasteIdList, setTasteIdList] = useState<number[]>(
     dummyMenu.tastes.map((taste) => taste.id)
   )
+  const [expectedPrice, setExpectedPrice] = useState<number>(
+    dummyMenu.expectedPrice
+  )
 
-  const tagList = dummyMenu.tastes
+  // valid 값
+  const [isTitleValid, setTitleValid] = useState(true)
+  const [isOriginalTitleValid, setOriginalTitleValid] = useState(true)
+  const [isOptionListValid, setOptionListValid] = useState<
+    { name: boolean; description: boolean }[]
+  >(
+    optionList.map((option) => ({
+      name: option.name ? true : false,
+      description: option.description ? true : false
+    }))
+  )
+
+  // onChange handler
   const handleImageChange = (image: ImageType) => {
     console.log(image)
     setImage(image)
   }
+
   const handleFranchiseChange = (e: React.FormEvent<HTMLSelectElement>) => {
     setFranchiseId(Number(e.currentTarget.value))
   }
+
   const handleTitleChange = (e: React.FormEvent<HTMLInputElement>) => {
     const title = e.currentTarget.value
-    console.log(title)
+    setTitle(title)
   }
 
   const handleOriginalTitleChange = (e: React.FormEvent<HTMLInputElement>) => {
@@ -50,26 +71,42 @@ const EditMenu = () => {
     setOriginalTitle(originalTitle)
   }
 
+  const handlePriceChange = (e: React.FormEvent<HTMLInputElement>) => {
+    const priceRegExp = /[^0-9]/g
+    const price = e.currentTarget.value.replace(priceRegExp, '')
+    setExpectedPrice(Number(price))
+  }
+
   const handleOptionAddBtnClick = () => {
     setOptionList((optionList) => {
-      const newOptions = [...optionList, { name: '', description: '' }]
-      return newOptions
+      const newOptionList = [...optionList, { name: '', description: '' }]
+      console.log(newOptionList)
+      return newOptionList
     })
   }
+
   const handleOptionDelBtnClick = (deletedIdx: number) => {
     setOptionList((optionList) => {
-      const newOptions = optionList.filter((_, idx) => deletedIdx !== idx)
-      return newOptions
+      const newOptionList = optionList.filter((_, idx) => deletedIdx !== idx)
+      console.log(newOptionList)
+      return newOptionList
     })
   }
+
   const handleOptionNameChange = (
     e: React.FormEvent<HTMLInputElement>,
     idx: number
   ) => {
     const newOptionName = e.currentTarget.value
     setOptionList((optionList) => {
-      optionList[idx].name = newOptionName
-      return optionList
+      optionList[idx] = {
+        name: newOptionName,
+        description: optionList[idx].description
+      }
+      const newOptionList = [...optionList]
+      console.log(newOptionList)
+
+      return newOptionList
     })
   }
   const handleOptionDescriptionChange = (
@@ -78,29 +115,78 @@ const EditMenu = () => {
   ) => {
     const newOptionDescription = e.currentTarget.value
     setOptionList((optionList) => {
-      optionList[idx].description = newOptionDescription
-      return optionList
+      optionList[idx] = {
+        name: optionList[idx].name,
+        description: newOptionDescription
+      }
+      const newOptionList = [...optionList]
+      console.log(newOptionList)
+
+      return newOptionList
     })
   }
 
   const handleTagListChange = (tagIdList: number[]) => {
-    console.log(tagIdList)
-    setTasteIdList(tagIdList)
+    const newTagIdList = tagIdList.slice(0, MAX_TAG)
+    console.log(newTagIdList)
+    setTasteIdList(newTagIdList)
   }
+
+  const requiredInputCheck = (input: string) => {
+    return input ? true : false
+  }
+
+  // input onBlur handler
+  const handleTitleBlur = (e: React.FormEvent<HTMLInputElement>) => {
+    const newValue = e.currentTarget.value
+    setTitleValid(requiredInputCheck(newValue))
+  }
+
+  const handleOriginalTitleBlur = (e: React.FormEvent<HTMLInputElement>) => {
+    const newValue = e.currentTarget.value
+    setOriginalTitleValid(requiredInputCheck(newValue))
+  }
+
+  const handleOptionInputBlur = (e: React.FormEvent<HTMLInputElement>) => {
+    setOptionListValid(
+      optionList.map((option) => ({
+        name: option.name ? true : false,
+        description: option.description ? true : false
+      }))
+    )
+  }
+
   const handleEditSubmit = (e: React.FormEvent<HTMLButtonElement>) => {
     // form data 전송
+    if (!isTitleValid) {
+      return
+    }
+    if (!isOriginalTitleValid) {
+      return
+    }
+
+    if (optionList.length < MIN_OPTION || MAX_OPTION < optionList.length) {
+      return
+    }
+
     const formData = new FormData()
     formData.append('userId', '1')
-    formData.append('image', image)
+    if (image) {
+      formData.append('image', image as string)
+    }
     formData.append('franchiseId', `${franchiseId}`)
     formData.append('title', title)
     formData.append('content', '')
     formData.append('originalTitle', originalTitle)
+    formData.append('expectedPrice', expectedPrice.toString())
     formData.append('optionList', JSON.stringify(optionList))
     formData.append('tasteList', JSON.stringify(tasteIdList))
+
+    /*
     for (const [key, value] of formData) {
       console.log(key, ': ', value)
     }
+    */
   }
   return (
     <FlexContainer>
@@ -114,23 +200,27 @@ const EditMenu = () => {
             </option>
           ))}
         </Select>
-        <TitleInput
+        <Input
           height={2.4}
           type="text"
           name={NAME_TITLE}
-          value={dummyMenu.title}
+          value={title}
           required={true}
           placeholder={PLACEHOLDER_TITLE}
           onChange={handleTitleChange}
+          onBlur={handleTitleBlur}
+          isValid={isTitleValid}
         />
-        <TitleInput
+        <Input
           height={2.4}
           type="text"
           name={NAME_ORIGINAL_TITLE}
-          value={dummyMenu.originalTitle}
+          value={originalTitle}
           required={true}
           placeholder={PLACEHOLDER_ORIGINAL_TITLE}
           onChange={handleOriginalTitleChange}
+          onBlur={handleOriginalTitleBlur}
+          isValid={isOriginalTitleValid}
         />
         <Button width={10} height={4} onClick={handleOptionAddBtnClick}>
           + 옵션
@@ -142,20 +232,24 @@ const EditMenu = () => {
               type="text"
               name={NAME_OPTION_NAME}
               value={option.name}
+              required={true}
               placeholder={PLACEHOLDER_OPTION_NAME}
               onChange={(e) => {
                 handleOptionNameChange(e, idx)
               }}
+              onBlur={handleOptionInputBlur}
             />
             <OptionDescription
               height={2.4}
               type="text"
               name={NAME_OPTION_DESCRIPTION}
               value={option.description}
+              required={true}
               placeholder={PLACEHOLDER_OPTION_DESCRIPTION}
               onChange={(e) => {
                 handleOptionDescriptionChange(e, idx)
               }}
+              onBlur={handleOptionInputBlur}
             />
             <Button
               width={8}
@@ -171,13 +265,14 @@ const EditMenu = () => {
           height={2.4}
           type="text"
           name={NAME_EXPECTED_PRICE}
-          value={dummyMenu.expectedPrice.toString()}
+          value={expectedPrice.toString()}
           placeholder={PLACEHOLDER_EXPECTED_PRICE}
+          onChange={handlePriceChange}
         />
       </InputWrapper>
       <SubTitle>맛</SubTitle>
       <TagContainer
-        selectedTasteIdList={tagList.map((tag) => tag.id)}
+        selectedTasteIdList={tasteIdList}
         onChange={handleTagListChange}
       />
       <Button onClick={handleEditSubmit}>메뉴 수정</Button>
@@ -209,10 +304,6 @@ const Title = styled.h1`
 const Select = styled.select`
   width: 100%;
   height: 3.2rem;
-`
-
-const TitleInput = styled(Input)`
-  width: 100%;
 `
 
 const OptionName = styled(Input)`
