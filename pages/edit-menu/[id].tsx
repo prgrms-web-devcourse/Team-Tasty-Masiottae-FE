@@ -10,7 +10,7 @@ import { dummyFranchiseList, dummyMenu } from '@constants/dummyMenu'
 
 const MIN_OPTION = 1
 const MAX_OPTION = 20
-const MAX_TAG = 3
+const MAX_TAG = 4
 
 const NAME_SELECT = 'brand'
 const NAME_TITLE = 'title'
@@ -42,18 +42,8 @@ const EditMenu = () => {
   // valid 값
   const [isTitleValid, setTitleValid] = useState(true)
   const [isOriginalTitleValid, setOriginalTitleValid] = useState(true)
-  const [isOptionListValid, setOptionListValid] = useState<
-    { name: boolean; description: boolean }[]
-  >(
-    optionList.map((option) => ({
-      name: option.name ? true : false,
-      description: option.description ? true : false
-    }))
-  )
-
   // onChange handler
   const handleImageChange = (image: ImageType) => {
-    console.log(image)
     setImage(image)
   }
 
@@ -147,15 +137,6 @@ const EditMenu = () => {
     setOriginalTitleValid(requiredInputCheck(newValue))
   }
 
-  const handleOptionInputBlur = (e: React.FormEvent<HTMLInputElement>) => {
-    setOptionListValid(
-      optionList.map((option) => ({
-        name: option.name ? true : false,
-        description: option.description ? true : false
-      }))
-    )
-  }
-
   const handleEditSubmit = (e: React.FormEvent<HTMLButtonElement>) => {
     // form data 전송
     if (!isTitleValid) {
@@ -164,6 +145,10 @@ const EditMenu = () => {
     if (!isOriginalTitleValid) {
       return
     }
+
+    setOptionList(
+      optionList.filter((option) => option.name && option.description)
+    )
 
     if (optionList.length < MIN_OPTION || MAX_OPTION < optionList.length) {
       return
@@ -178,15 +163,15 @@ const EditMenu = () => {
     formData.append('title', title)
     formData.append('content', '')
     formData.append('originalTitle', originalTitle)
-    formData.append('expectedPrice', expectedPrice.toString())
+    if (expectedPrice) {
+      formData.append('expectedPrice', expectedPrice.toString())
+    }
     formData.append('optionList', JSON.stringify(optionList))
     formData.append('tasteList', JSON.stringify(tasteIdList))
 
-    /*
     for (const [key, value] of formData) {
       console.log(key, ': ', value)
     }
-    */
   }
   return (
     <FlexContainer>
@@ -237,7 +222,7 @@ const EditMenu = () => {
               onChange={(e) => {
                 handleOptionNameChange(e, idx)
               }}
-              onBlur={handleOptionInputBlur}
+              isValid={option.name ? true : false}
             />
             <OptionDescription
               height={2.4}
@@ -249,7 +234,7 @@ const EditMenu = () => {
               onChange={(e) => {
                 handleOptionDescriptionChange(e, idx)
               }}
-              onBlur={handleOptionInputBlur}
+              isValid={option.description ? true : false}
             />
             <Button
               width={8}
@@ -307,10 +292,10 @@ const Select = styled.select`
 `
 
 const OptionName = styled(Input)`
-  width: 30%;
+  width: 40%;
 `
 const OptionDescription = styled(Input)`
-  width: 60%;
+  width: 50%;
 `
 
 const PriceInput = styled(Input)`
