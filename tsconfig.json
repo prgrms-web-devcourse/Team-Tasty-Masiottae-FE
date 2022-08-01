@@ -13,8 +13,7 @@
       "@mutations/*": ["src/mutations/*"],
       "@queries/*": ["src/queries/*"],
       "@customTypes/*": ["src/types/*"],
-      "@utils/*": ["src/utils/*"],
-      "@types/*": ["src/types/*"]
+      "@utils/*": ["src/utils/*"]
     },
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
