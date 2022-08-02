@@ -15,7 +15,7 @@ const patchImage = async ({ userId, image }: Params) => {
   form.append('image', image)
 
   const { data } = await axios.patch<Data>(`/accounts/${userId}/image`, form, {
-    headers: { 'Content-Type': '	multipart/form-data' }
+    headers: { 'Content-Type': 'multipart/form-data' }
   })
 
   return data

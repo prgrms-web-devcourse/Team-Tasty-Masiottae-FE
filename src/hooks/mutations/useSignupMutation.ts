@@ -34,7 +34,7 @@ const postSignup = async ({
   )
 
   const { data } = await axios.post<Data>('/signup', form, {
-    headers: { 'Content-Type': '	multipart/form-data' }
+    headers: { 'Content-Type': 'multipart/form-data' }
   })
 
   return data
