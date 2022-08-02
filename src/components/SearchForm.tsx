@@ -70,9 +70,11 @@ const SearchForm = ({ sortOptions }: Props) => {
         />
         <SearchIcon />
       </SearchWrapper>
-      {Object.keys(errors).length > 0 && (
-        <ErrorMessage>{Object.values(errors)}</ErrorMessage>
-      )}
+      {
+        <ErrorMessage>
+          {Object.keys(errors).length > 0 && Object.values(errors)}
+        </ErrorMessage>
+      }
       <OptionContainer>
         <FilterWrapper onClick={handleFilterClick}>
           <FilterIcon />
@@ -104,6 +106,9 @@ const SearchInput = styled(Input)`
 const ErrorMessage = styled.div`
   font-size: 1.6rem;
   color: red;
+  height: 2rem;
+  padding: 1rem;
+  box-sizing: border-box;
 `
 
 const SearchIcon = styled(FiSearch)`
