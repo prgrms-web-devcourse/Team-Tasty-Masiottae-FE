@@ -10,7 +10,6 @@ import { dummyFranchiseList, dummyMenu } from '@constants/dummyMenu'
 
 const MIN_OPTION = 1
 const MAX_OPTION = 20
-const MAX_TAG = 4
 
 const NAME_SELECT = 'brand'
 const NAME_TITLE = 'title'
@@ -114,8 +113,7 @@ const EditMenu = () => {
   }
 
   const handleTagListChange = (tagIdList: number[]) => {
-    const newTagIdList = tagIdList.slice(0, MAX_TAG)
-    setTasteIdList(newTagIdList)
+    setTasteIdList(tagIdList)
   }
 
   const requiredInputCheck = (input: string) => {
