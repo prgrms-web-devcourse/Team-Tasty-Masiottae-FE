@@ -9,6 +9,8 @@ import SearchForm from '@components/SearchForm'
 const SORT_OPTIONS = ['최신순', '좋아요순', '댓글순']
 
 const Search = () => {
+  const router = useRouter()
+  const { category } = router.query
   const [menuList, setMenuList] = useState(MenuListDummy)
   const ref = useIntersectionObserver(
     async (entry, observer) => {
@@ -17,8 +19,6 @@ const Search = () => {
     },
     { threshold: 0.5 }
   )
-  const router = useRouter()
-  const { category } = router.query
 
   return (
     <Container>

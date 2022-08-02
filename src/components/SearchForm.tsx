@@ -3,6 +3,8 @@ import { BsFilterLeft } from 'react-icons/bs'
 import Input from '@components/Input'
 import { FiSearch } from 'react-icons/fi'
 import useForm from '@hooks/useForm'
+import Modal from './Modal'
+import { useState } from 'react'
 
 interface Props {
   sortOptions: string[]
@@ -29,6 +31,7 @@ const validate = ({ keyword }: SearchInput) => {
 }
 
 const SearchForm = ({ sortOptions }: Props) => {
+  const [modalVisible, setModalVisible] = useState(false)
   const { values, errors, handleChange, handleSubmit } = useForm({
     initialValues: {
       keyword: ''
@@ -38,6 +41,9 @@ const SearchForm = ({ sortOptions }: Props) => {
     },
     validate
   })
+
+  const handleFilterClick = () => setModalVisible(true)
+  const handleModalClose = () => setModalVisible(false)
 
   return (
     <form onSubmit={handleSubmit}>
@@ -56,10 +62,13 @@ const SearchForm = ({ sortOptions }: Props) => {
         <ErrorMessage>{Object.values(errors)}</ErrorMessage>
       )}
       <OptionContainer>
-        <FilterWrapper>
+        <FilterWrapper onClick={handleFilterClick}>
           <FilterIcon />
           <Text>필터</Text>
         </FilterWrapper>
+        <Modal visible={modalVisible} onClose={handleModalClose}>
+          모달이여
+        </Modal>
         <select>
           {sortOptions.map((option) => (
             <option key={option} value={option}>
