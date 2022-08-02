@@ -5,7 +5,6 @@ import TagContainer from '@components/TagContainer'
 import ImageUploader from '@components/ImageUploader'
 import Button from '@components/Button'
 import { ImageType, Option, Taste } from '@customTypes/index'
-
 import { dummyFranchiseList, dummyMenu } from '@constants/dummyMenu'
 
 const MIN_OPTION = 1
@@ -174,6 +173,9 @@ const EditMenu = () => {
       console.log(key, ': ', value)
     }
     */
+    // mutation 호출
+
+    //성공 시 response data = id ㅇㄷ
   }
   return (
     <FlexContainer>

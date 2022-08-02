@@ -8,7 +8,10 @@ import {
 
 const axiosInstance = axios.create({
   timeout: 5000,
-  baseURL: process.env.NEXT_PUBLIC_API_URL
+  baseURL: '/',
+  headers: {
+    'Content-Type': `application/json`
+  }
 })
 
 axiosInstance.interceptors.request.use(handleRequest, handleRequestError)
