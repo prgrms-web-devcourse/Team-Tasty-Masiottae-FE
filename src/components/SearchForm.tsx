@@ -4,7 +4,8 @@ import Input from '@components/Input'
 import { FiSearch } from 'react-icons/fi'
 import useForm from '@hooks/useForm'
 import Modal from './Modal'
-import { useState } from 'react'
+import { useState, ChangeEvent } from 'react'
+import { useRouter } from 'next/router'
 
 interface Props {
   sortOptions: string[]
@@ -31,19 +32,30 @@ const validate = ({ keyword }: SearchInput) => {
 }
 
 const SearchForm = ({ sortOptions }: Props) => {
+  const router = useRouter()
   const [modalVisible, setModalVisible] = useState(false)
   const { values, errors, handleChange, handleSubmit } = useForm({
     initialValues: {
       keyword: ''
     },
-    onSubmit: ({ keyword }) => {
-      alert(`${keyword} submitted!`)
+    onSubmit: (values) => {
+      return {
+        keywords: values.keyword,
+        sortOption: router.query.sort
+      }
     },
     validate
   })
 
   const handleFilterClick = () => setModalVisible(true)
   const handleModalClose = () => setModalVisible(false)
+
+  const handleSortOptionChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    router.replace({
+      pathname: router.pathname,
+      query: { ...router.query, sort: e.target.value }
+    })
+  }
 
   return (
     <form onSubmit={handleSubmit}>
@@ -67,9 +79,9 @@ const SearchForm = ({ sortOptions }: Props) => {
           <Text>필터</Text>
         </FilterWrapper>
         <Modal visible={modalVisible} onClose={handleModalClose}>
-          모달이여
+          TEMP MODAL CHILD
         </Modal>
-        <select>
+        <select onChange={handleSortOptionChange}>
           {sortOptions.map((option) => (
             <option key={option} value={option}>
               {option}
