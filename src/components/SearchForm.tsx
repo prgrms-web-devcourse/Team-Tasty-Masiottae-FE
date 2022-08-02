@@ -70,11 +70,9 @@ const SearchForm = ({ sortOptions }: Props) => {
         />
         <SearchIcon />
       </SearchWrapper>
-      {
-        <ErrorMessage>
-          {Object.keys(errors).length > 0 && Object.values(errors)}
-        </ErrorMessage>
-      }
+      <ErrorMessage>
+        {Object.keys(errors).length > 0 && Object.values(errors)}
+      </ErrorMessage>
       <OptionContainer>
         <FilterWrapper onClick={handleFilterClick}>
           <FilterIcon />
