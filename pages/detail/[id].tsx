@@ -1,11 +1,14 @@
 import React, { useState } from 'react'
-import MenuDetail from '@components/Detail/MenuDetail'
-import CommentInput from '@components/Detail/CommentInput'
-import CommentList from '@components/Detail/CommentList'
-import userDummy from '../../src/components/Detail/userDummy.json'
+import MenuDetail from '@components/detail/MenuDetail'
+import CommentInput from '@components/detail/CommentInput'
+import CommentList from '@components/detail/CommentList'
 
 const Detail = () => {
-  const [user, setUser] = useState(userDummy) // 로그인한 유저
+  const [user, setUser] = useState({
+    id: 111,
+    name: '계란이 조아',
+    profileImageUrl: 'https://via.placeholder.com/300x150'
+  })
 
   return (
     <>
