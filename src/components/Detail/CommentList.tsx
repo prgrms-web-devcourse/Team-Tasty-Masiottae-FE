@@ -3,10 +3,13 @@ import styled from '@emotion/styled'
 import React, { Fragment, useState } from 'react'
 import { BiTrash } from 'react-icons/bi'
 import commentListDummy from './commentsDummy.json'
-import userDummy from './userDummy.json'
 
 const CommentList = () => {
-  const [user, setUser] = useState(userDummy)
+  const [user, setUser] = useState({
+    id: 111,
+    name: '계란이 조아',
+    profileImageUrl: 'https://via.placeholder.com/300x150'
+  })
   const [commentList, setCommentList] = useState(commentListDummy)
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
 
