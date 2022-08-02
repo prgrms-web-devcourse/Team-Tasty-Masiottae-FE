@@ -17,9 +17,7 @@ const Tag = ({
   isClicked = false,
   onClick
 }: Props) => {
-  const [clicked, setClicked] = useState(isClicked)
   const handleClick = (id: number) => {
-    setClicked((clicked) => !clicked)
     onClick(id)
   }
 
@@ -28,7 +26,7 @@ const Tag = ({
       name={name}
       color={color}
       height={height}
-      isClicked={clicked}
+      isClicked={isClicked}
       onClick={() => handleClick(id)}
     >
       {name}
