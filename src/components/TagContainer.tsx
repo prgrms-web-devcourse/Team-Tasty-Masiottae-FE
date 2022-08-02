@@ -6,6 +6,7 @@ import { useState } from 'react'
 interface Props {
   selectedTasteIdList: number[]
   onChange: (selectedTagList: number[]) => void
+  max?: number
   width?: number
   height?: number
   gap?: number
@@ -16,23 +17,21 @@ const TagContainer = ({
   selectedTasteIdList,
   onChange,
   width,
+  max,
   height = 20,
   gap = 0.8,
   tagHeight = 3.2,
   backgroundColor = '#d9d9d9'
 }: Props) => {
-  const [tagIdList, setTagIdList] = useState(selectedTasteIdList)
+  const tagIdList = selectedTasteIdList
   const handleClickTag = (clickedTagId: number) => {
-    setTagIdList((tagIdList) => {
-      let newTagList = tagIdList
-      if (tagIdList.includes(clickedTagId)) {
-        newTagList = tagIdList.filter((id) => id !== clickedTagId)
-      } else {
-        newTagList = [...tagIdList, clickedTagId]
-      }
-      onChange(newTagList)
-      return newTagList
-    })
+    let newTagList = tagIdList
+    if (tagIdList.includes(clickedTagId)) {
+      newTagList = tagIdList.filter((id) => id !== clickedTagId)
+    } else {
+      newTagList = [...tagIdList, clickedTagId]
+    }
+    onChange(newTagList)
   }
 
   return (
