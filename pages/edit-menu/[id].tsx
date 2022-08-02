@@ -35,9 +35,7 @@ const EditMenu = () => {
   const [tasteIdList, setTasteIdList] = useState<number[]>(
     dummyMenu.tastes.map((taste) => taste.id)
   )
-  const [expectedPrice, setExpectedPrice] = useState<number>(
-    dummyMenu.expectedPrice
-  )
+  const [expectedPrice, setExpectedPrice] = useState(dummyMenu.expectedPrice)
 
   // valid 값
   const [isTitleValid, setTitleValid] = useState(true)
@@ -69,12 +67,11 @@ const EditMenu = () => {
 
   const handleOptionAddBtnClick = () => {
     setOptionList((optionList) => {
-      if (optionList.length <= MAX_OPTION) {
-        const newOptionList = [...optionList, { name: '', description: '' }]
-        return newOptionList
-      } else {
+      if (optionList.length > MAX_OPTION) {
         return optionList
       }
+      const newOptionList = [...optionList, { name: '', description: '' }]
+      return newOptionList
     })
   }
 
@@ -149,7 +146,7 @@ const EditMenu = () => {
       optionList.filter((option) => option.name && option.description)
     )
 
-    if (optionList.length < MIN_OPTION || MAX_OPTION < optionList.length) {
+    if (optionList.length < MIN_OPTION) {
       return
     }
 
