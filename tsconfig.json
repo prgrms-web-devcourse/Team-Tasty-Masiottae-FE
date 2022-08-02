@@ -6,12 +6,9 @@
       "@constants/*": ["src/constants/*"],
       "@hooks/*": ["src/hooks/*"],
       "@interfaces": ["src/interfaces/index"],
-      "@interfaces/*": ["src/interfaces/*"],
       "@lib/*": ["src/lib/*"],
       "@axios/*": ["src/lib/axios/*"],
       "@api/*": ["src/lib/api/*"],
-      "@mutations/*": ["src/mutations/*"],
-      "@queries/*": ["src/queries/*"],
       "@customTypes/*": ["src/types/*"],
       "@utils/*": ["src/utils/*"]
     },
