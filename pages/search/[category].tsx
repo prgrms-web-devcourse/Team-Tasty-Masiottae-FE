@@ -1,17 +1,16 @@
-import Input from '@components/Input'
 import styled from '@emotion/styled'
 import useIntersectionObserver from '@hooks/useIntersectionObserver'
 import { MenuDummy, MenuListDummy } from '@constants/cardData'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
-import { FiSearch } from 'react-icons/fi'
-import { BsFilterLeft } from 'react-icons/bs'
 import MenuCardList from '@components/MenuCardList'
+import SearchForm from '@components/SearchForm'
 
 const SORT_OPTIONS = ['최신순', '좋아요순', '댓글순']
-const PLACEHOLDER_MENU_SEARCH = ' 메뉴 검색'
 
 const Search = () => {
+  const router = useRouter()
+  const { category } = router.query
   const [menuList, setMenuList] = useState(MenuListDummy)
   const ref = useIntersectionObserver(
     async (entry, observer) => {
@@ -20,35 +19,13 @@ const Search = () => {
     },
     { threshold: 0.5 }
   )
-  const router = useRouter()
-  const { category } = router.query
 
   return (
     <Container>
       <FixedWrapper>
         <InnerWrapper>
-          <SearchWrapper>
-            <SearchInput
-              height={5}
-              type="text"
-              placeholder={`${category}${PLACEHOLDER_MENU_SEARCH}`}
-            />
-            <SearchIcon />
-          </SearchWrapper>
           <CategoryHeader>{category}</CategoryHeader>
-          <OptionContainer>
-            <FilterWrapper>
-              <FilterIcon />
-              <Text>필터</Text>
-            </FilterWrapper>
-            <select>
-              {SORT_OPTIONS.map((value) => (
-                <option key={value} value={value}>
-                  {value}
-                </option>
-              ))}
-            </select>
-          </OptionContainer>
+          <SearchForm sortOptions={SORT_OPTIONS} />
         </InnerWrapper>
       </FixedWrapper>
       <CardListWrapper>
@@ -88,38 +65,6 @@ const InnerWrapper = styled.div`
   }
 `
 
-const SearchWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  margin-top: 1rem;
-`
-const SearchInput = styled(Input)`
-  width: 100%;
-`
-
-const SearchIcon = styled(FiSearch)`
-  font-size: 2.5rem;
-  margin-left: -3.5rem;
-`
-
-const OptionContainer = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  gap: 1rem;
-`
-
-const FilterWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  cursor: pointer;
-`
-
-const FilterIcon = styled(BsFilterLeft)`
-  font-size: 3.5rem;
-  font-weight: bold;
-`
-
 const CardListWrapper = styled.ul`
   padding-top: 22rem;
 `
@@ -131,11 +76,6 @@ const CategoryHeader = styled.div`
   padding: 3rem;
   background-color: gray;
   box-sizing: border-box;
-  user-select: none;
-`
-
-const Text = styled.span`
-  font-size: 2rem;
   user-select: none;
 `
 

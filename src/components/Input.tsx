@@ -36,7 +36,6 @@ const Input = ({
     },
     [onChange]
   )
-
   const handleBlur = useCallback(
     (e: React.FocusEvent<HTMLInputElement, Element>) => {
       onBlur && onBlur(e)
