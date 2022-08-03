@@ -2,7 +2,7 @@ export const FILE = 'file'
 export const TEXT = 'text'
 export const PASSWORD = 'password'
 export const INPUT_EMAIL = 'email'
-export const INPUT_NICKNAME = 'nickname'
+export const INPUT_NICKNAME = 'nickName'
 export const INPUT_PASSWORD = 'password'
 export const INPUT_PASSWORD_CONFIRM = 'passwordConfirm'
 export const INPUT_SNS = 'sns'
@@ -25,3 +25,7 @@ export const UNAVAILABLE = '사용 불가능'
 export const REGEX_PASSWORD = /\S{8,10}/
 export const REGEX_EMAIL =
   /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i
+
+export const REGEX_NICKNAME = /\S{1,7}/
+export const MAX_PASSWORD = 10
+export const MAX_NICKNAME = 7
