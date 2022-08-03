@@ -32,9 +32,13 @@ export const postMenu = async ({ image, data }: Params) => {
     })
   )
 
-  const { data: MenuId } = await axios.post<number>(`/menu`, formData, {
-    headers: { 'Content-Type': 'multipart/form-data' }
-  })
+  const { data: MenuId } = await axios.post<{ menuId: number }>(
+    `/menu`,
+    formData,
+    {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    }
+  )
 
   return MenuId
 }

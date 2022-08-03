@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
+import { useRouter } from 'next/router'
 import styled from '@emotion/styled'
 import Input from '@components/Input'
 import TagContainer from '@components/TagContainer'
 import ImageUploader from '@components/ImageUploader'
 import Button from '@components/Button'
-import { ImageType, Option } from '@customTypes/index'
+import { Option } from '@customTypes/index'
 import { dummyFranchiseList } from '@constants/dummyMenu'
 import { usePostMenu } from '@hooks/mutations/usePostMenuMutation'
 import {
@@ -25,6 +26,7 @@ import {
 
 const CreateMenu = () => {
   // 필드 값
+  const router = useRouter()
   const { mutate } = usePostMenu()
   const [file, setFile] = useState<File | null>(null)
   const [franchiseId, setFranchiseId] = useState(1)
@@ -118,7 +120,6 @@ const CreateMenu = () => {
     return input ? true : false
   }
 
-  // input onBlur handler
   const handleTitleBlur = (e: React.FormEvent<HTMLInputElement>) => {
     const newValue = e.currentTarget.value
     setTitleValid(requiredInputCheck(newValue))
@@ -128,9 +129,8 @@ const CreateMenu = () => {
     const newValue = e.currentTarget.value
     setOriginalTitleValid(requiredInputCheck(newValue))
   }
-
+  // form data 전송
   const handleEditSubmit = async () => {
-    // form data 전송
     if (!isTitleValid) {
       return
     }
@@ -157,12 +157,18 @@ const CreateMenu = () => {
       optionList: optionList,
       tasteIdList: tasteIdList
     }
-    console.log(file)
-    mutate({ image: file, data: data })
+    mutate(
+      { image: file, data: data },
+      {
+        onSuccess: (data) => {
+          router.push(`/detail/${data.menuId}`)
+        }
+      }
+    )
   }
   return (
     <FlexContainer>
-      <Title>메뉴 수정</Title>
+      <Title>메뉴 생성</Title>
       <ImageUploader onChange={handleImageChange} />
       <InputWrapper>
         <Select name={NAME_SELECT} onChange={handleFranchiseChange}>
