@@ -9,7 +9,7 @@ interface Props {
   size?: number
   shape?: 'square' | 'circle'
   value?: string | null
-  onChange: (image: ImageType, file: File) => void
+  onChange: (file: File) => void
 }
 
 const ImageUploader = ({
@@ -26,8 +26,7 @@ const ImageUploader = ({
       reader.readAsDataURL(file)
       reader.onload = () => {
         setImage(reader.result)
-
-        onChange(reader.result, file)
+        onChange(file)
       }
     }
   }

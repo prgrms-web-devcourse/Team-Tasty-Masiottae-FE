@@ -7,30 +7,27 @@ import Button from '@components/Button'
 import { ImageType, Option } from '@customTypes/index'
 import { dummyFranchiseList } from '@constants/dummyMenu'
 import { usePostMenu } from '@hooks/mutations/usePostMenuMutation'
-
-const MIN_OPTION = 1
-const MAX_OPTION = 20
-const MAX_TAG = 4
-
-const NAME_SELECT = 'brand'
-const NAME_TITLE = 'title'
-const NAME_ORIGINAL_TITLE = 'original-title'
-const NAME_OPTION_NAME = 'option-name'
-const NAME_OPTION_DESCRIPTION = 'option-description'
-const NAME_EXPECTED_PRICE = 'price'
-
-const PLACEHOLDER_TITLE = '커스텀 메뉴의 제목을 지어주세요'
-const PLACEHOLDER_ORIGINAL_TITLE = '기본이 되는 메뉴의 제목을 적어주세요'
-const PLACEHOLDER_OPTION_NAME = '옵션 명'
-const PLACEHOLDER_OPTION_DESCRIPTION = '옵션 단위, 또는 설명'
-const PLACEHOLDER_EXPECTED_PRICE = '예상되는 최종 가격을 입력해주세요'
+import {
+  MIN_OPTION,
+  MAX_OPTION,
+  NAME_SELECT,
+  NAME_TITLE,
+  NAME_ORIGINAL_TITLE,
+  NAME_OPTION_NAME,
+  NAME_OPTION_DESCRIPTION,
+  NAME_EXPECTED_PRICE,
+  PLACEHOLDER_TITLE,
+  PLACEHOLDER_ORIGINAL_TITLE,
+  PLACEHOLDER_OPTION_NAME,
+  PLACEHOLDER_OPTION_DESCRIPTION,
+  PLACEHOLDER_EXPECTED_PRICE
+} from '@constants/menuConstant'
 
 const CreateMenu = () => {
   // 필드 값
   const { mutate } = usePostMenu()
   const [file, setFile] = useState<File | null>(null)
-  const [image, setImage] = useState<ImageType>(null)
-  const [franchiseId, setFranchiseId] = useState(0)
+  const [franchiseId, setFranchiseId] = useState(1)
   const [title, setTitle] = useState('')
   const [originalTitle, setOriginalTitle] = useState('')
   const [optionList, setOptionList] = useState<Option[]>([])
@@ -41,10 +38,8 @@ const CreateMenu = () => {
   const [isTitleValid, setTitleValid] = useState(true)
   const [isOriginalTitleValid, setOriginalTitleValid] = useState(true)
   // onChange handler
-  const handleImageChange = (image: ImageType, file: File) => {
-    setImage(image)
+  const handleImageChange = (file: File) => {
     setFile(file)
-    console.log(file)
   }
 
   const handleFranchiseChange = (e: React.FormEvent<HTMLSelectElement>) => {
@@ -116,8 +111,7 @@ const CreateMenu = () => {
   }
 
   const handleTagListChange = (tagIdList: number[]) => {
-    const newTagIdList = tagIdList.slice(0, MAX_TAG)
-    setTasteIdList(newTagIdList)
+    setTasteIdList(tagIdList)
   }
 
   const requiredInputCheck = (input: string) => {
@@ -155,7 +149,7 @@ const CreateMenu = () => {
 
     const data = {
       userId: 1,
-      franchiseId: 1,
+      franchiseId: franchiseId,
       title: title,
       content: '',
       originalTitle: originalTitle,
@@ -253,7 +247,7 @@ const CreateMenu = () => {
         selectedTasteIdList={tasteIdList}
         onChange={handleTagListChange}
       />
-      <Button onClick={handleEditSubmit}>메뉴 수정</Button>
+      <Button onClick={handleEditSubmit}>메뉴 추가</Button>
     </FlexContainer>
   )
 }
