@@ -23,10 +23,13 @@ import {
   PLACEHOLDER_OPTION_DESCRIPTION,
   PLACEHOLDER_EXPECTED_PRICE
 } from '@constants/menuConstant'
+import { useFranchises } from '@hooks/queries/useFranchises'
 
 const CreateMenu = () => {
   // 필드 값
   const router = useRouter()
+  const { data: franchiseList } = useFranchises()
+
   const { mutate } = usePostMenu()
   const [file, setFile] = useState<File | null>(null)
   const [franchiseId, setFranchiseId] = useState(1)
@@ -35,6 +38,7 @@ const CreateMenu = () => {
   const [optionList, setOptionList] = useState<Option[]>([])
   const [tasteIdList, setTasteIdList] = useState<number[]>([])
   const [expectedPrice, setExpectedPrice] = useState(0)
+  console.log(franchiseList)
 
   // valid 값
   const [isTitleValid, setTitleValid] = useState(true)
