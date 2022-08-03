@@ -1,5 +1,5 @@
 import { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios'
-import { getLocalToken } from './localToken'
+import { getLocalToken } from '@utils/localToken'
 
 export const handleRequest = (
   config: AxiosRequestConfig
@@ -9,7 +9,7 @@ export const handleRequest = (
     throw new Error(`Axios config headers must be provided`)
   }
   if (token) {
-    config.headers.Authorization = `Bearer ${token}`
+    config.headers.Authorization = token
   }
   return config
 }
