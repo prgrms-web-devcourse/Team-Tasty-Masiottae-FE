@@ -3,9 +3,12 @@ import styled from '@emotion/styled'
 import Tag from './Tag'
 import { dummyTasteList as tasteList } from '@constants/dummyMenu'
 import { useState } from 'react'
+
+const MAX_TAG = 4
 interface Props {
   selectedTasteIdList: number[]
   onChange: (selectedTagList: number[]) => void
+  max?: number
   width?: number
   height?: number
   gap?: number
@@ -21,18 +24,16 @@ const TagContainer = ({
   tagHeight = 3.2,
   backgroundColor = '#d9d9d9'
 }: Props) => {
-  const [tagIdList, setTagIdList] = useState(selectedTasteIdList)
+  const tagIdList = selectedTasteIdList
   const handleClickTag = (clickedTagId: number) => {
-    setTagIdList((tagIdList) => {
-      let newTagList = tagIdList
-      if (tagIdList.includes(clickedTagId)) {
-        newTagList = tagIdList.filter((id) => id !== clickedTagId)
-      } else {
-        newTagList = [...tagIdList, clickedTagId]
-      }
-      onChange(newTagList)
-      return newTagList
-    })
+    let newTagList = tagIdList
+    if (tagIdList.includes(clickedTagId)) {
+      newTagList = tagIdList.filter((id) => id !== clickedTagId)
+    } else {
+      newTagList = [...tagIdList, clickedTagId]
+    }
+    newTagList = newTagList.slice(0, MAX_TAG)
+    onChange(newTagList)
   }
 
   return (
