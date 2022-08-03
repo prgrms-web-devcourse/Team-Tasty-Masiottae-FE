@@ -36,7 +36,7 @@ export interface Comment {
 export interface Option {
   id: number
   name: string
-  optionDescription: string
+  description: string
 }
 
 export interface Franchise {
