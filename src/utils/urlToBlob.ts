@@ -10,4 +10,5 @@ export function urlToBlob(imgSrc: string) {
   const blob = new Blob([ia], {
     type: 'image/jpeg'
   })
+  return blob
 }

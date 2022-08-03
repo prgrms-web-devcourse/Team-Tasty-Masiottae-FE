@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import styled from '@emotion/styled'
 import Input from '@components/Input'
 import TagContainer from '@components/TagContainer'
 import ImageUploader from '@components/ImageUploader'
 import Button from '@components/Button'
-import { ImageType, Option, Taste } from '@customTypes/index'
+import { ImageType, Option } from '@customTypes/index'
 import { dummyFranchiseList } from '@constants/dummyMenu'
-import axios from 'axios'
-import { getMaxListeners } from 'process'
-import axiosInstance from '@lib/axios'
+import { usePostMenu } from '@hooks/mutations/usePostMenuMutation'
 
 const MIN_OPTION = 1
 const MAX_OPTION = 20
@@ -27,8 +25,10 @@ const PLACEHOLDER_OPTION_NAME = '옵션 명'
 const PLACEHOLDER_OPTION_DESCRIPTION = '옵션 단위, 또는 설명'
 const PLACEHOLDER_EXPECTED_PRICE = '예상되는 최종 가격을 입력해주세요'
 
-const EditMenu = () => {
+const CreateMenu = () => {
   // 필드 값
+  const { mutate } = usePostMenu()
+  const [file, setFile] = useState<File | null>(null)
   const [image, setImage] = useState<ImageType>(null)
   const [franchiseId, setFranchiseId] = useState(0)
   const [title, setTitle] = useState('')
@@ -41,8 +41,10 @@ const EditMenu = () => {
   const [isTitleValid, setTitleValid] = useState(true)
   const [isOriginalTitleValid, setOriginalTitleValid] = useState(true)
   // onChange handler
-  const handleImageChange = (image: ImageType) => {
+  const handleImageChange = (image: ImageType, file: File) => {
     setImage(image)
+    setFile(file)
+    console.log(file)
   }
 
   const handleFranchiseChange = (e: React.FormEvent<HTMLSelectElement>) => {
@@ -133,7 +135,7 @@ const EditMenu = () => {
     setOriginalTitleValid(requiredInputCheck(newValue))
   }
 
-  const handleEditSubmit = async (e: React.FormEvent<HTMLButtonElement>) => {
+  const handleEditSubmit = async () => {
     // form data 전송
     if (!isTitleValid) {
       return
@@ -151,32 +153,18 @@ const EditMenu = () => {
       return
     }
 
-    const formData = new FormData()
-    formData.append('userId', '1')
-    if (image) {
-      formData.append('image', image as string) // blob 처리
+    const data = {
+      userId: 1,
+      franchiseId: 1,
+      title: title,
+      content: '',
+      originalTitle: originalTitle,
+      expectedPrice: expectedPrice,
+      optionList: optionList,
+      tasteIdList: tasteIdList
     }
-    formData.append('franchiseId', `${franchiseId}`)
-    formData.append('title', title)
-    formData.append('content', '')
-    formData.append('originalTitle', originalTitle)
-    if (expectedPrice) {
-      formData.append('expectedPrice', expectedPrice.toString())
-    }
-    formData.append('optionList', JSON.stringify(optionList))
-    formData.append('tasteList', JSON.stringify(tasteIdList))
-
-    //const result = await axiosInstance({ url: '/franchises' })
-    //console.log(result)
-
-    /*
-    for (const [key, value] of formData) {
-      console.log(key, ': ', value)
-    }
-    */
-    // mutation 호출
-
-    //성공 시 response data = id ㅇㄷ
+    console.log(file)
+    mutate({ image: file, data: data })
   }
   return (
     <FlexContainer>
@@ -313,4 +301,4 @@ const SubTitle = styled.h3`
   align-self: start;
 `
 
-export default EditMenu
+export default CreateMenu
