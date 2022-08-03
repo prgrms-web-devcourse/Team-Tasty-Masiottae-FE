@@ -15,6 +15,7 @@ interface Props {
 }
 
 const IMAGE_ALT = 'NO IMAGE'
+const extensions = ['jpg', 'png', 'jpeg']
 
 const MenuCard = ({
   title,
@@ -25,6 +26,14 @@ const MenuCard = ({
   comments,
   divRef
 }: Props) => {
+  if (!imageUrl) imageUrl = 'https://via.placeholder.com/300x150'
+
+  if (imageUrl) {
+    if (!extensions.includes(imageUrl.split('.').slice(-1)[0])) {
+      imageUrl = 'https://via.placeholder.com/300x150'
+    }
+  }
+
   return (
     <CardContainer ref={divRef}>
       <Title>{title}</Title>
