@@ -1,0 +1,52 @@
+[
+  {
+    "id": 1,
+    "menuId": 1,
+    "author": {
+      "id": 111,
+      "name": "계란이 조아",
+      "profileImageUrl": "https://via.placeholder.com/300x150"
+    },
+    "comment": "나는 글쓴이입니다"
+  },
+  {
+    "id": 2,
+    "menuId": 1,
+    "author": {
+      "id": 222,
+      "name": "레드",
+      "profileImageUrl": "https://via.placeholder.com/300x150"
+    },
+    "comment": "너무 달아요너무 달아요너무 달아요너무 달아요너무 달아요너무 달아요너무 달아요너무 달아요너무 달아요너무 달아요너무 달아요너무 달아요너무 달아요너무 달아요"
+  },
+  {
+    "id": 3,
+    "menuId": 1,
+    "author": {
+      "id": 333,
+      "name": "블루",
+      "profileImageUrl": "https://via.placeholder.com/300x150"
+    },
+    "comment": "ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ"
+  },
+  {
+    "id": 4,
+    "menuId": 1,
+    "author": {
+      "id": 444,
+      "name": "그린",
+      "profileImageUrl": "https://via.placeholder.com/300x150"
+    },
+    "comment": "ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ"
+  },
+  {
+    "id": 5,
+    "menuId": 1,
+    "author": {
+      "id": 555,
+      "name": "블래객개객",
+      "profileImageUrl": "https://via.placeholder.com/300x150"
+    },
+    "comment": "ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ"
+  }
+]
