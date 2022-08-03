@@ -1,21 +1,20 @@
 import styled from '@emotion/styled'
 import useIntersectionObserver from '@hooks/useIntersectionObserver'
-import { MenuDummy, MenuListDummy } from '@constants/cardData'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
 import MenuCardList from '@components/MenuCardList'
 import SearchForm from '@components/SearchForm'
+import { useMenuList } from '@hooks/queries/useMenuList'
 
 const SORT_OPTIONS = ['최신순', '좋아요순', '댓글순']
 
 const Search = () => {
   const router = useRouter()
   const { category } = router.query
-  const [menuList, setMenuList] = useState(MenuListDummy)
+  const { menuList } = useMenuList()
+
   const ref = useIntersectionObserver(
     async (entry, observer) => {
       observer.unobserve(entry.target)
-      setMenuList([...menuList, MenuDummy])
     },
     { threshold: 0.5 }
   )
