@@ -1,5 +1,7 @@
 /** @type {import('next').NextConfig} */
 
+const API_KEY = process.env.NEXT_PUBLIC_API_URL
+
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
@@ -9,8 +11,8 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        source: '/:path*',
-        destination: `${process.env.NEXT_PUBLIC_API_URL}/:path*`
+        source: '/api/:path*',
+        destination: `${API_KEY}/:path*`
       }
     ]
   }
