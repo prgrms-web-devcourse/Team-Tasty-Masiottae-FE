@@ -163,7 +163,7 @@ const CreateMenu = () => {
       { image: file, data: data },
       {
         onSuccess: (data) => {
-          router.push(`/detail/${data.menuId}`)
+          router.replace(`/detail/${data.menuId}`)
         }
       }
     )
