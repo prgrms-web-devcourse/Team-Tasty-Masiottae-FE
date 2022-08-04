@@ -1,5 +1,5 @@
 import { RefObject } from 'react'
-import { Menu } from '../types/index'
+import { Menu } from '@interfaces'
 import styled from '@emotion/styled'
 import Link from 'next/link'
 import MenuCard from '@components/MenuCard'
@@ -22,9 +22,9 @@ const MenuCardList = ({ menuList, divRef }: Props) => {
                   title={menu.title}
                   imageUrl={menu.image}
                   avatarImageUrl={menu.author.image}
-                  author={menu.author.nickname}
+                  author={menu.author.nickName}
                   likes={menu.likes}
-                  comments={menu.comments}
+                  comments={10}
                   divRef={menuList.length === idx + 1 ? divRef : null}
                 />
               </a>

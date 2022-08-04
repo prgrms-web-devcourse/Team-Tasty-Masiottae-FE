@@ -1,8 +1,8 @@
 import Avatar from '@components/Avatar'
 import MenuCardList from '@components/MenuCardList'
 import SearchForm from '@components/SearchForm'
-import { MenuDummy, MenuListDummy } from '@constants/cardData'
 import styled from '@emotion/styled'
+import { useMenuList } from '@hooks/queries/useMenuList'
 import useIntersectionObserver from '@hooks/useIntersectionObserver'
 import { MouseEvent, useState } from 'react'
 
@@ -18,12 +18,10 @@ interface TabProps {
 
 const UserMenu = () => {
   const [option, setOption] = useState(SELECT_DUMMY[0])
-  const [menuList, setMenuList] = useState(MenuListDummy)
-
+  const { menuList } = useMenuList()
   const ref = useIntersectionObserver(
     async (entry, observer) => {
       observer.unobserve(entry.target)
-      setMenuList([...menuList, MenuDummy])
     },
     { threshold: 0.5 }
   )
