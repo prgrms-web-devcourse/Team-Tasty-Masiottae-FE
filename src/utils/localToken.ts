@@ -13,7 +13,6 @@ export const getLocalToken = () => {
 }
 
 export const setLocalToken = ({ accessToken, expirationTime }: Data) => {
-  console.log(accessToken, expirationTime)
   if (typeof window !== undefined) {
     window.localStorage.setItem(LOCAL_TOKEN_KEY, accessToken)
     window.localStorage.setItem(LOCAL_TOKEN_EXPIRE_DATE, expirationTime)

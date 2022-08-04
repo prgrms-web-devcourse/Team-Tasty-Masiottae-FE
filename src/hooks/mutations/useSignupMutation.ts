@@ -44,7 +44,6 @@ const postSignup = async ({
       { type: 'application/json' }
     )
   )
-  console.log(email, password, nickName, snsAccount, image)
   const { data } = await axios.post<Data>('/signup', form, {
     headers: { 'Content-Type': 'multipart/form-data' }
   })
