@@ -1,12 +1,15 @@
-import Modal from '@components/Modal'
+import React, { useState } from 'react'
 import styled from '@emotion/styled'
-import React, { Fragment, useState } from 'react'
+import Modal from '@components/Modal'
+import { useMenu } from '@hooks/queries/useMenu'
+import { useRouter } from 'next/router'
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai'
 import { BiDotsHorizontalRounded } from 'react-icons/bi'
-import menuDummy from './menuDummy.json'
 
 const MenuDetail = () => {
-  const [menu, setMenu] = useState(menuDummy)
+  const router = useRouter()
+  const id = parseInt(router.query.id as string, 10)
+  const { data: menu } = useMenu(id)
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const handleEditMenuClick = (e: React.MouseEvent<SVGElement, MouseEvent>) => {
@@ -16,6 +19,8 @@ const MenuDetail = () => {
   const handleEditMenuClose = () => {
     setIsModalOpen(false)
   }
+
+  if (!menu) return <></>
 
   return (
     <MenuContainer>
@@ -33,31 +38,29 @@ const MenuDetail = () => {
       </Header>
 
       <ImageWrapper>
-        <Image src={menu.imageUrl} alt="" />
+        <Image src={menu.image} alt="" />
       </ImageWrapper>
 
       <Footer>
         <UserWrapper>
-          <Avatar src={menu.author.profileImageUrl} />
-          <UserNameText>{menu.author.name}</UserNameText>
+          <Avatar src={menu.author.image} />
+          <UserNameText>{menu.author.nickName}</UserNameText>
         </UserWrapper>
         <LikeWrapper>
-          <Heart size={30} />
+          <EmptyHeart size={30} />
           <LikesCountText>{menu.likes}</LikesCountText>
         </LikeWrapper>
       </Footer>
 
       <OptionsWrapper>
         <div>
-          <FranchiseText>[{menu.franchise}] </FranchiseText>
+          <FranchiseText>{menu.franchise.name} </FranchiseText>
           <span>{menu.originalTitle}</span>
         </div>
-        {menu.options.map((option) => (
-          <Fragment key={option.name}>
-            <OptionText>
-              + {option.name} {option.description}
-            </OptionText>
-          </Fragment>
+        {menu.optionList.map(({ optionName, optionDescription }) => (
+          <OptionText key={optionName}>
+            + {optionName} {optionDescription}
+          </OptionText>
         ))}
         <PriceText>예상 가격: {menu.expectedPrice} 원</PriceText>
       </OptionsWrapper>
@@ -172,11 +175,13 @@ const Heart = styled(AiFillHeart)`
   cursor: pointer;
 `
 
+const EmptyHeart = styled(AiOutlineHeart)`
+  cursor: pointer;
+`
+
 const LikesCountText = styled.span`
   font-size: 1.4rem;
   font-weight: 700;
 `
-
-const EmptyHeart = styled(AiOutlineHeart)``
 
 export default MenuDetail
