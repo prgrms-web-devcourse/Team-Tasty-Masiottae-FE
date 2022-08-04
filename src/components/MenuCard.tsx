@@ -71,6 +71,7 @@ const Title = styled.div`
 
 const Image = styled.img`
   width: 100%;
+  max-height: 20rem;
 `
 
 const CardFooter = styled.div`

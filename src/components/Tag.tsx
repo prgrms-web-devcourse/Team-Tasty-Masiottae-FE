@@ -49,7 +49,7 @@ const Item = styled.div<{
   border-radius: ${({ height }) => `${height}rem`};
   padding: 1rem 2rem;
   background-color: ${({ color }) => `${color}`};
-  opacity: ${({ isClicked }) => `${isClicked ? `1` : `0.5`}`};
+  opacity: ${({ isClicked }) => `${isClicked ? `1` : `0.3`}`};
   color: white;
   &:hover {
     cursor: pointer;

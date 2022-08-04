@@ -6,6 +6,7 @@ import useForm from '@hooks/useForm'
 import Modal from './Modal'
 import { useState, ChangeEvent } from 'react'
 import { useRouter } from 'next/router'
+import TagContainer from './TagContainer'
 
 interface Props {
   sortOptions: string[]
@@ -34,15 +35,18 @@ const validate = ({ keyword }: SearchInput) => {
 const SearchForm = ({ sortOptions }: Props) => {
   const router = useRouter()
   const [modalVisible, setModalVisible] = useState(false)
+  const [selectedTagList, setSelectedTagList] = useState<Array<number>>([])
   const { values, errors, handleChange, handleSubmit } = useForm({
     initialValues: {
       keyword: ''
     },
     onSubmit: (values) => {
-      return {
-        keywords: values.keyword,
-        sortOption: router.query.sort
+      const res = {
+        keyword: values.keyword,
+        sort: router.query.sort,
+        tasteIdList: selectedTagList
       }
+      return res
     },
     validate
   })
@@ -79,7 +83,15 @@ const SearchForm = ({ sortOptions }: Props) => {
           <Text>필터</Text>
         </FilterWrapper>
         <Modal visible={modalVisible} onClose={handleModalClose}>
-          TEMP MODAL CHILD
+          <TagContainer
+            selectedTasteIdList={selectedTagList}
+            backgroundColor="white"
+            gap={2}
+            tagHeight={3.3}
+            onChange={(newTagList) => {
+              setSelectedTagList([...newTagList])
+            }}
+          />
         </Modal>
         <select onChange={handleSortOptionChange}>
           {sortOptions.map((option) => (
