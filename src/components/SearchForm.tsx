@@ -46,7 +46,6 @@ const SearchForm = ({ sortOptions }: Props) => {
         sort: router.query.sort,
         tasteIdList: selectedTagList
       }
-      console.log(res)
       return res
     },
     validate
