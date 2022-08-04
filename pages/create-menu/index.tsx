@@ -28,7 +28,6 @@ import { useFranchises } from '@hooks/queries/useFranchises'
 const CreateMenu = () => {
   // 필드 값
   const router = useRouter()
-  const { data: franchiseList } = useFranchises()
 
   const { mutate } = usePostMenu()
   const [file, setFile] = useState<File | null>(null)
@@ -38,7 +37,6 @@ const CreateMenu = () => {
   const [optionList, setOptionList] = useState<Option[]>([])
   const [tasteIdList, setTasteIdList] = useState<number[]>([])
   const [expectedPrice, setExpectedPrice] = useState(0)
-  console.log(franchiseList)
 
   // valid 값
   const [isTitleValid, setTitleValid] = useState(true)

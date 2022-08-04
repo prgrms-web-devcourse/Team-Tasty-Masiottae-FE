@@ -1,19 +1,19 @@
 export const dummyFranchiseList = [
-  { id: 0, name: '스타벅스' },
-  { id: 1, name: '이디야' },
-  { id: 2, name: '공차' },
-  { id: 3, name: '아마스빈' },
-  { id: 4, name: '서브웨이' }
+  { id: 1, name: '스타벅스' },
+  { id: 2, name: '이디야' },
+  { id: 3, name: '공차' },
+  { id: 4, name: '아마스빈' },
+  { id: 5, name: '서브웨이' }
 ]
 
 export const dummyTasteList = [
-  { id: 0, name: '차가운', color: '#00B5E3' },
-  { id: 1, name: '뜨거운', color: '#FF3333' },
-  { id: 2, name: '달콤한', color: '#CC0099' },
-  { id: 3, name: '매콤한', color: '#df2020' },
-  { id: 4, name: '새콤한', color: '#FFDD33' },
-  { id: 5, name: '쌉쌀한', color: '#339966' },
-  { id: 6, name: '짭짤한', color: '#FF5533' }
+  { id: 1, name: '차가운', color: '#00B5E3' },
+  { id: 2, name: '뜨거운', color: '#FF3333' },
+  { id: 3, name: '달콤한', color: '#CC0099' },
+  { id: 4, name: '매콤한', color: '#df2020' },
+  { id: 5, name: '새콤한', color: '#FFDD33' },
+  { id: 6, name: '쌉쌀한', color: '#339966' },
+  { id: 7, name: '짭짤한', color: '#FF5533' }
 ]
 
 export const dummyMenu = {
