@@ -11,6 +11,9 @@ import {
 import React, { useState, useCallback } from 'react'
 import { BsEye } from 'react-icons/bs'
 import Button from '@components/Button'
+import { useLoginMutation } from '@hooks/mutations/useLoginMutation'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 interface Errors {
   email?: string
@@ -24,12 +27,17 @@ const LoginPage = () => {
   const [password, setPassword] = useState('')
   const [errors, setErrors] = useState<Errors>({})
   const [isTypePassword, setIsTypePassword] = useState(false)
+  const router = useRouter()
+  const { mutate: postLogin } = useLoginMutation()
 
-  const handleLoginSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const handleLoginSubmit = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     e.preventDefault()
     const LoginIsValid = password && email && emailIsValid && passwordIsValid
     if (LoginIsValid) {
-      //TODO신영: 로그인 API호출
+      //postLogin({ email, password })
+      router.replace('/')
     }
   }
 
@@ -76,26 +84,38 @@ const LoginPage = () => {
             onChange={validate}
             placeholder={PLACEHOLDER_EMAIL}
           />
-          {errors.email && <ErrorText>{errors.email}</ErrorText>}
+          <ErrorText>{errors.email}</ErrorText>
         </InputWrapper>
         <InputWrapper>
           <PasswordInput
-            type={isTypePassword ? 'password' : 'text'}
+            type={isTypePassword ? 'text' : 'password'}
             name={INPUT_PASSWORD}
             isValid={passwordIsValid}
             onChange={validate}
             placeholder={PLACEHOLDER_PASSWORD}
           />
           <ShowPasswordIcon onClick={handleEyeClick} />
-          {errors.password && <ErrorText>{errors.password}</ErrorText>}
+          <ErrorText>{errors.password}</ErrorText>
         </InputWrapper>
         <ChangePasswordButton onClick={handleLoginSubmit}>
           로그인
         </ChangePasswordButton>
       </LoginForm>
+      <SignupText>
+        회원가입하시겠어요? <Link href={`/signup`}>[이동]</Link>
+      </SignupText>
     </LoginContainer>
   )
 }
+
+const SignupText = styled.span`
+  text-align: left;
+  margin-top: 1rem;
+  margin-left: 3rem;
+  font-size: 1.6rem;
+  font-weight: 500;
+  cursor: pointer;
+`
 
 const LoginContainer = styled.div`
   width: 100%;
@@ -112,7 +132,6 @@ const LoginForm = styled.form`
   justify-content: center;
   align-items: flex-start;
   margin-top: 2rem;
-  padding-bottom: 9rem;
 `
 
 const Title = styled.div`
