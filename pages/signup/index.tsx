@@ -26,7 +26,9 @@ import {
   REGEX_NICKNAME,
   REGEX_PASSWORD,
   MAX_PASSWORD,
-  MAX_NICKNAME
+  MAX_NICKNAME,
+  MESSAGE_CHECK_AVAILABLE,
+  AVAILABLE
 } from '@constants/inputConstant'
 import ImageUploader from '@components/ImageUploader'
 
@@ -52,35 +54,42 @@ const Signup = () => {
   const [isTypeConfirmPassword, setIsTypeConfirmPassword] = useState(false)
   const [values, setValues] = useState<SignUpValues>(initialValues)
   const [errors, setErrors] = useState<SignUpValues>(initialValues)
+  const [isEmailCheck, setIsEmailCheck] = useState(false)
+  const [isNickNameCheck, setIsNickNameCheck] = useState(false)
+  const [checkSuccessText, setCheckSuccessText] = useState({
+    email: '',
+    nickName: ''
+  })
   const { mutate: postSignup } = useSignupMutation()
 
   const handleSignUpSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
-    const isError = Object.keys(errors).filter(
-      (key) => errors[key as keyof SignUpValues] !== ''
-    ).length
     const { email, nickName, password } = values
     const isValues = email !== '' && nickName !== '' && password !== ''
 
-    !isError && isValues && postSignup(values)
-  }
+    const isError = Object.keys(errors).filter(
+      (key) => errors[key as keyof SignUpValues] !== ''
+    ).length
 
-  const handleEyeClick = useCallback((name: string) => {
-    name === INPUT_PASSWORD
-      ? setIsTypePassword((isTypePassword) => !isTypePassword)
-      : setIsTypeConfirmPassword(
-          (isTypeConfirmPassword) => !isTypeConfirmPassword
-        )
-  }, [])
+    if (!isNickNameCheck) {
+      setErrors({ ...errors, nickName: MESSAGE_CHECK_AVAILABLE })
+    }
 
-  const handleImageChange = (file: File) => {
-    setValues({ ...values, image: file })
+    if (!isEmailCheck) {
+      setErrors({ ...errors, email: MESSAGE_CHECK_AVAILABLE })
+    }
+
+    if (!isError && isValues && isEmailCheck && isNickNameCheck) {
+      postSignup(values)
+    }
   }
 
   const handleCheckEmailClick = async (
     e: React.MouseEvent<HTMLButtonElement>
   ) => {
     e.preventDefault()
+
+    setErrors({ ...errors, email: '' })
     const property = 'email'
     const value = values.email
     const { data } = await axios.get(
@@ -89,13 +98,18 @@ const Signup = () => {
     const { errorMessage } = data
     if (errorMessage) {
       setErrors({ ...errors, email: errorMessage })
+      return
     }
+    setIsEmailCheck(true)
+    setCheckSuccessText({ ...checkSuccessText, [property]: AVAILABLE })
   }
 
   const handleCheckNickNameClick = async (
     e: React.MouseEvent<HTMLButtonElement>
   ) => {
     e.preventDefault()
+
+    setErrors({ ...errors, nickName: '' })
     const property = 'nickName'
     const value = values.nickName
     const { data } = await axios.get(
@@ -104,7 +118,10 @@ const Signup = () => {
     const { errorMessage } = data
     if (errorMessage) {
       setErrors({ ...errors, nickName: errorMessage })
+      return
     }
+    setIsNickNameCheck(true)
+    setCheckSuccessText({ ...checkSuccessText, [property]: AVAILABLE })
   }
 
   const handleSignUpChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -115,6 +132,8 @@ const Signup = () => {
       if (!REGEX_EMAIL.test(value)) {
         setErrors({ ...errors, [name]: ERROR_EMAIL })
       }
+      setCheckSuccessText({ ...checkSuccessText, [name]: '' })
+      setIsEmailCheck(false)
     }
 
     if (name === INPUT_NICKNAME) {
@@ -123,6 +142,8 @@ const Signup = () => {
       if (!REGEX_NICKNAME.test(value)) {
         setErrors({ ...errors, [name]: MESSAGE_NICKNAME })
       }
+      setCheckSuccessText({ ...checkSuccessText, [name]: '' })
+      setIsNickNameCheck(false)
     }
 
     if (name === INPUT_PASSWORD) {
@@ -146,6 +167,18 @@ const Signup = () => {
     setValues({ ...values, [name]: e.target.value })
   }
 
+  const handleEyeClick = useCallback((name: string) => {
+    name === INPUT_PASSWORD
+      ? setIsTypePassword((isTypePassword) => !isTypePassword)
+      : setIsTypeConfirmPassword(
+          (isTypeConfirmPassword) => !isTypeConfirmPassword
+        )
+  }, [])
+
+  const handleImageChange = (file: File) => {
+    setValues({ ...values, image: file })
+  }
+
   return (
     <SignUpForm>
       <Title>회원 가입</Title>
@@ -157,10 +190,11 @@ const Signup = () => {
             name={INPUT_EMAIL}
             placeholder={PLACEHOLDER_EMAIL}
             onChange={handleSignUpChange}
-          />{' '}
+          />
           <ExistCheckButton height={7} onClick={handleCheckEmailClick}>
             중복 확인
           </ExistCheckButton>
+          <SuccessText>{checkSuccessText.email}</SuccessText>
           <ErrorText>{errors[INPUT_EMAIL]}</ErrorText>
         </InputWrapper>
         <InputWrapper>
@@ -169,10 +203,11 @@ const Signup = () => {
             name={INPUT_NICKNAME}
             placeholder={PLACEHOLDER_NICKNAME}
             onChange={handleSignUpChange}
-          />{' '}
+          />
           <ExistCheckButton height={7} onClick={handleCheckNickNameClick}>
             중복 확인
           </ExistCheckButton>
+          <SuccessText>{checkSuccessText.nickName}</SuccessText>
           <ErrorText>{errors[INPUT_NICKNAME]}</ErrorText>
         </InputWrapper>
         <InputWrapper>
@@ -280,9 +315,16 @@ const TextInput = styled(Input)`
 const ErrorText = styled.span`
   text-align: left;
   margin-top: 1rem;
-  margin-left: 1rem;
   font-size: 1.4rem;
   color: ${(props) => props.theme.color.mainRed};
+`
+
+const SuccessText = styled.span`
+  text-align: left;
+  margin-top: 1rem;
+  margin-left: 1rem;
+  font-size: 1.4rem;
+  color: green;
 `
 
 const ShowPasswordIcon = styled(BsEye)`
