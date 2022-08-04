@@ -57,8 +57,8 @@ export const useSignupMutation = () => {
   return useMutation(postSignup, {
     onSuccess: ({ data, email, password }) => {
       setLocalToken(data)
-      postLogin({ email, password })
-      router.push('/')
+      //postLogin({ email, password })
+      router.replace('/')
     }
   })
 }
