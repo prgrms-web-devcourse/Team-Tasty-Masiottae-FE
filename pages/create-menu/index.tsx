@@ -23,7 +23,7 @@ import {
   PLACEHOLDER_OPTION_DESCRIPTION,
   PLACEHOLDER_EXPECTED_PRICE
 } from '@constants/menuConstant'
-import { useFranchises } from '@hooks/queries/useFranchises'
+//import { useFranchises } from '@hooks/queries/useFranchises'
 
 const CreateMenu = () => {
   // 필드 값
