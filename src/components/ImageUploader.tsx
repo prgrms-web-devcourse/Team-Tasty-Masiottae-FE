@@ -5,7 +5,7 @@ import { BsPlusLg } from 'react-icons/bs'
 
 const FILE_TYPE = 'image/gif, image/jpeg, image/png'
 const FILE_INPUT_NAME = 'image-input'
-const FILE_REGEX = /\.(jpg|jpeg|png)$/i
+const FILE_REGEX = /\.(jpg|jpeg|png|JPG|JPEG|PNG)$/i
 interface Props {
   size?: number
   shape?: 'square' | 'circle'
@@ -25,15 +25,16 @@ const ImageUploader = ({
     const reader = new FileReader()
     const file = e.target.files ? e.target.files[0] : null
 
-    if (file?.name.match(FILE_REGEX)) {
-      setIsError(false)
-      reader.readAsDataURL(file)
-      reader.onload = () => {
-        setImage(reader.result)
-        onChange(file)
-      }
-    } else {
+    if (!file?.name.match(FILE_REGEX)) {
       setIsError(true)
+      return
+    }
+
+    setIsError(false)
+    reader.readAsDataURL(file)
+    reader.onload = () => {
+      setImage(reader.result)
+      onChange(file)
     }
   }
 
