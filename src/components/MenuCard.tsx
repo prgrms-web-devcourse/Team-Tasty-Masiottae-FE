@@ -15,7 +15,7 @@ interface Props {
 }
 
 const IMAGE_ALT = 'NO IMAGE'
-const extensions = ['jpg', 'png', 'jpeg']
+const extensions = ['jpg', 'png', 'jpeg', 'jfif']
 
 const MenuCard = ({
   title,

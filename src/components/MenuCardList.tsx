@@ -12,7 +12,7 @@ interface Props {
 const MenuCardList = ({ menuList, divRef }: Props) => {
   return (
     <Container>
-      {menuList.map((menu, idx) => {
+      {[...menuList].reverse().map((menu, idx) => {
         return (
           <MenuCardWrapper key={idx}>
             <Link href={`/detail/${menu.id}`}>

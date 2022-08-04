@@ -4,8 +4,7 @@ import { useRouter } from 'next/router'
 import MenuCardList from '@components/MenuCardList'
 import SearchForm from '@components/SearchForm'
 import { useMenuList } from '@hooks/queries/useMenuList'
-
-const SORT_OPTIONS = ['최신순', '좋아요순', '댓글순']
+import { SORT_OPTIONS } from '@constants/searchOption'
 
 const Search = () => {
   const router = useRouter()

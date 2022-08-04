@@ -5,8 +5,8 @@ import styled from '@emotion/styled'
 import { useMenuList } from '@hooks/queries/useMenuList'
 import useIntersectionObserver from '@hooks/useIntersectionObserver'
 import { MouseEvent, useState } from 'react'
+import { SORT_OPTIONS } from '@constants/searchOption'
 
-const SORT_OPTIONS = ['최신순', '좋아요순', '댓글순']
 const SELECT_DUMMY = ['작성한 메뉴', '좋아요한 메뉴']
 const SIZE_100_IMG_URL = 'https://via.placeholder.com/100'
 
