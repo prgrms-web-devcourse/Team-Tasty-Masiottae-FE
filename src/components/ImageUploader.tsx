@@ -5,6 +5,7 @@ import { BsPlusLg } from 'react-icons/bs'
 
 const FILE_TYPE = 'image/gif, image/jpeg, image/png'
 const FILE_INPUT_NAME = 'image-input'
+const FILE_REGEX = /\.(jpg|jpeg|png)$/i
 interface Props {
   size?: number
   shape?: 'square' | 'circle'
@@ -19,15 +20,20 @@ const ImageUploader = ({
   onChange
 }: Props) => {
   const [image, setImage] = useState<ImageType>(value)
+  const [isError, setIsError] = useState(false)
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const reader = new FileReader()
     const file = e.target.files ? e.target.files[0] : null
-    if (file) {
+
+    if (file?.name.match(FILE_REGEX)) {
+      setIsError(false)
       reader.readAsDataURL(file)
       reader.onload = () => {
         setImage(reader.result)
         onChange(file)
       }
+    } else {
+      setIsError(true)
     }
   }
 
@@ -41,6 +47,11 @@ const ImageUploader = ({
       >
         <StyledPlus selected={image ? true : false} />
       </ImageBox>
+      {isError ? (
+        <ErrorMessage>확장자는 jpg, png, jpeg 만 가능해요!</ErrorMessage>
+      ) : (
+        ''
+      )}
       <FileInput
         id={FILE_INPUT_NAME}
         type="file"
@@ -78,6 +89,11 @@ const StyledPlus = styled(BsPlusLg)<{ selected: boolean }>`
   width: 10rem;
   height: 10rem;
   visibility: ${({ selected }) => (selected ? 'hidden' : 'visible')};
+`
+
+const ErrorMessage = styled.div`
+  font-size: 1.4rem;
+  color: red;
 `
 
 const FileInput = styled.input`
