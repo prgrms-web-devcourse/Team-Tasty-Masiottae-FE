@@ -65,7 +65,7 @@ const Signup = () => {
   const handleSignUpSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
     const { email, nickName, password } = values
-    const isValues = email !== '' && nickName !== '' && password !== ''
+    const isValidValues = email !== '' && nickName !== '' && password !== ''
 
     const isError = Object.keys(errors).filter(
       (key) => errors[key as keyof SignUpValues] !== ''
@@ -79,7 +79,7 @@ const Signup = () => {
       setErrors({ ...errors, email: MESSAGE_CHECK_AVAILABLE })
     }
 
-    if (!isError && isValues && isEmailCheck && isNickNameCheck) {
+    if (!isError && isValidValues && isEmailCheck && isNickNameCheck) {
       postSignup(values)
     }
   }
@@ -261,7 +261,7 @@ const ExistCheckButton = styled(Button)`
   padding: 0 0.1rem;
   color: white;
   font-size: 1.5rem;
-  font-weight: 500;
+  font-weight: 400;
   position: absolute;
   right: 1.2rem;
   top: 1rem;

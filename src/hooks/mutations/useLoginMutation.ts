@@ -9,13 +9,22 @@ interface Params {
   password: string
 }
 
+interface Token {
+  accessToken: string
+  expirationTime: string
+}
+
+interface Data {
+  token: Token
+  account: User
+}
+
 const postLogin = async ({ email, password }: Params) => {
-  const { data } = await axios.post<User>(
+  const { data } = await axios.post<Data>(
     '/login',
     JSON.stringify({ email, password })
   )
 
-  console.log('뮤테이션 로그인 파람', email, password)
   return data
 }
 
@@ -23,7 +32,6 @@ export const useLoginMutation = () => {
   const [user, setUser] = useRecoilState<User>(currentUser)
   return useMutation(postLogin, {
     onSuccess: (data) => {
-      console.log('뮤테이션 로그인 데이터', data)
       setUser({ ...user, ...data })
     }
   })
