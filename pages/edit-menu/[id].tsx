@@ -1,32 +1,31 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import styled from '@emotion/styled'
 import Input from '@components/Input'
 import TagContainer from '@components/TagContainer'
 import ImageUploader from '@components/ImageUploader'
 import Button from '@components/Button'
-import { ImageType, Option, Taste } from '@customTypes/index'
-
+import { Option } from '@customTypes/index'
 import { dummyFranchiseList, dummyMenu } from '@constants/dummyMenu'
-
-const MIN_OPTION = 1
-const MAX_OPTION = 20
-
-const NAME_SELECT = 'brand'
-const NAME_TITLE = 'title'
-const NAME_ORIGINAL_TITLE = 'original-title'
-const NAME_OPTION_NAME = 'option-name'
-const NAME_OPTION_DESCRIPTION = 'option-description'
-const NAME_EXPECTED_PRICE = 'price'
-
-const PLACEHOLDER_TITLE = '커스텀 메뉴의 제목을 지어주세요'
-const PLACEHOLDER_ORIGINAL_TITLE = '기본이 되는 메뉴의 제목을 적어주세요'
-const PLACEHOLDER_OPTION_NAME = '옵션 명'
-const PLACEHOLDER_OPTION_DESCRIPTION = '옵션 단위, 또는 설명'
-const PLACEHOLDER_EXPECTED_PRICE = '예상되는 최종 가격을 입력해주세요'
+import {
+  MIN_OPTION,
+  MAX_OPTION,
+  NAME_SELECT,
+  NAME_TITLE,
+  NAME_ORIGINAL_TITLE,
+  NAME_OPTION_NAME,
+  NAME_OPTION_DESCRIPTION,
+  NAME_EXPECTED_PRICE,
+  PLACEHOLDER_TITLE,
+  PLACEHOLDER_ORIGINAL_TITLE,
+  PLACEHOLDER_OPTION_NAME,
+  PLACEHOLDER_OPTION_DESCRIPTION,
+  PLACEHOLDER_EXPECTED_PRICE
+} from '@constants/menuConstant'
 
 const EditMenu = () => {
   // 필드 값
-  const [image, setImage] = useState<ImageType>(dummyMenu.image)
+  const defaultImage = dummyMenu.image
+  const [file, setFile] = useState<File | null>(null)
   const [franchiseId, setFranchiseId] = useState(dummyMenu.franchise.id)
   const [title, setTitle] = useState(dummyMenu.title)
   const [originalTitle, setOriginalTitle] = useState(dummyMenu.originalTitle)
@@ -40,8 +39,8 @@ const EditMenu = () => {
   const [isTitleValid, setTitleValid] = useState(true)
   const [isOriginalTitleValid, setOriginalTitleValid] = useState(true)
   // onChange handler
-  const handleImageChange = (image: ImageType) => {
-    setImage(image)
+  const handleImageChange = (file: File) => {
+    setFile(file)
   }
 
   const handleFranchiseChange = (e: React.FormEvent<HTMLSelectElement>) => {
@@ -151,27 +150,7 @@ const EditMenu = () => {
     if (!tasteIdList.length) {
       return
     }
-
-    const formData = new FormData()
-    formData.append('userId', '1')
-    if (image) {
-      formData.append('image', image as string)
-    }
-    formData.append('franchiseId', `${franchiseId}`)
-    formData.append('title', title)
-    formData.append('content', '')
-    formData.append('originalTitle', originalTitle)
-    if (expectedPrice) {
-      formData.append('expectedPrice', expectedPrice.toString())
-    }
-    formData.append('optionList', JSON.stringify(optionList))
-    formData.append('tasteList', JSON.stringify(tasteIdList))
-
-    /*
-    for (const [key, value] of formData) {
-      console.log(key, ': ', value)
-    }
-    */
+    // api 호출
   }
   return (
     <FlexContainer>
