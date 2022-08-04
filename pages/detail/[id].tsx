@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import MenuDetail from '@components/_detail/MenuDetail'
-import CommentInput from '@components/_detail/CommentInput'
-import CommentList from '@components/_detail/CommentList'
+import MenuDetail from '@components/detail/MenuDetail'
+import CommentInput from '@components/detail/CommentInput'
+import CommentList from '@components/detail/CommentList'
 
 const Detail = () => {
   const [user, setUser] = useState({
