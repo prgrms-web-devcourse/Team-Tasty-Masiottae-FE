@@ -13,8 +13,8 @@ const MyInfoPage = () => {
       <UserProfile />
       <UserData />
       <ChangePasswordButton onClick={() => router.push(PASSWORD_CHANGE_URL)}>
-        비밀번호 변경하기
-      </ChangePasswordButton>{' '}
+        비밀번호 변경
+      </ChangePasswordButton>
       <LogoutButton onClick={() => router.push(LOGIN_URL)}>
         로그아웃
       </LogoutButton>
@@ -31,24 +31,24 @@ const UserContainer = styled.div`
 
 const ChangePasswordButton = styled(Button)`
   width: 100%;
-  height: 7rem;
+  height: 5.6rem;
   margin-top: 4rem;
   background-color: ${(props) => props.theme.color.mainBlack};
   border-radius: 1rem;
   color: white;
-  font-size: 1.7rem;
-  font-weight: 500;
+  font-size: 1.8rem;
+  font-weight: 700;
   cursor: pointer;
 `
 
 const LogoutButton = styled(Button)`
-  height: 7rem;
+  height: 5.6rem;
   margin-top: 1rem;
   background-color: ${(props) => props.theme.color.mainPink};
   border-radius: 1rem;
   color: white;
-  font-size: 1.7rem;
-  font-weight: 500;
+  font-size: 1.8rem;
+  font-weight: 700;
   cursor: pointer;
 `
 

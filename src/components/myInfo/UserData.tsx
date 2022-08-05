@@ -31,12 +31,12 @@ const UserDataContainer = styled.div`
 `
 
 const Title = styled.div`
-  font-size: 2.6rem;
+  font-size: 2.4rem;
   margin: 0.2rem 0 0 2.8rem;
 `
 
 const Text = styled.div`
-  font-size: 2.6rem;
+  font-size: 2.4rem;
   margin: 0.2rem 0 0 1rem;
   color: ${(props) => props.theme.color.fontNormal};
 `

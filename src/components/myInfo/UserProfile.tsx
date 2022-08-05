@@ -115,8 +115,13 @@ const UserProfile = () => {
         onClose={() => setIsProfileModalOpen(false)}
         className="profile"
       >
-        <ModalTitle>프로필 사진을 변경하시겠어요?</ModalTitle>
-        <ImageUploader onChange={handleProfileChange} value={user.image} />
+        <ModalTitle>프로필을 바꾸시겠어요?</ModalTitle>
+        <ImageUploader
+          shape="circle"
+          size={14}
+          onChange={handleProfileChange}
+          value={user.image}
+        />
         <ModalButton onClick={handleProfileSubmit}>확인</ModalButton>
       </ProfileModal>
     </UserProfileWrapper>
@@ -134,19 +139,23 @@ const ProfileModal = styled(Modal)`
   border-radius: 1rem;
   margin-top: 2rem;
   padding: 2rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  top: 40%;
 `
 
 const ModalTitle = styled.div`
-  font-size: 2rem;
+  font-size: 2.8rem;
   font-weight: 700;
   text-align: center;
   margin-bottom: 2rem;
 `
 
 const ModalButton = styled(Button)`
-  font-size: 1.7rem;
+  font-size: 1.8rem;
   font-weight: 700;
-  height: 6rem;
+  height: 5.6rem;
   border-radius: 1.2rem;
   display: flex;
   margin: 1rem auto 1rem auto;
@@ -186,8 +195,8 @@ const NickName = styled.div`
 
 const ChangeNickNameInput = styled(Input)`
   width: 90%;
-  height: 5rem;
-  font-size: 2rem;
+  height: 4.8rem;
+  font-size: 1.6rem;
 `
 
 const ChangeNickNameButton = styled(Button)`
