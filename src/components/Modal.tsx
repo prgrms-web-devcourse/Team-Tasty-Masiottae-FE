@@ -11,6 +11,7 @@ interface Props {
   visible: boolean
   onClose: () => void
   option?: 'drawer'
+  className?: string
 }
 
 const Modal = ({
@@ -19,7 +20,8 @@ const Modal = ({
   height,
   visible,
   onClose,
-  option
+  option,
+  className
 }: Props) => {
   const ref = useClickAway(onClose)
   const [element, setElement] = useState<HTMLElement | null>(null)
@@ -38,7 +40,13 @@ const Modal = ({
       onClick={(e) => e.stopPropagation()}
       onTouchStart={(e) => e.stopPropagation()}
     >
-      <ModalContainer ref={ref} width={width} height={height} option={option}>
+      <ModalContainer
+        ref={ref}
+        width={width}
+        height={height}
+        option={option}
+        className={className}
+      >
         {children}
         <div></div>
       </ModalContainer>

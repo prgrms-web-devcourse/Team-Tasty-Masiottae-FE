@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
-import UserData from './UserData'
-import UserProfile from './UserProfile'
+import UserData from '@components/myInfo/UserData'
+import UserProfile from '@components/myInfo/UserProfile'
 import Button from '@components/Button'
 import { LOGIN_URL, PASSWORD_CHANGE_URL } from '@constants/pageUrl'
 import { useRouter } from 'next/router'
