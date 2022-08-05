@@ -2,7 +2,8 @@ import React, { Fragment, useState } from 'react'
 import styled from '@emotion/styled'
 import Modal from '@components/Modal'
 import { Comment, User } from '@interfaces'
-import { BiTrash } from 'react-icons/bi'
+import { BiDotsHorizontalRounded, BiTrash } from 'react-icons/bi'
+import { getDate } from '@utils/getDate'
 
 interface Props {
   user: User
@@ -20,12 +21,6 @@ const CommentList = ({ user, commentList }: Props) => {
     setIsDeleteModalOpen(false)
   }
 
-  const getDate = (createdAt: string) => {
-    const month = createdAt.slice(5, 7) + '월'
-    const day = createdAt.slice(8, 10) + '일'
-    return month + day
-  }
-
   return (
     <CommentListContainer>
       <CommnetCountText>댓글 {commentList.length} 개</CommnetCountText>
@@ -34,26 +29,29 @@ const CommentList = ({ user, commentList }: Props) => {
           <CommentWrapper>
             <Avatar src={author.image} />
             <CommentContainer>
-              <CommentHeaderWrapper>
-                <UserNameText>{author.nickName}</UserNameText>
-                <DateText>{getDate(createdAt)}</DateText>
-              </CommentHeaderWrapper>
+              <CommentHeader>
+                <NameAndDateWrapper>
+                  <UserNameText>{author.nickName}</UserNameText>
+                  <DateText>{getDate(createdAt)}</DateText>
+                </NameAndDateWrapper>
+                {user.id === author.id && (
+                  <>
+                    <Dots size={20} onClick={handleDeleteCommentClick} />
+                    <Modal
+                      visible={isDeleteModalOpen}
+                      onClose={handleDeleteCommentClose}
+                      option="drawer"
+                    >
+                      <ModalItem>
+                        <BiTrash size={25} />
+                        삭제
+                      </ModalItem>
+                    </Modal>
+                  </>
+                )}
+              </CommentHeader>
               <CommentBox>
                 <CommentText>{comment}</CommentText>
-                <ButtonWrapper onClick={handleDeleteCommentClick}>
-                  {user.id === author.id && (
-                    <>
-                      <DeleteButton size={20} />
-                      <Modal
-                        visible={isDeleteModalOpen}
-                        onClose={handleDeleteCommentClose}
-                        option="drawer"
-                      >
-                        <ModalItem>삭제</ModalItem>
-                      </Modal>
-                    </>
-                  )}
-                </ButtonWrapper>
               </CommentBox>
             </CommentContainer>
           </CommentWrapper>
@@ -88,9 +86,13 @@ const CommentContainer = styled.div`
   width: 100%;
 `
 
-const CommentHeaderWrapper = styled(Flex)`
-  align-items: center;
+const CommentHeader = styled(Flex)`
+  justify-content: space-between;
   margin-bottom: 0.4rem;
+`
+
+const NameAndDateWrapper = styled(Flex)`
+  align-items: center;
 `
 
 const UserNameText = styled.div`
@@ -102,8 +104,13 @@ const DateText = styled.span`
   margin-left: 1rem;
 `
 
+const Dots = styled(BiDotsHorizontalRounded)`
+  justify-self: end;
+  cursor: pointer;
+`
+
 const CommentBox = styled(Flex)`
-  justify-content: space-between;
+  justify-content: space-evenly;
   font-size: 1.4rem;
   min-width: 100%;
   border-radius: 0.5rem;
@@ -114,12 +121,6 @@ const CommentBox = styled(Flex)`
 const CommentText = styled.div`
   padding-right: 2rem;
   width: 100%;
-`
-
-const ButtonWrapper = styled.div`
-  justify-self: flex-end;
-  margin-left: 0.5rem;
-  cursor: pointer;
 `
 
 const ModalItem = styled(Flex)`
@@ -133,7 +134,5 @@ const ModalItem = styled(Flex)`
     margin-top: 1rem;
   }
 `
-
-const DeleteButton = styled(BiTrash)``
 
 export default CommentList
