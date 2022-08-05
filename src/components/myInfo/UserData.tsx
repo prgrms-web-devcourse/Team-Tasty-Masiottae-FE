@@ -38,7 +38,7 @@ const Title = styled.div`
 const Text = styled.div`
   font-size: 2.4rem;
   margin: 0.2rem 0 0 1rem;
-  color: ${(props) => props.theme.color.fontNormal};
+  color: ${(props) => props.theme.color.fontBasic};
 `
 
 const UserDetailWrapper = styled.div`

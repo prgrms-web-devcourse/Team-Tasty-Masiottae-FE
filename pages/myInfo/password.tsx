@@ -136,7 +136,7 @@ const ErrorText = styled.span`
   margin-top: 1rem;
   margin-left: 1rem;
   font-size: 1.4rem;
-  color: ${(props) => props.theme.color.mainRed};
+  color: ${(props) => props.theme.color.error};
 `
 const ChangePasswordButton = styled(Button)`
   width: 100%;
