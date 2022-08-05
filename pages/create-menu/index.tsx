@@ -6,7 +6,6 @@ import TagContainer from '@components/TagContainer'
 import ImageUploader from '@components/ImageUploader'
 import Button from '@components/Button'
 import { Option } from '@customTypes/index'
-import { dummyFranchiseList } from '@constants/dummyMenu'
 import { usePostMenu } from '@hooks/mutations/usePostMenuMutation'
 import {
   MIN_OPTION,
@@ -23,12 +22,12 @@ import {
   PLACEHOLDER_OPTION_DESCRIPTION,
   PLACEHOLDER_EXPECTED_PRICE
 } from '@constants/menuConstant'
-//import { useFranchises } from '@hooks/queries/useFranchises'
+import { useFranchiseList } from '@hooks/queries/useFranchiseList'
 
 const CreateMenu = () => {
   // 필드 값
   const router = useRouter()
-
+  const { data: franchiseList } = useFranchiseList()
   const { mutate } = usePostMenu()
   const [file, setFile] = useState<File | null>(null)
   const [franchiseId, setFranchiseId] = useState(1)
@@ -174,7 +173,7 @@ const CreateMenu = () => {
       <ImageUploader onChange={handleImageChange} />
       <InputWrapper>
         <Select name={NAME_SELECT} onChange={handleFranchiseChange}>
-          {dummyFranchiseList.map((franchise) => (
+          {franchiseList?.map((franchise) => (
             <option key={franchise.id} value={franchise.id}>
               {franchise.name}
             </option>
