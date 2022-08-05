@@ -13,15 +13,13 @@ const InputMessage = ({
 }: Props) => {
   const message = isValid ? successMessage : errorMessage
   return (
-    <Message isValid={isValid} message={message} errorMessage={errorMessage}>
+    <Message isValid={isValid} errorMessage={errorMessage}>
       {message}
     </Message>
   )
 }
 
-type MessageType = Props & { message: string | undefined }
-
-const Message = styled.span<MessageType>`
+const Message = styled.span<Props>`
   text-align: left;
   margin-top: 1rem;
   font-size: 1.4rem;
