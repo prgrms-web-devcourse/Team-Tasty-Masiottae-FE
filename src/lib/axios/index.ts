@@ -7,7 +7,7 @@ import {
 } from './interceptors'
 
 const axiosInstance = axios.create({
-  timeout: 5000,
+  timeout: 10000,
   baseURL: '/api',
   headers: { 'Content-Type': 'application/json' }
 })
