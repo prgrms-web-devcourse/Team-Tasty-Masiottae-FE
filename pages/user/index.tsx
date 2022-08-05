@@ -6,6 +6,7 @@ import { useMenuList } from '@hooks/queries/useMenuList'
 import useIntersectionObserver from '@hooks/useIntersectionObserver'
 import { MouseEvent, useState } from 'react'
 import { SORT_OPTIONS } from '@constants/searchOption'
+import { useSearchMyMenuList } from '../../src/hooks/queries/useSearchMyMenuList'
 
 const SELECT_DUMMY = ['작성한 메뉴', '좋아요한 메뉴']
 const SIZE_100_IMG_URL = 'https://via.placeholder.com/100'
@@ -17,6 +18,13 @@ interface TabProps {
 }
 
 const UserMenu = () => {
+  const { data } = useSearchMyMenuList(1, {
+    offset: 0,
+    limit: 10,
+    tasteList: [],
+    keyword: '민'
+  })
+  console.log(data)
   const [option, setOption] = useState(SELECT_DUMMY[0])
   const { menuList } = useMenuList()
   const ref = useIntersectionObserver(
