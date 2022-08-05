@@ -1,7 +1,7 @@
-import Modal from '@components/Modal'
-import styled from '@emotion/styled'
-import { Comment, User } from '@interfaces'
 import React, { Fragment, useState } from 'react'
+import styled from '@emotion/styled'
+import Modal from '@components/Modal'
+import { Comment, User } from '@interfaces'
 import { BiTrash } from 'react-icons/bi'
 
 interface Props {
@@ -20,19 +20,28 @@ const CommentList = ({ user, commentList }: Props) => {
     setIsDeleteModalOpen(false)
   }
 
+  const getDate = (createdAt: string) => {
+    const month = createdAt.slice(5, 7) + '월'
+    const day = createdAt.slice(8, 10) + '일'
+    return month + day
+  }
+
   return (
     <CommentListContainer>
       <CommnetCountText>댓글 {commentList.length} 개</CommnetCountText>
-      {commentList.map((comment) => (
-        <Fragment key={comment.id}>
+      {commentList.map(({ id, author, createdAt, comment }) => (
+        <Fragment key={id}>
           <CommentWrapper>
-            <Avatar src={comment.author.image} />
+            <Avatar src={author.image} />
             <CommentContainer>
-              <UserNameText>{comment.author.nickName}</UserNameText>
-              <Comment>
-                <CommentText>{comment.comment}</CommentText>
+              <CommentHeaderWrapper>
+                <UserNameText>{author.nickName}</UserNameText>
+                <DateText>{getDate(createdAt)}</DateText>
+              </CommentHeaderWrapper>
+              <CommentBox>
+                <CommentText>{comment}</CommentText>
                 <ButtonWrapper onClick={handleDeleteCommentClick}>
-                  {user.id === comment.author.id && (
+                  {user.id === author.id && (
                     <>
                       <DeleteButton size={20} />
                       <Modal
@@ -45,7 +54,7 @@ const CommentList = ({ user, commentList }: Props) => {
                     </>
                   )}
                 </ButtonWrapper>
-              </Comment>
+              </CommentBox>
             </CommentContainer>
           </CommentWrapper>
         </Fragment>
@@ -79,13 +88,21 @@ const CommentContainer = styled.div`
   width: 100%;
 `
 
+const CommentHeaderWrapper = styled(Flex)`
+  align-items: center;
+  margin-bottom: 0.4rem;
+`
+
 const UserNameText = styled.div`
   font-size: 1.2rem;
   font-weight: 700;
-  margin-bottom: 0.5rem;
 `
 
-const Comment = styled(Flex)`
+const DateText = styled.span`
+  margin-left: 1rem;
+`
+
+const CommentBox = styled(Flex)`
   justify-content: space-between;
   font-size: 1.4rem;
   min-width: 100%;
