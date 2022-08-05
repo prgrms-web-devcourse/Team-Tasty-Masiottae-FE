@@ -316,7 +316,7 @@ const ErrorText = styled.span`
   text-align: left;
   margin-top: 1rem;
   font-size: 1.4rem;
-  color: ${(props) => props.theme.color.mainRed};
+  color: ${(props) => props.theme.color.error};
 `
 
 const SuccessText = styled.span`
