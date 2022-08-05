@@ -9,7 +9,7 @@ interface Props {
 const InputMessage = ({
   isValid = false,
   errorMessage,
-  successMessage
+  successMessage = ''
 }: Props) => {
   const message = isValid ? successMessage : errorMessage
   return (
@@ -28,7 +28,6 @@ const Message = styled.span<MessageType>`
   margin-left: 1rem;
   color: ${(props) =>
     props.isValid ? props.theme.color.success : props.theme.color.error};
-  display: ${({ message }) => message === '' && 'none'};
 `
 
 export default InputMessage
