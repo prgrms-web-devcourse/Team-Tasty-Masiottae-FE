@@ -1,21 +1,18 @@
 import Modal from '@components/Modal'
 import styled from '@emotion/styled'
+import { Comment, User } from '@interfaces'
 import React, { Fragment, useState } from 'react'
 import { BiTrash } from 'react-icons/bi'
-import commentListDummy from './commentsDummy.json'
 
-const CommentList = () => {
-  const [user, setUser] = useState({
-    id: 111,
-    name: '계란이 조아',
-    profileImageUrl: 'https://via.placeholder.com/300x150'
-  })
-  const [commentList, setCommentList] = useState(commentListDummy)
+interface Props {
+  user: User
+  commentList: Comment[]
+}
+
+const CommentList = ({ user, commentList }: Props) => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
 
-  const handleDeleteCommentClick = (
-    e: React.MouseEvent<HTMLDivElement, MouseEvent>
-  ) => {
+  const handleDeleteCommentClick = () => {
     setIsDeleteModalOpen(true)
   }
 
@@ -29,9 +26,9 @@ const CommentList = () => {
       {commentList.map((comment) => (
         <Fragment key={comment.id}>
           <CommentWrapper>
-            <Avatar src={comment.author.profileImageUrl} />
+            <Avatar src={comment.author.image} />
             <CommentContainer>
-              <UserNameText>{comment.author.name}</UserNameText>
+              <UserNameText>{comment.author.nickName}</UserNameText>
               <Comment>
                 <CommentText>{comment.comment}</CommentText>
                 <ButtonWrapper onClick={handleDeleteCommentClick}>

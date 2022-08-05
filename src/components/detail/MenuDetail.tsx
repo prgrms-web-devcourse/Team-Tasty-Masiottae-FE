@@ -1,26 +1,24 @@
 import React, { useState } from 'react'
 import styled from '@emotion/styled'
 import Modal from '@components/Modal'
-import { useMenu } from '@hooks/queries/useMenu'
-import { useRouter } from 'next/router'
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai'
 import { BiDotsHorizontalRounded } from 'react-icons/bi'
+import { Menu } from '@interfaces'
 
-const MenuDetail = () => {
-  const router = useRouter()
-  const id = parseInt(router.query.id as string, 10)
-  const { data: menu } = useMenu(id)
+interface Props {
+  menu: Menu
+}
+
+const MenuDetail = ({ menu }: Props) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
-  const handleEditMenuClick = (e: React.MouseEvent<SVGElement, MouseEvent>) => {
+  const handleEditMenuClick = () => {
     setIsModalOpen(true)
   }
 
   const handleEditMenuClose = () => {
     setIsModalOpen(false)
   }
-
-  if (!menu) return <></>
 
   return (
     <MenuContainer>

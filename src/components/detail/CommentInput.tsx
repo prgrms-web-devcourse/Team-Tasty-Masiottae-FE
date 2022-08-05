@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import { usePostCommentMutation } from '@hooks/mutations/usePostCommentMutation'
 import React, {
   ChangeEvent,
   useCallback,
@@ -10,10 +11,16 @@ import React, {
 const GUEST_INPUT_PLACEHOLDER = '로그인 후 작성해주세요(최대 80자).'
 const LOGGEDIN_INPUT_PLACEHOLDER = '댓글을 입력해주세요.'
 
-const CommentInput = () => {
+interface Props {
+  menuId: number
+  userId: number
+}
+
+const CommentInput = ({ menuId, userId }: Props) => {
   const [comment, setComment] = useState('')
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(true)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
+  const { mutate: postComment } = usePostCommentMutation()
 
   useEffect(() => {
     if (textareaRef.current === null) {
@@ -35,7 +42,11 @@ const CommentInput = () => {
   }, [])
 
   const handleAddButtonClick = () => {
-    console.log(comment)
+    postComment({
+      userId,
+      menuId,
+      comment
+    })
   }
 
   return (
