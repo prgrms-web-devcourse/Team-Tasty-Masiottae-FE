@@ -57,9 +57,9 @@ const MenuDetail = () => {
           <FranchiseText>{menu.franchise.name} </FranchiseText>
           <span>{menu.originalTitle}</span>
         </div>
-        {menu.optionList.map(({ optionName, optionDescription }) => (
-          <OptionText key={optionName}>
-            + {optionName} {optionDescription}
+        {menu.optionList.map(({ name, description }) => (
+          <OptionText key={name}>
+            + {name} {description}
           </OptionText>
         ))}
         <PriceText>예상 가격: {menu.expectedPrice} 원</PriceText>
