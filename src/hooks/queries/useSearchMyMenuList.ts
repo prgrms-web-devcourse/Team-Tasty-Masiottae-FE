@@ -21,9 +21,9 @@ export const useSearchMyMenuList = (
   accountId: number,
   params: searchParams
 ) => {
-  const { keyword, tasteList, sort } = params
+  const { keyword, tasteIdList, sort, limit } = params
   const { data, isLoading, error } = useQuery<searchResponse, Error>(
-    ['myMenuList', accountId, keyword, tasteList, sort],
+    ['myMenuList', accountId, keyword, tasteIdList, sort, limit],
     () => getMyMenuList(accountId, params)
   )
 

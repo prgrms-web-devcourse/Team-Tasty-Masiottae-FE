@@ -54,7 +54,13 @@ export interface Taste {
 export interface searchParams {
   keyword?: string
   sort?: 'recent' | 'comment' | 'like'
-  tasteList: number[]
+  tasteIdList?: number[]
   offset: number
   limit: number
+}
+
+export interface SearchFormOptions {
+  keyword: string
+  sort?: string
+  tasteIdList: number[]
 }

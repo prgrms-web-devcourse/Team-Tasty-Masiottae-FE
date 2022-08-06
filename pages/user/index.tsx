@@ -6,6 +6,7 @@ import useIntersectionObserver from '@hooks/useIntersectionObserver'
 import { MouseEvent, useState } from 'react'
 import { SORT_OPTIONS } from '@constants/searchOption'
 import { useSearchMyMenuList } from '../../src/hooks/queries/useSearchMyMenuList'
+import { SearchFormOptions } from '@interfaces'
 
 const SELECT_DUMMY = ['작성한 메뉴', '좋아요한 메뉴']
 const SIZE_100_IMG_URL = 'https://via.placeholder.com/100'
@@ -17,12 +18,11 @@ interface TabProps {
 }
 
 const UserMenu = () => {
-  const { menuList } = useSearchMyMenuList(1, {
+  const [searchOptions, setSearchOptions] = useState({
     offset: 0,
-    limit: 10,
-    tasteList: []
+    limit: 10
   })
-
+  const { menuList } = useSearchMyMenuList(1, searchOptions)
   const [option, setOption] = useState(SELECT_DUMMY[0])
   const ref = useIntersectionObserver(
     async (entry, observer) => {
@@ -30,6 +30,10 @@ const UserMenu = () => {
     },
     { threshold: 0.5 }
   )
+
+  const handleSubmit = (values: SearchFormOptions) => {
+    setSearchOptions({ ...searchOptions, ...values })
+  }
 
   const handleClick = (e: MouseEvent<HTMLElement>) => {
     const divElement = e.target as HTMLElement
@@ -56,7 +60,7 @@ const UserMenu = () => {
               </Tab>
             ))}
           </TabContainer>
-          <SearchForm sortOptions={SORT_OPTIONS} />
+          <SearchForm sortOptions={SORT_OPTIONS} onSubmit={handleSubmit} />
         </InnerWrapper>
       </FixedWrapper>
       <CardListContainer>

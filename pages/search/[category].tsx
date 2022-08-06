@@ -23,7 +23,12 @@ const Search = () => {
       <FixedWrapper>
         <InnerWrapper>
           <CategoryHeader>{category}</CategoryHeader>
-          <SearchForm sortOptions={SORT_OPTIONS} />
+          <SearchForm
+            sortOptions={SORT_OPTIONS}
+            onSubmit={() => {
+              return
+            }}
+          />
         </InnerWrapper>
       </FixedWrapper>
       <CardListWrapper>
