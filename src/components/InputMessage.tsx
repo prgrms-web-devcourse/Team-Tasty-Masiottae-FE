@@ -20,7 +20,6 @@ const InputMessage = ({
 }
 
 const Message = styled.span<Props>`
-  text-align: left;
   margin-top: 1rem;
   font-size: 1.4rem;
   margin-left: 1rem;
