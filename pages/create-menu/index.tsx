@@ -5,12 +5,13 @@ import Input from '@components/Input'
 import TagContainer from '@components/TagContainer'
 import ImageUploader from '@components/ImageUploader'
 import Button from '@components/Button'
+import FranchiseSelect from '@components/FranchiseSelect'
 import { Option } from '@customTypes/index'
 import { usePostMenu } from '@hooks/mutations/usePostMenuMutation'
+import { useFranchiseList } from '@hooks/queries/useFranchiseList'
 import {
   MIN_OPTION,
   MAX_OPTION,
-  NAME_SELECT,
   NAME_TITLE,
   NAME_ORIGINAL_TITLE,
   NAME_OPTION_NAME,
@@ -22,7 +23,6 @@ import {
   PLACEHOLDER_OPTION_DESCRIPTION,
   PLACEHOLDER_EXPECTED_PRICE
 } from '@constants/menuConstant'
-import { useFranchiseList } from '@hooks/queries/useFranchiseList'
 
 const CreateMenu = () => {
   // 필드 값
@@ -172,13 +172,7 @@ const CreateMenu = () => {
       <Title>메뉴 생성</Title>
       <ImageUploader onChange={handleImageChange} />
       <InputWrapper>
-        <Select name={NAME_SELECT} onChange={handleFranchiseChange}>
-          {franchiseList?.map((franchise) => (
-            <option key={franchise.id} value={franchise.id}>
-              {franchise.name}
-            </option>
-          ))}
-        </Select>
+        <FranchiseSelect onChange={handleFranchiseChange} />
         <Input
           height={2.4}
           type="text"
