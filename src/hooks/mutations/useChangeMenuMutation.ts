@@ -1,10 +1,6 @@
 import axios from '@lib/axios'
+import { Option } from '@interfaces'
 import { useMutation } from '@tanstack/react-query'
-
-interface Option {
-  name: string
-  description: string
-}
 
 interface Data {
   userId: number
