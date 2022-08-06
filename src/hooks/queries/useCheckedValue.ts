@@ -2,7 +2,8 @@ import { useQuery } from '@tanstack/react-query'
 import axios from '@lib/axios'
 
 interface Data {
-  value: string
+  isDuplicated: boolean
+  errorMessage: string | null
 }
 
 const getCheckedValue = async (
