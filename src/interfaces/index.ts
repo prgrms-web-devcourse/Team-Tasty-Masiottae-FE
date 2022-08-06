@@ -50,3 +50,11 @@ export interface Taste {
   name: string
   color: string
 }
+
+export interface searchParams {
+  keyword?: string
+  sort?: 'recent' | 'comment' | 'like'
+  tasteList: number[]
+  offset: number
+  limit: number
+}
