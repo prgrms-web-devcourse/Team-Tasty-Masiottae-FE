@@ -2,11 +2,13 @@ import styled from '@emotion/styled'
 import Input from '@components/Input'
 import {
   INPUT_EMAIL,
-  PLACEHOLDER_EMAIL,
   INPUT_PASSWORD,
+  PLACEHOLDER_EMAIL,
   PLACEHOLDER_PASSWORD,
   REGEX_PASSWORD,
-  REGEX_EMAIL
+  REGEX_EMAIL,
+  MESSAGE_PASSWORD,
+  ERROR_EMAIL
 } from '@constants/inputConstant'
 import React, { useState, useCallback } from 'react'
 import { BsEye } from 'react-icons/bs'
@@ -27,16 +29,16 @@ const LoginPage = () => {
   const [password, setPassword] = useState('')
   const [errors, setErrors] = useState<Errors>({})
   const [isTypePassword, setIsTypePassword] = useState(false)
-  const router = useRouter()
   const { mutate: postLogin } = useLoginMutation()
+  const router = useRouter()
 
   const handleLoginSubmit = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.preventDefault()
-    const LoginIsValid = password && email && emailIsValid && passwordIsValid
-    if (LoginIsValid) {
-      //postLogin({ email, password })
+    const isLoginValid = password && email && emailIsValid && passwordIsValid
+    if (isLoginValid) {
+      postLogin({ email, password })
       router.replace('/')
     }
   }
@@ -54,14 +56,14 @@ const LoginPage = () => {
         e.target.value = value.slice(0, 10)
       }
       if (!REGEX_PASSWORD.test(value)) {
-        newErrors.password = '8-10자 사이로 공백없이 입력해주세요'
+        newErrors.password = MESSAGE_PASSWORD
         setPasswordIsValid(false)
       }
       setPassword(e.target.value)
     }
     if (name === INPUT_EMAIL) {
       if (!REGEX_EMAIL.test(value)) {
-        newErrors.email = '이메일 형식으로 입력해주세요.'
+        newErrors.email = ERROR_EMAIL
         setEmailIsValid(false)
       }
       setEmail(e.target.value)
@@ -102,7 +104,7 @@ const LoginPage = () => {
         </ChangePasswordButton>
       </LoginForm>
       <SignupText>
-        회원가입하시겠어요? <Link href={`/signup`}>[이동]</Link>
+        회원가입하시겠어요? <Link href={'/signup'}>[이동]</Link>
       </SignupText>
     </LoginContainer>
   )

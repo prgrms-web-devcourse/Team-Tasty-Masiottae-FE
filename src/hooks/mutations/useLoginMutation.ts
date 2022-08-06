@@ -3,6 +3,7 @@ import { useMutation } from '@tanstack/react-query'
 import { useRecoilState } from 'recoil'
 import { currentUser } from '@recoil/currentUser'
 import { User } from '@interfaces'
+import { setLocalToken } from '@utils/localToken'
 
 interface Params {
   email: string
@@ -32,7 +33,8 @@ export const useLoginMutation = () => {
   const [user, setUser] = useRecoilState<User>(currentUser)
   return useMutation(postLogin, {
     onSuccess: (data) => {
-      setUser({ ...user, ...data })
+      setUser({ ...user, ...data.account })
+      setLocalToken(data.token)
     }
   })
 }
