@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import React, { useState } from 'react'
 import { ImageType } from '@customTypes/index'
-import { BsPlusLg } from 'react-icons/bs'
+import { TbCameraPlus } from 'react-icons/tb'
 
 const FILE_TYPE = 'image/gif, image/jpeg, image/png'
 const FILE_INPUT_NAME = 'image-input'
@@ -46,7 +46,7 @@ const ImageUploader = ({
         shape={shape}
         image={image}
       >
-        <StyledPlus selected={image ? true : false} />
+        <StyledIcon selected={image ? true : false} />
       </ImageBox>
       {isError ? (
         <ErrorMessage>확장자는 jpg, png, jpeg 만 가능해요!</ErrorMessage>
@@ -75,7 +75,7 @@ const ImageBox = styled.label<{
   height: ${({ size }) => `${size}rem`};
   padding-top: ${({ size }) => (size ? `0` : 'calc(50% - 5rem)')};
   padding-bottom: ${({ size }) => (size ? `0` : 'calc(50% - 5rem)')};
-  background-color: #d9d9d9;
+  background-color: #f7bec1;
   background-image: ${({ image }) => (image ? `url(${image})` : null)};
   background-repeat: no-repeat;
   background-size: cover;
@@ -86,9 +86,10 @@ const ImageBox = styled.label<{
   }
 `
 
-const StyledPlus = styled(BsPlusLg)<{ selected: boolean }>`
+const StyledIcon = styled(TbCameraPlus)<{ selected: boolean }>`
   width: 10rem;
   height: 10rem;
+  color: white;
   visibility: ${({ selected }) => (selected ? 'hidden' : 'visible')};
 `
 

@@ -170,8 +170,9 @@ const CreateMenu = () => {
   }
   return (
     <FlexContainer>
-      <Title>메뉴 생성</Title>
-      <ImageUploader onChange={handleImageChange} />
+      <ImageUploaderWrapper>
+        <ImageUploader onChange={handleImageChange} />
+      </ImageUploaderWrapper>
       <InputWrapper>
         <Select name={NAME_SELECT} onChange={handleFranchiseChange}>
           {dummyFranchiseList.map((franchise) => (
@@ -276,9 +277,8 @@ const InputWrapper = styled.div`
   gap: 0.8rem;
 `
 
-const Title = styled.h1`
-  font-size: 4rem;
-  align-self: start;
+const ImageUploaderWrapper = styled.div`
+  width: calc(100% + 40px);
 `
 
 const Select = styled.select`
