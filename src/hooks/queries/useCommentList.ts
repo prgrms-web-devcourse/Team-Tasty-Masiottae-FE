@@ -9,7 +9,9 @@ const getCommentListByMenuId = async (menuId: number) => {
 }
 
 export const useCommentList = (menuId: number) => {
-  return useQuery<Comment[], Error>(['comments', menuId], () =>
-    getCommentListByMenuId(menuId)
+  return useQuery<Comment[], Error>(
+    ['comments', menuId],
+    () => getCommentListByMenuId(menuId),
+    { enabled: !!menuId }
   )
 }

@@ -1,21 +1,19 @@
-import Modal from '@components/Modal'
-import styled from '@emotion/styled'
 import React, { Fragment, useState } from 'react'
-import { BiTrash } from 'react-icons/bi'
-import commentListDummy from './commentsDummy.json'
+import styled from '@emotion/styled'
+import Modal from '@components/Modal'
+import { Comment, User } from '@interfaces'
+import { BiDotsHorizontalRounded, BiTrash } from 'react-icons/bi'
+import { getDate } from '@utils/getDate'
 
-const CommentList = () => {
-  const [user, setUser] = useState({
-    id: 111,
-    name: '계란이 조아',
-    profileImageUrl: 'https://via.placeholder.com/300x150'
-  })
-  const [commentList, setCommentList] = useState(commentListDummy)
+interface Props {
+  user: User
+  commentList: Comment[]
+}
+
+const CommentList = ({ user, commentList }: Props) => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
 
-  const handleDeleteCommentClick = (
-    e: React.MouseEvent<HTMLDivElement, MouseEvent>
-  ) => {
+  const handleDeleteCommentClick = () => {
     setIsDeleteModalOpen(true)
   }
 
@@ -26,29 +24,35 @@ const CommentList = () => {
   return (
     <CommentListContainer>
       <CommnetCountText>댓글 {commentList.length} 개</CommnetCountText>
-      {commentList.map((comment) => (
-        <Fragment key={comment.id}>
+      {commentList.map(({ id, author, createdAt, comment }) => (
+        <Fragment key={id}>
           <CommentWrapper>
-            <Avatar src={comment.author.profileImageUrl} />
+            <Avatar src={author.image} />
             <CommentContainer>
-              <UserNameText>{comment.author.name}</UserNameText>
-              <Comment>
-                <CommentText>{comment.comment}</CommentText>
-                <ButtonWrapper onClick={handleDeleteCommentClick}>
-                  {user.id === comment.author.id && (
-                    <>
-                      <DeleteButton size={20} />
-                      <Modal
-                        visible={isDeleteModalOpen}
-                        onClose={handleDeleteCommentClose}
-                        option="drawer"
-                      >
-                        <ModalItem>삭제</ModalItem>
-                      </Modal>
-                    </>
-                  )}
-                </ButtonWrapper>
-              </Comment>
+              <CommentHeader>
+                <NameAndDateWrapper>
+                  <UserNameText>{author.nickName}</UserNameText>
+                  <DateText>{getDate(createdAt)}</DateText>
+                </NameAndDateWrapper>
+                {user.id === author.id && (
+                  <>
+                    <Dots size={20} onClick={handleDeleteCommentClick} />
+                    <Modal
+                      visible={isDeleteModalOpen}
+                      onClose={handleDeleteCommentClose}
+                      option="drawer"
+                    >
+                      <ModalItem>
+                        <BiTrash size={25} />
+                        삭제
+                      </ModalItem>
+                    </Modal>
+                  </>
+                )}
+              </CommentHeader>
+              <CommentBox>
+                <CommentText>{comment}</CommentText>
+              </CommentBox>
             </CommentContainer>
           </CommentWrapper>
         </Fragment>
@@ -82,14 +86,31 @@ const CommentContainer = styled.div`
   width: 100%;
 `
 
+const CommentHeader = styled(Flex)`
+  justify-content: space-between;
+  margin-bottom: 0.4rem;
+`
+
+const NameAndDateWrapper = styled(Flex)`
+  align-items: center;
+`
+
 const UserNameText = styled.div`
   font-size: 1.2rem;
   font-weight: 700;
-  margin-bottom: 0.5rem;
 `
 
-const Comment = styled(Flex)`
-  justify-content: space-between;
+const DateText = styled.span`
+  margin-left: 1rem;
+`
+
+const Dots = styled(BiDotsHorizontalRounded)`
+  justify-self: end;
+  cursor: pointer;
+`
+
+const CommentBox = styled(Flex)`
+  justify-content: space-evenly;
   font-size: 1.4rem;
   min-width: 100%;
   border-radius: 0.5rem;
@@ -100,12 +121,6 @@ const Comment = styled(Flex)`
 const CommentText = styled.div`
   padding-right: 2rem;
   width: 100%;
-`
-
-const ButtonWrapper = styled.div`
-  justify-self: flex-end;
-  margin-left: 0.5rem;
-  cursor: pointer;
 `
 
 const ModalItem = styled(Flex)`
@@ -119,7 +134,5 @@ const ModalItem = styled(Flex)`
     margin-top: 1rem;
   }
 `
-
-const DeleteButton = styled(BiTrash)``
 
 export default CommentList

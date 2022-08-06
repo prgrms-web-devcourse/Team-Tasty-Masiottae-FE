@@ -30,7 +30,6 @@ export interface Comment {
   author: User
   comment: string
   createdAt: string
-  updatedAt: string
 }
 
 export interface Option {
