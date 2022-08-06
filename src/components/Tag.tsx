@@ -1,5 +1,4 @@
 import styled from '@emotion/styled'
-import { useState } from 'react'
 interface Props {
   id: number
   name: string
@@ -46,11 +45,13 @@ const Item = styled.div<{
   justify-content: center;
   align-items: center;
   font-size: ${({ height }) => `${height * 0.7}rem`};
+  font-weight: 500;
   border-radius: ${({ height }) => `${height}rem`};
   padding: 1rem 2rem;
-  background-color: ${({ color }) => `${color}`};
-  opacity: ${({ isClicked }) => `${isClicked ? `1` : `0.3`}`};
-  color: white;
+  border: ${({ color }) => `0.2rem solid ${color}`};
+  background-color: ${({ isClicked, color }) =>
+    isClicked ? `${color}` : `#ffffff`};
+  color: ${({ isClicked, color }) => (isClicked ? `#ffffff` : `${color}`)};
   &:hover {
     cursor: pointer;
   }
