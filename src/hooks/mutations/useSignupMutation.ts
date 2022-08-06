@@ -1,6 +1,5 @@
 import axios from '@lib/axios'
 import { useMutation } from '@tanstack/react-query'
-import { setLocalToken } from '@utils/localToken'
 import { useRouter } from 'next/router'
 import { useLoginMutation } from '@hooks/mutations/useLoginMutation'
 
@@ -55,9 +54,8 @@ export const useSignupMutation = () => {
   const { mutate: postLogin } = useLoginMutation()
   const router = useRouter()
   return useMutation(postSignup, {
-    onSuccess: ({ data, email, password }) => {
-      setLocalToken(data)
-      //postLogin({ email, password })
+    onSuccess: ({ email, password }) => {
+      postLogin({ email, password })
       router.replace('/')
     }
   })
