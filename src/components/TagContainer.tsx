@@ -1,8 +1,9 @@
 import { Taste } from '@customTypes/index'
 import styled from '@emotion/styled'
 import Tag from './Tag'
-import { dummyTasteList as tasteList } from '@constants/dummyMenu'
+import { dummyTasteList } from '@constants/dummyMenu'
 import { useState } from 'react'
+import { useTasteList } from '@hooks/queries/useTasteList'
 
 const MAX_TAG = 4
 interface Props {
@@ -22,8 +23,9 @@ const TagContainer = ({
   height = 20,
   gap = 0.8,
   tagHeight = 3.2,
-  backgroundColor = '#d9d9d9'
+  backgroundColor = '#ffffff'
 }: Props) => {
+  const { data: tasteList } = useTasteList()
   const tagIdList = selectedTasteIdList
   const handleClickTag = (clickedTagId: number) => {
     let newTagList = tagIdList
@@ -43,7 +45,7 @@ const TagContainer = ({
       gap={gap}
       backgroundColor={backgroundColor}
     >
-      {tasteList.map((taste) => (
+      {tasteList?.map((taste) => (
         <Tag
           key={taste.id}
           id={taste.id}
