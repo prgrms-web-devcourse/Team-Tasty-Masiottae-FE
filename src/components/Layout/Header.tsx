@@ -72,7 +72,6 @@ const HeaderContainer = styled.div`
   right: 0;
   z-index: 100;
   background-color: ${mainPink};
-  border-bottom: 0.1rem solid ${borderLight};
   display: flex;
   align-items: center;
   justify-content: space-between;
