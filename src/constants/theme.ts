@@ -1,18 +1,19 @@
 const theme = {
   color: {
     mainPink: '#E7404A',
-    mainYellow: '#F5CB39',
-    mainOrange: '#FF824C',
-    mainRed: '#FC3B41',
     mainBlack: '#000000',
-    fontBlack: '#3C3C3C',
-    fontDark: '#828282',
-    fontNormal: '#A3A3A3',
-    borderNormal: '#CCCCCC',
+    mainWhite: '#FFFFFF',
+    mainBlue: '#2F0EF6',
+    mainYellow: '#FFCE31',
+    error: '#d32f2f',
+    success: '#4caf50',
+    fontBasic: '#000000',
+    fontLight: '#A3A3A3',
+    borderBasic: '#CCCCCC',
     borderLight: '#F1F1F1',
+    backgroundBasic: '#FFFFFF',
     backgroundLight: '#F8F8F8',
-    backgroundNormal: '#F1F1F1',
-    mainWhite: '#FFFFFF'
+    franchiseLight: '#9EA4AA'
   },
   layout: {
     headerHeight: '7.5rem',

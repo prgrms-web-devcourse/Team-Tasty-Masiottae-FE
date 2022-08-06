@@ -66,7 +66,7 @@ const StyledInput = styled.input<Props>`
   height: ${({ height }) => `${height}rem`};
   border: 0.1rem solid
     ${({ theme, isValid }) =>
-      isValid ? theme.color.borderNormal : theme.color.mainRed};
+      isValid ? theme.color.borderBasic : theme.color.error};
   padding: 2.2rem 2.2rem;
   border-radius: 1rem;
   box-sizing: border-box;

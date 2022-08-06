@@ -3,7 +3,7 @@ import { useMutation } from '@tanstack/react-query'
 
 interface Params {
   userId: number
-  image: string
+  image: File
 }
 
 interface Data {
@@ -14,7 +14,7 @@ const patchImage = async ({ userId, image }: Params) => {
   const form = new FormData()
   form.append('image', image)
 
-  const { data } = await axios.patch<Data>(`/accounts/${userId}/image`, form, {
+  const { data } = await axios.post<Data>(`/accounts/${userId}/image`, form, {
     headers: { 'Content-Type': 'multipart/form-data' }
   })
 

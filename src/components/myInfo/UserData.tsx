@@ -1,19 +1,24 @@
 import styled from '@emotion/styled'
+import { useRecoilState } from 'recoil'
+import { currentUser } from '@recoil/currentUser'
+import { User } from '@interfaces'
+
 const UserData = () => {
+  const [user, setUser] = useRecoilState<User>(currentUser)
   return (
     <UserDataContainer>
       <UserDetailWrapper>
         <UserDetail>
           <Title>Email</Title>
-          <Text>admin@co.kr</Text>
+          <Text>{user.email}</Text>
         </UserDetail>
         <UserDetail>
-          <Title>닉네임</Title>
-          <Text>계란이 좋아</Text>
+          <Title>가입일</Title>
+          <Text>{user.createdAt.substring(0, 10)}</Text>
         </UserDetail>
         <UserDetail>
           <Title>게시물 수</Title>
-          <Text>200</Text>
+          <Text>{user.menuCount}</Text>
         </UserDetail>
       </UserDetailWrapper>
     </UserDataContainer>
@@ -26,14 +31,14 @@ const UserDataContainer = styled.div`
 `
 
 const Title = styled.div`
-  font-size: 2.6rem;
+  font-size: 2.4rem;
   margin: 0.2rem 0 0 2.8rem;
 `
 
 const Text = styled.div`
-  font-size: 2.6rem;
+  font-size: 2.4rem;
   margin: 0.2rem 0 0 1rem;
-  color: ${(props) => props.theme.color.fontNormal};
+  color: ${(props) => props.theme.color.fontBasic};
 `
 
 const UserDetailWrapper = styled.div`
@@ -45,10 +50,6 @@ const UserDetailWrapper = styled.div`
 
   > div:first-of-type {
     border-top: 0.1rem solid ${(props) => props.theme.color.borderLight};
-  }
-
-  > div:nth-of-type(n + 2) {
-    cursor: pointer;
   }
 `
 
