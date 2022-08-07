@@ -12,7 +12,6 @@ import { usePostMenu } from '@hooks/mutations/usePostMenuMutation'
 import InputMessage from '@components/InputMessage'
 
 import {
-  MIN_OPTION,
   MAX_OPTION,
   NAME_TITLE,
   NAME_ORIGINAL_TITLE,
@@ -96,7 +95,6 @@ const CreateMenu = () => {
         description: optionList[idx].description
       }
       const newOptionList = [...optionList]
-
       return newOptionList
     })
   }
@@ -119,6 +117,7 @@ const CreateMenu = () => {
 
   const handleTagListChange = (tagIdList: number[]) => {
     setTasteIdList(tagIdList)
+    console.log(Boolean(tagIdList.length))
   }
 
   const handlePriceButtonClick = () => {
@@ -130,9 +129,6 @@ const CreateMenu = () => {
     setOptionList(
       optionList.filter((option) => option.name && option.description)
     )
-    if (!(title && originalTitle && optionList.length && tasteIdList)) {
-      return
-    }
 
     const data = {
       userId: 1,
@@ -167,7 +163,6 @@ const CreateMenu = () => {
           type="text"
           name={NAME_TITLE}
           value={title}
-          required={true}
           placeholder={PLACEHOLDER_TITLE}
           onChange={handleTitleChange}
           isValid={Boolean(title)}
@@ -182,7 +177,6 @@ const CreateMenu = () => {
           type="text"
           name={NAME_ORIGINAL_TITLE}
           value={originalTitle}
-          required={true}
           placeholder={PLACEHOLDER_ORIGINAL_TITLE}
           onChange={handleOriginalTitleChange}
           isValid={Boolean(originalTitle)}
@@ -272,7 +266,16 @@ const CreateMenu = () => {
       <Button
         color={'#fff'}
         backgroundColor={'#000'}
-        disabled={false}
+        disabled={
+          !(
+            title &&
+            originalTitle &&
+            optionList.filter((option) => option.name && option.description)
+              .length &&
+            tasteIdList.length &&
+            (isPriceBtnClicked || expectedPrice > 0)
+          )
+        }
         onClick={handleEditSubmit}
       >
         메뉴 추가
