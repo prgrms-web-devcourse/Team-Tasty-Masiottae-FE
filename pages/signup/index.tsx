@@ -187,7 +187,8 @@ const Signup = () => {
       <InputContainer>
         <InputWrapper>
           <TextInput
-            type={TEXT}
+            type="text"
+            isValid={errors[INPUT_EMAIL] === ''}
             name={INPUT_EMAIL}
             placeholder={PLACEHOLDER_EMAIL}
             onChange={handleSignUpChange}
@@ -203,7 +204,8 @@ const Signup = () => {
         </InputWrapper>
         <InputWrapper>
           <TextInput
-            type={TEXT}
+            type="text"
+            isValid={errors[INPUT_NICKNAME] === ''}
             name={INPUT_NICKNAME}
             placeholder={PLACEHOLDER_NICKNAME}
             onChange={handleSignUpChange}
@@ -219,7 +221,8 @@ const Signup = () => {
         </InputWrapper>
         <InputWrapper>
           <TextInput
-            type={isTypePassword ? TEXT : PASSWORD}
+            type={isTypePassword ? 'text' : 'password'}
+            isValid={errors[INPUT_PASSWORD] === ''}
             name={INPUT_PASSWORD}
             placeholder={PLACEHOLDER_PASSWORD}
             onChange={handleSignUpChange}
@@ -233,7 +236,8 @@ const Signup = () => {
         </InputWrapper>
         <InputWrapper>
           <TextInput
-            type={isTypeConfirmPassword ? TEXT : PASSWORD}
+            type={isTypeConfirmPassword ? 'text' : 'password'}
+            isValid={errors[INPUT_PASSWORD_CONFIRM] === ''}
             name={INPUT_PASSWORD_CONFIRM}
             placeholder={PLACEHOLDER_PASSWORD_CONFIRM}
             onChange={handleSignUpChange}
