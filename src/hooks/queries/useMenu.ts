@@ -9,5 +9,7 @@ const getMenuById = async (menuId: number) => {
 }
 
 export const useMenu = (menuId: number) => {
-  return useQuery<Menu, Error>(['menu', menuId], () => getMenuById(menuId))
+  return useQuery<Menu, Error>(['menu', menuId], () => getMenuById(menuId), {
+    enabled: !!menuId
+  })
 }
