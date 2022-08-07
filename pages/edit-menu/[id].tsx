@@ -30,7 +30,7 @@ const EditMenu = () => {
   const router = useRouter()
   const { id } = router.query
 
-  const mutate = useChangeMenu()
+  const { mutate } = useChangeMenu()
   const { data: menuData } = useMenu(Number(id))
 
   useEffect(() => {
@@ -168,11 +168,32 @@ const EditMenu = () => {
       return
     }
     // api 호출
+
+    const data = {
+      userId: 1,
+      franchiseId: franchiseId,
+      title: title,
+      content: '',
+      originalTitle: originalTitle,
+      expectedPrice: expectedPrice,
+      optionList: optionList,
+      tasteIdList: tasteIdList
+    }
+
+    mutate(
+      { menuId: Number(id), image: file, data: data },
+      {
+        onSuccess: () => {
+          router.replace(`/detail/${id}`)
+        }
+      }
+    )
   }
   return (
     <FlexContainer>
-      <Title>메뉴 수정</Title>
-      <ImageUploader value={menuData?.image} onChange={handleImageChange} />
+      <ImageUploaderWrapper>
+        <ImageUploader value={menuData?.image} onChange={handleImageChange} />
+      </ImageUploaderWrapper>
       <InputWrapper>
         <FranchiseSelect onChange={handleFranchiseChange} />
         <Input
@@ -271,9 +292,8 @@ const InputWrapper = styled.div`
   gap: 0.8rem;
 `
 
-const Title = styled.h1`
-  font-size: 4rem;
-  align-self: start;
+const ImageUploaderWrapper = styled.div`
+  width: calc(100% + 40px);
 `
 
 const OptionName = styled(Input)`
