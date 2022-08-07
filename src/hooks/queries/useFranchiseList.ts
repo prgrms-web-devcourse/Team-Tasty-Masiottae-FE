@@ -9,7 +9,12 @@ const getFranchiseList = async () => {
 }
 
 export const useFranchiseList = () => {
-  return useQuery<Franchise[], Error>(['franchises'], getFranchiseList, {
-    staleTime: Infinity
-  })
+  const { data, isLoading } = useQuery<Franchise[], Error>(
+    ['franchises'],
+    getFranchiseList,
+    {
+      staleTime: Infinity
+    }
+  )
+  return { franchiseList: data, isLoading }
 }

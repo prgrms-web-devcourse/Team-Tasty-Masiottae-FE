@@ -1,15 +1,17 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from '@emotion/styled'
 import Input from '@components/Input'
+import FranchiseSelect from '@components/FranchiseSelect'
 import TagContainer from '@components/TagContainer'
 import ImageUploader from '@components/ImageUploader'
 import Button from '@components/Button'
-import { Option } from '@customTypes/index'
-import { dummyFranchiseList, dummyMenu } from '@constants/dummyMenu'
+import { Option } from '@interfaces'
+import { dummyMenu } from '@constants/dummyMenu'
+import { useMenu } from '@hooks/queries/useMenu'
+import { useChangeMenu } from '@hooks/mutations/useChangeMenuMutation'
 import {
   MIN_OPTION,
   MAX_OPTION,
-  NAME_SELECT,
   NAME_TITLE,
   NAME_ORIGINAL_TITLE,
   NAME_OPTION_NAME,
@@ -21,15 +23,30 @@ import {
   PLACEHOLDER_OPTION_DESCRIPTION,
   PLACEHOLDER_EXPECTED_PRICE
 } from '@constants/menuConstant'
+import { useRouter } from 'next/router'
 
 const EditMenu = () => {
   // 필드 값
-  const defaultImage = dummyMenu.image
+  const router = useRouter()
+  const { id } = router.query
+
+  const mutate = useChangeMenu()
+  const { data: menuData } = useMenu(Number(id))
+
+  useEffect(() => {
+    if (menuData) {
+      setFranchiseId(menuData.franchise.id)
+      setTitle(menuData.title)
+      setOriginalTitle(menuData.originalTitle)
+      setOptionList(menuData.optionList)
+      setExpectedPrice(menuData.expectedPrice)
+    }
+  }, [menuData])
   const [file, setFile] = useState<File | null>(null)
-  const [franchiseId, setFranchiseId] = useState(dummyMenu.franchise.id)
-  const [title, setTitle] = useState(dummyMenu.title)
+  const [franchiseId, setFranchiseId] = useState(0)
+  const [title, setTitle] = useState('')
   const [originalTitle, setOriginalTitle] = useState(dummyMenu.originalTitle)
-  const [optionList, setOptionList] = useState<Option[]>(dummyMenu.options)
+  const [optionList, setOptionList] = useState<Option[]>([])
   const [tasteIdList, setTasteIdList] = useState<number[]>(
     dummyMenu.tastes.map((taste) => taste.id)
   )
@@ -155,15 +172,9 @@ const EditMenu = () => {
   return (
     <FlexContainer>
       <Title>메뉴 수정</Title>
-      <ImageUploader onChange={handleImageChange} />
+      <ImageUploader value={menuData?.image} onChange={handleImageChange} />
       <InputWrapper>
-        <Select name={NAME_SELECT} onChange={handleFranchiseChange}>
-          {dummyFranchiseList.map((franchise) => (
-            <option key={franchise.id} value={franchise.id}>
-              {franchise.name}
-            </option>
-          ))}
-        </Select>
+        <FranchiseSelect onChange={handleFranchiseChange} />
         <Input
           height={2.4}
           type="text"
@@ -263,11 +274,6 @@ const InputWrapper = styled.div`
 const Title = styled.h1`
   font-size: 4rem;
   align-self: start;
-`
-
-const Select = styled.select`
-  width: 100%;
-  height: 3.2rem;
 `
 
 const OptionName = styled(Input)`

@@ -5,13 +5,12 @@ import Input from '@components/Input'
 import TagContainer from '@components/TagContainer'
 import ImageUploader from '@components/ImageUploader'
 import Button from '@components/Button'
+import FranchiseSelect from '@components/FranchiseSelect'
 import { Option } from '@customTypes/index'
-import { dummyFranchiseList } from '@constants/dummyMenu'
 import { usePostMenu } from '@hooks/mutations/usePostMenuMutation'
 import {
   MIN_OPTION,
   MAX_OPTION,
-  NAME_SELECT,
   NAME_TITLE,
   NAME_ORIGINAL_TITLE,
   NAME_OPTION_NAME,
@@ -23,12 +22,10 @@ import {
   PLACEHOLDER_OPTION_DESCRIPTION,
   PLACEHOLDER_EXPECTED_PRICE
 } from '@constants/menuConstant'
-//import { useFranchises } from '@hooks/queries/useFranchises'
 
 const CreateMenu = () => {
   // 필드 값
   const router = useRouter()
-
   const { mutate } = usePostMenu()
   const [file, setFile] = useState<File | null>(null)
   const [franchiseId, setFranchiseId] = useState(1)
@@ -173,13 +170,7 @@ const CreateMenu = () => {
       <Title>메뉴 생성</Title>
       <ImageUploader onChange={handleImageChange} />
       <InputWrapper>
-        <Select name={NAME_SELECT} onChange={handleFranchiseChange}>
-          {dummyFranchiseList.map((franchise) => (
-            <option key={franchise.id} value={franchise.id}>
-              {franchise.name}
-            </option>
-          ))}
-        </Select>
+        <FranchiseSelect onChange={handleFranchiseChange} />
         <Input
           height={2.4}
           type="text"
@@ -279,11 +270,6 @@ const InputWrapper = styled.div`
 const Title = styled.h1`
   font-size: 4rem;
   align-self: start;
-`
-
-const Select = styled.select`
-  width: 100%;
-  height: 3.2rem;
 `
 
 const OptionName = styled(Input)`

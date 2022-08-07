@@ -16,7 +16,7 @@ export interface Menu {
   originalTitle: string
   author: User
   content: string
-  optionList: Omit<Option, 'id'>[]
+  optionList: Option[]
   expectedPrice: number
   tasteList: Taste[]
   likes: number
@@ -33,9 +33,8 @@ export interface Comment {
 }
 
 export interface Option {
-  id: number
-  optionName: string
-  optionDescription: string
+  name: string
+  description: string
 }
 
 export interface Franchise {

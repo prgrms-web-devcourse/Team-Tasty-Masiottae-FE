@@ -13,11 +13,12 @@ interface Data {
   tasteIdList: number[]
 }
 interface Params {
+  menuId: number
   image: File | null
   data: Data
 }
 
-export const postMenu = async ({ image, data }: Params) => {
+export const patchMenu = async ({ menuId, image, data }: Params) => {
   const formData = new FormData()
   if (image) {
     formData.append('image', image)
@@ -29,17 +30,11 @@ export const postMenu = async ({ image, data }: Params) => {
     })
   )
 
-  const { data: MenuId } = await axios.post<{ menuId: number }>(
-    `/menu`,
-    formData,
-    {
-      headers: { 'Content-Type': 'multipart/form-data' }
-    }
-  )
-
-  return MenuId
+  await axios.post(`/menu${menuId}`, formData, {
+    headers: { 'Content-Type': 'multipart/form-data' }
+  })
 }
 
-export const usePostMenu = () => {
-  return useMutation(postMenu)
+export const useChangeMenu = () => {
+  return useMutation(patchMenu)
 }

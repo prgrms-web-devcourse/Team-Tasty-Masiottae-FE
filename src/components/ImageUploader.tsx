@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ImageType } from '@customTypes/index'
 import { BsPlusLg } from 'react-icons/bs'
 
@@ -21,6 +21,11 @@ const ImageUploader = ({
 }: Props) => {
   const [image, setImage] = useState<ImageType>(value)
   const [isError, setIsError] = useState(false)
+
+  useEffect(() => {
+    setImage(value)
+  }, [value])
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const reader = new FileReader()
     const file = e.target.files ? e.target.files[0] : null
@@ -29,7 +34,6 @@ const ImageUploader = ({
       setIsError(true)
       return
     }
-
     setIsError(false)
     reader.readAsDataURL(file)
     reader.onload = () => {
