@@ -7,22 +7,15 @@ export const dummyFranchiseList = [
 ]
 
 export const dummyTasteList = [
-  { id: 1, name: '차가운', color: '#1e88e5' },
-  { id: 2, name: '뜨거운', color: '#f72c25' },
-  { id: 3, name: '달콤한', color: '#ef476f' },
-  { id: 4, name: '매콤한', color: '#f94144' },
-  { id: 5, name: '새콤한', color: '#f9c74f' },
-  { id: 6, name: '쌉쌀한', color: '#90be6d' },
-  { id: 7, name: '짭짤한', color: '#f86624' },
-  { id: 8, name: '느끼한', color: '#fcb232' },
-  { id: 9, name: '부드러운', color: '#B69521' },
-  { id: 10, name: '매우 단', color: '#9e0059' },
-  { id: 11, name: '매우 짠', color: '#ca6702' },
-  { id: 12, name: '매우 쓴', color: '#3f5549' },
-  { id: 13, name: '매우 신', color: '#ee9b00' },
-  { id: 14, name: '매우 매운', color: '#74092c' },
-  { id: 15, name: '감칠맛 나는', color: '#4d194d' },
-  { id: 16, name: '고소한', color: '#cf995f' }
+  { id: 1, name: '차가운', color: '#1C78D2' },
+  { id: 2, name: '뜨거운', color: '#ED0E05' },
+  { id: 4, name: '매콤한', color: '#d00000' },
+  { id: 3, name: '달콤한', color: '#EA0E4C' },
+  { id: 5, name: '새콤한', color: '#ffa500' },
+  { id: 6, name: '쌉쌀한', color: '#3d405b' },
+  { id: 7, name: '짭짤한', color: '#EA5400' },
+  { id: 8, name: '느끼한', color: '#eccf8b' },
+  { id: 9, name: '고소한', color: '#83624d' }
 ]
 
 export const dummyMenu = {

@@ -45,9 +45,9 @@ const Item = styled.div<{
   justify-content: center;
   align-items: center;
   font-size: ${({ height }) => `${height * 0.7}rem`};
-  font-weight: 500;
+  font-weight: 600;
   border-radius: ${({ height }) => `${height}rem`};
-  padding: 1rem 2rem;
+  padding: 1.8rem 2.4rem;
   border: ${({ color }) => `0.2rem solid ${color}`};
   background-color: ${({ isClicked, color }) =>
     isClicked ? `${color}` : `#ffffff`};
