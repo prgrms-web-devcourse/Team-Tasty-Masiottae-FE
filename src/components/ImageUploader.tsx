@@ -46,7 +46,7 @@ const ImageUploader = ({
         shape={shape}
         image={image}
       >
-        <StyledIcon selected={image ? true : false} />
+        <StyledIcon selected={Boolean(image)} />
       </ImageBox>
       {isError ? (
         <ErrorMessage>확장자는 jpg, png, jpeg 만 가능해요!</ErrorMessage>
