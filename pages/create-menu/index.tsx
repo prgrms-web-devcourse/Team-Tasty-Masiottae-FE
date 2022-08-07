@@ -43,9 +43,8 @@ const CreateMenu = () => {
   const [tasteIdList, setTasteIdList] = useState<number[]>([])
   const [expectedPrice, setExpectedPrice] = useState(0)
 
-  // valid 값
   const [isPriceBtnClicked, setIsPriceBtnClicked] = useState(false)
-  // onChange handler
+
   const handleImageChange = (file: File) => {
     setFile(file)
   }
