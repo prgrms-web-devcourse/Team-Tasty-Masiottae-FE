@@ -42,13 +42,23 @@ const CommentInput = ({ menuId, userId }: Props) => {
   }, [])
 
   const handleAddButtonClick = () => {
-    postComment({
-      userId,
-      menuId,
-      comment
-    })
+    postComment(
+      {
+        userId,
+        menuId,
+        comment
+      },
+      {
+        onSuccess: () => {
+          setComment('')
+          if (textareaRef.current) {
+            textareaRef.current.value = ''
+          }
+        }
+      }
+    )
   }
-
+  console.log(textareaRef.current)
   return (
     <CommentWriteContainer>
       <Textarea
