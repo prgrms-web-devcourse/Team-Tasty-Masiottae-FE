@@ -7,6 +7,7 @@ import { useState, ChangeEvent, FormEvent } from 'react'
 import TagContainer from './TagContainer'
 import { SearchFormOptions } from '@interfaces'
 import Button from './Button'
+import theme from '@constants/theme'
 
 interface Props {
   sortOptions: SortOption[]
@@ -58,6 +59,12 @@ const SearchForm = ({ sortOptions, onSubmit }: Props) => {
       </SearchWrapper>
       <ErrorMessage></ErrorMessage>
       <OptionContainer>
+        <SortTagWrapper>
+          <SortTag isClicked={true}>최신순</SortTag>
+          <SortTag isClicked={false}>좋아요순</SortTag>
+          <SortTag isClicked={false}>댓글순</SortTag>
+        </SortTagWrapper>
+
         <FilterWrapper onClick={handleFilterClick}>
           <FilterIcon />
           <Text>필터</Text>
@@ -76,17 +83,36 @@ const SearchForm = ({ sortOptions, onSubmit }: Props) => {
             <Button onClick={handleModalClose}>제출</Button>
           </form>
         </Modal>
-        <select onChange={handleSortOptionChange}>
-          {sortOptions.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </select>
       </OptionContainer>
     </form>
   )
 }
+
+interface SortTagProps {
+  isClicked: boolean
+}
+
+const SortTagWrapper = styled.div`
+  display: flex;
+  gap: 0.5rem;
+`
+
+const SortTag = styled.div<SortTagProps>`
+  display: inline-flex;
+  width: fit-content;
+  justify-content: center;
+  align-items: center;
+  border-radius: 2rem;
+  background-color: ${({ isClicked }) =>
+    isClicked ? theme.color.mainPink : theme.color.mainWhite};
+  border: 1px solid ${theme.color.mainPink};
+  padding: 0.5rem 2rem;
+  color: ${({ isClicked }) =>
+    isClicked ? theme.color.mainWhite : theme.color.mainPink};
+  font-size: 1.6rem;
+  font-weight: 400;
+  cursor: pointer;
+`
 
 const SearchWrapper = styled.div`
   display: flex;
@@ -111,7 +137,7 @@ const SearchIcon = styled(FiSearch)`
 
 const OptionContainer = styled.div`
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   gap: 1rem;
 `
 
@@ -130,6 +156,7 @@ const FilterIcon = styled(BsFilterLeft)`
 const Text = styled.span`
   font-size: 2rem;
   user-select: none;
+  font-weight: 700;
 `
 
 export default SearchForm

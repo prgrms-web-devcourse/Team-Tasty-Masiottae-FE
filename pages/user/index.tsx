@@ -45,9 +45,11 @@ const UserMenu = () => {
       <FixedWrapper>
         <InnerWrapper>
           <ProfileContainer>
-            <Avatar size={10} src={SIZE_100_IMG_URL} isLoading={false} />
+            <Avatar size={7} src={SIZE_100_IMG_URL} isLoading={false} />
             <Author>작성자</Author>
           </ProfileContainer>
+
+          <SearchForm sortOptions={SORT_OPTIONS} onSubmit={handleSubmit} />
           <TabContainer>
             {SELECT_DUMMY.map((selectOption) => (
               <Tab
@@ -60,7 +62,6 @@ const UserMenu = () => {
               </Tab>
             ))}
           </TabContainer>
-          <SearchForm sortOptions={SORT_OPTIONS} onSubmit={handleSubmit} />
         </InnerWrapper>
       </FixedWrapper>
       <CardListContainer>
@@ -79,7 +80,7 @@ const FixedWrapper = styled.div`
 const InnerWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.5rem;
   min-width: 33.5rem;
   max-width: 46rem;
   width: 100%;
@@ -94,14 +95,14 @@ const InnerWrapper = styled.div`
 `
 
 const ProfileContainer = styled.div`
-  padding: 2rem;
+  padding: 1rem;
   display: flex;
   align-items: center;
   gap: 2rem;
 `
 
 const Author = styled.div`
-  font-size: 2.4rem;
+  font-size: 2rem;
   font-weight: bold;
   user-select: none;
 `
@@ -118,14 +119,14 @@ const Tab = styled.button<TabProps>`
   background-color: #ffffff;
   border: none;
   padding: 0 2rem;
-  font-size: 2.2rem;
+  font-size: 1.8rem;
   font-weight: bold;
   border-bottom: ${({ selected }) => (selected ? '3px solid red' : 'none')};
   height: 5rem;
 `
 
 const CardListContainer = styled.ul`
-  padding-top: 31.25rem;
+  padding-top: 25.25rem;
 `
 
 export default UserMenu
