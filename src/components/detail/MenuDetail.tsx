@@ -4,6 +4,8 @@ import Modal from '@components/Modal'
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai'
 import { BiDotsHorizontalRounded } from 'react-icons/bi'
 import { Menu } from '@interfaces'
+import { useDeleteMenuMutation } from '@hooks/mutations/useDeleteMenuMutation'
+import { useRouter } from 'next/router'
 
 interface Props {
   menu: Menu
@@ -11,6 +13,8 @@ interface Props {
 
 const MenuDetail = ({ menu }: Props) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const { mutate: deleteMenu } = useDeleteMenuMutation()
+  const router = useRouter()
 
   const handleEditMenuClick = () => {
     setIsModalOpen(true)
@@ -18,6 +22,18 @@ const MenuDetail = ({ menu }: Props) => {
 
   const handleEditMenuClose = () => {
     setIsModalOpen(false)
+  }
+
+  const handleMenuDelete = () => {
+    deleteMenu(
+      { menuId: menu.id },
+      {
+        onSuccess: () => {
+          setIsModalOpen(false)
+          router.push('/')
+        }
+      }
+    )
   }
 
   return (
@@ -31,7 +47,7 @@ const MenuDetail = ({ menu }: Props) => {
           option="drawer"
         >
           <ModalItem>수정</ModalItem>
-          <ModalItem>삭제</ModalItem>
+          <ModalItem onClick={handleMenuDelete}>삭제</ModalItem>
         </Modal>
       </Header>
 
