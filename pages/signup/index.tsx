@@ -4,6 +4,7 @@ import Input from '@components/Input'
 import Button from '@components/Button'
 import { BsEye } from 'react-icons/bs'
 import { useSignupMutation } from '@hooks/mutations/useSignupMutation'
+import InputMessage from '@components/InputMessage'
 import axios from '@lib/axios'
 import {
   TEXT,
@@ -37,7 +38,7 @@ interface SignUpValues {
   email: string
   nickName: string
   password: string
-  passwordConfirm?: string
+  passwordConfirm: string
   snsAccount?: string
 }
 
@@ -182,7 +183,7 @@ const Signup = () => {
   return (
     <SignUpForm>
       <Title>회원 가입</Title>
-      <ImageUploader onChange={handleImageChange} />
+      <ImageUploader shape="circle" size={14} onChange={handleImageChange} />
       <InputContainer>
         <InputWrapper>
           <TextInput
@@ -194,8 +195,11 @@ const Signup = () => {
           <ExistCheckButton height={7} onClick={handleCheckEmailClick}>
             중복 확인
           </ExistCheckButton>
-          <SuccessText>{checkSuccessText.email}</SuccessText>
-          <ErrorText>{errors[INPUT_EMAIL]}</ErrorText>
+          <InputMessage
+            isValid={errors[INPUT_EMAIL] === ''}
+            errorMessage={errors[INPUT_EMAIL]}
+            successMessage={checkSuccessText.email}
+          />
         </InputWrapper>
         <InputWrapper>
           <TextInput
@@ -207,8 +211,11 @@ const Signup = () => {
           <ExistCheckButton height={7} onClick={handleCheckNickNameClick}>
             중복 확인
           </ExistCheckButton>
-          <SuccessText>{checkSuccessText.nickName}</SuccessText>
-          <ErrorText>{errors[INPUT_NICKNAME]}</ErrorText>
+          <InputMessage
+            isValid={errors[INPUT_NICKNAME] === ''}
+            errorMessage={errors[INPUT_NICKNAME]}
+            successMessage={checkSuccessText.nickName}
+          />
         </InputWrapper>
         <InputWrapper>
           <TextInput
@@ -222,7 +229,7 @@ const Signup = () => {
               handleEyeClick(INPUT_PASSWORD)
             }}
           />
-          <ErrorText>{errors[INPUT_PASSWORD]}</ErrorText>
+          <InputMessage errorMessage={errors[INPUT_PASSWORD]} />
         </InputWrapper>
         <InputWrapper>
           <TextInput
@@ -236,7 +243,7 @@ const Signup = () => {
               handleEyeClick(INPUT_PASSWORD_CONFIRM)
             }}
           />
-          <ErrorText>{errors[INPUT_PASSWORD_CONFIRM]}</ErrorText>
+          <InputMessage errorMessage={errors[INPUT_PASSWORD_CONFIRM]} />
         </InputWrapper>
         <InputWrapper>
           <TextInput
@@ -254,29 +261,30 @@ const Signup = () => {
 }
 
 const ExistCheckButton = styled(Button)`
+  white-space: nowrap;
   width: 8rem;
-  height: 5rem;
+  height: 4rem;
   border-radius: 1rem;
   background-color: black;
   padding: 0 0.1rem;
   color: white;
-  font-size: 1.5rem;
-  font-weight: 400;
+  font-size: 1.4rem;
+  font-weight: 700;
   position: absolute;
-  right: 1.2rem;
-  top: 1rem;
+  right: 1rem;
+  top: 0.7rem;
   cursor: pointer;
 `
 
 const SignUpButton = styled(Button)`
   width: 100%;
-  height: 7rem;
+  height: 5.6rem;
   margin-top: 1rem;
   background-color: black;
   border-radius: 1rem;
   color: white;
-  font-size: 1.7rem;
-  font-weight: 500;
+  font-size: 1.8rem;
+  font-weight: 700;
   cursor: pointer;
 `
 
@@ -289,7 +297,8 @@ const SignUpForm = styled.form`
 
 const Title = styled.div`
   margin-top: 3rem;
-  font-size: 4rem;
+  margin-bottom: 2rem;
+  font-size: 2.8rem;
   font-weight: 700;
 `
 
@@ -306,33 +315,18 @@ const InputWrapper = styled.div`
 
 const TextInput = styled(Input)`
   width: 100%;
-  height: 7rem;
+  height: 5.6rem;
   border-radius: 1rem;
   padding-left: 2rem;
-  font-size: 1.7rem;
-`
-
-const ErrorText = styled.span`
-  text-align: left;
-  margin-top: 1rem;
-  font-size: 1.4rem;
-  color: ${(props) => props.theme.color.error};
-`
-
-const SuccessText = styled.span`
-  text-align: left;
-  margin-top: 1rem;
-  margin-left: 1rem;
-  font-size: 1.4rem;
-  color: green;
+  font-size: 1.8rem;
 `
 
 const ShowPasswordIcon = styled(BsEye)`
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 2rem;
+  height: 2rem;
   position: absolute;
   right: 2.8rem;
-  top: 2.2rem;
+  top: 1.7rem;
   cursor: pointer;
 `
 
