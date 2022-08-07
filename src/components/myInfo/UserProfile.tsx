@@ -17,6 +17,7 @@ import {
 } from '@constants/inputConstant'
 import { useChangeImageMutation } from '@hooks/mutations/useChangeImageMutation'
 import { useChangeNickNameMutation } from '@hooks/mutations/useChangeNickNameMutation'
+import InputMessage from '@components/InputMessage'
 
 const CHANGE_NICKNAME_PLACEHOLDER = '변경할 닉네임'
 
@@ -25,7 +26,6 @@ const UserProfile = () => {
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false)
   const [nickName, setNickName] = useState('')
   const [error, setError] = useState('')
-  const [isNickNameValid, setIsNickNameValid] = useState(true)
   const [imageFile, setImageFile] = useState<File | null>(null)
   const [user, setUser] = useRecoilState<User>(currentUser)
 
@@ -53,11 +53,9 @@ const UserProfile = () => {
   const handleNicknameChange = useCallback(
     async (e: React.ChangeEvent<HTMLInputElement>) => {
       setError('')
-      setIsNickNameValid(true)
       const value = e.target.value.replace(/\s/, '').slice(0, 7)
       if (!REGEX_NICKNAME.test(value)) {
         setError(MESSAGE_NICKNAME)
-        setIsNickNameValid(false)
       }
       setNickName(value)
       e.target.value = value
@@ -69,7 +67,6 @@ const UserProfile = () => {
     const isNickNameExist = false
     if (isNickNameExist) {
       setError(ERROR_EXIST_NICKNAME)
-      setIsNickNameValid(false)
       return
     }
 
@@ -96,13 +93,13 @@ const UserProfile = () => {
               type="text"
               placeholder={CHANGE_NICKNAME_PLACEHOLDER}
               onChange={handleNicknameChange}
-              isValid={error ? false : true}
+              isValid={error === ''}
             />
             <ChangeNickNameButton onClick={handleNicknameSubmit}>
               수정
             </ChangeNickNameButton>
           </NickName>
-          {!isNickNameValid && <ErrorText>{error}</ErrorText>}
+          <InputMessage errorMessage={error} />
         </>
       ) : (
         <NickName>
@@ -128,13 +125,6 @@ const UserProfile = () => {
   )
 }
 
-const ErrorText = styled.span`
-  text-align: left;
-  margin-top: 1rem;
-  font-size: 1.4rem;
-  color: ${(props) => props.theme.color.error};
-`
-
 const ProfileModal = styled(Modal)`
   border-radius: 1rem;
   margin-top: 2rem;
@@ -156,9 +146,9 @@ const ModalButton = styled(Button)`
   font-size: 1.8rem;
   font-weight: 700;
   height: 5.6rem;
-  border-radius: 1.2rem;
+  border-radius: 1rem;
   display: flex;
-  margin: 1rem auto 1rem auto;
+  margin-top: 1rem;
   align-items: center;
   justify-content: center;
   background-color: ${(props) => props.theme.color.mainBlack};
@@ -166,12 +156,15 @@ const ModalButton = styled(Button)`
 `
 
 const UserProfileWrapper = styled.div`
-  text-align: center;
   margin: 5rem auto 3rem auto;
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  > span {
+    margin-left: -1rem;
+  }
 `
 
 const UserImage = styled(Image)`
