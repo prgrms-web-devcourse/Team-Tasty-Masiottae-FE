@@ -32,7 +32,6 @@ const EditMenu = () => {
 
   const mutate = useChangeMenu()
   const { data: menuData } = useMenu(Number(id))
-  //onsole.log(menuData)
 
   useEffect(() => {
     if (menuData) {
@@ -275,11 +274,6 @@ const InputWrapper = styled.div`
 const Title = styled.h1`
   font-size: 4rem;
   align-self: start;
-`
-
-const Select = styled.select`
-  width: 100%;
-  height: 3.2rem;
 `
 
 const OptionName = styled(Input)`

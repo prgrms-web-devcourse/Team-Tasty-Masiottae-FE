@@ -8,7 +8,6 @@ import Button from '@components/Button'
 import FranchiseSelect from '@components/FranchiseSelect'
 import { Option } from '@customTypes/index'
 import { usePostMenu } from '@hooks/mutations/usePostMenuMutation'
-import { useFranchiseList } from '@hooks/queries/useFranchiseList'
 import {
   MIN_OPTION,
   MAX_OPTION,
@@ -27,7 +26,6 @@ import {
 const CreateMenu = () => {
   // 필드 값
   const router = useRouter()
-  const { data: franchiseList } = useFranchiseList()
   const { mutate } = usePostMenu()
   const [file, setFile] = useState<File | null>(null)
   const [franchiseId, setFranchiseId] = useState(1)
@@ -272,11 +270,6 @@ const InputWrapper = styled.div`
 const Title = styled.h1`
   font-size: 4rem;
   align-self: start;
-`
-
-const Select = styled.select`
-  width: 100%;
-  height: 3.2rem;
 `
 
 const OptionName = styled(Input)`

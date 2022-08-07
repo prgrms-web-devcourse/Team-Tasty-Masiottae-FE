@@ -7,7 +7,7 @@ interface Props {
 }
 
 const FranchiseSelect = ({ onChange }: Props) => {
-  const { data: franchiseList } = useFranchiseList()
+  const { franchiseList } = useFranchiseList()
 
   return (
     <Select name={NAME_SELECT} onChange={onChange}>

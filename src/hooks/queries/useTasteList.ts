@@ -8,7 +8,12 @@ const getTasteList = async () => {
 }
 
 export const useTasteList = () => {
-  return useQuery<Taste[], Error>(['tasteList'], getTasteList, {
-    staleTime: Infinity
-  })
+  const { data, isLoading } = useQuery<Taste[], Error>(
+    ['tasteList'],
+    getTasteList,
+    {
+      staleTime: Infinity
+    }
+  )
+  return { tasteList: data, isLoading }
 }
