@@ -2,8 +2,10 @@ import React, { useState } from 'react'
 import styled from '@emotion/styled'
 import Modal from '@components/Modal'
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai'
-import { BiDotsHorizontalRounded } from 'react-icons/bi'
+import { BiDotsVerticalRounded, BiTrash } from 'react-icons/bi'
 import { Menu } from '@interfaces'
+import Avatar from '@components/Avatar'
+import { BsFillPencilFill } from 'react-icons/bs'
 
 interface Props {
   menu: Menu
@@ -11,6 +13,11 @@ interface Props {
 
 const MenuDetail = ({ menu }: Props) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isLikeClicked, setIsLikeClicked] = useState(true)
+
+  const handleLikeClick = () => {
+    setIsLikeClicked((prev) => !prev)
+  }
 
   const handleEditMenuClick = () => {
     setIsModalOpen(true)
@@ -20,48 +27,66 @@ const MenuDetail = ({ menu }: Props) => {
     setIsModalOpen(false)
   }
 
+  console.log(menu.tasteList)
   return (
     <MenuContainer>
-      <Header>
-        <Title>{menu.title}</Title>
-        <Dots size={30} onClick={handleEditMenuClick} />
-        <Modal
-          visible={isModalOpen}
-          onClose={handleEditMenuClose}
-          option="drawer"
-        >
-          <ModalItem>수정</ModalItem>
-          <ModalItem>삭제</ModalItem>
-        </Modal>
-      </Header>
+      <Image src={menu.image} alt="" />
 
-      <ImageWrapper>
-        <Image src={menu.image} alt="" />
-      </ImageWrapper>
+      <Hat />
+      <Header>
+        <LeftHeader>
+          <FranchiseText>{menu.franchise.name} </FranchiseText>
+          <Title>{menu.title}</Title>
+        </LeftHeader>
+        <RightHeader>
+          {isLikeClicked ? (
+            <Heart size={40} onClick={handleLikeClick} />
+          ) : (
+            <EmptyHeart size={40} onClick={handleLikeClick} />
+          )}
+          <LikesCountText clicked={isLikeClicked}>{menu.likes}</LikesCountText>
+          <Dots size={30} onClick={handleEditMenuClick} />
+          <Modal
+            visible={isModalOpen}
+            onClose={handleEditMenuClose}
+            option="drawer"
+          >
+            <ModalItem>
+              <BsFillPencilFill size={25} />
+              수정
+            </ModalItem>
+            <ModalItem>
+              <BiTrash size={25} />
+              삭제
+            </ModalItem>
+          </Modal>
+        </RightHeader>
+      </Header>
 
       <Footer>
         <UserWrapper>
-          <Avatar src={menu.author.image} />
+          <Avatar size={4} src={menu.author.image} isLoading={false} />
           <UserNameText>{menu.author.nickName}</UserNameText>
         </UserWrapper>
-        <LikeWrapper>
-          <EmptyHeart size={30} />
-          <LikesCountText>{menu.likes}</LikesCountText>
-        </LikeWrapper>
       </Footer>
 
       <OptionsWrapper>
-        <div>
-          <FranchiseText>{menu.franchise.name} </FranchiseText>
-          <span>{menu.originalTitle}</span>
-        </div>
+        <OriginalTitle>{menu.originalTitle}</OriginalTitle>
         {menu.optionList.map(({ name, description }) => (
           <OptionText key={name}>
-            + {name} {description}
+            {name} {description}
           </OptionText>
         ))}
-        <PriceText>예상 가격: {menu.expectedPrice} 원</PriceText>
+        <PriceText>{menu.expectedPrice} 원</PriceText>
       </OptionsWrapper>
+
+      <TagContainer>
+        {menu.tasteList.map(({ id, name, color }) => (
+          <Tag key={id} color={color}>
+            <span>{name}</span>
+          </Tag>
+        ))}
+      </TagContainer>
     </MenuContainer>
   )
 }
@@ -74,18 +99,67 @@ const MenuContainer = styled.div`
   margin-bottom: 2rem;
 `
 
+const Hat = styled.div`
+  position: relative;
+  top: -1.5rem;
+  background-color: white;
+  width: 100%;
+  height: 3rem;
+  border-radius: 1.5rem;
+`
+
 const Header = styled(Flex)`
   justify-content: space-between;
   align-items: center;
+  position: relative;
+
   margin-top: 1rem;
   margin-bottom: 2rem;
 `
 
-const Title = styled.span`
-  font-size: 3.6rem;
+const Image = styled.img`
+  width: 100%;
+  height: 100%;
 `
 
-const Dots = styled(BiDotsHorizontalRounded)`
+const LeftHeader = styled.div``
+
+const FranchiseText = styled.div`
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #a3a3a3;
+  margin-bottom: 0.8rem;
+`
+
+const Title = styled.div`
+  font-size: 2.8rem;
+  font-weight: 700;
+`
+
+const RightHeader = styled(Flex)`
+  align-items: center;
+  position: relative;
+  top: -1.6rem;
+`
+
+const EmptyHeart = styled(AiOutlineHeart)`
+  cursor: pointer;
+`
+
+const Heart = styled(AiFillHeart)`
+  color: red;
+  cursor: pointer;
+`
+
+const LikesCountText = styled.span<{ clicked: boolean }>`
+  color: ${({ clicked }) => (clicked ? 'white' : 'black')};
+  position: relative;
+  right: 2.5rem;
+  font-size: 1.4rem;
+  font-weight: 700;
+`
+
+const Dots = styled(BiDotsVerticalRounded)`
   cursor: pointer;
 `
 
@@ -101,14 +175,6 @@ const ModalItem = styled(Flex)`
   }
 `
 
-const ImageWrapper = styled(Flex)`
-  justify-content: center;
-  max-width: 50rem;
-  height: 100vw;
-  max-height: 50rem;
-  margin-bottom: -45%;
-`
-
 const Footer = styled(Flex)`
   justify-content: space-between;
   margin-bottom: 2rem;
@@ -119,8 +185,6 @@ const OptionsWrapper = styled(Flex)`
   font-size: 2rem;
   margin-bottom: 1rem;
   padding: 1rem;
-  border: 0.1rem solid rgba(0, 0, 0, 0.4);
-  border-radius: 1rem;
 
   & > div:first-of-type {
     margin-bottom: 2rem;
@@ -131,7 +195,8 @@ const OptionsWrapper = styled(Flex)`
   }
 `
 
-const FranchiseText = styled.span`
+const OriginalTitle = styled.div`
+  font-size: 1.6rem;
   font-weight: 700;
 `
 
@@ -141,18 +206,8 @@ const OptionText = styled.span`
 
 const PriceText = styled.span`
   font-size: 1.6rem;
+  font-weight: 700;
   align-self: flex-end;
-`
-
-const Image = styled.img`
-  width: 50%;
-  height: 50%;
-`
-
-const Avatar = styled.img`
-  width: 3rem;
-  height: 3rem;
-  margin-right: 1rem;
 `
 
 const UserWrapper = styled(Flex)`
@@ -162,24 +217,24 @@ const UserWrapper = styled(Flex)`
 const UserNameText = styled.div`
   font-size: 2rem;
   font-weight: 700;
+  margin-left: 1.2rem;
 `
 
-const LikeWrapper = styled(Flex)`
+const TagContainer = styled(Flex)`
+  gap: 1rem;
+`
+
+const Tag = styled(Flex)<{ color: string }>`
+  display: flex;
   align-items: center;
-`
-
-const Heart = styled(AiFillHeart)`
-  color: red;
-  cursor: pointer;
-`
-
-const EmptyHeart = styled(AiOutlineHeart)`
-  cursor: pointer;
-`
-
-const LikesCountText = styled.span`
-  font-size: 1.4rem;
+  color: white;
+  font-size: 1.8rem;
   font-weight: 700;
+  background-color: ${({ color }) => color};
+  min-width: fit-content;
+  height: 3.2rem;
+  padding: 1rem 2rem;
+  border-radius: 1.6rem;
 `
 
 export default MenuDetail

@@ -4,6 +4,7 @@ import Modal from '@components/Modal'
 import { Comment, User } from '@interfaces'
 import { BiDotsHorizontalRounded, BiTrash } from 'react-icons/bi'
 import { getDate } from '@utils/getDate'
+import Avatar from '@components/Avatar'
 
 interface Props {
   user: User
@@ -27,7 +28,7 @@ const CommentList = ({ user, commentList }: Props) => {
       {commentList.map(({ id, author, createdAt, comment }) => (
         <Fragment key={id}>
           <CommentWrapper>
-            <Avatar src={author.image} />
+            <Avatar size={4} src={author.image} isLoading={false} />
             <CommentContainer>
               <CommentHeader>
                 <NameAndDateWrapper>
@@ -50,9 +51,7 @@ const CommentList = ({ user, commentList }: Props) => {
                   </>
                 )}
               </CommentHeader>
-              <CommentBox>
-                <CommentText>{comment}</CommentText>
-              </CommentBox>
+              <CommentText>{comment}</CommentText>
             </CommentContainer>
           </CommentWrapper>
         </Fragment>
@@ -74,16 +73,13 @@ const CommnetCountText = styled.div`
 
 const CommentWrapper = styled(Flex)`
   margin-bottom: 1rem;
-`
-
-const Avatar = styled.img`
-  width: 3rem;
-  height: 3rem;
-  margin-right: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 0.1rem solid #f1f1f1;
 `
 
 const CommentContainer = styled.div`
-  width: 100%;
+  width: calc(100% - 4rem);
+  margin-left: 1rem;
 `
 
 const CommentHeader = styled(Flex)`
@@ -109,18 +105,8 @@ const Dots = styled(BiDotsHorizontalRounded)`
   cursor: pointer;
 `
 
-const CommentBox = styled(Flex)`
-  justify-content: space-evenly;
-  font-size: 1.4rem;
-  min-width: 100%;
-  border-radius: 0.5rem;
-  padding: 1rem;
-  background-color: rgba(0, 0, 0, 0.03);
-`
-
 const CommentText = styled.div`
-  padding-right: 2rem;
-  width: 100%;
+  font-size: 1.4rem;
 `
 
 const ModalItem = styled(Flex)`

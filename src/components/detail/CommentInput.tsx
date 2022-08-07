@@ -58,7 +58,7 @@ const CommentInput = ({ menuId, userId }: Props) => {
       }
     )
   }
-  console.log(textareaRef.current)
+
   return (
     <CommentWriteContainer>
       <Textarea
@@ -88,7 +88,6 @@ const Textarea = styled.textarea`
   width: 100%;
   height: 4rem;
   font-size: 1.6rem;
-  border: 0.1rem solid rgba(0, 0, 0, 0.4);
   border-radius: 1rem;
   padding: 1rem 7rem 1rem 1rem;
   resize: none;
@@ -99,16 +98,17 @@ const Textarea = styled.textarea`
   }
 
   &::placeholder {
-    font-size: 1.4rem;
+    font-size: 1.6rem;
   }
 `
 
 const AddCommentButton = styled.button`
   position: absolute;
-  bottom: 0.5rem;
-  right: 1rem;
+  bottom: 0.4rem;
+  right: 0.4rem;
   width: 5rem;
-  height: 3rem;
+  height: 3.2rem;
+  font-weight: 700;
   border: none;
   border-radius: 0.6rem;
   color: #f5f5f5;
