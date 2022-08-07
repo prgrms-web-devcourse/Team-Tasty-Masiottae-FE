@@ -2,7 +2,6 @@ import type { NextPage } from 'next'
 import useIntersectionObserver from '@hooks/useIntersectionObserver'
 import MenuCardList from '@components/MenuCardList'
 import { useMenuList } from '@hooks/queries/useMenuList'
-import MenuCard from '@components/MenuCard'
 
 const Home: NextPage = () => {
   const { menuList } = useMenuList()
