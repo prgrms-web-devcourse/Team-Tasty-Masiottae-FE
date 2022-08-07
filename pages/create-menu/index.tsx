@@ -10,6 +10,8 @@ import FranchiseSelect from '@components/FranchiseSelect'
 import { Option } from '@customTypes/index'
 import { usePostMenu } from '@hooks/mutations/usePostMenuMutation'
 import InputMessage from '@components/InputMessage'
+import { useRecoilState } from 'recoil'
+import { currentUser } from '@recoil/currentUser'
 
 import {
   MAX_OPTION,
@@ -30,6 +32,7 @@ import {
 
 const CreateMenu = () => {
   // 필드 값
+  const [{ id: userId }] = useRecoilState(currentUser)
   const router = useRouter()
   const { mutate } = usePostMenu()
   const [file, setFile] = useState<File | null>(null)
@@ -131,7 +134,7 @@ const CreateMenu = () => {
     )
 
     const data = {
-      userId: 1,
+      userId: userId,
       franchiseId: franchiseId,
       title: title,
       content: '',
