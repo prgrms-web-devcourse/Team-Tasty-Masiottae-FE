@@ -10,6 +10,7 @@ interface Props {
   accept?: string
   required?: boolean
   isValid?: boolean
+  isDisabled?: boolean
   placeholder: string
   onChange?: React.ChangeEventHandler<HTMLInputElement>
   onBlur?: React.FocusEventHandler<HTMLInputElement>
@@ -25,6 +26,7 @@ const Input = ({
   accept,
   required = false,
   isValid = true,
+  isDisabled = false,
   placeholder,
   onChange,
   onBlur,
@@ -57,6 +59,7 @@ const Input = ({
       onChange={handleChange}
       onBlur={handleBlur}
       className={className}
+      disabled={isDisabled}
     />
   )
 }

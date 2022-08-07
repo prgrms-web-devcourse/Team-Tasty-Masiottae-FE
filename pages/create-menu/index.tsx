@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useRouter } from 'next/router'
 import styled from '@emotion/styled'
+import { TiDelete } from 'react-icons/ti'
 import Input from '@components/Input'
 import TagContainer from '@components/TagContainer'
 import ImageUploader from '@components/ImageUploader'
@@ -8,6 +9,8 @@ import Button from '@components/Button'
 import FranchiseSelect from '@components/FranchiseSelect'
 import { Option } from '@customTypes/index'
 import { usePostMenu } from '@hooks/mutations/usePostMenuMutation'
+import InputMessage from '@components/InputMessage'
+
 import {
   MIN_OPTION,
   MAX_OPTION,
@@ -20,7 +23,10 @@ import {
   PLACEHOLDER_ORIGINAL_TITLE,
   PLACEHOLDER_OPTION_NAME,
   PLACEHOLDER_OPTION_DESCRIPTION,
-  PLACEHOLDER_EXPECTED_PRICE
+  PLACEHOLDER_EXPECTED_PRICE,
+  ERROR_MESSAGE_REQUIRED_TITLE,
+  ERROR_MESSAGE_REQUIRED_ORIGINAL_TITLE,
+  ERROR_MESSAGE_REQUIRED_OPTION
 } from '@constants/menuConstant'
 
 const CreateMenu = () => {
@@ -36,8 +42,7 @@ const CreateMenu = () => {
   const [expectedPrice, setExpectedPrice] = useState(0)
 
   // valid 값
-  const [isTitleValid, setTitleValid] = useState(true)
-  const [isOriginalTitleValid, setOriginalTitleValid] = useState(true)
+  const [isPriceBtnClicked, setIsPriceBtnClicked] = useState(false)
   // onChange handler
   const handleImageChange = (file: File) => {
     setFile(file)
@@ -95,6 +100,7 @@ const CreateMenu = () => {
       return newOptionList
     })
   }
+
   const handleOptionDescriptionChange = (
     e: React.FormEvent<HTMLInputElement>,
     idx: number
@@ -115,34 +121,16 @@ const CreateMenu = () => {
     setTasteIdList(tagIdList)
   }
 
-  const requiredInputCheck = (input: string) => {
-    return input ? true : false
+  const handlePriceButtonClick = () => {
+    setIsPriceBtnClicked((isBtnClicked) => !isBtnClicked)
   }
 
-  const handleTitleBlur = (e: React.FormEvent<HTMLInputElement>) => {
-    const newValue = e.currentTarget.value
-    setTitleValid(requiredInputCheck(newValue))
-  }
-
-  const handleOriginalTitleBlur = (e: React.FormEvent<HTMLInputElement>) => {
-    const newValue = e.currentTarget.value
-    setOriginalTitleValid(requiredInputCheck(newValue))
-  }
   // form data 전송
   const handleEditSubmit = async () => {
-    if (!isTitleValid) {
-      return
-    }
-    if (!isOriginalTitleValid) {
-      return
-    }
     setOptionList(
       optionList.filter((option) => option.name && option.description)
     )
-    if (optionList.length < MIN_OPTION) {
-      return
-    }
-    if (!tasteIdList.length) {
+    if (!(title && originalTitle && optionList.length && tasteIdList)) {
       return
     }
 
@@ -171,7 +159,9 @@ const CreateMenu = () => {
         <ImageUploader onChange={handleImageChange} />
       </ImageUploaderWrapper>
       <InputWrapper>
+        <InputName>프랜차이즈</InputName>
         <FranchiseSelect onChange={handleFranchiseChange} />
+        <InputName>커스텀 메뉴 이름</InputName>
         <Input
           height={2.4}
           type="text"
@@ -180,9 +170,13 @@ const CreateMenu = () => {
           required={true}
           placeholder={PLACEHOLDER_TITLE}
           onChange={handleTitleChange}
-          onBlur={handleTitleBlur}
-          isValid={isTitleValid}
+          isValid={Boolean(title)}
         />
+        <InputMessage
+          isValid={Boolean(title)}
+          errorMessage={ERROR_MESSAGE_REQUIRED_TITLE}
+        ></InputMessage>
+        <InputName>기본 메뉴 이름</InputName>
         <Input
           height={2.4}
           type="text"
@@ -191,63 +185,98 @@ const CreateMenu = () => {
           required={true}
           placeholder={PLACEHOLDER_ORIGINAL_TITLE}
           onChange={handleOriginalTitleChange}
-          onBlur={handleOriginalTitleBlur}
-          isValid={isOriginalTitleValid}
+          isValid={Boolean(originalTitle)}
         />
-        <Button width={10} height={4} onClick={handleOptionAddBtnClick}>
-          + 옵션
-        </Button>
+        <InputMessage
+          isValid={Boolean(originalTitle)}
+          errorMessage={ERROR_MESSAGE_REQUIRED_ORIGINAL_TITLE}
+        ></InputMessage>
+        <OptionButton
+          width={10}
+          height={4}
+          color={'#fff'}
+          backgroundColor={'#000'}
+          onClick={handleOptionAddBtnClick}
+        >
+          옵션 추가
+        </OptionButton>
         {optionList.map((option, idx) => (
-          <Flex key={idx}>
-            <OptionName
-              height={2.4}
-              type="text"
-              name={NAME_OPTION_NAME}
-              value={option.name}
-              required={true}
-              placeholder={PLACEHOLDER_OPTION_NAME}
-              onChange={(e) => {
-                handleOptionNameChange(e, idx)
-              }}
-              isValid={option.name ? true : false}
-            />
-            <OptionDescription
-              height={2.4}
-              type="text"
-              name={NAME_OPTION_DESCRIPTION}
-              value={option.description}
-              required={true}
-              placeholder={PLACEHOLDER_OPTION_DESCRIPTION}
-              onChange={(e) => {
-                handleOptionDescriptionChange(e, idx)
-              }}
-              isValid={option.description ? true : false}
-            />
-            <Button
-              width={8}
-              height={4}
-              onClick={() => handleOptionDelBtnClick(idx)}
-            >
-              삭제
-            </Button>
-          </Flex>
+          <div key={idx}>
+            <OptionWrapper key={idx}>
+              <OptionName
+                height={2.4}
+                type="text"
+                name={NAME_OPTION_NAME}
+                value={option.name}
+                required={true}
+                placeholder={PLACEHOLDER_OPTION_NAME}
+                onChange={(e) => {
+                  handleOptionNameChange(e, idx)
+                }}
+                isValid={option.name ? true : false}
+              />
+              <OptionDescription
+                height={2.4}
+                type="text"
+                name={NAME_OPTION_DESCRIPTION}
+                value={option.description}
+                required={true}
+                placeholder={PLACEHOLDER_OPTION_DESCRIPTION}
+                onChange={(e) => {
+                  handleOptionDescriptionChange(e, idx)
+                }}
+                isValid={option.description ? true : false}
+              />
+              <Button
+                width={6}
+                height={4}
+                backgroundColor={'#fff'}
+                onClick={() => handleOptionDelBtnClick(idx)}
+              >
+                <DeleteIcon />
+              </Button>
+            </OptionWrapper>
+            <InputMessage
+              isValid={option.name && option.description ? true : false}
+              errorMessage={ERROR_MESSAGE_REQUIRED_OPTION}
+            ></InputMessage>
+          </div>
         ))}
-        <PriceInput
-          width={20}
-          height={2.4}
-          type="text"
-          name={NAME_EXPECTED_PRICE}
-          value={expectedPrice.toString()}
-          placeholder={PLACEHOLDER_EXPECTED_PRICE}
-          onChange={handlePriceChange}
-        />
+        <OptionWrapper>
+          <InputName>가격</InputName>
+          <PriceInput
+            width={20}
+            height={2.4}
+            type="text"
+            name={NAME_EXPECTED_PRICE}
+            value={expectedPrice.toString()}
+            placeholder={PLACEHOLDER_EXPECTED_PRICE}
+            onChange={handlePriceChange}
+            isDisabled={isPriceBtnClicked}
+          />
+          <PriceDefaultButton
+            width={6.4}
+            height={4}
+            onClick={handlePriceButtonClick}
+            isClicked={isPriceBtnClicked}
+          >
+            모름
+          </PriceDefaultButton>
+        </OptionWrapper>
       </InputWrapper>
       <SubTitle>맛</SubTitle>
       <TagContainer
         selectedTasteIdList={tasteIdList}
         onChange={handleTagListChange}
       />
-      <Button onClick={handleEditSubmit}>메뉴 추가</Button>
+      <Button
+        color={'#fff'}
+        backgroundColor={'#000'}
+        disabled={false}
+        onClick={handleEditSubmit}
+      >
+        메뉴 추가
+      </Button>
     </FlexContainer>
   )
 }
@@ -262,21 +291,50 @@ const FlexContainer = styled(Flex)`
 `
 
 const InputWrapper = styled.div`
-  width: 90%;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 0.8rem;
+`
+
+const DeleteIcon = styled(TiDelete)`
+  width: 3rem;
+  height: 3rem;
+`
+const InputName = styled.div`
+  font-size: 2rem;
+  font-weight: 800;
+  min-width: 10rem;
+  padding: 0.8rem 0;
+`
+const OptionButton = styled(Button)`
+  margin: 0.8rem 0;
 `
 
 const ImageUploaderWrapper = styled.div`
   width: calc(100% + 40px);
 `
 
+const OptionWrapper = styled.div`
+  display: flex;
+  gap: 0.8rem;
+  align-items: center;
+  padding: 0.4rem 0;
+`
+
 const OptionName = styled(Input)`
-  width: 40%;
+  width: 30%;
 `
 const OptionDescription = styled(Input)`
   width: 50%;
+  flex-grow: 1;
+  flex-shrink: 1;
+`
+
+const PriceDefaultButton = styled(Button)<{ isClicked: boolean }>`
+  font-weight: 600;
+  background-color: ${({ isClicked }) => (isClicked ? '#000' : '#fff')};
+  color: ${({ isClicked }) => (isClicked ? '#fff' : '#000')};
+  border: 2px solid black;
 `
 
 const PriceInput = styled(Input)`
@@ -285,7 +343,7 @@ const PriceInput = styled(Input)`
 `
 
 const SubTitle = styled.h3`
-  font-size: 2.4rem;
+  font-size: 2rem;
   align-self: start;
 `
 
