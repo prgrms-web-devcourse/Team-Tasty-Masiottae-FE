@@ -82,14 +82,12 @@ const CardHeader = styled.div`
   flex-direction: column;
   gap: 0.3rem;
   padding: 0.5rem;
-  box-sizing: border-box;
 `
 const CardFooter = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
   padding: 0.5rem;
-  box-sizing: border-box;
 `
 
 const Franchise = styled.div`
@@ -116,12 +114,11 @@ const UserInfoWrapper = styled.div`
   justify-content: flex-end;
   align-items: center;
   gap: 1rem;
-  box-sizing: border-box;
 `
 
 const Author = styled.div`
   font-size: 1.4rem;
-  font-weight: 600;
+  font-weight: 700;
   user-select: none;
 `
 
@@ -130,7 +127,6 @@ const PostInfoWrapper = styled.div`
   justify-content: flex-end;
   align-items: center;
   gap: 1rem;
-  box-sizing: border-box;
 `
 
 const Text = styled.div`
