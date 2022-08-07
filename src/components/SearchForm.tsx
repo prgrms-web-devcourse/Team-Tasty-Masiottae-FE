@@ -22,7 +22,7 @@ const PLACEHOLDER_SEARCH_INPUT = '메뉴 검색'
 
 const SearchForm = ({ sortOptions, onSubmit }: Props) => {
   const [modalVisible, setModalVisible] = useState(false)
-  const [tasteIdList, setTasteIdList] = useState<Array<number>>([])
+  const [tasteIdList, setTasteIdList] = useState<number[]>([])
   const [keyword, setKeyword] = useState('')
   const [sort, setSort] = useState('')
 
