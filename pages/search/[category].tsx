@@ -4,7 +4,6 @@ import { useRouter } from 'next/router'
 import MenuCardList from '@components/MenuCardList'
 import SearchForm from '@components/SearchForm'
 import { useMenuList } from '@hooks/queries/useMenuList'
-import { SORT_OPTIONS } from '@constants/searchOption'
 import FranchiseInfo from '@components/FranchiseInfo'
 import { useFranchiseList } from '../../src/hooks/queries/useFranchiseList'
 const Search = () => {
@@ -29,7 +28,6 @@ const Search = () => {
             isLoading={isLoading}
           />
           <SearchForm
-            sortOptions={SORT_OPTIONS}
             onSubmit={() => {
               return
             }}

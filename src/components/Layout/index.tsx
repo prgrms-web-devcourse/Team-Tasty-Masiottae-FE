@@ -29,7 +29,6 @@ const Container = styled.div`
   position: relative;
   width: 50rem;
   min-height: 100vh;
-  overflow-x: hidden;
   margin: 0 auto;
   background-color: '#FFFFFF';
   -ms-overflow-style: none;
