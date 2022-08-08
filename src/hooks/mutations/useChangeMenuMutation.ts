@@ -3,14 +3,14 @@ import { Option } from '@interfaces'
 import { useMutation } from '@tanstack/react-query'
 
 interface Data {
-  userId: number
-  franchiseId: number
-  title: string
-  content: string
-  originalTitle: string
-  expectedPrice: number
-  optionList: Option[]
-  tasteIdList: number[]
+  userId?: number
+  franchiseId?: number
+  title?: string
+  content?: string
+  originalTitle?: string
+  expectedPrice?: number
+  optionList?: Option[]
+  tasteIdList?: number[]
 }
 interface Params {
   menuId: number
@@ -30,7 +30,7 @@ export const patchMenu = async ({ menuId, image, data }: Params) => {
     })
   )
 
-  await axios.post(`/menu${menuId}`, formData, {
+  await axios.post(`/menu/${menuId}`, formData, {
     headers: { 'Content-Type': 'multipart/form-data' }
   })
 }

@@ -45,23 +45,35 @@ const EditMenu = () => {
   }
 
   const handleEditSubmit = (e: React.FormEvent<HTMLButtonElement>) => {
-    // api 호출
-    /*
+    const data = {
+      userId: 1,
+      franchiseId: 24,
+      title: '슈렉 프라푸치노',
+      content: '맛있습니다.',
+      originalTitle: '그린티 프라푸치노',
+      expectedPrice: 2500,
+      optionList: [
+        { name: '에스프레소 샷', description: '1샷' },
+        { name: '간 자바칩', description: '1개' },
+        { name: '통 자바칩', description: '1개' },
+        { name: '카라멜드리즐', description: '2개' }
+      ],
+      tasteIdList: [1]
+    }
     mutate(
       { menuId: Number(id), image: file, data: data },
       {
         onSuccess: () => {
+          console.log('응답 완료')
           router.replace(`/detail/${id}`)
         }
       }
     )
-    */
   }
   const handleInputChange = (
     inputData: InputListType,
     isDataValid: boolean
   ) => {
-    console.log(inputData)
     console.log(isDataValid)
   }
   return (
@@ -85,7 +97,7 @@ const EditMenu = () => {
       <Button
         color={'#fff'}
         backgroundColor={'#000'}
-        disabled={isInputValid}
+        disabled={false}
         onClick={handleEditSubmit}
       >
         메뉴 추가
