@@ -16,7 +16,7 @@ const Tag = ({
   isClicked = false,
   onClick
 }: Props) => {
-  const handleClick = (id: number | null) => {
+  const handleClick = (id: number) => {
     id && onClick && onClick(id)
   }
 
@@ -26,8 +26,9 @@ const Tag = ({
       color={color}
       height={height}
       isClicked={isClicked}
-      readOnly={!onClick}
-      onClick={() => handleClick(id ?? null)}
+      readOnly={!id}
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      onClick={id ? () => handleClick(id) : () => {}}
     >
       {name}
     </Item>
