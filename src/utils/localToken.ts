@@ -20,5 +20,8 @@ export const setLocalToken = ({ accessToken, expirationTime }: Data) => {
 }
 
 export const removeLocalToken = () => {
-  typeof window !== undefined && window.localStorage.removeItem(LOCAL_TOKEN_KEY)
+  if (typeof window !== undefined) {
+    window.localStorage.removeItem(LOCAL_TOKEN_KEY)
+    window.localStorage.removeItem(LOCAL_TOKEN_EXPIRE_DATE)
+  }
 }
