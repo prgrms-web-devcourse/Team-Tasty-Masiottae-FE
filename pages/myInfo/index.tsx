@@ -10,7 +10,7 @@ const MyInfoPage = () => {
   const router = useRouter()
   const handleLogout = () => {
     removeLocalToken()
-    router.push(LOGIN_URL)
+    router.replace(LOGIN_URL)
   }
 
   return (
