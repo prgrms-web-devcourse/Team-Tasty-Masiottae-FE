@@ -1,11 +1,11 @@
 import styled from '@emotion/styled'
 interface Props {
-  id: number
+  id?: number
   name: string
   color: string
   height: number
   isClicked?: boolean
-  onClick: (clickedTag: number) => void
+  onClick?: (clickedTag: number) => void
 }
 
 const Tag = ({
@@ -16,8 +16,8 @@ const Tag = ({
   isClicked = false,
   onClick
 }: Props) => {
-  const handleClick = (id: number) => {
-    onClick(id)
+  const handleClick = (id: number | null) => {
+    id && onClick && onClick(id)
   }
 
   return (
@@ -26,7 +26,8 @@ const Tag = ({
       color={color}
       height={height}
       isClicked={isClicked}
-      onClick={() => handleClick(id)}
+      readOnly={!onClick}
+      onClick={() => handleClick(id ?? null)}
     >
       {name}
     </Item>
@@ -37,6 +38,7 @@ const Item = styled.div<{
   name: string
   color: string
   height: number
+  readOnly: boolean
   isClicked: boolean
 }>`
   display: inline-flex;
@@ -49,11 +51,12 @@ const Item = styled.div<{
   border-radius: ${({ height }) => `${height}rem`};
   padding: 1.8rem 2.4rem;
   border: ${({ color }) => `0.2rem solid ${color}`};
-  background-color: ${({ isClicked, color }) =>
-    isClicked ? `${color}` : `#ffffff`};
-  color: ${({ isClicked, color }) => (isClicked ? `#ffffff` : `${color}`)};
+  background-color: ${({ isClicked, readOnly, color }) =>
+    readOnly ? `${color}` : isClicked ? `${color}` : `#ffffff`};
+  color: ${({ readOnly, isClicked, color }) =>
+    readOnly ? `${color}` : isClicked ? `#ffffff` : `${color}`};
   &:hover {
-    cursor: pointer;
+    cursor: ${({ readOnly }) => (readOnly ? '' : 'pointer')};
   }
 `
 
