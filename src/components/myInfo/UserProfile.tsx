@@ -93,7 +93,7 @@ const UserProfile = () => {
               type="text"
               placeholder={CHANGE_NICKNAME_PLACEHOLDER}
               onChange={handleNicknameChange}
-              isValid={error === ''}
+              isValid={Boolean(error)}
             />
             <ChangeNickNameButton onClick={handleNicknameSubmit}>
               수정
