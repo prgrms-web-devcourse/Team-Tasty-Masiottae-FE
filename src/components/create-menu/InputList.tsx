@@ -3,6 +3,7 @@ import InputMessage from '@components/InputMessage'
 import Input from '@components/Input'
 import Button from '@components/Button'
 import { TiDelete } from 'react-icons/ti'
+import { BsCheckLg } from 'react-icons/bs'
 import { Option } from '@interfaces'
 import FranchiseSelect from '@components/FranchiseSelect'
 
@@ -20,7 +21,8 @@ import {
   PLACEHOLDER_EXPECTED_PRICE,
   ERROR_MESSAGE_REQUIRED_TITLE,
   ERROR_MESSAGE_REQUIRED_ORIGINAL_TITLE,
-  ERROR_MESSAGE_REQUIRED_OPTION
+  ERROR_MESSAGE_REQUIRED_OPTION,
+  ERROR_MESSAGE_REQUIRED_OPTION_TEXT
 } from '@constants/menuConstant'
 
 export interface InputListType {
@@ -164,15 +166,21 @@ export const InputList = ({
         isValid={Boolean(originalTitle)}
         errorMessage={ERROR_MESSAGE_REQUIRED_ORIGINAL_TITLE}
       ></InputMessage>
-      <OptionButton
-        width={10}
-        height={4}
-        color={'#fff'}
-        backgroundColor={'#000'}
-        onClick={handleOptionAddBtnClick}
-      >
-        옵션 추가
-      </OptionButton>
+      <OptionButtonWrapper>
+        <OptionButton
+          width={10}
+          height={4}
+          color={'#fff'}
+          backgroundColor={'#000'}
+          onClick={handleOptionAddBtnClick}
+        >
+          옵션 추가
+        </OptionButton>
+        <InputMessage
+          isValid={Boolean(optionList.length)}
+          errorMessage={ERROR_MESSAGE_REQUIRED_OPTION}
+        ></InputMessage>
+      </OptionButtonWrapper>
       {optionList.map((option, idx) => (
         <div key={idx}>
           <OptionWrapper key={idx}>
@@ -211,12 +219,12 @@ export const InputList = ({
           </OptionWrapper>
           <InputMessage
             isValid={option.name && option.description ? true : false}
-            errorMessage={ERROR_MESSAGE_REQUIRED_OPTION}
+            errorMessage={ERROR_MESSAGE_REQUIRED_OPTION_TEXT}
           ></InputMessage>
         </div>
       ))}
-      <OptionWrapper>
-        <InputName>가격</InputName>
+      <PriceWrapper>
+        <PriceTitle>가격</PriceTitle>
         <PriceInput
           width={20}
           height={2.4}
@@ -234,14 +242,14 @@ export const InputList = ({
           isDisabled={isPriceButtonClicked}
         />
         <PriceDefaultButton
-          width={6.4}
+          width={8}
           height={4.6}
           onClick={handlePriceButtonClick}
           isClicked={isPriceButtonClicked}
         >
-          모름
+          모름 {isPriceButtonClicked ? <CheckIcon /> : ''}
         </PriceDefaultButton>
-      </OptionWrapper>
+      </PriceWrapper>
     </InputWrapper>
   )
 }
@@ -252,6 +260,10 @@ const InputWrapper = styled.div`
   flex-direction: column;
 `
 
+const OptionButtonWrapper = styled.div`
+  display: flex;
+  align-items: center;
+`
 const DeleteIcon = styled(TiDelete)`
   width: 3rem;
   height: 3rem;
@@ -259,7 +271,7 @@ const DeleteIcon = styled(TiDelete)`
 const InputName = styled.div`
   font-size: 2rem;
   font-weight: 800;
-  min-width: 10rem;
+  min-width: 2rem;
   padding-bottom: 0.8rem;
   padding-top: 1.6rem;
 `
@@ -283,13 +295,34 @@ const OptionDescription = styled(Input)`
   flex-shrink: 1;
 `
 
+const PriceWrapper = styled.div`
+  display: flex;
+  gap: 0.8rem;
+  align-items: center;
+  padding: 0.4rem 0;
+`
+const PriceTitle = styled.div`
+  font-size: 2rem;
+  font-weight: 800;
+  width: 15rem;
+
+  padding-bottom: 0.8rem;
+  padding-top: 1.6rem;
+`
+
 const PriceDefaultButton = styled(Button)<{ isClicked: boolean }>`
   background-color: ${({ isClicked }) => (isClicked ? '#000' : '#fff')};
   color: ${({ isClicked }) => (isClicked ? '#fff' : '#000')};
-  border: 0.3rem solid black;
+  border: 0.2rem solid black;
 `
 
 const PriceInput = styled(Input)`
-  width: 70%;
-  align-self: end;
+  flex-grow: 1;
+`
+
+const CheckIcon = styled(BsCheckLg)`
+  padding-left: 0.4rem;
+  padding-top: 0.2rem;
+  width: 1.6rem;
+  height: 1.6rem;
 `

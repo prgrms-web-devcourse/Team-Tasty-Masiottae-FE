@@ -18,4 +18,6 @@ export const ERROR_MESSAGE_REQUIRED_TITLE =
   '커스텀 메뉴 이름은 필수 입력값이에요'
 export const ERROR_MESSAGE_REQUIRED_ORIGINAL_TITLE =
   '기본 메뉴 이름은 필수 입력값이에요'
-export const ERROR_MESSAGE_REQUIRED_OPTION = '옵션 이름과 설명을 입력해주세요'
+export const ERROR_MESSAGE_REQUIRED_OPTION_TEXT =
+  '옵션 이름과 설명을 입력해주세요'
+export const ERROR_MESSAGE_REQUIRED_OPTION = '옵션은 최소 1개 이상이어야 해요'
