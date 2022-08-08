@@ -12,26 +12,25 @@ interface Props {
 const MenuCardList = ({ menuList, divRef }: Props) => {
   return (
     <Container>
-      {[...menuList].reverse().map((menu, idx) => {
-        return (
-          <MenuCardWrapper key={idx}>
-            <Link href={`/detail/${menu.id}`}>
-              <a>
-                <MenuCard
-                  key={idx}
-                  title={menu.title}
-                  imageUrl={menu.image}
-                  avatarImageUrl={menu.author.image}
-                  author={menu.author.nickName}
-                  likes={menu.likes}
-                  comments={10}
-                  divRef={menuList.length === idx + 1 ? divRef : null}
-                />
-              </a>
-            </Link>
-          </MenuCardWrapper>
-        )
-      })}
+      {menuList.map((menu, idx) => (
+        <MenuCardWrapper key={idx}>
+          <Link href={`/detail/${menu.id}`}>
+            <a>
+              <MenuCard
+                key={idx}
+                title={menu.title}
+                franchise={menu.franchise.name}
+                imageUrl={menu.image}
+                avatarImageUrl={menu.author.image}
+                author={menu.author.nickName}
+                likes={menu.likes}
+                comments={10}
+                divRef={menuList.length === idx + 1 ? divRef : null}
+              />
+            </a>
+          </Link>
+        </MenuCardWrapper>
+      ))}
     </Container>
   )
 }
@@ -39,7 +38,8 @@ const MenuCardList = ({ menuList, divRef }: Props) => {
 const Container = styled.ul`
   display: flex;
   flex-direction: column;
-  row-gap: 1rem;
+  margin-top: 1rem;
+  row-gap: 0.5rem;
 `
 
 const MenuCardWrapper = styled.li``

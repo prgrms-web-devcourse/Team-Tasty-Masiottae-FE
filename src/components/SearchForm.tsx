@@ -2,14 +2,15 @@ import styled from '@emotion/styled'
 import { BsFilterLeft } from 'react-icons/bs'
 import Input from '@components/Input'
 import { FiSearch } from 'react-icons/fi'
-import useForm from '@hooks/useForm'
 import Modal from './Modal'
-import { useState, ChangeEvent } from 'react'
-import { useRouter } from 'next/router'
+import { useState, ChangeEvent, FormEvent } from 'react'
 import TagContainer from './TagContainer'
+import { SearchFormOptions } from '@interfaces'
+import Button from './Button'
 
 interface Props {
   sortOptions: SortOption[]
+  onSubmit: (values: SearchFormOptions) => void
 }
 
 interface SortOption {
@@ -17,86 +18,63 @@ interface SortOption {
   value: string
 }
 
-interface SearchInput {
-  keyword: string
-}
-
-interface FormError {
-  length?: string
-}
-
 const PLACEHOLDER_SEARCH_INPUT = '메뉴 검색'
 
-const validate = ({ keyword }: SearchInput) => {
-  const result: FormError = {}
-
-  if (keyword.length < 2) {
-    result.length = '2글자 이상 입력해주세요!'
-  }
-
-  return result
-}
-
-const SearchForm = ({ sortOptions }: Props) => {
-  const router = useRouter()
+const SearchForm = ({ sortOptions, onSubmit }: Props) => {
   const [modalVisible, setModalVisible] = useState(false)
-  const [selectedTagList, setSelectedTagList] = useState<Array<number>>([])
-  const { values, errors, handleChange, handleSubmit } = useForm({
-    initialValues: {
-      keyword: ''
-    },
-    onSubmit: (values) => {
-      const result = {
-        keyword: values.keyword,
-        sort: router.query.sort,
-        tasteIdList: selectedTagList
-      }
-      return result
-    },
-    validate
-  })
+  const [tasteIdList, setTasteIdList] = useState<number[]>([])
+  const [keyword, setKeyword] = useState('')
+  const [sort, setSort] = useState('')
 
   const handleFilterClick = () => setModalVisible(true)
   const handleModalClose = () => setModalVisible(false)
 
   const handleSortOptionChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    router.replace({
-      pathname: router.pathname,
-      query: { ...router.query, sort: e.target.value }
-    })
+    setSort(e.target.value)
+    onSubmit({ keyword, tasteIdList, sort: e.target.value })
+  }
+
+  const handleKeywordChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setKeyword(e.target.value)
+  }
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    onSubmit({ keyword, tasteIdList, sort })
+    console.log({ keyword, tasteIdList, sort })
   }
 
   return (
     <form onSubmit={handleSubmit}>
       <SearchWrapper>
         <SearchInput
-          name="keyword"
-          value={values.keyword}
+          value={keyword}
           height={5}
           type="text"
           placeholder={PLACEHOLDER_SEARCH_INPUT}
-          onChange={handleChange}
+          onChange={handleKeywordChange}
         />
         <SearchIcon />
       </SearchWrapper>
-      <ErrorMessage>
-        {Object.keys(errors).length > 0 && Object.values(errors)}
-      </ErrorMessage>
+      <ErrorMessage></ErrorMessage>
       <OptionContainer>
         <FilterWrapper onClick={handleFilterClick}>
           <FilterIcon />
           <Text>필터</Text>
         </FilterWrapper>
         <Modal visible={modalVisible} onClose={handleModalClose}>
-          <TagContainer
-            selectedTasteIdList={selectedTagList}
-            backgroundColor="white"
-            gap={2}
-            tagHeight={3.3}
-            onChange={(newTagList) => {
-              setSelectedTagList([...newTagList])
-            }}
-          />
+          <form onSubmit={handleSubmit}>
+            <TagContainer
+              selectedTasteIdList={tasteIdList}
+              backgroundColor="white"
+              gap={2}
+              tagHeight={3.3}
+              onChange={(newTagList) => {
+                setTasteIdList(newTagList)
+              }}
+            />
+            <Button onClick={handleModalClose}>제출</Button>
+          </form>
         </Modal>
         <select onChange={handleSortOptionChange}>
           {sortOptions.map((option) => (

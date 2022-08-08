@@ -1,51 +1,51 @@
-import CategoryBox from '@components/CategoryBox'
 import styled from '@emotion/styled'
-import Link from 'next/link'
-
-const CATEGORY_LIST = [
-  '전체',
-  '스타벅스',
-  '공차',
-  '맥도날드',
-  '서브웨이',
-  '버거킹'
-]
+import { useFranchiseList } from '@hooks/queries/useFranchiseList'
+import FranchiseInfoList from '@components/FranchiseInfoList'
 
 const Category = () => {
+  const { franchiseList, isLoading } = useFranchiseList()
   return (
     <>
-      <Header>카테고리</Header>
-      <BoxContainer>
-        {CATEGORY_LIST.map((category) => (
-          <BoxWrapper key={category}>
-            <Link href={`/search/${category}`}>
-              <a>
-                <CategoryBox imageUrl="https://picsum.photos/seed/picsum/120/120">
-                  {category}
-                </CategoryBox>
-              </a>
-            </Link>
-          </BoxWrapper>
-        ))}
-      </BoxContainer>
+      <FixedWrapper>
+        <InnerWrapper>
+          <Header>카테고리</Header>
+        </InnerWrapper>
+      </FixedWrapper>
+      <FranchiseInfoList
+        franchiseList={franchiseList || []}
+        isLoading={isLoading}
+      />
     </>
   )
 }
 
+const FixedWrapper = styled.div`
+  position: fixed;
+  left: 0;
+  width: 100%;
+`
+
+const InnerWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  min-width: 33.5rem;
+  max-width: 46rem;
+  width: 100%;
+  background-color: white;
+  margin: 0 auto;
+  padding-bottom: 0.5rem;
+  box-sizing: border-box;
+
+  @media screen and (max-width: 31.25rem) {
+    padding: 0 2rem;
+  }
+`
+
 const Header = styled.h2`
   display: flex;
-  justify-content: center;
   align-items: center;
-  font-size: 3rem;
+  font-size: 2.4rem;
+  padding: 0.5rem;
 `
-
-const BoxContainer = styled.ul`
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-  flex-wrap: wrap;
-`
-
-const BoxWrapper = styled.li``
 
 export default Category

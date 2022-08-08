@@ -23,7 +23,7 @@ const TagContainer = ({
   tagHeight = 3.2,
   backgroundColor = '#ffffff'
 }: Props) => {
-  const { data: tasteList } = useTasteList()
+  const { tasteList } = useTasteList()
   const tagIdList = selectedTasteIdList
   const handleClickTag = (clickedTagId: number) => {
     let newTagList = tagIdList
