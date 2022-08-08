@@ -265,7 +265,7 @@ const CreateMenu = () => {
         selectedTasteIdList={tasteIdList}
         onChange={handleTagListChange}
       />
-      <Button
+      <SubmitButton
         color={'#fff'}
         backgroundColor={'#000'}
         disabled={
@@ -281,7 +281,7 @@ const CreateMenu = () => {
         onClick={handleEditSubmit}
       >
         메뉴 추가
-      </Button>
+      </SubmitButton>
     </FlexContainer>
   )
 }
@@ -350,6 +350,10 @@ const PriceInput = styled(Input)`
 const SubTitle = styled.h3`
   font-size: 2rem;
   align-self: start;
+`
+
+const SubmitButton = styled(Button)`
+  font-weight: 700;
 `
 
 export default CreateMenu
