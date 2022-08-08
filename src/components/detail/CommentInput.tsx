@@ -80,7 +80,6 @@ const CommentWriteContainer = styled(Flex)`
 const Textarea = styled.textarea`
   width: 100%;
   height: 4.8rem;
-  min-height: 4.8rem;
   font-size: 1.6rem;
   border-radius: 1rem;
   padding: 1.4rem 6rem 1rem 1rem;
@@ -89,10 +88,6 @@ const Textarea = styled.textarea`
 
   &:focus {
     outline: none;
-  }
-
-  &::placeholder {
-    font-size: 1.6rem;
   }
 `
 

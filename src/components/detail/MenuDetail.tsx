@@ -1,19 +1,20 @@
 import React, { useState } from 'react'
 import styled from '@emotion/styled'
 import Modal from '@components/Modal'
-import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai'
 import { BiDotsVerticalRounded, BiTrash } from 'react-icons/bi'
 import { Menu } from '@interfaces'
 import { useDeleteMenuMutation } from '@hooks/mutations/useDeleteMenuMutation'
 import { useRouter } from 'next/router'
 import Avatar from '@components/Avatar'
 import { BsFillPencilFill } from 'react-icons/bs'
+import { IoMdHeart } from 'react-icons/io'
 
 interface Props {
   menu: Menu
+  userId: number
 }
 
-const MenuDetail = ({ menu }: Props) => {
+const MenuDetail = ({ menu, userId }: Props) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const { mutate: deleteMenu } = useDeleteMenuMutation()
   const router = useRouter()
@@ -37,7 +38,7 @@ const MenuDetail = ({ menu }: Props) => {
       {
         onSuccess: () => {
           setIsModalOpen(false)
-          router.push('/')
+          router.replace('/')
         }
       }
     )
@@ -47,7 +48,7 @@ const MenuDetail = ({ menu }: Props) => {
     <>
       <MenuContainer>
         <ImageWrapper>
-          <Image src={menu.image} />
+          <Img src={menu.image} />
         </ImageWrapper>
 
         <HatWrapper>
@@ -67,7 +68,9 @@ const MenuDetail = ({ menu }: Props) => {
             <LikesCountText clicked={isLikeClicked}>
               {menu.likes}
             </LikesCountText>
-            <Dots size={30} onClick={handleEditMenuClick} />
+            {menu.author.id !== userId && (
+              <Dots size={30} onClick={handleEditMenuClick} />
+            )}
           </RightHeader>
         </Header>
 
@@ -124,15 +127,12 @@ const ImageWrapper = styled.div`
   margin: 0 -2rem;
 `
 
-const Image = styled.label<{
-  size?: number
-  src: string
-}>`
+const Img = styled.div<{ src: string }>`
   display: flex;
-  width: ${({ size }) => (size ? `${size}rem` : '100%')};
-  height: ${({ size }) => (size ? `${size}rem` : '100%')};
-  padding-top: ${({ size }) => (size ? `0` : '50%')};
-  padding-bottom: ${({ size }) => (size ? `0` : '50%')};
+  width: 100%;
+  height: 100%;
+  padding-top: 50%;
+  padding-bottom: 50%;
   background-image: ${({ src }) => (src ? `url(${src})` : null)};
   background-repeat: no-repeat;
   background-size: cover;
@@ -178,22 +178,23 @@ const RightHeader = styled(Flex)`
   align-items: center;
   position: relative;
   top: -2rem;
-  left: 1rem;
+  left: 1rem; /*adfsf */
 `
 
-const EmptyHeart = styled(AiOutlineHeart)`
+const EmptyHeart = styled(IoMdHeart)`
   margin-right: -1rem;
+  color: gray;
   cursor: pointer;
 `
 
-const Heart = styled(AiFillHeart)`
+const Heart = styled(IoMdHeart)`
   margin-right: -1rem;
   color: red;
   cursor: pointer;
 `
 
 const LikesCountText = styled.span<{ clicked: boolean }>`
-  color: ${({ clicked }) => (clicked ? 'white' : 'black')};
+  color: white;
   position: relative;
   right: 1.5rem;
   font-size: 1.4rem;
@@ -214,11 +215,6 @@ const ModalItem = styled(Flex)`
   &:not(:first-of-type) {
     margin-top: 1rem;
   }
-`
-
-const Footer = styled(Flex)`
-  justify-content: space-between;
-  margin-bottom: 2rem;
 `
 
 const OptionsWrapper = styled(Flex)`
