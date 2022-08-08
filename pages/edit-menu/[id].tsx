@@ -1,17 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import styled from '@emotion/styled'
-import Input from '@components/Input'
 import TagContainer from '@components/TagContainer'
 import ImageUploader from '@components/ImageUploader'
 import Button from '@components/Button'
 import { Option } from '@interfaces'
-import { dummyMenu } from '@constants/dummyMenu'
 import { useMenu } from '@hooks/queries/useMenu'
 import { useChangeMenu } from '@hooks/mutations/useChangeMenuMutation'
-import { MIN_OPTION } from '@constants/menuConstant'
 import { useRouter } from 'next/router'
 import { InputList } from '@components/create-menu/InputList'
-
+import { useRecoilState } from 'recoil'
+import { currentUser } from '@recoil/currentUser'
 export interface InputListType {
   franchiseId: number
   title: string
@@ -23,12 +21,13 @@ export interface InputListType {
 
 const EditMenu = () => {
   // 필드 값
+  const [{ id: userId }] = useRecoilState(currentUser)
   const router = useRouter()
   const { id } = router.query
 
   const { mutate } = useChangeMenu()
   const { data: menuData } = useMenu(Number(id))
-
+  console.log(menuData)
   useEffect(() => {
     if (menuData) {
       setFranchiseId(menuData.franchise.id)
@@ -36,6 +35,8 @@ const EditMenu = () => {
       setOriginalTitle(menuData.originalTitle)
       setOptionList(menuData.optionList)
       setExpectedPrice(menuData.expectedPrice)
+      setTasteIdList(menuData.tasteList.map((taste) => taste.id))
+      setIsPriceButtonClicked(!menuData.expectedPrice)
     }
   }, [menuData])
 
@@ -47,9 +48,7 @@ const EditMenu = () => {
   const [isPriceButtonClicked, setIsPriceButtonClicked] = useState(false)
 
   const [file, setFile] = useState<File | null>(null)
-  const [tasteIdList, setTasteIdList] = useState<number[]>(
-    dummyMenu.tastes.map((taste) => taste.id)
-  )
+  const [tasteIdList, setTasteIdList] = useState<number[]>([])
 
   const handleInputChange = ({
     franchiseId,
@@ -78,7 +77,14 @@ const EditMenu = () => {
 
   const handleEditSubmit = (e: React.FormEvent<HTMLButtonElement>) => {
     const data = {
-      userId: 1
+      userId: userId,
+      franchiseId,
+      title,
+      originalTitle,
+      optionList,
+      expectedPrice,
+      tasteIdList,
+      content: ''
     }
     mutate(
       { menuId: Number(id), image: file, data: data },
@@ -124,7 +130,7 @@ const EditMenu = () => {
         }
         onClick={handleEditSubmit}
       >
-        메뉴 추가
+        메뉴 수정
       </SubmitButton>
     </FlexContainer>
   )

@@ -3,14 +3,14 @@ import { Option } from '@interfaces'
 import { useMutation } from '@tanstack/react-query'
 
 interface Data {
-  userId?: number
-  franchiseId?: number
-  title?: string
-  content?: string
-  originalTitle?: string
-  expectedPrice?: number
-  optionList?: Option[]
-  tasteIdList?: number[]
+  userId: number
+  franchiseId: number
+  title: string
+  content: string
+  originalTitle: string
+  expectedPrice: number
+  optionList: Option[]
+  tasteIdList: number[]
 }
 interface Params {
   menuId: number

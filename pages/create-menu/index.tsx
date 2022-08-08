@@ -119,7 +119,6 @@ const CreateMenu = () => {
 
   const handleTagListChange = (tagIdList: number[]) => {
     setTasteIdList(tagIdList)
-    console.log(Boolean(tagIdList.length))
   }
 
   const handlePriceButtonClick = () => {
