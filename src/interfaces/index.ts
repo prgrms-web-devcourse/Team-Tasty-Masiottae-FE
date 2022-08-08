@@ -48,3 +48,17 @@ export interface Taste {
   name: string
   color: string
 }
+
+export interface searchParams {
+  keyword?: string
+  sort?: 'recent' | 'comment' | 'like'
+  tasteIdList?: number[]
+  offset: number
+  limit: number
+}
+
+export interface SearchFormOptions {
+  keyword: string
+  sort?: string
+  tasteIdList: number[]
+}

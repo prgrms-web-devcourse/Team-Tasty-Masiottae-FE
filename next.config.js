@@ -6,7 +6,10 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   images: {
-    domains: ['user-images.githubusercontent.com']
+    domains: [
+      'user-images.githubusercontent.com',
+      'masiottae-image-bucket.s3.ap-northeast-2.amazonaws.com'
+    ]
   },
   async rewrites() {
     return [
