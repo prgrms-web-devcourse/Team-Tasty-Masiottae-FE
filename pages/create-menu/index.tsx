@@ -143,6 +143,7 @@ const SubTitle = styled.h3`
 
 const SubmitButton = styled(Button)`
   font-weight: 700;
+  font-size: 1.8rem;
 `
 
 export default CreateMenu

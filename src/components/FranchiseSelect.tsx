@@ -24,6 +24,7 @@ const Select = styled.select`
   width: 100%;
   height: 4.8rem;
   border-radius: 6px;
+  margin-bottom: 0.8rem;
 `
 
 export default FranchiseSelect

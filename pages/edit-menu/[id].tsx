@@ -90,7 +90,6 @@ const EditMenu = () => {
       { menuId: Number(id), image: file, data: data },
       {
         onSuccess: () => {
-          console.log('응답 완료')
           router.replace(`/detail/${id}`)
         }
       }

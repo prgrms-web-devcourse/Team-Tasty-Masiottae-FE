@@ -235,7 +235,7 @@ export const InputList = ({
         />
         <PriceDefaultButton
           width={6.4}
-          height={4}
+          height={4.6}
           onClick={handlePriceButtonClick}
           isClicked={isPriceButtonClicked}
         >
@@ -260,7 +260,8 @@ const InputName = styled.div`
   font-size: 2rem;
   font-weight: 800;
   min-width: 10rem;
-  padding: 0.8rem 0;
+  padding-bottom: 0.8rem;
+  padding-top: 1.6rem;
 `
 const OptionButton = styled(Button)`
   margin: 0.8rem 0;
@@ -283,10 +284,9 @@ const OptionDescription = styled(Input)`
 `
 
 const PriceDefaultButton = styled(Button)<{ isClicked: boolean }>`
-  font-weight: 600;
   background-color: ${({ isClicked }) => (isClicked ? '#000' : '#fff')};
   color: ${({ isClicked }) => (isClicked ? '#fff' : '#000')};
-  border: 2px solid black;
+  border: 0.3rem solid black;
 `
 
 const PriceInput = styled(Input)`
