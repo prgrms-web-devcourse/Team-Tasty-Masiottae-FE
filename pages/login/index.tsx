@@ -54,8 +54,8 @@ const LoginPage = () => {
   const validate = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target
 
-    setErrors({ email: '', password: '' })
     if (name === INPUT_PASSWORD) {
+      setErrors({ ...errors, [name]: '' })
       if (value.length > 10) {
         e.target.value = value.slice(0, 10)
       }
@@ -65,6 +65,7 @@ const LoginPage = () => {
       setPassword(e.target.value)
     }
     if (name === INPUT_EMAIL) {
+      setErrors({ ...errors, [name]: '' })
       if (!REGEX_EMAIL.test(value)) {
         setErrors({ ...errors, [name]: ERROR_EMAIL })
       }
