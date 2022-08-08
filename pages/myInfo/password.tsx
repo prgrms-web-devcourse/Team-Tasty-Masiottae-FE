@@ -39,17 +39,16 @@ const PasswordEditPage = () => {
   const validate = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target
     e.target.value = value.slice(0, 10)
-    setErrors({
-      password: '',
-      passwordConfirm: ''
-    })
+
     if (name === INPUT_PASSWORD) {
+      setErrors({ ...errors, [name]: '' })
       if (!REGEX_PASSWORD.test(value)) {
         setErrors({ ...errors, [name]: MESSAGE_PASSWORD })
       }
       setPassword(e.target.value)
     }
     if (name === INPUT_PASSWORD_CONFIRM) {
+      setErrors({ ...errors, [name]: '' })
       if (!REGEX_PASSWORD.test(value)) {
         setErrors({ ...errors, [name]: MESSAGE_PASSWORD })
       }
@@ -100,7 +99,7 @@ const PasswordEditPage = () => {
               handleEyeClick(INPUT_PASSWORD_CONFIRM)
             }}
           />
-          <InputMessage errorMessage={errors[INPUT_PASSWORD_CONFIRM]} />{' '}
+          <InputMessage errorMessage={errors[INPUT_PASSWORD_CONFIRM]} />
         </InputWrapper>
         <ChangePasswordButton>완료</ChangePasswordButton>
       </UserEditForm>
@@ -120,12 +119,6 @@ const UserContainer = styled.div`
   height: 100%;
   position: relative;
   background-color: white;
-`
-
-const UserInfo = styled.div`
-  text-align: center;
-  margin: 5rem auto 0 auto;
-  position: relative;
 `
 
 const UserEditForm = styled.form`
