@@ -22,14 +22,6 @@ const CommentInput = ({ menuId, userId }: Props) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const { mutate: postComment } = usePostCommentMutation()
 
-  useEffect(() => {
-    if (textareaRef.current === null) {
-      return
-    }
-
-    textareaRef.current.style.height = textareaRef.current.scrollHeight + 'px'
-  }, [])
-
   const handleChange = useCallback((e: ChangeEvent<HTMLTextAreaElement>) => {
     if (textareaRef.current === null) {
       return
@@ -53,6 +45,7 @@ const CommentInput = ({ menuId, userId }: Props) => {
           setComment('')
           if (textareaRef.current) {
             textareaRef.current.value = ''
+            textareaRef.current.style.height = '4rem'
           }
         }
       }

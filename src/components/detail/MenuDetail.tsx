@@ -29,65 +29,71 @@ const MenuDetail = ({ menu }: Props) => {
 
   console.log(menu.tasteList)
   return (
-    <MenuContainer>
-      <Image src={menu.image} alt="" />
+    <>
+      <MenuContainer>
+        <ImageWrapper>
+          <Image src={menu.image} alt="" />
+        </ImageWrapper>
 
-      <Hat />
-      <Header>
-        <LeftHeader>
-          <FranchiseText>{menu.franchise.name} </FranchiseText>
-          <Title>{menu.title}</Title>
-        </LeftHeader>
-        <RightHeader>
-          {isLikeClicked ? (
-            <Heart size={40} onClick={handleLikeClick} />
-          ) : (
-            <EmptyHeart size={40} onClick={handleLikeClick} />
-          )}
-          <LikesCountText clicked={isLikeClicked}>{menu.likes}</LikesCountText>
-          <Dots size={30} onClick={handleEditMenuClick} />
-          <Modal
-            visible={isModalOpen}
-            onClose={handleEditMenuClose}
-            option="drawer"
-          >
-            <ModalItem>
-              <BsFillPencilFill size={25} />
-              수정
-            </ModalItem>
-            <ModalItem>
-              <BiTrash size={25} />
-              삭제
-            </ModalItem>
-          </Modal>
-        </RightHeader>
-      </Header>
+        <HatWrapper>
+          <Hat />
+        </HatWrapper>
+        <Header>
+          <LeftHeader>
+            <FranchiseText>{menu.franchise.name} </FranchiseText>
+            <Title>{menu.title}</Title>
+          </LeftHeader>
+          <RightHeader>
+            {isLikeClicked ? (
+              <Heart size={40} onClick={handleLikeClick} />
+            ) : (
+              <EmptyHeart size={40} onClick={handleLikeClick} />
+            )}
+            <LikesCountText clicked={isLikeClicked}>
+              {menu.likes}
+            </LikesCountText>
+            <Dots size={30} onClick={handleEditMenuClick} />
+          </RightHeader>
+        </Header>
 
-      <Footer>
         <UserWrapper>
           <Avatar size={4} src={menu.author.image} isLoading={false} />
           <UserNameText>{menu.author.nickName}</UserNameText>
         </UserWrapper>
-      </Footer>
 
-      <OptionsWrapper>
-        <OriginalTitle>{menu.originalTitle}</OriginalTitle>
-        {menu.optionList.map(({ name, description }) => (
-          <OptionText key={name}>
-            {name} {description}
-          </OptionText>
-        ))}
-        <PriceText>{menu.expectedPrice} 원</PriceText>
-      </OptionsWrapper>
+        <OptionsWrapper>
+          <OriginalTitle>{menu.originalTitle}</OriginalTitle>
+          {menu.optionList.map(({ name, description }) => (
+            <OptionText key={name}>
+              {name} {description}
+            </OptionText>
+          ))}
+          <PriceText>{menu.expectedPrice} 원</PriceText>
+        </OptionsWrapper>
 
-      <TagContainer>
-        {menu.tasteList.map(({ id, name, color }) => (
-          <Tag key={id} color={color}>
-            <span>{name}</span>
-          </Tag>
-        ))}
-      </TagContainer>
-    </MenuContainer>
+        <TagContainer>
+          {menu.tasteList.map(({ id, name, color }) => (
+            <Tag key={id} color={color}>
+              <span>{name}</span>
+            </Tag>
+          ))}
+        </TagContainer>
+      </MenuContainer>
+      <Modal
+        visible={isModalOpen}
+        onClose={handleEditMenuClose}
+        option="drawer"
+      >
+        <ModalItem>
+          <BsFillPencilFill size={25} />
+          수정
+        </ModalItem>
+        <ModalItem>
+          <BiTrash size={25} />
+          삭제
+        </ModalItem>
+      </Modal>
+    </>
   )
 }
 
@@ -97,6 +103,19 @@ const Flex = styled.div`
 
 const MenuContainer = styled.div`
   margin-bottom: 2rem;
+`
+
+const ImageWrapper = styled.div`
+  margin: 0 -2rem;
+`
+
+const Image = styled.img`
+  width: 100%;
+  height: 100%;
+`
+
+const HatWrapper = styled.div`
+  margin: 0 -2rem;
 `
 
 const Hat = styled.div`
@@ -112,14 +131,8 @@ const Header = styled(Flex)`
   justify-content: space-between;
   align-items: center;
   position: relative;
-
-  margin-top: 1rem;
+  margin-top: -1.5rem;
   margin-bottom: 2rem;
-`
-
-const Image = styled.img`
-  width: 100%;
-  height: 100%;
 `
 
 const LeftHeader = styled.div``
@@ -139,14 +152,17 @@ const Title = styled.div`
 const RightHeader = styled(Flex)`
   align-items: center;
   position: relative;
-  top: -1.6rem;
+  top: -2rem;
+  left: 1rem;
 `
 
 const EmptyHeart = styled(AiOutlineHeart)`
+  margin-right: -1rem;
   cursor: pointer;
 `
 
 const Heart = styled(AiFillHeart)`
+  margin-right: -1rem;
   color: red;
   cursor: pointer;
 `
@@ -154,7 +170,7 @@ const Heart = styled(AiFillHeart)`
 const LikesCountText = styled.span<{ clicked: boolean }>`
   color: ${({ clicked }) => (clicked ? 'white' : 'black')};
   position: relative;
-  right: 2.5rem;
+  right: 1.5rem;
   font-size: 1.4rem;
   font-weight: 700;
 `
@@ -212,6 +228,7 @@ const PriceText = styled.span`
 
 const UserWrapper = styled(Flex)`
   align-items: center;
+  margin-bottom: 1rem;
 `
 
 const UserNameText = styled.div`

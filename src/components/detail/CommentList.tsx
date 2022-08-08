@@ -23,40 +23,42 @@ const CommentList = ({ user, commentList }: Props) => {
   }
 
   return (
-    <CommentListContainer>
-      <CommnetCountText>댓글 {commentList.length} 개</CommnetCountText>
-      {commentList.map(({ id, author, createdAt, comment }) => (
-        <Fragment key={id}>
-          <CommentWrapper>
-            <Avatar size={4} src={author.image} isLoading={false} />
-            <CommentContainer>
-              <CommentHeader>
-                <NameAndDateWrapper>
-                  <UserNameText>{author.nickName}</UserNameText>
-                  <DateText>{getDate(createdAt)}</DateText>
-                </NameAndDateWrapper>
-                {user.id === author.id && (
-                  <>
-                    <Dots size={20} onClick={handleDeleteCommentClick} />
-                    <Modal
-                      visible={isDeleteModalOpen}
-                      onClose={handleDeleteCommentClose}
-                      option="drawer"
-                    >
-                      <ModalItem>
-                        <BiTrash size={25} />
-                        삭제
-                      </ModalItem>
-                    </Modal>
-                  </>
-                )}
-              </CommentHeader>
-              <CommentText>{comment}</CommentText>
-            </CommentContainer>
-          </CommentWrapper>
-        </Fragment>
-      ))}
-    </CommentListContainer>
+    <>
+      <CommentListContainer>
+        <CommnetCountText>댓글 {commentList.length}개</CommnetCountText>
+        {commentList.map(({ id, author, createdAt, comment }) => (
+          <Fragment key={id}>
+            <CommentWrapper>
+              <Avatar size={4} src={author.image} isLoading={false} />
+              <CommentContainer>
+                <CommentHeader>
+                  <NameAndDateWrapper>
+                    <UserNameText>{author.nickName}</UserNameText>
+                    <DateText>{getDate(createdAt)}</DateText>
+                  </NameAndDateWrapper>
+                  {user.id === author.id && (
+                    <>
+                      <Dots size={20} onClick={handleDeleteCommentClick} />
+                    </>
+                  )}
+                </CommentHeader>
+                <CommentText>{comment}</CommentText>
+              </CommentContainer>
+            </CommentWrapper>
+          </Fragment>
+        ))}
+      </CommentListContainer>
+      <Modal
+        visible={isDeleteModalOpen}
+        onClose={handleDeleteCommentClose}
+        option="drawer"
+      >
+        <ModalItem>
+          <BiTrash size={25} />
+          삭제
+        </ModalItem>
+      </Modal>
+    </>
   )
 }
 
@@ -68,6 +70,7 @@ const CommentListContainer = styled.div``
 
 const CommnetCountText = styled.div`
   font-size: 1.4rem;
+  font-weight: 700;
   margin-bottom: 2rem;
 `
 
@@ -80,6 +83,7 @@ const CommentWrapper = styled(Flex)`
 const CommentContainer = styled.div`
   width: calc(100% - 4rem);
   margin-left: 1rem;
+  padding-bottom: 0.8rem;
 `
 
 const CommentHeader = styled(Flex)`
