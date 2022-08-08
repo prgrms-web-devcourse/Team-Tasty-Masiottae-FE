@@ -27,7 +27,7 @@ const CommentInput = ({ menuId, userId }: Props) => {
       return
     }
 
-    textareaRef.current.style.height = '4rem'
+    textareaRef.current.style.height = '4.8rem'
     textareaRef.current.style.height = textareaRef.current.scrollHeight + 'px'
 
     setComment(e.target.value)
@@ -45,7 +45,7 @@ const CommentInput = ({ menuId, userId }: Props) => {
           setComment('')
           if (textareaRef.current) {
             textareaRef.current.value = ''
-            textareaRef.current.style.height = '4rem'
+            textareaRef.current.style.height = '4.8rem'
           }
         }
       }
@@ -79,10 +79,11 @@ const CommentWriteContainer = styled(Flex)`
 
 const Textarea = styled.textarea`
   width: 100%;
-  height: 4rem;
+  height: 4.8rem;
+  min-height: 4.8rem;
   font-size: 1.6rem;
   border-radius: 1rem;
-  padding: 1rem 7rem 1rem 1rem;
+  padding: 1.4rem 6rem 1rem 1rem;
   resize: none;
   overflow: hidden;
 
@@ -97,13 +98,13 @@ const Textarea = styled.textarea`
 
 const AddCommentButton = styled.button`
   position: absolute;
-  bottom: 0.4rem;
-  right: 0.4rem;
+  bottom: 0.6rem;
+  right: 0.6rem;
   width: 5rem;
-  height: 3.2rem;
+  height: 3.6rem;
   font-weight: 700;
   border: none;
-  border-radius: 0.6rem;
+  border-radius: 1rem;
   color: #f5f5f5;
   background-color: black;
   margin-left: -6rem;

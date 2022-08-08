@@ -27,12 +27,11 @@ const MenuDetail = ({ menu }: Props) => {
     setIsModalOpen(false)
   }
 
-  console.log(menu.tasteList)
   return (
     <>
       <MenuContainer>
         <ImageWrapper>
-          <Image src={menu.image} alt="" />
+          <Image src={menu.image} size={undefined} />
         </ImageWrapper>
 
         <HatWrapper>
@@ -109,9 +108,19 @@ const ImageWrapper = styled.div`
   margin: 0 -2rem;
 `
 
-const Image = styled.img`
-  width: 100%;
-  height: 100%;
+const Image = styled.label<{
+  size: number | undefined
+  src: string
+}>`
+  display: flex;
+  width: ${({ size }) => (size ? `${size}rem` : '100%')};
+  height: ${({ size }) => (size ? `${size}rem` : '100%')};
+  padding-top: ${({ size }) => (size ? `0` : '50%')};
+  padding-bottom: ${({ size }) => (size ? `0` : '50%')};
+  background-image: ${({ src }) => (src ? `url(${src})` : null)};
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 `
 
 const HatWrapper = styled.div`
