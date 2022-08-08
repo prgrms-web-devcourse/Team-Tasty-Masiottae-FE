@@ -9,17 +9,17 @@ import { currentUser } from '@recoil/currentUser'
 import { User } from '@interfaces'
 import Image from 'next/image'
 import Modal from '@components/Modal'
+import axios from '@lib/axios'
 import ImageUploader from '@components/ImageUploader'
 import {
   MESSAGE_NICKNAME,
-  ERROR_EXIST_NICKNAME,
-  REGEX_NICKNAME
+  REGEX_NICKNAME,
+  PLACEHOLDER_NICKNAME,
+  INPUT_NICKNAME
 } from '@constants/inputConstant'
 import { useChangeImageMutation } from '@hooks/mutations/useChangeImageMutation'
 import { useChangeNickNameMutation } from '@hooks/mutations/useChangeNickNameMutation'
 import InputMessage from '@components/InputMessage'
-
-const CHANGE_NICKNAME_PLACEHOLDER = '변경할 닉네임'
 
 const UserProfile = () => {
   const [isNameEditorOpen, setIsNameEditorOpen] = useState(false)
@@ -52,7 +52,7 @@ const UserProfile = () => {
   }, [imageFile, patchImage, user, setUser])
 
   const handleNicknameChange = useCallback(
-    async (e: React.ChangeEvent<HTMLInputElement>) => {
+    (e: React.ChangeEvent<HTMLInputElement>) => {
       setError('')
       const value = e.target.value.replace(/\s/, '').slice(0, 7)
       if (!REGEX_NICKNAME.test(value)) {
@@ -64,10 +64,13 @@ const UserProfile = () => {
     []
   )
 
-  const handleNicknameSubmit = useCallback(() => {
-    const isNickNameExist = false
-    if (isNickNameExist) {
-      setError(ERROR_EXIST_NICKNAME)
+  const handleNicknameSubmit = useCallback(async () => {
+    const { data } = await axios.get(
+      `/accounts/check?property=${INPUT_NICKNAME}&value=${nickName}`
+    )
+    const { errorMessage } = data
+    if (errorMessage) {
+      setError(errorMessage)
       return
     }
 
@@ -95,9 +98,9 @@ const UserProfile = () => {
           <NickName ref={nameEditRef}>
             <ChangeNickNameInput
               type="text"
-              placeholder={CHANGE_NICKNAME_PLACEHOLDER}
+              placeholder={PLACEHOLDER_NICKNAME}
               onChange={handleNicknameChange}
-              isValid={Boolean(error)}
+              isValid={error ? false : true}
             />
             <ChangeNickNameButton onClick={handleNicknameSubmit}>
               수정
