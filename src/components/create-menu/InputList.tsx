@@ -3,7 +3,7 @@ import InputMessage from '@components/InputMessage'
 import Input from '@components/Input'
 import Button from '@components/Button'
 import { TiDelete } from 'react-icons/ti'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Option } from '@interfaces'
 import FranchiseSelect from '@components/FranchiseSelect'
 
@@ -30,99 +30,68 @@ export interface InputListType {
   originalTitle: string
   optionList: Option[]
   expectedPrice: number
+  isPriceButtonClicked: boolean
 }
 
 interface Prop {
-  franchiseId?: number
-  title?: string
-  originalTitle?: string
-  optionList?: Option[]
-  expectedPrice?: number
-  onChange: (inputList: InputListType, isValid: boolean) => void
+  franchiseId: number
+  title: string
+  originalTitle: string
+  optionList: Option[]
+  expectedPrice: number
+  isPriceButtonClicked: boolean
+  onChange: (inputList: InputListType) => void
 }
 
 export const InputList = ({
-  franchiseId: defaultFranchiseId,
-  title: defaultTitle,
-  originalTitle: defaultOriginalTitle,
-  optionList: defaultOptionList,
-  expectedPrice: defaultPrice,
+  franchiseId,
+  title,
+  originalTitle,
+  optionList,
+  expectedPrice,
+  isPriceButtonClicked,
   onChange
 }: Prop) => {
-  useEffect(() => {
-    setFranchiseId(defaultFranchiseId ? defaultFranchiseId : 1)
-    setTitle(defaultTitle ? defaultTitle : '')
-    setOriginalTitle(defaultOriginalTitle ? defaultOriginalTitle : '')
-    setOptionList(defaultOptionList ? defaultOptionList : [])
-    setExpectedPrice(defaultPrice ? defaultPrice : 0)
-  }, [
-    defaultFranchiseId,
-    defaultTitle,
-    defaultOriginalTitle,
-    defaultOptionList,
-    defaultPrice
-  ])
-
-  const [franchiseId, setFranchiseId] = useState(defaultFranchiseId ?? 1)
-  const [title, setTitle] = useState(defaultTitle ?? '')
-  const [originalTitle, setOriginalTitle] = useState(defaultOriginalTitle ?? '')
-  const [optionList, setOptionList] = useState<Option[]>(
-    defaultOptionList ?? []
-  )
-  const [expectedPrice, setExpectedPrice] = useState(defaultPrice ?? 0)
-  const [isPriceBtnClicked, setIsPriceBtnClicked] = useState(false)
-
-  onChange(
-    {
+  const handleOnChange = () => {
+    onChange({
       franchiseId,
       title,
       originalTitle,
       optionList,
-      expectedPrice
-    },
-    Boolean(
-      franchiseId &&
-        title &&
-        originalTitle &&
-        optionList.filter((option) => option.name && option.description)
-          .length &&
-        expectedPrice
-    )
-  )
+      expectedPrice,
+      isPriceButtonClicked
+    })
+  }
 
   const handleTitleChange = (e: React.FormEvent<HTMLInputElement>) => {
-    console.log(e.currentTarget.value)
-    const title = e.currentTarget.value
-    setTitle(title)
+    title = e.currentTarget.value
+    handleOnChange()
   }
 
   const handleOriginalTitleChange = (e: React.FormEvent<HTMLInputElement>) => {
-    const originalTitle = e.currentTarget.value
-    console.log(originalTitle)
-    setOriginalTitle(originalTitle)
+    originalTitle = e.currentTarget.value
+    handleOnChange()
   }
 
   const handlePriceChange = (e: React.FormEvent<HTMLInputElement>) => {
     const priceRegExp = /[^0-9]/g
-    const price = e.currentTarget.value.replace(priceRegExp, '')
-    setExpectedPrice(Number(price))
+    expectedPrice = Number(e.currentTarget.value.replace(priceRegExp, ''))
+    handleOnChange()
   }
 
   const handleOptionAddBtnClick = () => {
-    setOptionList((optionList) => {
-      if (optionList.length > MAX_OPTION) {
-        return optionList
-      }
-      const newOptionList = [...optionList, { name: '', description: '' }]
-      return newOptionList
-    })
+    if (optionList.length > MAX_OPTION) {
+      return
+    }
+    const newOptionList = [...optionList, { name: '', description: '' }]
+    optionList = newOptionList
+    handleOnChange()
   }
 
   const handleOptionDelBtnClick = (deletedIdx: number) => {
-    setOptionList((optionList) => {
-      const newOptionList = optionList.filter((_, idx) => deletedIdx !== idx)
-      return newOptionList
-    })
+    const newOptionList = optionList.filter((_, idx) => deletedIdx !== idx)
+    optionList = newOptionList
+    handleOnChange()
   }
 
   const handleOptionNameChange = (
@@ -130,14 +99,13 @@ export const InputList = ({
     idx: number
   ) => {
     const newOptionName = e.currentTarget.value
-    setOptionList((optionList) => {
-      optionList[idx] = {
-        name: newOptionName,
-        description: optionList[idx].description
-      }
-      const newOptionList = [...optionList]
-      return newOptionList
-    })
+    optionList[idx] = {
+      name: newOptionName,
+      description: optionList[idx].description
+    }
+    const newOptionList = [...optionList]
+    optionList = newOptionList
+    handleOnChange()
   }
 
   const handleOptionDescriptionChange = (
@@ -145,23 +113,24 @@ export const InputList = ({
     idx: number
   ) => {
     const newOptionDescription = e.currentTarget.value
-    setOptionList((optionList) => {
-      optionList[idx] = {
-        name: optionList[idx].name,
-        description: newOptionDescription
-      }
-      const newOptionList = [...optionList]
-
-      return newOptionList
-    })
+    optionList[idx] = {
+      name: optionList[idx].name,
+      description: newOptionDescription
+    }
+    const newOptionList = [...optionList]
+    optionList = newOptionList
+    handleOnChange()
   }
 
   const handleFranchiseChange = (e: React.FormEvent<HTMLSelectElement>) => {
-    setFranchiseId(Number(e.currentTarget.value))
+    franchiseId = Number(e.currentTarget.value)
+    handleOnChange()
   }
 
   const handlePriceButtonClick = () => {
-    setIsPriceBtnClicked((isBtnClicked) => !isBtnClicked)
+    expectedPrice = 0
+    isPriceButtonClicked = !isPriceButtonClicked
+    handleOnChange()
   }
 
   return (
@@ -254,16 +223,22 @@ export const InputList = ({
           height={2.4}
           type="text"
           name={NAME_EXPECTED_PRICE}
-          value={String(expectedPrice)}
+          value={
+            expectedPrice
+              ? String(expectedPrice)
+              : isPriceButtonClicked
+              ? '미정'
+              : '0'
+          }
           placeholder={PLACEHOLDER_EXPECTED_PRICE}
           onChange={handlePriceChange}
-          isDisabled={isPriceBtnClicked}
+          isDisabled={isPriceButtonClicked}
         />
         <PriceDefaultButton
           width={6.4}
           height={4}
           onClick={handlePriceButtonClick}
-          isClicked={isPriceBtnClicked}
+          isClicked={isPriceButtonClicked}
         >
           모름
         </PriceDefaultButton>

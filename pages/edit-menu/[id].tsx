@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from '@emotion/styled'
 import Input from '@components/Input'
 import TagContainer from '@components/TagContainer'
@@ -18,6 +18,7 @@ export interface InputListType {
   originalTitle: string
   optionList: Option[]
   expectedPrice: number
+  isPriceButtonClicked: boolean
 }
 
 const EditMenu = () => {
@@ -28,13 +29,44 @@ const EditMenu = () => {
   const { mutate } = useChangeMenu()
   const { data: menuData } = useMenu(Number(id))
 
+  useEffect(() => {
+    if (menuData) {
+      setFranchiseId(menuData.franchise.id)
+      setTitle(menuData.title)
+      setOriginalTitle(menuData.originalTitle)
+      setOptionList(menuData.optionList)
+      setExpectedPrice(menuData.expectedPrice)
+    }
+  }, [menuData])
+
+  const [franchiseId, setFranchiseId] = useState(1)
+  const [title, setTitle] = useState('')
+  const [originalTitle, setOriginalTitle] = useState('')
+  const [optionList, setOptionList] = useState<Option[]>([])
+  const [expectedPrice, setExpectedPrice] = useState(0)
+  const [isPriceButtonClicked, setIsPriceButtonClicked] = useState(false)
+
   const [file, setFile] = useState<File | null>(null)
   const [tasteIdList, setTasteIdList] = useState<number[]>(
     dummyMenu.tastes.map((taste) => taste.id)
   )
 
-  const [inputList, setInputList] = useState<InputListType>()
-  const [isInputValid, setIsInputValid] = useState(true)
+  const handleInputChange = ({
+    franchiseId,
+    title,
+    originalTitle,
+    optionList,
+    expectedPrice,
+    isPriceButtonClicked
+  }: InputListType) => {
+    setFranchiseId(franchiseId)
+    setTitle(title)
+    setOriginalTitle(originalTitle)
+    setOptionList(optionList)
+    setExpectedPrice(expectedPrice)
+    setIsPriceButtonClicked(isPriceButtonClicked)
+  }
+
   // onChange handler
   const handleImageChange = (file: File) => {
     setFile(file)
@@ -46,19 +78,7 @@ const EditMenu = () => {
 
   const handleEditSubmit = (e: React.FormEvent<HTMLButtonElement>) => {
     const data = {
-      userId: 1,
-      franchiseId: 24,
-      title: '슈렉 프라푸치노',
-      content: '맛있습니다.',
-      originalTitle: '그린티 프라푸치노',
-      expectedPrice: 2500,
-      optionList: [
-        { name: '에스프레소 샷', description: '1샷' },
-        { name: '간 자바칩', description: '1개' },
-        { name: '통 자바칩', description: '1개' },
-        { name: '카라멜드리즐', description: '2개' }
-      ],
-      tasteIdList: [1]
+      userId: 1
     }
     mutate(
       { menuId: Number(id), image: file, data: data },
@@ -70,23 +90,19 @@ const EditMenu = () => {
       }
     )
   }
-  const handleInputChange = (
-    inputData: InputListType,
-    isDataValid: boolean
-  ) => {
-    console.log(isDataValid)
-  }
+
   return (
     <FlexContainer>
       <ImageUploaderWrapper>
         <ImageUploader value={menuData?.image} onChange={handleImageChange} />
       </ImageUploaderWrapper>
       <InputList
-        franchiseId={menuData?.franchise.id}
-        title={menuData?.title}
-        originalTitle={menuData?.originalTitle}
-        optionList={menuData?.optionList}
-        expectedPrice={menuData?.expectedPrice}
+        franchiseId={franchiseId}
+        title={title}
+        originalTitle={originalTitle}
+        optionList={optionList}
+        expectedPrice={expectedPrice}
+        isPriceButtonClicked={isPriceButtonClicked}
         onChange={handleInputChange}
       ></InputList>
       <SubTitle>맛</SubTitle>
@@ -94,14 +110,22 @@ const EditMenu = () => {
         selectedTasteIdList={tasteIdList}
         onChange={handleTagListChange}
       />
-      <Button
+      <SubmitButton
         color={'#fff'}
         backgroundColor={'#000'}
-        disabled={false}
+        disabled={
+          !(
+            title &&
+            originalTitle &&
+            optionList.length &&
+            tasteIdList.length &&
+            (expectedPrice || isPriceButtonClicked)
+          )
+        }
         onClick={handleEditSubmit}
       >
         메뉴 추가
-      </Button>
+      </SubmitButton>
     </FlexContainer>
   )
 }
@@ -116,12 +140,16 @@ const FlexContainer = styled(Flex)`
 `
 
 const ImageUploaderWrapper = styled.div`
-  width: calc(100% + 40px);
+  width: calc(100% + 4rem);
 `
 
 const SubTitle = styled.h3`
   font-size: 2.4rem;
   align-self: start;
+`
+
+const SubmitButton = styled(Button)`
+  font-weight: 700;
 `
 
 export default EditMenu
