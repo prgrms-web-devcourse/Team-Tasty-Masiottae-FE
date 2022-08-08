@@ -123,7 +123,8 @@ const EditMenu = () => {
           !(
             title &&
             originalTitle &&
-            optionList.length &&
+            optionList.filter(({ name, description }) => name && description)
+              .length &&
             tasteIdList.length &&
             (expectedPrice || isPriceButtonClicked)
           )

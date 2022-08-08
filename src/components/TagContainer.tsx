@@ -1,8 +1,5 @@
-import { Taste } from '@customTypes/index'
 import styled from '@emotion/styled'
 import Tag from './Tag'
-import { dummyTasteList } from '@constants/dummyMenu'
-import { useState } from 'react'
 import { useTasteList } from '@hooks/queries/useTasteList'
 
 const MAX_TAG = 4

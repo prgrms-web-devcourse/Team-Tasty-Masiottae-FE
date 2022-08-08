@@ -3,7 +3,6 @@ import InputMessage from '@components/InputMessage'
 import Input from '@components/Input'
 import Button from '@components/Button'
 import { TiDelete } from 'react-icons/ti'
-import { useState } from 'react'
 import { Option } from '@interfaces'
 import FranchiseSelect from '@components/FranchiseSelect'
 
