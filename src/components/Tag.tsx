@@ -51,7 +51,7 @@ const Item = styled.div<{
   font-weight: 600;
   border-radius: ${({ height }) => `${height}rem`};
   padding: 1.8rem 2.4rem;
-  border: ${({ color }) => `0.2rem solid ${color}`};
+  border: ${({ color }) => `0.3rem solid ${color}`};
   background-color: ${({ isClicked, readOnly, color }) =>
     readOnly ? `${color}` : isClicked ? `${color}` : `#ffffff`};
   color: ${({ readOnly, isClicked, color }) =>
