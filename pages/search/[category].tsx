@@ -5,10 +5,12 @@ import MenuCardList from '@components/MenuCardList'
 import SearchForm from '@components/SearchForm'
 import { useMenuList } from '@hooks/queries/useMenuList'
 import { SORT_OPTIONS } from '@constants/searchOption'
-
+import FranchiseInfo from '@components/FranchiseInfo'
+import { useFranchiseList } from '../../src/hooks/queries/useFranchiseList'
 const Search = () => {
   const router = useRouter()
-  const { category } = router.query
+  const id = parseInt(router.query.category as string)
+  const { franchiseList, isLoading } = useFranchiseList()
   const { menuList } = useMenuList()
 
   const ref = useIntersectionObserver(
@@ -22,7 +24,10 @@ const Search = () => {
     <Container>
       <FixedWrapper>
         <InnerWrapper>
-          <CategoryHeader>{category}</CategoryHeader>
+          <FranchiseInfo
+            franchise={franchiseList?.find((franchise) => franchise.id === id)}
+            isLoading={isLoading}
+          />
           <SearchForm
             sortOptions={SORT_OPTIONS}
             onSubmit={() => {
@@ -70,16 +75,6 @@ const InnerWrapper = styled.div`
 
 const CardListWrapper = styled.ul`
   padding-top: 22rem;
-`
-
-const CategoryHeader = styled.div`
-  height: 8rem;
-  font-size: 2rem;
-  text-align: center;
-  padding: 3rem;
-  background-color: gray;
-  box-sizing: border-box;
-  user-select: none;
 `
 
 export default Search
