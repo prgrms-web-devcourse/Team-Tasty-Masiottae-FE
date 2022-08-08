@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import Tag from './Tag'
 import { useTasteList } from '@hooks/queries/useTasteList'
 
-const MAX_TAG = 10
+const MAX_TAG = 4
 
 interface Props {
   selectedTasteIdList: number[]
