@@ -1,12 +1,11 @@
 import styled from '@emotion/styled'
-import { useState } from 'react'
 interface Props {
-  id: number
+  id?: number
   name: string
   color: string
   height: number
   isClicked?: boolean
-  onClick: (clickedTag: number) => void
+  onClick?: (clickedTag: number) => void
 }
 
 const Tag = ({
@@ -18,7 +17,7 @@ const Tag = ({
   onClick
 }: Props) => {
   const handleClick = (id: number) => {
-    onClick(id)
+    id && onClick && onClick(id)
   }
 
   return (
@@ -27,7 +26,9 @@ const Tag = ({
       color={color}
       height={height}
       isClicked={isClicked}
-      onClick={() => handleClick(id)}
+      readOnly={!id}
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      onClick={id ? () => handleClick(id) : () => {}}
     >
       {name}
     </Item>
@@ -38,6 +39,7 @@ const Item = styled.div<{
   name: string
   color: string
   height: number
+  readOnly: boolean
   isClicked: boolean
 }>`
   display: inline-flex;
@@ -46,13 +48,16 @@ const Item = styled.div<{
   justify-content: center;
   align-items: center;
   font-size: ${({ height }) => `${height * 0.7}rem`};
+  font-weight: 600;
   border-radius: ${({ height }) => `${height}rem`};
-  padding: 1rem 2rem;
-  background-color: ${({ color }) => `${color}`};
-  opacity: ${({ isClicked }) => `${isClicked ? `1` : `0.3`}`};
-  color: white;
+  padding: 1.8rem 2.4rem;
+  border: ${({ color }) => `0.2rem solid ${color}`};
+  background-color: ${({ isClicked, readOnly, color }) =>
+    readOnly ? `${color}` : isClicked ? `${color}` : `#ffffff`};
+  color: ${({ readOnly, isClicked, color }) =>
+    readOnly ? `${color}` : isClicked ? `#ffffff` : `${color}`};
   &:hover {
-    cursor: pointer;
+    cursor: ${({ readOnly }) => (readOnly ? '' : 'pointer')};
   }
 `
 

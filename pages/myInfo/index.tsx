@@ -35,7 +35,7 @@ const ChangePasswordButton = styled(Button)`
   margin-top: 4rem;
   background-color: ${(props) => props.theme.color.mainBlack};
   border-radius: 1rem;
-  color: white;
+  color: ${(props) => props.theme.color.mainWhite};
   font-size: 1.8rem;
   font-weight: 700;
   cursor: pointer;
@@ -46,7 +46,7 @@ const LogoutButton = styled(Button)`
   margin-top: 1rem;
   background-color: ${(props) => props.theme.color.mainPink};
   border-radius: 1rem;
-  color: white;
+  color: ${(props) => props.theme.color.mainWhite};
   font-size: 1.8rem;
   font-weight: 700;
   cursor: pointer;

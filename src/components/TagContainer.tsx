@@ -3,6 +3,7 @@ import Tag from './Tag'
 import { useTasteList } from '@hooks/queries/useTasteList'
 
 const MAX_TAG = 4
+
 interface Props {
   selectedTasteIdList: number[]
   onChange: (selectedTagList: number[]) => void
