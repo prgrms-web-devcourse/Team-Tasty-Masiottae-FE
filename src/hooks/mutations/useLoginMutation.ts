@@ -6,6 +6,9 @@ import { User } from '@interfaces'
 import { setLocalToken } from '@utils/localToken'
 import { useRouter } from 'next/router'
 
+const DEFAULT_USER_IMAGE =
+  'https://user-images.githubusercontent.com/79133602/183457197-175f637c-c28b-4ddc-8cf1-195796fc3231.png'
+
 interface Params {
   email: string
   password: string
@@ -35,7 +38,12 @@ export const useLoginMutation = () => {
   const [user, setUser] = useRecoilState<User>(currentUser)
   return useMutation(postLogin, {
     onSuccess: (data) => {
-      setUser({ ...user, ...data.account })
+      const { image } = data.account
+      setUser({
+        ...user,
+        ...data.account,
+        image: image === null ? DEFAULT_USER_IMAGE : image
+      })
       setLocalToken(data.token)
       router.replace('/')
     }

@@ -5,8 +5,7 @@ export const currentUser = atom<User>({
   key: 'currentUser',
   default: {
     id: 1,
-    image:
-      'https://user-images.githubusercontent.com/79133602/181918487-b0e0d98c-3520-40f2-947b-7ba9f4422cd4.PNG',
+    image: '',
     email: 'example@naver.com',
     nickName: '계란이 좋아',
     snsAccount: 'example@naver.com',
