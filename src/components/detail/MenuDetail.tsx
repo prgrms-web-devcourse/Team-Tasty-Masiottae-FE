@@ -59,7 +59,7 @@ const MenuDetail = ({ menu, userId }: Props) => {
             <FranchiseText>{menu.franchise.name} </FranchiseText>
             <Title>{menu.title}</Title>
           </LeftHeader>
-          <RightHeader>
+          <RightHeader guest={menu.author.id !== userId}>
             {isLikeClicked ? (
               <Heart size={40} onClick={handleLikeClick} />
             ) : (
@@ -68,7 +68,7 @@ const MenuDetail = ({ menu, userId }: Props) => {
             <LikesCountText clicked={isLikeClicked}>
               {menu.likes}
             </LikesCountText>
-            {menu.author.id !== userId && (
+            {menu.author.id === userId && (
               <Dots size={30} onClick={handleEditMenuClick} />
             )}
           </RightHeader>
@@ -86,7 +86,9 @@ const MenuDetail = ({ menu, userId }: Props) => {
               {name} {description}
             </OptionText>
           ))}
-          <PriceText>{menu.expectedPrice} 원</PriceText>
+          <PriceText>
+            {menu.expectedPrice === 0 ? '미정' : `${menu.expectedPrice} 원`}
+          </PriceText>
         </OptionsWrapper>
 
         <TagContainer>
@@ -174,11 +176,11 @@ const Title = styled.div`
   font-weight: 700;
 `
 
-const RightHeader = styled(Flex)`
+const RightHeader = styled(Flex)<{ guest: boolean }>`
   align-items: center;
   position: relative;
   top: -2rem;
-  left: 1rem; /*adfsf */
+  left: ${({ guest }) => (guest ? '0' : '1rem')};
 `
 
 const EmptyHeart = styled(IoMdHeart)`
@@ -271,8 +273,8 @@ const Tag = styled(Flex)<{ color: string }>`
   background-color: ${({ color }) => color};
   min-width: fit-content;
   height: 3.2rem;
-  padding: 1rem 2rem;
-  border-radius: 1.6rem;
+  padding: 1.8rem 2.4rem;
+  border-radius: 1.8rem;
 `
 
 export default MenuDetail
