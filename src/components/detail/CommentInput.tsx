@@ -90,10 +90,6 @@ const Textarea = styled.textarea`
   &:focus {
     outline: none;
   }
-
-  &::placeholder {
-    font-size: 1.6rem;
-  }
 `
 
 const AddCommentButton = styled.button`
