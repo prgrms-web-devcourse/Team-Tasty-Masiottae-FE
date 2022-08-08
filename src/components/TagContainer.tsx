@@ -1,6 +1,5 @@
 import styled from '@emotion/styled'
 import Tag from './Tag'
-import { dummyTasteList } from '@constants/dummyMenu'
 import { useTasteList } from '@hooks/queries/useTasteList'
 
 const MAX_TAG = 10
@@ -44,7 +43,7 @@ const TagContainer = ({
       gap={gap}
       backgroundColor={backgroundColor}
     >
-      {dummyTasteList?.map((taste) => (
+      {tasteList?.map((taste) => (
         <Tag
           key={taste.id}
           id={taste.id}
