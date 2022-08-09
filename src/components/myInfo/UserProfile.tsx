@@ -28,12 +28,17 @@ const UserProfile = () => {
   const [error, setError] = useState('')
   const [imageFile, setImageFile] = useState<File | null>(null)
   const [user, setUser] = useRecoilState<User>(currentUser)
-  const [isReset, setIsReset] = useState(false)
+  const [isReset, setIsReset] = useState(true)
 
   const { mutate: patchImage } = useChangeImageMutation()
   const { mutate: patchNickName } = useChangeNickNameMutation()
 
   const nameEditRef = useClickAway(() => setIsNameEditorOpen(false))
+
+  const handleProfileModalToggle = () => {
+    setIsProfileModalOpen((isProfileModalOpen) => !isProfileModalOpen)
+    setIsReset((isReset) => !isReset)
+  }
 
   const handleProfileChange = useCallback((file: File) => {
     setImageFile(file)
@@ -88,10 +93,7 @@ const UserProfile = () => {
         alt={user.nickName}
         width={140}
         height={140}
-        onClick={() => {
-          setIsProfileModalOpen(true)
-          setIsReset(false)
-        }}
+        onClick={handleProfileModalToggle}
       />
       {isNameEditorOpen ? (
         <>
@@ -116,10 +118,7 @@ const UserProfile = () => {
       )}
       <ProfileModal
         visible={isProfileModalOpen}
-        onClose={() => {
-          setIsProfileModalOpen(false)
-          setIsReset(true)
-        }}
+        onClose={handleProfileModalToggle}
         className="profile"
       >
         <ModalTitle>프로필을 바꾸시겠어요?</ModalTitle>

@@ -18,15 +18,11 @@ const ImageUploader = ({
   size,
   shape = 'square',
   value = null,
-  isReset,
+  isReset = true,
   onChange
 }: Props) => {
   const [image, setImage] = useState<ImageType>(value)
   const [isError, setIsError] = useState(false)
-
-  useEffect(() => {
-    setImage(value)
-  }, [value])
 
   useEffect(() => {
     isReset && setImage(value)
