@@ -27,7 +27,7 @@ const CreateMenu = () => {
 
   const { mutate } = usePostMenu()
   const [file, setFile] = useState<File | null>(null)
-  const [franchiseId, setFranchiseId] = useState(1)
+  const [franchiseId, setFranchiseId] = useState<number>(0)
   const [title, setTitle] = useState('')
   const [originalTitle, setOriginalTitle] = useState('')
   const [optionList, setOptionList] = useState<Option[]>([])
@@ -44,6 +44,10 @@ const CreateMenu = () => {
   }
 
   const handleEditSubmit = async () => {
+    if (!franchiseId) {
+      return
+    }
+
     setOptionList(
       optionList.filter((option) => option.name && option.description)
     )

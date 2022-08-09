@@ -27,7 +27,6 @@ const EditMenu = () => {
 
   const { mutate } = useChangeMenu()
   const { data: menuData } = useMenu(Number(id))
-  console.log(menuData)
   useEffect(() => {
     if (menuData) {
       setFranchiseId(menuData.franchise.id)
