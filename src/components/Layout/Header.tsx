@@ -6,8 +6,9 @@ import theme from '@constants/theme'
 import Link from 'next/link'
 import { useEffect, useState, useCallback } from 'react'
 import { MYINFO_URL, LOGIN_URL, USER_URL, HOME_URL } from '@constants/pageUrl'
+import { getLocalToken } from '@utils/localToken'
 
-const { mainPink, mainWhite, borderLight } = theme.color
+const { mainPink, mainWhite } = theme.color
 const { headerHeight, pagePadding } = theme.layout
 
 const MYINFO = '내정보'
@@ -17,9 +18,17 @@ export const Header = () => {
   const router = useRouter()
   const { pathname } = router
   const [title, setTitle] = useState('')
+  const [token, setToken] = useState('')
+
   const onClickPrev = () => {
     router.back()
   }
+
+  useEffect(() => {
+    if (pathname === LOGIN_URL || pathname === HOME_URL) {
+      setToken(getLocalToken() || '')
+    }
+  }, [token, pathname])
 
   const handlePathChange = useCallback((pathname: string) => {
     if (pathname === MYINFO_URL) {
@@ -47,18 +56,23 @@ export const Header = () => {
           </a>
         </Link>
       )}
-      <InnerRight>
-        <Link href={MYINFO_URL}>
-          <a>
-            <StyledUserIcon />
-          </a>
-        </Link>
-        <Link href={LOGIN_URL}>
-          <a>
-            <StyledLoginIcon />
-          </a>
-        </Link>
-      </InnerRight>
+      {pathname !== LOGIN_URL && (
+        <InnerRight>
+          {token ? (
+            <Link href={MYINFO_URL}>
+              <a>
+                <StyledUserIcon />
+              </a>
+            </Link>
+          ) : (
+            <Link href={LOGIN_URL}>
+              <a>
+                <StyledLoginIcon />
+              </a>
+            </Link>
+          )}
+        </InnerRight>
+      )}
     </HeaderContainer>
   )
 }
