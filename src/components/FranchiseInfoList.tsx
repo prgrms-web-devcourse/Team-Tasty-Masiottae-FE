@@ -13,7 +13,7 @@ const FranchiseInfoList = ({ franchiseList, isLoading }: Props) => {
   return (
     <BoxContainer>
       <BoxWrapper>
-        <Link href={`/search/전체`}>
+        <Link href={`/search/0`}>
           <a>
             <FranchiseInfo
               franchise={{ id: 0, name: '전체', image: '/ALL.png' }}
@@ -25,7 +25,7 @@ const FranchiseInfoList = ({ franchiseList, isLoading }: Props) => {
 
       {franchiseList?.map((franchise) => (
         <BoxWrapper key={franchise.id}>
-          <Link href={`/search/${franchise.name}`}>
+          <Link href={`/search/${franchise.id}`}>
             <a>
               <FranchiseInfo franchise={franchise} isLoading={isLoading} />
             </a>

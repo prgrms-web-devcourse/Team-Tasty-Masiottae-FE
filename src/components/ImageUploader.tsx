@@ -10,6 +10,7 @@ interface Props {
   size?: number
   shape?: 'square' | 'circle'
   value?: string | null
+  isReset?: boolean
   onChange: (file: File) => void
 }
 
@@ -17,19 +18,19 @@ const ImageUploader = ({
   size,
   shape = 'square',
   value = null,
+  isReset = true,
   onChange
 }: Props) => {
   const [image, setImage] = useState<ImageType>(value)
   const [isError, setIsError] = useState(false)
 
   useEffect(() => {
-    setImage(value)
-  }, [value])
+    isReset && setImage(value)
+  }, [isReset, value])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const reader = new FileReader()
     const file = e.target.files ? e.target.files[0] : null
-
     if (!file?.name.match(FILE_REGEX)) {
       setIsError(true)
       return

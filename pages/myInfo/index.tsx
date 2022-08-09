@@ -4,9 +4,14 @@ import UserProfile from '@components/myInfo/UserProfile'
 import Button from '@components/Button'
 import { LOGIN_URL, PASSWORD_CHANGE_URL } from '@constants/pageUrl'
 import { useRouter } from 'next/router'
+import { removeLocalToken } from '@utils/localToken'
 
 const MyInfoPage = () => {
   const router = useRouter()
+  const handleLogout = () => {
+    removeLocalToken()
+    router.replace(LOGIN_URL)
+  }
 
   return (
     <UserContainer>
@@ -15,9 +20,7 @@ const MyInfoPage = () => {
       <ChangePasswordButton onClick={() => router.push(PASSWORD_CHANGE_URL)}>
         비밀번호 변경
       </ChangePasswordButton>
-      <LogoutButton onClick={() => router.push(LOGIN_URL)}>
-        로그아웃
-      </LogoutButton>
+      <LogoutButton onClick={handleLogout}>로그아웃</LogoutButton>
     </UserContainer>
   )
 }

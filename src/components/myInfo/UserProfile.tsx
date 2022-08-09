@@ -9,17 +9,17 @@ import { currentUser } from '@recoil/currentUser'
 import { User } from '@interfaces'
 import Image from 'next/image'
 import Modal from '@components/Modal'
+import axios from '@lib/axios'
 import ImageUploader from '@components/ImageUploader'
 import {
   MESSAGE_NICKNAME,
-  ERROR_EXIST_NICKNAME,
-  REGEX_NICKNAME
-} from '@constants/inputConstant'
+  REGEX_NICKNAME,
+  PLACEHOLDER_NICKNAME,
+  INPUT_NICKNAME
+} from '@constants/inputConstants'
 import { useChangeImageMutation } from '@hooks/mutations/useChangeImageMutation'
 import { useChangeNickNameMutation } from '@hooks/mutations/useChangeNickNameMutation'
 import InputMessage from '@components/InputMessage'
-
-const CHANGE_NICKNAME_PLACEHOLDER = '변경할 닉네임'
 
 const UserProfile = () => {
   const [isNameEditorOpen, setIsNameEditorOpen] = useState(false)
@@ -28,11 +28,22 @@ const UserProfile = () => {
   const [error, setError] = useState('')
   const [imageFile, setImageFile] = useState<File | null>(null)
   const [user, setUser] = useRecoilState<User>(currentUser)
+  const [isReset, setIsReset] = useState(true)
 
   const { mutate: patchImage } = useChangeImageMutation()
   const { mutate: patchNickName } = useChangeNickNameMutation()
 
   const nameEditRef = useClickAway(() => setIsNameEditorOpen(false))
+
+  const handleProfileModalOpen = () => {
+    setIsProfileModalOpen(true)
+    setIsReset(false)
+  }
+
+  const handleProfileModalClose = () => {
+    setIsProfileModalOpen(false)
+    setIsReset(true)
+  }
 
   const handleProfileChange = useCallback((file: File) => {
     setImageFile(file)
@@ -51,7 +62,7 @@ const UserProfile = () => {
   }, [imageFile, patchImage, user, setUser])
 
   const handleNicknameChange = useCallback(
-    async (e: React.ChangeEvent<HTMLInputElement>) => {
+    (e: React.ChangeEvent<HTMLInputElement>) => {
       setError('')
       const value = e.target.value.replace(/\s/, '').slice(0, 7)
       if (!REGEX_NICKNAME.test(value)) {
@@ -63,10 +74,13 @@ const UserProfile = () => {
     []
   )
 
-  const handleNicknameSubmit = useCallback(() => {
-    const isNickNameExist = false
-    if (isNickNameExist) {
-      setError(ERROR_EXIST_NICKNAME)
+  const handleNicknameSubmit = useCallback(async () => {
+    const { data } = await axios.get(
+      `/accounts/check?property=${INPUT_NICKNAME}&value=${nickName}`
+    )
+    const { errorMessage } = data
+    if (errorMessage) {
+      setError(errorMessage)
       return
     }
 
@@ -84,16 +98,16 @@ const UserProfile = () => {
         alt={user.nickName}
         width={140}
         height={140}
-        onClick={() => setIsProfileModalOpen(true)}
+        onClick={handleProfileModalOpen}
       />
       {isNameEditorOpen ? (
         <>
           <NickName ref={nameEditRef}>
             <ChangeNickNameInput
               type="text"
-              placeholder={CHANGE_NICKNAME_PLACEHOLDER}
+              placeholder={PLACEHOLDER_NICKNAME}
               onChange={handleNicknameChange}
-              isValid={Boolean(error)}
+              isValid={error ? false : true}
             />
             <ChangeNickNameButton onClick={handleNicknameSubmit}>
               수정
@@ -109,7 +123,7 @@ const UserProfile = () => {
       )}
       <ProfileModal
         visible={isProfileModalOpen}
-        onClose={() => setIsProfileModalOpen(false)}
+        onClose={handleProfileModalClose}
         className="profile"
       >
         <ModalTitle>프로필을 바꾸시겠어요?</ModalTitle>
@@ -118,6 +132,7 @@ const UserProfile = () => {
           size={14}
           onChange={handleProfileChange}
           value={user.image}
+          isReset={isReset}
         />
         <ModalButton onClick={handleProfileSubmit}>확인</ModalButton>
       </ProfileModal>

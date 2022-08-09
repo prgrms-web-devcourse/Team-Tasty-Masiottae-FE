@@ -7,9 +7,9 @@ import { useState, ChangeEvent, FormEvent } from 'react'
 import TagContainer from './TagContainer'
 import { SearchFormOptions } from '@interfaces'
 import Button from './Button'
+import SortOption from './SortOption'
 
 interface Props {
-  sortOptions: SortOption[]
   onSubmit: (values: SearchFormOptions) => void
 }
 
@@ -20,18 +20,18 @@ interface SortOption {
 
 const PLACEHOLDER_SEARCH_INPUT = '메뉴 검색'
 
-const SearchForm = ({ sortOptions, onSubmit }: Props) => {
+const SearchForm = ({ onSubmit }: Props) => {
   const [modalVisible, setModalVisible] = useState(false)
   const [tasteIdList, setTasteIdList] = useState<number[]>([])
   const [keyword, setKeyword] = useState('')
-  const [sort, setSort] = useState('')
+  const [sort, setSort] = useState('recent')
 
   const handleFilterClick = () => setModalVisible(true)
   const handleModalClose = () => setModalVisible(false)
 
-  const handleSortOptionChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    setSort(e.target.value)
-    onSubmit({ keyword, tasteIdList, sort: e.target.value })
+  const handleSortChange = (value: string) => {
+    setSort(value)
+    onSubmit({ keyword, tasteIdList, sort: value })
   }
 
   const handleKeywordChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -41,11 +41,10 @@ const SearchForm = ({ sortOptions, onSubmit }: Props) => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     onSubmit({ keyword, tasteIdList, sort })
-    console.log({ keyword, tasteIdList, sort })
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <Form onSubmit={handleSubmit}>
       <SearchWrapper>
         <SearchInput
           value={keyword}
@@ -56,8 +55,9 @@ const SearchForm = ({ sortOptions, onSubmit }: Props) => {
         />
         <SearchIcon />
       </SearchWrapper>
-      <ErrorMessage></ErrorMessage>
       <OptionContainer>
+        <SortOption selectedValue={sort} onChange={handleSortChange} />
+
         <FilterWrapper onClick={handleFilterClick}>
           <FilterIcon />
           <Text>필터</Text>
@@ -76,17 +76,16 @@ const SearchForm = ({ sortOptions, onSubmit }: Props) => {
             <Button onClick={handleModalClose}>제출</Button>
           </form>
         </Modal>
-        <select onChange={handleSortOptionChange}>
-          {sortOptions.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </select>
       </OptionContainer>
-    </form>
+    </Form>
   )
 }
+
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+`
 
 const SearchWrapper = styled.div`
   display: flex;
@@ -96,14 +95,6 @@ const SearchInput = styled(Input)`
   width: 100%;
 `
 
-const ErrorMessage = styled.div`
-  font-size: 1.6rem;
-  color: red;
-  height: 2rem;
-  padding: 1rem;
-  box-sizing: border-box;
-`
-
 const SearchIcon = styled(FiSearch)`
   font-size: 2.5rem;
   margin-left: -3.5rem;
@@ -111,7 +102,7 @@ const SearchIcon = styled(FiSearch)`
 
 const OptionContainer = styled.div`
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   gap: 1rem;
 `
 
@@ -130,6 +121,7 @@ const FilterIcon = styled(BsFilterLeft)`
 const Text = styled.span`
   font-size: 2rem;
   user-select: none;
+  font-weight: 700;
 `
 
 export default SearchForm

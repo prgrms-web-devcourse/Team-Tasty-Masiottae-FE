@@ -3,15 +3,15 @@ import Avatar from './Avatar'
 import { Franchise } from '../interfaces/index'
 
 interface Props {
-  franchise: Franchise
+  franchise: Franchise | undefined
   isLoading: boolean
 }
 
-const FranchiseList = ({ franchise, isLoading }: Props) => {
+const FranchiseInfo = ({ franchise, isLoading }: Props) => {
   return (
     <FranchiseWrapper>
-      <Avatar size={7} src={franchise.image} isLoading={isLoading} />
-      <FranchiseName>{franchise.name}</FranchiseName>
+      <Avatar size={7} src={franchise?.image} isLoading={isLoading} />
+      <FranchiseName>{franchise?.name}</FranchiseName>
     </FranchiseWrapper>
   )
 }
@@ -28,4 +28,4 @@ const FranchiseWrapper = styled.div`
   padding: 1rem;
 `
 
-export default FranchiseList
+export default FranchiseInfo

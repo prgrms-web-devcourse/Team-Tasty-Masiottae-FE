@@ -11,8 +11,12 @@ import {
   MESSAGE_PASSWORD,
   ERROR_PASSWORD_CONFIRM,
   REGEX_PASSWORD
-} from '@constants/inputConstant'
+} from '@constants/inputConstants'
 import InputMessage from '@components/InputMessage'
+import { useChangePasswordMutation } from '@hooks/mutations/useChangePasswordMutation'
+import { useRecoilState } from 'recoil'
+import { currentUser } from '@recoil/currentUser'
+import { useRouter } from 'next/router'
 
 interface Errors {
   password: string
@@ -21,12 +25,16 @@ interface Errors {
 
 const PasswordEditPage = () => {
   const [password, setPassword] = useState('')
+  const [passwordConfirm, setPasswordConfirm] = useState('')
   const [isTypePassword, setIsTypePassword] = useState(false)
   const [isTypeConfirmPassword, setIsTypeConfirmPassword] = useState(false)
+  const [user] = useRecoilState(currentUser)
+  const router = useRouter()
   const [errors, setErrors] = useState<Errors>({
     password: '',
     passwordConfirm: ''
   })
+  const { mutate: patchPassword } = useChangePasswordMutation()
 
   const handleEyeClick = useCallback((name: string) => {
     name === INPUT_PASSWORD
@@ -45,6 +53,9 @@ const PasswordEditPage = () => {
       if (!REGEX_PASSWORD.test(value)) {
         setErrors({ ...errors, [name]: MESSAGE_PASSWORD })
       }
+      if (passwordConfirm === e.target.value) {
+        setErrors({ ...errors, [INPUT_PASSWORD_CONFIRM]: '' })
+      }
       setPassword(e.target.value)
     }
     if (name === INPUT_PASSWORD_CONFIRM) {
@@ -55,22 +66,24 @@ const PasswordEditPage = () => {
       if (password !== e.target.value) {
         setErrors({ ...errors, [name]: ERROR_PASSWORD_CONFIRM })
       }
+      setPasswordConfirm(e.target.value)
     }
   }
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
     const isError = Object.keys(errors).some(
       (key) => errors[key as keyof typeof errors] !== ''
     )
     if (password && !isError) {
-      console.log(password)
+      patchPassword({ userId: user.id, password })
+      router.back()
     }
   }
   return (
     <UserContainer>
       <Title>비밀번호 변경</Title>
-      <UserEditForm onSubmit={handleSubmit}>
+      <UserEditForm>
         <InputWrapper>
           <PasswordInput
             type={isTypePassword ? 'text' : 'password'}
@@ -101,7 +114,7 @@ const PasswordEditPage = () => {
           />
           <InputMessage errorMessage={errors[INPUT_PASSWORD_CONFIRM]} />
         </InputWrapper>
-        <ChangePasswordButton>완료</ChangePasswordButton>
+        <ChangePasswordButton onClick={handleSubmit}>완료</ChangePasswordButton>
       </UserEditForm>
     </UserContainer>
   )

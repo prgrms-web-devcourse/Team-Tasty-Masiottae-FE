@@ -38,7 +38,6 @@ const MenuCardList = ({ menuList, divRef }: Props) => {
 const Container = styled.ul`
   display: flex;
   flex-direction: column;
-  margin-top: 1rem;
   row-gap: 0.5rem;
 `
 
