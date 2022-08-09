@@ -19,6 +19,7 @@ import {
   PLACEHOLDER_OPTION_NAME,
   PLACEHOLDER_OPTION_DESCRIPTION,
   PLACEHOLDER_EXPECTED_PRICE,
+  ERROR_MESSAGE_REQUIRED_FRANCHISE,
   ERROR_MESSAGE_REQUIRED_TITLE,
   ERROR_MESSAGE_REQUIRED_ORIGINAL_TITLE,
   ERROR_MESSAGE_REQUIRED_OPTION,
@@ -141,6 +142,10 @@ export const InputList = ({
         onChange={handleFranchiseChange}
         defaultValue={franchiseId}
       />
+      <InputMessage
+        isValid={Boolean(franchiseId)}
+        errorMessage={ERROR_MESSAGE_REQUIRED_FRANCHISE}
+      ></InputMessage>
       <InputName>커스텀 메뉴 이름</InputName>
       <Input
         height={2.4}
