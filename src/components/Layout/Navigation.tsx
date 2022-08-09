@@ -4,12 +4,17 @@ import { BiHomeAlt, BiSearch } from 'react-icons/bi'
 import { VscBook } from 'react-icons/vsc'
 import theme from '@constants/theme'
 import Link from 'next/link'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
+import { getLocalToken } from '@utils/localToken'
+import { useRecoilState } from 'recoil'
+import { currentUser } from '@recoil/currentUser'
 import {
   CREATE_MENU_URL,
   USER_URL,
   SEARCH_URL,
-  HOME_URL
+  HOME_URL,
+  LOGIN_URL
 } from '@constants/pageUrl'
 
 const { mainPink, mainWhite, borderLight } = theme.color
@@ -22,6 +27,14 @@ type IconType = {
 export const Navigation = () => {
   const router = useRouter()
   const { pathname } = router
+  const [token, setToken] = useState('')
+  const [user] = useRecoilState(currentUser)
+
+  useEffect(() => {
+    if (pathname === LOGIN_URL || pathname === HOME_URL) {
+      setToken(getLocalToken() || '')
+    }
+  }, [token, pathname])
 
   return (
     <NavContainer>
@@ -33,7 +46,7 @@ export const Navigation = () => {
             </NavItem>
           </StyledAnchor>
         </Link>
-        <Link href={CREATE_MENU_URL}>
+        <Link href={token ? CREATE_MENU_URL : LOGIN_URL}>
           <StyledAnchor>
             <NavItem>
               <StyledPlus selected={pathname === CREATE_MENU_URL} />
@@ -47,10 +60,9 @@ export const Navigation = () => {
             </NavItem>
           </StyledAnchor>
         </Link>
-        <Link href={USER_URL}>
+        <Link href={token ? `${USER_URL}/${user.id}` : LOGIN_URL}>
           <StyledAnchor>
             <NavItem>
-              {/* //todo신영 USER_URL 뒤에 /userId query param 넘겨주기 */}
               <StyledMenu selected={pathname === USER_URL} />
             </NavItem>
           </StyledAnchor>
@@ -72,9 +84,8 @@ const StyledAnchor = styled.a`
 
 const NavContainer = styled.div`
   height: ${navHeight};
-  position: fixed;
+  position: sticky;
   max-width: 50rem;
-  margin: 0 auto;
   left: 0;
   right: 0;
   bottom: 0;
