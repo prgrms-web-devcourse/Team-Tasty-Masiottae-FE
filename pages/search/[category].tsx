@@ -5,7 +5,7 @@ import MenuCardList from '@components/MenuCardList'
 import SearchForm from '@components/SearchForm'
 import { useMenuList } from '@hooks/queries/useMenuList'
 import FranchiseInfo from '@components/FranchiseInfo'
-import { useFranchiseList } from '../../src/hooks/queries/useFranchiseList'
+import { useFranchiseList } from '@hooks/queries/useFranchiseList'
 const Search = () => {
   const router = useRouter()
   const id = parseInt(router.query.category as string)

@@ -86,7 +86,7 @@ const ProfileContainer = styled.div`
 
 const Author = styled.div`
   font-size: 2rem;
-  font-weight: bold;
+  font-weight: 700;
   user-select: none;
 `
 
@@ -104,7 +104,7 @@ const Tab = styled.button<TabProps>`
   border: none;
   padding: 0 2rem;
   font-size: 1.8rem;
-  font-weight: bold;
+  font-weight: 700;
   border-bottom: ${({ selected }) => (selected ? '3px solid red' : 'none')};
   height: 5rem;
 `
