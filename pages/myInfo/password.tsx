@@ -25,6 +25,7 @@ interface Errors {
 
 const PasswordEditPage = () => {
   const [password, setPassword] = useState('')
+  const [passwordConfirm, setPasswordConfirm] = useState('')
   const [isTypePassword, setIsTypePassword] = useState(false)
   const [isTypeConfirmPassword, setIsTypeConfirmPassword] = useState(false)
   const [user] = useRecoilState(currentUser)
@@ -52,6 +53,9 @@ const PasswordEditPage = () => {
       if (!REGEX_PASSWORD.test(value)) {
         setErrors({ ...errors, [name]: MESSAGE_PASSWORD })
       }
+      if (passwordConfirm === e.target.value) {
+        setErrors({ ...errors, [INPUT_PASSWORD_CONFIRM]: '' })
+      }
       setPassword(e.target.value)
     }
     if (name === INPUT_PASSWORD_CONFIRM) {
@@ -62,6 +66,7 @@ const PasswordEditPage = () => {
       if (password !== e.target.value) {
         setErrors({ ...errors, [name]: ERROR_PASSWORD_CONFIRM })
       }
+      setPasswordConfirm(e.target.value)
     }
   }
 
