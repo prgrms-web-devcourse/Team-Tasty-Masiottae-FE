@@ -1,18 +1,24 @@
 import styled from '@emotion/styled'
 import { useFranchiseList } from '@hooks/queries/useFranchiseList'
 import { NAME_SELECT } from '@constants/menuConstant'
+import { useEffect } from 'react'
 
 interface Props {
+  defaultValue?: number
   onChange: (e: React.FormEvent<HTMLSelectElement>) => void
 }
 
-const FranchiseSelect = ({ onChange }: Props) => {
+const FranchiseSelect = ({ defaultValue, onChange }: Props) => {
   const { franchiseList } = useFranchiseList()
 
   return (
     <Select name={NAME_SELECT} onChange={onChange}>
       {franchiseList?.map((franchise) => (
-        <option key={franchise.id} value={franchise.id}>
+        <option
+          key={franchise.id}
+          value={franchise.id}
+          selected={defaultValue === franchise.id}
+        >
           {franchise.name}
         </option>
       ))}

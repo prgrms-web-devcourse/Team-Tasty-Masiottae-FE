@@ -34,7 +34,7 @@ export interface InputListType {
   isPriceButtonClicked: boolean
 }
 
-interface Prop {
+interface Props {
   franchiseId: number
   title: string
   originalTitle: string
@@ -52,7 +52,7 @@ export const InputList = ({
   expectedPrice,
   isPriceButtonClicked,
   onChange
-}: Prop) => {
+}: Props) => {
   const handleOnChange = () => {
     onChange({
       franchiseId,
@@ -137,7 +137,10 @@ export const InputList = ({
   return (
     <InputWrapper>
       <InputName>프랜차이즈</InputName>
-      <FranchiseSelect onChange={handleFranchiseChange} />
+      <FranchiseSelect
+        onChange={handleFranchiseChange}
+        defaultValue={franchiseId}
+      />
       <InputName>커스텀 메뉴 이름</InputName>
       <Input
         height={2.4}
