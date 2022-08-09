@@ -8,7 +8,6 @@ import InputMessage from '@components/InputMessage'
 import axios from '@lib/axios'
 import {
   TEXT,
-  PASSWORD,
   INPUT_EMAIL,
   INPUT_NICKNAME,
   INPUT_PASSWORD,
