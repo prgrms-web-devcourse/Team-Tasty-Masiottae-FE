@@ -147,7 +147,7 @@ export const InputList = ({
         errorMessage={ERROR_MESSAGE_REQUIRED_FRANCHISE}
       ></InputMessage>
       <InputName>커스텀 메뉴 이름</InputName>
-      <Input
+      <TitleInput
         height={2.4}
         type="text"
         name={NAME_TITLE}
@@ -161,7 +161,7 @@ export const InputList = ({
         errorMessage={ERROR_MESSAGE_REQUIRED_TITLE}
       ></InputMessage>
       <InputName>기본 메뉴 이름</InputName>
-      <Input
+      <TitleInput
         height={2.4}
         type="text"
         name={NAME_ORIGINAL_TITLE}
@@ -283,6 +283,10 @@ const InputName = styled.div`
   padding-bottom: 0.8rem;
   padding-top: 1.6rem;
 `
+const TitleInput = styled(Input)`
+  font-size: 1.6rem;
+`
+
 const OptionButton = styled(Button)`
   margin: 0.8rem 0;
 `
@@ -295,9 +299,11 @@ const OptionWrapper = styled.div`
 `
 
 const OptionName = styled(Input)`
+  font-size: 1.6rem;
   width: 30%;
 `
 const OptionDescription = styled(Input)`
+  font-size: 1.6rem;
   width: 50%;
   flex-grow: 1;
   flex-shrink: 1;
@@ -325,6 +331,7 @@ const PriceDefaultButton = styled(Button)<{ isClicked: boolean }>`
 `
 
 const PriceInput = styled(Input)`
+  font-size: 1.6rem;
   flex-grow: 1;
 `
 
