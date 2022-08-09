@@ -105,7 +105,9 @@ const MenuDetail = ({ menu, userId }: Props) => {
         option="drawer"
       >
         <ModalItem>
-          <BsFillPencilFill size={25} />
+          <IconWrapper>
+            <BsFillPencilFill size={20} />
+          </IconWrapper>
           수정
         </ModalItem>
         <ModalItem onClick={handleMenuDelete}>
@@ -217,6 +219,13 @@ const ModalItem = styled(Flex)`
   &:not(:first-of-type) {
     margin-top: 1rem;
   }
+`
+
+const IconWrapper = styled(Flex)`
+  justify-content: center;
+  align-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
 `
 
 const OptionsWrapper = styled(Flex)`
