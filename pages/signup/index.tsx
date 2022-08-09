@@ -8,7 +8,6 @@ import InputMessage from '@components/InputMessage'
 import axios from '@lib/axios'
 import {
   TEXT,
-  PASSWORD,
   INPUT_EMAIL,
   INPUT_NICKNAME,
   INPUT_PASSWORD,
@@ -127,9 +126,9 @@ const Signup = () => {
 
   const handleSignUpChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target
-    setErrors(initialValues)
 
     if (name === INPUT_EMAIL) {
+      setErrors({ ...errors, [name]: '' })
       if (!REGEX_EMAIL.test(value)) {
         setErrors({ ...errors, [name]: ERROR_EMAIL })
       }
@@ -138,6 +137,7 @@ const Signup = () => {
     }
 
     if (name === INPUT_NICKNAME) {
+      setErrors({ ...errors, [name]: '' })
       e.target.value = value.replace(/\s/, '').slice(0, MAX_NICKNAME)
 
       if (!REGEX_NICKNAME.test(value)) {
@@ -148,6 +148,7 @@ const Signup = () => {
     }
 
     if (name === INPUT_PASSWORD) {
+      setErrors({ ...errors, [name]: '' })
       e.target.value = value.replace(/\s/, '').slice(0, MAX_PASSWORD)
 
       if (!REGEX_PASSWORD.test(value)) {
@@ -156,6 +157,7 @@ const Signup = () => {
     }
 
     if (name === INPUT_PASSWORD_CONFIRM) {
+      setErrors({ ...errors, [name]: '' })
       e.target.value = value.replace(/\s/, '').slice(0, MAX_PASSWORD)
 
       if (!REGEX_PASSWORD.test(value)) {

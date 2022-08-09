@@ -1,18 +1,23 @@
 import React, { useState } from 'react'
 import styled from '@emotion/styled'
 import Modal from '@components/Modal'
-import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai'
 import { BiDotsVerticalRounded, BiTrash } from 'react-icons/bi'
 import { Menu } from '@interfaces'
+import { useDeleteMenuMutation } from '@hooks/mutations/useDeleteMenuMutation'
+import { useRouter } from 'next/router'
 import Avatar from '@components/Avatar'
 import { BsFillPencilFill } from 'react-icons/bs'
+import { IoMdHeart } from 'react-icons/io'
 
 interface Props {
   menu: Menu
+  userId: number
 }
 
-const MenuDetail = ({ menu }: Props) => {
+const MenuDetail = ({ menu, userId }: Props) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const { mutate: deleteMenu } = useDeleteMenuMutation()
+  const router = useRouter()
   const [isLikeClicked, setIsLikeClicked] = useState(true)
 
   const handleLikeClick = () => {
@@ -27,11 +32,23 @@ const MenuDetail = ({ menu }: Props) => {
     setIsModalOpen(false)
   }
 
+  const handleMenuDelete = () => {
+    deleteMenu(
+      { menuId: menu.id },
+      {
+        onSuccess: () => {
+          setIsModalOpen(false)
+          router.replace('/')
+        }
+      }
+    )
+  }
+
   return (
     <>
       <MenuContainer>
         <ImageWrapper>
-          <Image src={menu.image} size={undefined} />
+          <Img src={menu.image} />
         </ImageWrapper>
 
         <HatWrapper>
@@ -42,7 +59,7 @@ const MenuDetail = ({ menu }: Props) => {
             <FranchiseText>{menu.franchise.name} </FranchiseText>
             <Title>{menu.title}</Title>
           </LeftHeader>
-          <RightHeader>
+          <RightHeader guest={menu.author.id !== userId}>
             {isLikeClicked ? (
               <Heart size={40} onClick={handleLikeClick} />
             ) : (
@@ -51,7 +68,9 @@ const MenuDetail = ({ menu }: Props) => {
             <LikesCountText clicked={isLikeClicked}>
               {menu.likes}
             </LikesCountText>
-            <Dots size={30} onClick={handleEditMenuClick} />
+            {menu.author.id === userId && (
+              <Dots size={30} onClick={handleEditMenuClick} />
+            )}
           </RightHeader>
         </Header>
 
@@ -67,7 +86,9 @@ const MenuDetail = ({ menu }: Props) => {
               {name} {description}
             </OptionText>
           ))}
-          <PriceText>{menu.expectedPrice} 원</PriceText>
+          <PriceText>
+            {menu.expectedPrice === 0 ? '미정' : `${menu.expectedPrice} 원`}
+          </PriceText>
         </OptionsWrapper>
 
         <TagContainer>
@@ -87,7 +108,7 @@ const MenuDetail = ({ menu }: Props) => {
           <BsFillPencilFill size={25} />
           수정
         </ModalItem>
-        <ModalItem>
+        <ModalItem onClick={handleMenuDelete}>
           <BiTrash size={25} />
           삭제
         </ModalItem>
@@ -108,15 +129,12 @@ const ImageWrapper = styled.div`
   margin: 0 -2rem;
 `
 
-const Image = styled.label<{
-  size: number | undefined
-  src: string
-}>`
+const Img = styled.div<{ src: string }>`
   display: flex;
-  width: ${({ size }) => (size ? `${size}rem` : '100%')};
-  height: ${({ size }) => (size ? `${size}rem` : '100%')};
-  padding-top: ${({ size }) => (size ? `0` : '50%')};
-  padding-bottom: ${({ size }) => (size ? `0` : '50%')};
+  width: 100%;
+  height: 100%;
+  padding-top: 50%;
+  padding-bottom: 50%;
   background-image: ${({ src }) => (src ? `url(${src})` : null)};
   background-repeat: no-repeat;
   background-size: cover;
@@ -158,26 +176,27 @@ const Title = styled.div`
   font-weight: 700;
 `
 
-const RightHeader = styled(Flex)`
+const RightHeader = styled(Flex)<{ guest: boolean }>`
   align-items: center;
   position: relative;
   top: -2rem;
-  left: 1rem;
+  left: ${({ guest }) => (guest ? '0' : '1rem')};
 `
 
-const EmptyHeart = styled(AiOutlineHeart)`
+const EmptyHeart = styled(IoMdHeart)`
   margin-right: -1rem;
+  color: gray;
   cursor: pointer;
 `
 
-const Heart = styled(AiFillHeart)`
+const Heart = styled(IoMdHeart)`
   margin-right: -1rem;
   color: red;
   cursor: pointer;
 `
 
 const LikesCountText = styled.span<{ clicked: boolean }>`
-  color: ${({ clicked }) => (clicked ? 'white' : 'black')};
+  color: white;
   position: relative;
   right: 1.5rem;
   font-size: 1.4rem;
@@ -198,11 +217,6 @@ const ModalItem = styled(Flex)`
   &:not(:first-of-type) {
     margin-top: 1rem;
   }
-`
-
-const Footer = styled(Flex)`
-  justify-content: space-between;
-  margin-bottom: 2rem;
 `
 
 const OptionsWrapper = styled(Flex)`
@@ -259,8 +273,8 @@ const Tag = styled(Flex)<{ color: string }>`
   background-color: ${({ color }) => color};
   min-width: fit-content;
   height: 3.2rem;
-  padding: 1rem 2rem;
-  border-radius: 1.6rem;
+  padding: 1.8rem 2.4rem;
+  border-radius: 1.8rem;
 `
 
 export default MenuDetail
