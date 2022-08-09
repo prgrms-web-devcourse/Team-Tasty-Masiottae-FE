@@ -16,7 +16,7 @@ import {
   REGEX_NICKNAME,
   PLACEHOLDER_NICKNAME,
   INPUT_NICKNAME
-} from '@constants/inputConstant'
+} from '@constants/inputConstants'
 import { useChangeImageMutation } from '@hooks/mutations/useChangeImageMutation'
 import { useChangeNickNameMutation } from '@hooks/mutations/useChangeNickNameMutation'
 import InputMessage from '@components/InputMessage'
@@ -35,9 +35,14 @@ const UserProfile = () => {
 
   const nameEditRef = useClickAway(() => setIsNameEditorOpen(false))
 
-  const handleProfileModalToggle = () => {
-    setIsProfileModalOpen((isProfileModalOpen) => !isProfileModalOpen)
-    setIsReset((isReset) => !isReset)
+  const handleProfileModalOpen = () => {
+    setIsProfileModalOpen(true)
+    setIsReset(false)
+  }
+
+  const handleProfileModalClose = () => {
+    setIsProfileModalOpen(false)
+    setIsReset(true)
   }
 
   const handleProfileChange = useCallback((file: File) => {
@@ -93,7 +98,7 @@ const UserProfile = () => {
         alt={user.nickName}
         width={140}
         height={140}
-        onClick={handleProfileModalToggle}
+        onClick={handleProfileModalOpen}
       />
       {isNameEditorOpen ? (
         <>
@@ -118,7 +123,7 @@ const UserProfile = () => {
       )}
       <ProfileModal
         visible={isProfileModalOpen}
-        onClose={handleProfileModalToggle}
+        onClose={handleProfileModalClose}
         className="profile"
       >
         <ModalTitle>프로필을 바꾸시겠어요?</ModalTitle>
