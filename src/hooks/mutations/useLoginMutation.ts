@@ -5,6 +5,7 @@ import { currentUser } from '@recoil/currentUser'
 import { User } from '@interfaces'
 import { setLocalToken } from '@utils/localToken'
 import { useRouter } from 'next/router'
+import { DEFAULT_USER_IMAGE } from '@constants/image'
 
 interface Params {
   email: string
@@ -35,7 +36,12 @@ export const useLoginMutation = () => {
   const [user, setUser] = useRecoilState<User>(currentUser)
   return useMutation(postLogin, {
     onSuccess: (data) => {
-      setUser({ ...user, ...data.account })
+      const { image } = data.account
+      setUser({
+        ...user,
+        ...data.account,
+        image: image ?? DEFAULT_USER_IMAGE
+      })
       setLocalToken(data.token)
       router.replace('/')
     }

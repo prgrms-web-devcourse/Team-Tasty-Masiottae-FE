@@ -29,7 +29,7 @@ import {
   MAX_NICKNAME,
   MESSAGE_CHECK_AVAILABLE,
   AVAILABLE
-} from '@constants/inputConstant'
+} from '@constants/inputConstants'
 import ImageUploader from '@components/ImageUploader'
 
 interface SignUpValues {

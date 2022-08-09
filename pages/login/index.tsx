@@ -9,7 +9,7 @@ import {
   REGEX_EMAIL,
   MESSAGE_PASSWORD,
   ERROR_EMAIL
-} from '@constants/inputConstant'
+} from '@constants/inputConstants'
 import React, { useState, useCallback, useEffect } from 'react'
 import { BsEye } from 'react-icons/bs'
 import Button from '@components/Button'
@@ -31,7 +31,11 @@ const LoginPage = () => {
 
   useEffect(() => {
     isError &&
-      setErrors({ ...errors, [INPUT_EMAIL]: '존재하지 않는 회원입니다.' })
+      setErrors({
+        ...errors,
+        [INPUT_EMAIL]:
+          '존재하지 않는 회원이에요. 이메일, 비밀번호를 확인해주세요.'
+      })
   }, [isError])
 
   const handleLoginSubmit = async (

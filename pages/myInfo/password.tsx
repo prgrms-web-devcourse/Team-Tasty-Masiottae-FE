@@ -11,7 +11,7 @@ import {
   MESSAGE_PASSWORD,
   ERROR_PASSWORD_CONFIRM,
   REGEX_PASSWORD
-} from '@constants/inputConstant'
+} from '@constants/inputConstants'
 import InputMessage from '@components/InputMessage'
 import { useChangePasswordMutation } from '@hooks/mutations/useChangePasswordMutation'
 import { useRecoilState } from 'recoil'
