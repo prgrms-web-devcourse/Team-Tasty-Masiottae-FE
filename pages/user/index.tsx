@@ -4,7 +4,6 @@ import SearchForm from '@components/SearchForm'
 import styled from '@emotion/styled'
 import useIntersectionObserver from '@hooks/useIntersectionObserver'
 import { MouseEvent, useState } from 'react'
-import { SORT_OPTIONS } from '@constants/searchOption'
 import { useSearchMyMenuList } from '../../src/hooks/queries/useSearchMyMenuList'
 import { SearchFormOptions } from '@interfaces'
 
@@ -42,27 +41,27 @@ const UserMenu = () => {
 
   return (
     <>
-      <FixedWrapper>
-        <InnerWrapper>
-          <ProfileContainer>
-            <Avatar size={10} src={SIZE_100_IMG_URL} isLoading={false} />
-            <Author>작성자</Author>
-          </ProfileContainer>
-          <TabContainer>
-            {SELECT_DUMMY.map((selectOption) => (
-              <Tab
-                key={selectOption}
-                selected={option === selectOption}
-                value={selectOption}
-                onClick={handleClick}
-              >
-                {selectOption}
-              </Tab>
-            ))}
-          </TabContainer>
-          <SearchForm sortOptions={SORT_OPTIONS} onSubmit={handleSubmit} />
-        </InnerWrapper>
-      </FixedWrapper>
+      <ProfileContainer>
+        <Avatar size={7} src={SIZE_100_IMG_URL} isLoading={false} />
+        <Author>작성자</Author>
+      </ProfileContainer>
+
+      <TabContainer>
+        {SELECT_DUMMY.map((selectOption) => (
+          <Tab
+            key={selectOption}
+            selected={option === selectOption}
+            value={selectOption}
+            onClick={handleClick}
+          >
+            {selectOption}
+          </Tab>
+        ))}
+      </TabContainer>
+      <StickyWrapper>
+        <SearchForm onSubmit={handleSubmit} />
+      </StickyWrapper>
+
       <CardListContainer>
         <MenuCardList menuList={menuList} divRef={ref} />
       </CardListContainer>
@@ -70,45 +69,31 @@ const UserMenu = () => {
   )
 }
 
-const FixedWrapper = styled.div`
-  position: fixed;
-  left: 0;
-  width: 100%;
-`
-
-const InnerWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  min-width: 33.5rem;
-  max-width: 46rem;
-  width: 100%;
+const StickyWrapper = styled.div`
+  width: 100%auto;
+  position: sticky;
+  top: 7.5rem;
+  padding: 0.5rem 0;
   background-color: white;
-  margin: 0 auto;
-  padding-bottom: 1rem;
-  box-sizing: border-box;
-
-  @media screen and (max-width: 31.25rem) {
-    padding: 0 2rem;
-  }
 `
 
 const ProfileContainer = styled.div`
-  padding: 2rem;
+  padding: 1rem;
   display: flex;
   align-items: center;
   gap: 2rem;
 `
 
 const Author = styled.div`
-  font-size: 2.4rem;
-  font-weight: bold;
+  font-size: 2rem;
+  font-weight: 700;
   user-select: none;
 `
 
 const TabContainer = styled.div`
   display: flex;
   justify-content: space-around;
+  background-color: white;
 `
 
 const Tab = styled.button<TabProps>`
@@ -118,14 +103,12 @@ const Tab = styled.button<TabProps>`
   background-color: #ffffff;
   border: none;
   padding: 0 2rem;
-  font-size: 2.2rem;
-  font-weight: bold;
+  font-size: 1.8rem;
+  font-weight: 700;
   border-bottom: ${({ selected }) => (selected ? '3px solid red' : 'none')};
   height: 5rem;
 `
 
-const CardListContainer = styled.ul`
-  padding-top: 31.25rem;
-`
+const CardListContainer = styled.ul``
 
 export default UserMenu

@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 interface Props {
   size: number
   isLoading: boolean
-  src: string
+  src: string | undefined
 }
 
 const Avatar = styled.div<Props>`
