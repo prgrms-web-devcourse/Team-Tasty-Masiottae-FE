@@ -50,8 +50,9 @@ export interface Taste {
 }
 
 export interface searchParams {
+  franchiseId?: number
   keyword?: string
-  sort?: 'recent' | 'comment' | 'like'
+  sort?: string
   tasteIdList?: number[]
   offset: number
   limit: number

@@ -3,14 +3,30 @@ import useIntersectionObserver from '@hooks/useIntersectionObserver'
 import { useRouter } from 'next/router'
 import MenuCardList from '@components/MenuCardList'
 import SearchForm from '@components/SearchForm'
-import { useMenuList } from '@hooks/queries/useMenuList'
 import FranchiseInfo from '@components/FranchiseInfo'
 import { useFranchiseList } from '@hooks/queries/useFranchiseList'
+import { useEffect, useState } from 'react'
+import { useSearchMenuList } from '@hooks/queries/useSearchMenuList'
+import { SearchFormOptions, searchParams } from '@interfaces'
+
 const Search = () => {
   const router = useRouter()
   const id = parseInt(router.query.category as string)
+  const [searchOptions, setSearchOptions] = useState<searchParams>({
+    offset: 0,
+    limit: 0
+  })
   const { franchiseList, isLoading } = useFranchiseList()
-  const { menuList } = useMenuList()
+  const { menuList } = useSearchMenuList(searchOptions)
+
+  useEffect(() => {
+    if (!router.isReady) return
+    setSearchOptions({ offset: 0, limit: 10, franchiseId: id })
+  }, [router.isReady, id])
+
+  const handleSubmit = (values: SearchFormOptions) => {
+    setSearchOptions({ ...searchOptions, ...values })
+  }
 
   const ref = useIntersectionObserver(
     async (entry, observer) => {
@@ -24,14 +40,16 @@ const Search = () => {
       <FixedWrapper>
         <InnerWrapper>
           <FranchiseInfo
-            franchise={franchiseList?.find((franchise) => franchise.id === id)}
+            franchise={
+              searchOptions.franchiseId === 0
+                ? { id: 0, name: '전체', image: '/ALL.png' }
+                : franchiseList?.find(
+                    (franchise) => franchise.id === searchOptions.franchiseId
+                  )
+            }
             isLoading={isLoading}
           />
-          <SearchForm
-            onSubmit={() => {
-              return
-            }}
-          />
+          <SearchForm onSubmit={handleSubmit} />
         </InnerWrapper>
       </FixedWrapper>
       <CardListWrapper>
