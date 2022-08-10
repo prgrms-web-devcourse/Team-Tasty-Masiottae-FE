@@ -24,8 +24,8 @@ const CreateMenu = () => {
   // 필드 값
   const router = useRouter()
   const [{ id: userId }] = useRecoilState(currentUser)
-
   const { mutate } = usePostMenu()
+
   const [file, setFile] = useState<File | null>(null)
   const [franchiseId, setFranchiseId] = useState<number>(0)
   const [title, setTitle] = useState('')
@@ -34,6 +34,8 @@ const CreateMenu = () => {
   const [tasteIdList, setTasteIdList] = useState<number[]>([])
   const [expectedPrice, setExpectedPrice] = useState(0)
   const [isPriceButtonClicked, setIsPriceButtonClicked] = useState(false)
+
+  console.log(userId)
 
   const handleImageChange = (file: File) => {
     setFile(file)
@@ -121,7 +123,7 @@ const CreateMenu = () => {
         }
         onClick={handleEditSubmit}
       >
-        메뉴 추가
+        등록 하기
       </SubmitButton>
     </FlexContainer>
   )
@@ -147,7 +149,7 @@ const SubTitle = styled.h3`
 
 const SubmitButton = styled(Button)`
   font-weight: 700;
-  font-size: 1.8rem;
+  font-size: 2rem;
 `
 
 export default CreateMenu
