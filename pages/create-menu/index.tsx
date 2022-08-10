@@ -24,8 +24,8 @@ const CreateMenu = () => {
   // 필드 값
   const router = useRouter()
   const [{ id: userId }] = useRecoilState(currentUser)
-
   const { mutate } = usePostMenu()
+
   const [file, setFile] = useState<File | null>(null)
   const [franchiseId, setFranchiseId] = useState<number>(0)
   const [title, setTitle] = useState('')
@@ -44,10 +44,6 @@ const CreateMenu = () => {
   }
 
   const handleEditSubmit = async () => {
-    if (!franchiseId) {
-      return
-    }
-
     setOptionList(
       optionList.filter((option) => option.name && option.description)
     )
@@ -111,6 +107,7 @@ const CreateMenu = () => {
         backgroundColor={'#000'}
         disabled={
           !(
+            franchiseId &&
             title &&
             originalTitle &&
             optionList.filter((option) => option.name && option.description)
@@ -121,7 +118,7 @@ const CreateMenu = () => {
         }
         onClick={handleEditSubmit}
       >
-        메뉴 추가
+        등록 하기
       </SubmitButton>
     </FlexContainer>
   )
@@ -147,7 +144,7 @@ const SubTitle = styled.h3`
 
 const SubmitButton = styled(Button)`
   font-weight: 700;
-  font-size: 1.8rem;
+  font-size: 2rem;
 `
 
 export default CreateMenu
