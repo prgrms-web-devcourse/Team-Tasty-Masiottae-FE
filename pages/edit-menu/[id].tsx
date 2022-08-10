@@ -119,6 +119,7 @@ const EditMenu = () => {
         backgroundColor={'#000'}
         disabled={
           !(
+            franchiseId &&
             title &&
             originalTitle &&
             optionList.filter(({ name, description }) => name && description)

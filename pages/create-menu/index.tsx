@@ -44,10 +44,6 @@ const CreateMenu = () => {
   }
 
   const handleEditSubmit = async () => {
-    if (!franchiseId) {
-      return
-    }
-
     setOptionList(
       optionList.filter((option) => option.name && option.description)
     )
@@ -111,6 +107,7 @@ const CreateMenu = () => {
         backgroundColor={'#000'}
         disabled={
           !(
+            franchiseId &&
             title &&
             originalTitle &&
             optionList.filter((option) => option.name && option.description)
