@@ -86,7 +86,7 @@ const CreateMenu = () => {
   return (
     <FlexContainer>
       <ImageUploaderWrapper>
-        <ImageUploader onChange={handleImageChange} />
+        <ImageUploader isDeletable={true} onChange={handleImageChange} />
       </ImageUploaderWrapper>
       <InputList
         franchiseId={franchiseId}
