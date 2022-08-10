@@ -35,8 +35,6 @@ const CreateMenu = () => {
   const [expectedPrice, setExpectedPrice] = useState(0)
   const [isPriceButtonClicked, setIsPriceButtonClicked] = useState(false)
 
-  console.log(userId)
-
   const handleImageChange = (file: File) => {
     setFile(file)
   }
