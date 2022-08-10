@@ -8,9 +8,11 @@ export const handleRequest = (
   if (!config?.headers) {
     throw new Error(`Axios config headers must be provided`)
   }
-  /*   if (token) {
+
+  if (token) {
     config.headers.Authorization = token
-  } */
+  }
+
   return config
 }
 
