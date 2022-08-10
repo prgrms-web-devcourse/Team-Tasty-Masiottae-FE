@@ -8,6 +8,7 @@ import { useRouter } from 'next/router'
 import Avatar from '@components/Avatar'
 import { BsFillPencilFill } from 'react-icons/bs'
 import { IoMdHeart } from 'react-icons/io'
+import { usePostLikeMutation } from '@hooks/mutations/usePostLikeMutation'
 
 interface Props {
   menu: Menu
@@ -18,10 +19,20 @@ const MenuDetail = ({ menu, userId }: Props) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const { mutate: deleteMenu } = useDeleteMenuMutation()
   const router = useRouter()
-  const [isLikeClicked, setIsLikeClicked] = useState(true)
+  const [isLikeClicked, setIsLikeClicked] = useState(false)
+  const { mutate: postLike } = usePostLikeMutation({ menuId: menu.id })
 
-  const handleLikeClick = () => {
-    setIsLikeClicked((prev) => !prev)
+  const handleHeartClick = () => {
+    postLike(
+      {
+        menuId: menu.id
+      },
+      {
+        onSuccess: () => {
+          setIsLikeClicked((prev) => !prev)
+        }
+      }
+    )
   }
 
   const handleEditMenuClick = () => {
@@ -32,7 +43,7 @@ const MenuDetail = ({ menu, userId }: Props) => {
     setIsModalOpen(false)
   }
 
-  const handleMenuDelete = () => {
+  const handleMenuDeleteClick = () => {
     deleteMenu(
       { menuId: menu.id },
       {
@@ -61,9 +72,9 @@ const MenuDetail = ({ menu, userId }: Props) => {
           </LeftHeader>
           <RightHeader guest={menu.author.id !== userId}>
             {isLikeClicked ? (
-              <Heart size={40} onClick={handleLikeClick} />
+              <Heart size={50} onClick={handleHeartClick}></Heart>
             ) : (
-              <EmptyHeart size={40} onClick={handleLikeClick} />
+              <EmptyHeart size={50} onClick={handleHeartClick} />
             )}
             <LikesCountText clicked={isLikeClicked}>
               {menu.likes}
@@ -110,7 +121,7 @@ const MenuDetail = ({ menu, userId }: Props) => {
           </IconWrapper>
           수정
         </ModalItem>
-        <ModalItem onClick={handleMenuDelete}>
+        <ModalItem onClick={handleMenuDeleteClick}>
           <BiTrash size={25} />
           삭제
         </ModalItem>
@@ -197,10 +208,10 @@ const Heart = styled(IoMdHeart)`
   cursor: pointer;
 `
 
-const LikesCountText = styled.span<{ clicked: boolean }>`
+const LikesCountText = styled.div<{ clicked: boolean }>`
   color: white;
   position: relative;
-  right: 1.5rem;
+  right: 1.9rem;
   font-size: 1.4rem;
   font-weight: 700;
 `
