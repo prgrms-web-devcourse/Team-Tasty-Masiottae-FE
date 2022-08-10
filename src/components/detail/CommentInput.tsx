@@ -1,12 +1,6 @@
 import styled from '@emotion/styled'
 import { usePostCommentMutation } from '@hooks/mutations/usePostCommentMutation'
-import React, {
-  ChangeEvent,
-  useCallback,
-  useEffect,
-  useRef,
-  useState
-} from 'react'
+import React, { ChangeEvent, useCallback, useRef, useState } from 'react'
 
 const GUEST_INPUT_PLACEHOLDER = '로그인 후 작성해주세요(최대 80자).'
 const LOGGEDIN_INPUT_PLACEHOLDER = '댓글을 입력해주세요.'

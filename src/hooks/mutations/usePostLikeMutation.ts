@@ -13,7 +13,7 @@ const postLike = async ({ menuId }: Params) => {
   return status
 }
 
-export const usePostLikeMutation = ({ menuId }: { menuId: number }) => {
+export const usePostLikeMutation = ({ menuId }: Params) => {
   const queryClient = useQueryClient()
 
   return useMutation(postLike, {
