@@ -16,20 +16,21 @@ const initialUser = {
 const localStorageEffect =
   (key: string) =>
   ({ setSelf, onSet }: any) => {
-    const savedValue =
-      window !== undefined ? window.localStorage.getItem(key) : null
+    if (typeof window !== undefined) {
+      const savedValue =
+        typeof window !== undefined ? window.localStorage.getItem(key) : ''
 
-    if (savedValue != null) {
-      setSelf(JSON.parse(savedValue) || initialUser)
-    }
-
-    onSet((newValue: string, _: any, isReset: boolean) => {
-      if (window !== undefined) {
-        isReset
-          ? window.localStorage.removeItem(key)
-          : window.localStorage.setItem(key, JSON.stringify(newValue))
+      if (savedValue != null) {
+        setSelf(JSON.parse(savedValue) || initialUser)
       }
-    })
+
+      onSet((newValue: string, _: any, isReset: boolean) => {
+        isReset
+          ? typeof window !== undefined && window.localStorage.removeItem(key)
+          : typeof window !== undefined &&
+            window.localStorage.setItem(key, JSON.stringify(newValue))
+      })
+    }
   }
 
 export const currentUser = atom<User>({
