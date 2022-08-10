@@ -46,7 +46,7 @@ export const Navigation = () => {
             </NavItem>
           </StyledAnchor>
         </Link>
-        <Link href={`${USER_URL}`}>
+        <Link href={`${USER_URL}/${user.id}`}>
           <StyledAnchor>
             <NavItem>
               <StyledMenu selected={pathname === USER_URL} />
