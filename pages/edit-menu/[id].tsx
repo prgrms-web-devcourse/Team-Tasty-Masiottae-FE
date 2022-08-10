@@ -66,7 +66,7 @@ const EditMenu = () => {
   }
 
   // onChange handler
-  const handleImageChange = (file: File) => {
+  const handleImageChange = (file: File | null) => {
     setFile(file)
   }
 

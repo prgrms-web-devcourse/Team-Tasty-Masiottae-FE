@@ -45,7 +45,7 @@ const UserProfile = () => {
     setIsReset(true)
   }
 
-  const handleProfileChange = useCallback((file: File) => {
+  const handleProfileChange = useCallback((file: File | null) => {
     setImageFile(file)
   }, [])
 

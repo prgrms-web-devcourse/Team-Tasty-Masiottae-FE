@@ -13,7 +13,7 @@ interface Props {
   value?: string | null
   isReset?: boolean
   isDeletable?: boolean
-  onChange: (file: File) => void
+  onChange: (file: File | null) => void
 }
 
 const ImageUploader = ({
@@ -34,6 +34,7 @@ const ImageUploader = ({
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const reader = new FileReader()
     const file = e.target.files ? e.target.files[0] : null
+    console.log(file)
     if (!file) {
       return
     }
@@ -47,6 +48,7 @@ const ImageUploader = ({
       setImage(reader.result)
       onChange(file)
     }
+    e.target.value = ''
   }
 
   const handleDeleteButtonClick = (
@@ -54,6 +56,7 @@ const ImageUploader = ({
   ) => {
     e.preventDefault()
     setImage(null)
+    onChange(null)
   }
 
   return (
