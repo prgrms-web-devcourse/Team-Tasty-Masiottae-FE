@@ -20,6 +20,7 @@ export interface Menu {
   expectedPrice: number
   tasteList: Taste[]
   likes: number
+  comments: number
   createdAt: string
   updatedAt: string
 }

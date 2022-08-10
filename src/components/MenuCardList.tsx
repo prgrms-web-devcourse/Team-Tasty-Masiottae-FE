@@ -24,7 +24,7 @@ const MenuCardList = ({ menuList, divRef }: Props) => {
                 avatarImageUrl={menu.author.image}
                 author={menu.author.nickName}
                 likes={menu.likes}
-                comments={10}
+                comments={menu.comments || 0}
                 divRef={menuList.length === idx + 1 ? divRef : null}
               />
             </a>
