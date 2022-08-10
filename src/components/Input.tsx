@@ -81,6 +81,7 @@ const StyledInput = styled.input<Props>`
     box-shadow: 0 0 0 100rem white inset;
   }
   &:focus {
+    outline: none;
     border: 0.1rem solid black;
   }
 `

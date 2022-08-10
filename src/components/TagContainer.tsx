@@ -20,7 +20,7 @@ const TagContainer = ({
   width,
   height = 20,
   gap = 0.8,
-  tagHeight = 3.2,
+  tagHeight = 3.0,
   backgroundColor = '#ffffff'
 }: Props) => {
   const { tasteList } = useTasteList()
