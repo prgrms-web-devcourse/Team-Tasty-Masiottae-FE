@@ -15,7 +15,6 @@ export const checkToken = async (config: AxiosRequestConfig) => {
     moment(tastyToken_expire).diff(moment(), 'minutes') < 10 &&
     tastyRefreshToken
   ) {
-    console.log('요청하지')
     const { data } = await axios.post(
       `${process.env.NEXT_PUBLIC_API_URL}/re-issue`,
       {
@@ -27,7 +26,6 @@ export const checkToken = async (config: AxiosRequestConfig) => {
     setToken(data)
     config.headers.Authorization = data.token
   } else {
-    console.log('요청 안하지')
     config.headers.Authorization = tastyToken
   }
   return config
