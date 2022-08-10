@@ -6,20 +6,20 @@ import { User } from '@interfaces'
 import { setLocalToken } from '@utils/localToken'
 import { useRouter } from 'next/router'
 import { DEFAULT_USER_IMAGE } from '@constants/image'
-
 interface Params {
   email: string
   password: string
 }
 
 interface Token {
-  accessToken: string
-  expirationTime: string
+  token: string
+  expirationDate: string
 }
 
 interface Data {
-  token: Token
+  accessToken: Token
   account: User
+  refreshToken: Token
 }
 
 const postLogin = async ({ email, password }: Params) => {
@@ -42,7 +42,7 @@ export const useLoginMutation = () => {
         ...data.account,
         image: image ?? DEFAULT_USER_IMAGE
       })
-      setLocalToken(data.token)
+      setLocalToken(data)
       router.replace('/')
     }
   })
