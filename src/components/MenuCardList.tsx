@@ -39,6 +39,7 @@ const Container = styled.ul`
   display: flex;
   flex-direction: column;
   row-gap: 0.5rem;
+  margin-top: 0.5rem;
 `
 
 const MenuCardWrapper = styled.li``
