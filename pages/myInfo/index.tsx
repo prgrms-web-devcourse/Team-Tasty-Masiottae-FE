@@ -1,10 +1,18 @@
 import styled from '@emotion/styled'
-import UserData from '@components/myInfo/UserData'
-import UserProfile from '@components/myInfo/UserProfile'
 import Button from '@components/Button'
 import { LOGIN_URL, PASSWORD_CHANGE_URL } from '@constants/pageUrl'
 import { useRouter } from 'next/router'
 import { removeLocalToken } from '@utils/localToken'
+import dynamic from 'next/dynamic'
+
+const UserProfileWithNoSSR = dynamic(
+  () => import('@components/myInfo/UserProfile'),
+  { ssr: false }
+)
+
+const UserDataWithNoSSR = dynamic(() => import('@components/myInfo/UserData'), {
+  ssr: false
+})
 
 const MyInfoPage = () => {
   const router = useRouter()
@@ -15,8 +23,8 @@ const MyInfoPage = () => {
 
   return (
     <UserContainer>
-      <UserProfile />
-      <UserData />
+      <UserProfileWithNoSSR />
+      <UserDataWithNoSSR />
       <ChangePasswordButton onClick={() => router.push(PASSWORD_CHANGE_URL)}>
         비밀번호 변경
       </ChangePasswordButton>
