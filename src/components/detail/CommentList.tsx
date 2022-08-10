@@ -102,6 +102,7 @@ const UserNameText = styled.div`
 
 const DateText = styled.span`
   margin-left: 1rem;
+  color: #a3a3a3;
 `
 
 const Dots = styled(BiDotsHorizontalRounded)`

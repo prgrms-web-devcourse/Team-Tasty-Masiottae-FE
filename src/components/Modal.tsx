@@ -48,7 +48,6 @@ const Modal = ({
         className={className}
       >
         {children}
-        <div></div>
       </ModalContainer>
     </BackgroundDim>,
     element
@@ -71,12 +70,13 @@ const ModalContainer = styled.div<{
   height: number | undefined
   option: 'drawer' | undefined
 }>`
+  display: ${({ option }) => (option === 'drawer' ? '' : 'flex')};
+  justify-content: ${({ option }) => (option === 'drawer' ? '' : 'center')};
   position: fixed;
-  top: ${({ option }) => (option !== 'drawer' ? '50%' : '')};
-  bottom: ${({ option }) => (option === 'drawer' ? 0 : '')};
+  top: ${({ option }) => (option === 'drawer' ? '' : '50%')};
+  bottom: ${({ option }) => (option === 'drawer' ? '0' : '')};
   left: 50%;
-  transform: translate(-50%, -50%);
-  width: ${({ width }) => (width ? `${width}rem` : '100%')};
+  transform: translate(-50%, 0%);
   width: ${({ option }) => (option === 'drawer' ? `100%` : '45rem')};
   max-width: 50rem;
   height: ${({ height }) => `${height}rem`};
