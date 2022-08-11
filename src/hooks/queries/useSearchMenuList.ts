@@ -29,6 +29,7 @@ const getMenuList = async (params: searchParams) => {
 
 export const useSearchMenuList = (params: searchParams) => {
   const { keyword, tasteIdList, sort, limit, franchiseId, offset } = params
+
   const { data, isLoading, error, fetchNextPage } = useInfiniteQuery<
     searchResponse,
     Error
@@ -49,11 +50,13 @@ export const useSearchMenuList = (params: searchParams) => {
     }
   )
 
+  const menuList = data?.pages
+    .map((value) => value?.menu)
+    .flat()
+    .filter((val) => !!val)
+
   return {
-    menuList: data?.pages
-      .map((value) => value?.menu)
-      .flat()
-      .filter((val) => !!val),
+    menuList,
     isLoading,
     error,
     fetchNextPage
