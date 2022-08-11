@@ -13,11 +13,11 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={theme}>
-        <Layout>
-          <RecoilRoot>
+        <RecoilRoot>
+          <Layout>
             <Component {...pageProps} />
-          </RecoilRoot>
-        </Layout>
+          </Layout>
+        </RecoilRoot>
       </ThemeProvider>
     </QueryClientProvider>
   )
