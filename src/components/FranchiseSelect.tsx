@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import { useFranchiseList } from '@hooks/queries/useFranchiseList'
 import { NAME_SELECT } from '@constants/menuConstant'
 
-const PLACEHOLDER_FRANCHISE_LIST = '해당하는 프렌차이즈를 선택해주세요'
+const PLACEHOLDER_FRANCHISE_LIST = '해당하는 프랜차이즈를 선택해주세요'
 interface Props {
   defaultValue?: number
   onChange: (e: React.FormEvent<HTMLSelectElement>) => void

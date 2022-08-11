@@ -35,7 +35,7 @@ const CreateMenu = () => {
   const [expectedPrice, setExpectedPrice] = useState(0)
   const [isPriceButtonClicked, setIsPriceButtonClicked] = useState(false)
 
-  const handleImageChange = (file: File) => {
+  const handleImageChange = (file: File | null) => {
     setFile(file)
   }
 
@@ -86,7 +86,7 @@ const CreateMenu = () => {
   return (
     <FlexContainer>
       <ImageUploaderWrapper>
-        <ImageUploader onChange={handleImageChange} />
+        <ImageUploader isDeletable={true} onChange={handleImageChange} />
       </ImageUploaderWrapper>
       <InputList
         franchiseId={franchiseId}
