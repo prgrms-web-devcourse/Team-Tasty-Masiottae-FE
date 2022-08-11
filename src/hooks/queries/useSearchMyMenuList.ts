@@ -1,6 +1,6 @@
 import { Menu } from '@interfaces'
 import axios from '@lib/axios'
-import { useQuery, useInfiniteQuery } from '@tanstack/react-query'
+import { useInfiniteQuery } from '@tanstack/react-query'
 import { createSearchRequestParameter } from '@utils/queryString'
 import { searchParams } from '@interfaces'
 
