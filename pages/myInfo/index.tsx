@@ -14,14 +14,20 @@ const MyInfoPage = () => {
   }
 
   return (
-    <UserContainer>
-      <UserProfile />
-      <UserData />
-      <ChangePasswordButton onClick={() => router.push(PASSWORD_CHANGE_URL)}>
-        비밀번호 변경
-      </ChangePasswordButton>
-      <LogoutButton onClick={handleLogout}>로그아웃</LogoutButton>
-    </UserContainer>
+    <>
+      {router.isReady && (
+        <UserContainer>
+          <UserProfile />
+          <UserData />
+          <ChangePasswordButton
+            onClick={() => router.push(PASSWORD_CHANGE_URL)}
+          >
+            비밀번호 변경
+          </ChangePasswordButton>
+          <LogoutButton onClick={handleLogout}>로그아웃</LogoutButton>
+        </UserContainer>
+      )}
+    </>
   )
 }
 
