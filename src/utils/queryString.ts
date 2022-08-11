@@ -4,6 +4,9 @@ export const createSearchRequestParameter = (params: searchParams) => {
   const requestParameter = new URLSearchParams(
     `?offset=${params.offset}&limit=${params.limit}&sort=recent`
   )
+  if (params.franchiseId !== undefined) {
+    requestParameter.set('franchiseId', params.franchiseId.toString())
+  }
   if (params.keyword) {
     requestParameter.set('keyword', params.keyword)
   }

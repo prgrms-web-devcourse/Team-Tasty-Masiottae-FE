@@ -66,7 +66,7 @@ const EditMenu = () => {
   }
 
   // onChange handler
-  const handleImageChange = (file: File) => {
+  const handleImageChange = (file: File | null) => {
     setFile(file)
   }
 
@@ -98,7 +98,11 @@ const EditMenu = () => {
   return (
     <FlexContainer>
       <ImageUploaderWrapper>
-        <ImageUploader value={menuData?.image} onChange={handleImageChange} />
+        <ImageUploader
+          value={menuData?.image}
+          isDeletable={true}
+          onChange={handleImageChange}
+        />
       </ImageUploaderWrapper>
       <InputList
         franchiseId={franchiseId}

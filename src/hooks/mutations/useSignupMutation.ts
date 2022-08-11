@@ -3,7 +3,7 @@ import { useMutation } from '@tanstack/react-query'
 import { useLoginMutation } from '@hooks/mutations/useLoginMutation'
 
 interface Params {
-  image?: File
+  image?: File | null
   email: string
   nickName: string
   password: string

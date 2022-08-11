@@ -4,10 +4,9 @@ import Input from '@components/Input'
 import { FiSearch } from 'react-icons/fi'
 import Modal from './Modal'
 import { useState, ChangeEvent, FormEvent } from 'react'
-import TagContainer from './TagContainer'
 import { SearchFormOptions } from '@interfaces'
-import Button from './Button'
 import SortOption from './SortOption'
+import FilterForm from './FilterForm'
 
 interface Props {
   onSubmit: (values: SearchFormOptions) => void
@@ -57,24 +56,19 @@ const SearchForm = ({ onSubmit }: Props) => {
       </SearchWrapper>
       <OptionContainer>
         <SortOption selectedValue={sort} onChange={handleSortChange} />
-
         <FilterWrapper onClick={handleFilterClick}>
           <FilterIcon />
           <Text>필터</Text>
         </FilterWrapper>
         <Modal visible={modalVisible} onClose={handleModalClose}>
-          <form onSubmit={handleSubmit}>
-            <TagContainer
-              selectedTasteIdList={tasteIdList}
-              backgroundColor="white"
-              gap={2}
-              tagHeight={3.3}
-              onChange={(newTagList) => {
-                setTasteIdList(newTagList)
-              }}
-            />
-            <Button onClick={handleModalClose}>제출</Button>
-          </form>
+          <FilterForm
+            onSubmit={handleSubmit}
+            tasteIdList={tasteIdList}
+            onClose={handleModalClose}
+            onChange={(newTagList) => {
+              setTasteIdList(newTagList)
+            }}
+          />
         </Modal>
       </OptionContainer>
     </Form>

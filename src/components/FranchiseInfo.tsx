@@ -3,11 +3,19 @@ import Avatar from './Avatar'
 import { Franchise } from '../interfaces/index'
 
 interface Props {
-  franchise: Franchise | undefined
+  franchise?: Franchise
   isLoading: boolean
 }
 
 const FranchiseInfo = ({ franchise, isLoading }: Props) => {
+  if (isLoading)
+    return (
+      <FranchiseWrapper>
+        <Avatar size={7} src={''} isLoading={isLoading} />
+        <FranchiseName>{''}</FranchiseName>
+      </FranchiseWrapper>
+    )
+
   return (
     <FranchiseWrapper>
       <Avatar size={7} src={franchise?.image} isLoading={isLoading} />

@@ -33,7 +33,7 @@ import {
 import ImageUploader from '@components/ImageUploader'
 
 interface SignUpValues {
-  image?: File
+  image?: File | null
   email: string
   nickName: string
   password: string
@@ -178,7 +178,7 @@ const Signup = () => {
         )
   }, [])
 
-  const handleImageChange = (file: File) => {
+  const handleImageChange = (file: File | null) => {
     setValues({ ...values, image: file })
   }
 
