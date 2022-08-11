@@ -34,8 +34,14 @@ export const removeCookie = (name: string) => {
 }
 
 export const setToken = ({ token, expirationDate }: Token) => {
-  setCookie(TOKEN_KEY, token)
-  setCookie(TOKEN_EXPIRE_DATE, expirationDate)
+  setCookie(TOKEN_KEY, token, {
+    path: '/',
+    expires: new Date(expirationDate)
+  })
+  setCookie(TOKEN_EXPIRE_DATE, expirationDate, {
+    path: '/',
+    expires: new Date(expirationDate)
+  })
 }
 
 export const getToken = () => {
@@ -55,18 +61,23 @@ export const getTokenData = () => {
 
 export const setTokenData = ({ accessToken, account, refreshToken }: Data) => {
   setCookie(TOKEN_KEY, accessToken.token, {
+    path: '/',
     expires: new Date(accessToken.expirationDate)
   })
   setCookie(TOKEN_EXPIRE_DATE, accessToken.expirationDate, {
+    path: '/',
     expires: new Date(accessToken.expirationDate)
   })
   setCookie(REFRESH_TOKEN_KEY, refreshToken.token, {
+    path: '/',
     expires: new Date(refreshToken.expirationDate)
   })
   setCookie(REFRESH_TOKEN_EXPIRE_DATE, refreshToken.expirationDate, {
+    path: '/',
     expires: new Date(refreshToken.expirationDate)
   })
   setCookie(CURRENT_USER, JSON.stringify(account), {
+    path: '/',
     expires: new Date(accessToken.expirationDate)
   })
 }

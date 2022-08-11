@@ -1,17 +1,8 @@
 import { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios'
-import { getToken } from '@utils/cookie'
+import { checkToken } from '@utils/checkToken'
 
-export const handleRequest = (
-  config: AxiosRequestConfig
-): AxiosRequestConfig => {
-  const token = getToken()
-  if (!config?.headers) {
-    throw new Error(`Axios config headers must be provided`)
-  }
-  if (token) {
-    config.headers.Authorization = token
-  }
-  return config
+export const handleRequest = async (config: AxiosRequestConfig) => {
+  return checkToken(config)
 }
 
 export const handleRequestError = (error: AxiosError): Promise<AxiosError> => {
