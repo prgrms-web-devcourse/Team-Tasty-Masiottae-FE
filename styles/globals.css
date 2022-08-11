@@ -16,6 +16,10 @@ body {
   background-color: #f9f9f9;
 }
 
+::-webkit-scrollbar {
+  display: none;
+}
+
 a {
   color: inherit;
   text-decoration: none;

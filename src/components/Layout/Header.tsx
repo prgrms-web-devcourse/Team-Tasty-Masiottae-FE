@@ -2,13 +2,10 @@ import styled from '@emotion/styled'
 import { useRouter } from 'next/router'
 import { VscChevronLeft } from 'react-icons/vsc'
 import { FiLogIn, FiUser } from 'react-icons/fi'
-import theme from '@constants/theme'
 import Link from 'next/link'
 import { useEffect, useState, useCallback } from 'react'
 import { MYINFO_URL, LOGIN_URL, USER_URL, HOME_URL } from '@constants/pageUrl'
-
-const { mainPink, mainWhite, borderLight } = theme.color
-const { headerHeight, pagePadding } = theme.layout
+import { getLocalToken } from '@utils/localToken'
 
 const MYINFO = '내정보'
 const USER = '메뉴판'
@@ -17,9 +14,17 @@ export const Header = () => {
   const router = useRouter()
   const { pathname } = router
   const [title, setTitle] = useState('')
+  const [token, setToken] = useState('')
+
   const onClickPrev = () => {
     router.back()
   }
+
+  useEffect(() => {
+    if (pathname === LOGIN_URL || pathname === HOME_URL) {
+      setToken(getLocalToken() || '')
+    }
+  }, [token, pathname])
 
   const handlePathChange = useCallback((pathname: string) => {
     if (pathname === MYINFO_URL) {
@@ -47,36 +52,41 @@ export const Header = () => {
           </a>
         </Link>
       )}
-      <InnerRight>
-        <Link href={MYINFO_URL}>
-          <a>
-            <StyledUserIcon />
-          </a>
-        </Link>
-        <Link href={LOGIN_URL}>
-          <a>
-            <StyledLoginIcon />
-          </a>
-        </Link>
-      </InnerRight>
+      {pathname !== LOGIN_URL && (
+        <InnerRight>
+          {token ? (
+            <Link href={MYINFO_URL}>
+              <a>
+                <StyledUserIcon />
+              </a>
+            </Link>
+          ) : (
+            <Link href={LOGIN_URL}>
+              <a>
+                <StyledLoginIcon />
+              </a>
+            </Link>
+          )}
+        </InnerRight>
+      )}
     </HeaderContainer>
   )
 }
 
 const HeaderContainer = styled.div`
-  height: ${headerHeight};
+  height: ${(props) => props.theme.layout.headerHeight};
   position: fixed;
   max-width: 50rem;
   margin: 0 auto;
   left: 0;
   right: 0;
   z-index: 100;
-  background-color: ${mainPink};
+  background-color: ${(props) => props.theme.color.mainPink};
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 ${pagePadding};
-  color: ${mainWhite};
+  padding: 0 ${(props) => props.theme.layout.pagePadding};
+  color: ${(props) => props.theme.color.mainWhite};
 `
 
 const StyledBackIcon = styled(VscChevronLeft)`
@@ -109,7 +119,7 @@ const Logo = styled.div`
 const InnerRight = styled.div`
   position: absolute;
   top: 50%;
-  right: ${pagePadding};
+  right: ${(props) => props.theme.layout.pagePadding};
   transform: translateY(-50%);
   display: flex;
 
