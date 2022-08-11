@@ -5,7 +5,7 @@ import { FiLogIn, FiUser } from 'react-icons/fi'
 import Link from 'next/link'
 import { useEffect, useState, useCallback } from 'react'
 import { MYINFO_URL, LOGIN_URL, USER_URL, HOME_URL } from '@constants/pageUrl'
-import { getLocalToken } from '@utils/localToken'
+import { getToken } from '@utils/cookie'
 
 const MYINFO = '내정보'
 const USER = '메뉴판'
@@ -22,7 +22,7 @@ export const Header = () => {
 
   useEffect(() => {
     if (pathname === LOGIN_URL || pathname === HOME_URL) {
-      setToken(getLocalToken() || '')
+      setToken(getToken() || '')
     }
   }, [token, pathname])
 
