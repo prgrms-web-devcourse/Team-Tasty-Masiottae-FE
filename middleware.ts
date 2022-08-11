@@ -1,23 +1,32 @@
 import { NextResponse } from 'next/server'
-import { getToken } from '@utils/cookie'
+import type { NextFetchEvent, NextRequest } from 'next/server'
+import { TOKEN_KEY } from '@constants/token'
 import {
   CREATE_MENU_URL,
   EDIT_MENU_URL,
   MYINFO_URL,
   PASSWORD_CHANGE_URL,
   USER_URL,
-  LOGIN_URL
+  LOGIN_URL,
+  SIGNUP_URL
 } from '@constants/pageUrl'
-import type { NextFetchEvent, NextRequest } from 'next/server'
+const TOKEN_REQUIRED_URL_LIST = [
+  CREATE_MENU_URL,
+  MYINFO_URL,
+  PASSWORD_CHANGE_URL,
+  EDIT_MENU_URL,
+  USER_URL,
+  SIGNUP_URL
+]
 
 export function middleware(req: NextRequest, ev: NextFetchEvent) {
-  console.log(req.nextUrl.pathname, getToken())
+  const { pathname } = req.nextUrl
   if (
-    (req.nextUrl.pathname === CREATE_MENU_URL ||
-      MYINFO_URL ||
-      PASSWORD_CHANGE_URL) &&
-    !getToken()
+    TOKEN_REQUIRED_URL_LIST.includes(pathname) &&
+    !req.cookies.get(TOKEN_KEY)
   ) {
-    console.log('go to Login')
+    const url = req.nextUrl.clone()
+    url.pathname = LOGIN_URL
+    return NextResponse.redirect(`${url}`)
   }
 }
