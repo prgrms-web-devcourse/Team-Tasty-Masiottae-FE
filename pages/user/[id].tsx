@@ -3,29 +3,30 @@ import MenuCardList from '@components/MenuCardList'
 import SearchForm from '@components/SearchForm'
 import styled from '@emotion/styled'
 import useIntersectionObserver from '@hooks/useIntersectionObserver'
-import { MouseEvent, useState } from 'react'
+import { useState } from 'react'
 import { useSearchMyMenuList } from '../../src/hooks/queries/useSearchMyMenuList'
 import { SearchFormOptions } from '@interfaces'
 
-const SELECT_DUMMY = ['작성한 메뉴', '좋아요한 메뉴']
+// const SELECT_DUMMY = ['작성한 메뉴', '좋아요한 메뉴']
 const SIZE_100_IMG_URL = 'https://via.placeholder.com/100'
 
-interface TabProps {
-  selected: boolean
-  value: string
-  onClick: (e: MouseEvent<HTMLElement>) => void
-}
+// interface TabProps {
+//   selected: boolean
+//   value: string
+//   onClick: (e: MouseEvent<HTMLElement>) => void
+// }
 
 const UserMenu = () => {
   const [searchOptions, setSearchOptions] = useState({
     offset: 0,
     limit: 10
   })
-  const { menuList } = useSearchMyMenuList(1, searchOptions)
-  const [option, setOption] = useState(SELECT_DUMMY[0])
+  const { menuList, fetchNextPage } = useSearchMyMenuList(searchOptions)
+  // const [option, setOption] = useState(SELECT_DUMMY[0])
   const ref = useIntersectionObserver(
     async (entry, observer) => {
       observer.unobserve(entry.target)
+      fetchNextPage()
     },
     { threshold: 0.5 }
   )
@@ -34,10 +35,10 @@ const UserMenu = () => {
     setSearchOptions({ ...searchOptions, ...values })
   }
 
-  const handleClick = (e: MouseEvent<HTMLElement>) => {
-    const divElement = e.target as HTMLElement
-    setOption(divElement.innerText)
-  }
+  // const handleClick = (e: MouseEvent<HTMLElement>) => {
+  //   const divElement = e.target as HTMLElement
+  //   setOption(divElement.innerText)
+  // }
 
   return (
     <>
@@ -46,7 +47,7 @@ const UserMenu = () => {
         <Author>작성자</Author>
       </ProfileContainer>
 
-      <TabContainer>
+      {/* <TabContainer>
         {SELECT_DUMMY.map((selectOption) => (
           <Tab
             key={selectOption}
@@ -57,7 +58,7 @@ const UserMenu = () => {
             {selectOption}
           </Tab>
         ))}
-      </TabContainer>
+      </TabContainer> */}
       <StickyWrapper>
         <SearchForm onSubmit={handleSubmit} />
       </StickyWrapper>
@@ -94,24 +95,24 @@ const Author = styled.div`
   user-select: none;
 `
 
-const TabContainer = styled.div`
-  display: flex;
-  justify-content: space-around;
-  background-color: white;
-`
+// const TabContainer = styled.div`
+//   display: flex;
+//   justify-content: space-around;
+//   background-color: white;
+// `
 
-const Tab = styled.button<TabProps>`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #ffffff;
-  border: none;
-  padding: 0 2rem;
-  font-size: 1.8rem;
-  font-weight: 700;
-  border-bottom: ${({ selected }) => (selected ? '3px solid red' : 'none')};
-  height: 5rem;
-`
+// const Tab = styled.button<TabProps>`
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   background-color: #ffffff;
+//   border: none;
+//   padding: 0 2rem;
+//   font-size: 1.8rem;
+//   font-weight: 700;
+//   border-bottom: ${({ selected }) => (selected ? '3px solid red' : 'none')};
+//   height: 5rem;
+// `
 
 const CardListContainer = styled.ul``
 

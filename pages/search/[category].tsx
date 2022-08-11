@@ -14,7 +14,7 @@ const Search = () => {
   const id = parseInt(router.query.category as string)
   const [searchOptions, setSearchOptions] = useState<searchParams>({
     offset: 0,
-    limit: 2
+    limit: 10
   })
   const { franchiseList, isLoading: isFranchiseListLoading } =
     useFranchiseList()
