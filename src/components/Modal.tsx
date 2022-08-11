@@ -84,6 +84,7 @@ const ModalContainer = styled.div<{
   background-color: white;
   box-shadow: 0 0.3rem 0.6rem rgba(0, 0, 0, 0.2);
   animation: ${({ option }) => (option === 'drawer' ? 'drawer-show 0.3s' : '')};
+  border-radius: 1rem;
 
   @keyframes drawer-show {
     from {

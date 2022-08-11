@@ -16,7 +16,6 @@ interface Props {
   divRef: RefObject<HTMLDivElement> | null
 }
 
-const IMAGE_ALT = 'NO IMAGE'
 const extensions = ['jpg', 'png', 'jpeg', 'jfif']
 
 const MenuCard = ({
@@ -29,17 +28,17 @@ const MenuCard = ({
   comments,
   divRef
 }: Props) => {
-  if (!imageUrl) imageUrl = 'https://via.placeholder.com/160'
+  if (!imageUrl) imageUrl = 'https://via.placeholder.com/150'
 
   if (imageUrl) {
     if (!extensions.includes(imageUrl.split('.').slice(-1)[0])) {
-      imageUrl = 'https://via.placeholder.com/160'
+      imageUrl = 'https://via.placeholder.com/150'
     }
   }
 
   return (
     <CardContainer ref={divRef}>
-      <Image src={imageUrl} alt={IMAGE_ALT} />
+      <Img src={imageUrl} />
       <CardInfo>
         <CardHeader>
           <Franchise>{franchise}</Franchise>
@@ -102,11 +101,12 @@ const Title = styled.div`
   user-select: none;
 `
 
-const Image = styled.img`
-  width: 16rem;
-  height: 16rem;
+const Img = styled.div<{ src: string }>`
+  min-width: 15rem;
+  height: 15rem;
+  background: ${({ src }) => `no-repeat top center url(${src})`};
+  background-size: cover;
   border-radius: 1rem;
-  object-fit: cover;
 `
 
 const UserInfoWrapper = styled.div`

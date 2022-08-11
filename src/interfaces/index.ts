@@ -20,6 +20,7 @@ export interface Menu {
   expectedPrice: number
   tasteList: Taste[]
   likes: number
+  comments: number
   createdAt: string
   updatedAt: string
 }
@@ -50,8 +51,9 @@ export interface Taste {
 }
 
 export interface searchParams {
+  franchiseId?: number
   keyword?: string
-  sort?: 'recent' | 'comment' | 'like'
+  sort?: string
   tasteIdList?: number[]
   offset: number
   limit: number

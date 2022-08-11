@@ -24,7 +24,7 @@ const MenuCardList = ({ menuList, divRef }: Props) => {
                 avatarImageUrl={menu.author.image}
                 author={menu.author.nickName}
                 likes={menu.likes}
-                comments={10}
+                comments={menu.comments || 0}
                 divRef={menuList.length === idx + 1 ? divRef : null}
               />
             </a>
@@ -39,6 +39,7 @@ const Container = styled.ul`
   display: flex;
   flex-direction: column;
   row-gap: 0.5rem;
+  margin-top: 0.5rem;
 `
 
 const MenuCardWrapper = styled.li``
