@@ -190,10 +190,11 @@ const Title = styled.div`
 `
 
 const RightHeader = styled(Flex)<{ guest: boolean }>`
+  width: 8rem;
   align-items: center;
   position: relative;
   top: -2rem;
-  left: ${({ guest }) => (guest ? '0' : '1rem')};
+  left: ${({ guest }) => (guest ? '2rem' : '0')};
 `
 
 const EmptyHeart = styled(IoMdHeart)`
@@ -209,9 +210,10 @@ const Heart = styled(IoMdHeart)`
 `
 
 const LikesCountText = styled.div<{ clicked: boolean }>`
+  width: 0.6rem;
   color: white;
   position: relative;
-  right: 1.9rem;
+  right: 1.6rem;
   font-size: 1.4rem;
   font-weight: 700;
 `
