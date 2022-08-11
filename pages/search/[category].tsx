@@ -35,20 +35,19 @@ const Search = () => {
     { threshold: 0.5 }
   )
 
+  const getFranchise = () => {
+    return searchOptions.franchiseId === 0
+      ? { id: 0, name: '전체', image: '/ALL.png' }
+      : franchiseList?.find(
+          (franchise) => franchise.id === searchOptions.franchiseId
+        )
+  }
+
   return (
     <Container>
       <FixedWrapper>
         <InnerWrapper>
-          <FranchiseInfo
-            franchise={
-              searchOptions.franchiseId === 0
-                ? { id: 0, name: '전체', image: '/ALL.png' }
-                : franchiseList?.find(
-                    (franchise) => franchise.id === searchOptions.franchiseId
-                  )
-            }
-            isLoading={isLoading}
-          />
+          <FranchiseInfo franchise={getFranchise()} isLoading={isLoading} />
           <SearchForm onSubmit={handleSubmit} />
         </InnerWrapper>
       </FixedWrapper>
