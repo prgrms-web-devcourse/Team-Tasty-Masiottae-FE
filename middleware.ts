@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { getLocalToken } from '@utils/localToken'
+import { getToken } from '@utils/cookie'
 import {
   CREATE_MENU_URL,
   EDIT_MENU_URL,
@@ -11,11 +11,13 @@ import {
 import type { NextFetchEvent, NextRequest } from 'next/server'
 
 export function middleware(req: NextRequest, ev: NextFetchEvent) {
-  console.log(req.url, getLocalToken())
+  console.log(req.nextUrl.pathname, getToken())
   if (
-    (req.url === CREATE_MENU_URL || MYINFO_URL || PASSWORD_CHANGE_URL) &&
-    getLocalToken() === null
+    (req.nextUrl.pathname === CREATE_MENU_URL ||
+      MYINFO_URL ||
+      PASSWORD_CHANGE_URL) &&
+    !getToken()
   ) {
-    return NextResponse.redirect(new URL(LOGIN_URL, req.url))
+    console.log('go to Login')
   }
 }
