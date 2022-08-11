@@ -1,15 +1,16 @@
 import styled from '@emotion/styled'
-import UserData from '@components/myInfo/UserData'
-import UserProfile from '@components/myInfo/UserProfile'
 import Button from '@components/Button'
 import { LOGIN_URL, PASSWORD_CHANGE_URL } from '@constants/pageUrl'
 import { useRouter } from 'next/router'
-import { removeLocalToken } from '@utils/localToken'
+import { removeTokenData, removeCookie } from '@utils/cookie'
+import UserProfile from '@components/myInfo/UserProfile'
+import UserData from '@components/myInfo/UserData'
 
 const MyInfoPage = () => {
   const router = useRouter()
   const handleLogout = () => {
-    removeLocalToken()
+    removeTokenData()
+    removeCookie('currentUser')
     router.replace(LOGIN_URL)
   }
 

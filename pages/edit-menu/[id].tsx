@@ -119,6 +119,7 @@ const EditMenu = () => {
         backgroundColor={'#000'}
         disabled={
           !(
+            franchiseId &&
             title &&
             originalTitle &&
             optionList.filter(({ name, description }) => name && description)
@@ -129,7 +130,7 @@ const EditMenu = () => {
         }
         onClick={handleEditSubmit}
       >
-        메뉴 수정
+        수정 하기
       </SubmitButton>
     </FlexContainer>
   )
@@ -155,6 +156,7 @@ const SubTitle = styled.h3`
 
 const SubmitButton = styled(Button)`
   font-weight: 700;
+  font-size: 2rem;
 `
 
 export default EditMenu

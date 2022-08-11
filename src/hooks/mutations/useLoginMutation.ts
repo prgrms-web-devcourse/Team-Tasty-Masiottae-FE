@@ -3,9 +3,9 @@ import { useMutation } from '@tanstack/react-query'
 import { useRecoilState } from 'recoil'
 import { currentUser } from '@recoil/currentUser'
 import { User } from '@interfaces'
-import { setLocalToken } from '@utils/localToken'
 import { useRouter } from 'next/router'
 import { DEFAULT_USER_IMAGE } from '@constants/image'
+import { setTokenData } from '@utils/cookie'
 interface Params {
   email: string
   password: string
@@ -42,7 +42,7 @@ export const useLoginMutation = () => {
         ...data.account,
         image: image ?? DEFAULT_USER_IMAGE
       })
-      setLocalToken(data)
+      setTokenData(data)
       router.replace('/')
     }
   })
