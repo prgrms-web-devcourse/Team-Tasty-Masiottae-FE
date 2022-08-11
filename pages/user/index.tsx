@@ -63,7 +63,11 @@ const UserMenu = () => {
       </StickyWrapper>
 
       <CardListContainer>
-        <MenuCardList menuList={menuList} divRef={ref} />
+        <MenuCardList
+          menuList={menuList || []}
+          divRef={ref}
+          isLoading={false}
+        />
       </CardListContainer>
     </>
   )
