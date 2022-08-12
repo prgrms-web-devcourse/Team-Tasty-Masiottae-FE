@@ -11,7 +11,6 @@ export const createSearchRequestParameter = (params: searchParams) => {
     requestParameter.set('keyword', params.keyword)
   }
   if (params.tasteIdList && params.tasteIdList.length !== 0) {
-    console.log(params.tasteIdList)
     requestParameter.set('tasteIdList', `${params.tasteIdList.join(',')}`)
   }
   if (params.sort) {

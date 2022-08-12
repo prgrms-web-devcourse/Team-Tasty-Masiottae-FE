@@ -14,10 +14,15 @@ const Search = () => {
   const id = parseInt(router.query.category as string)
   const [searchOptions, setSearchOptions] = useState<searchParams>({
     offset: 0,
-    limit: 0
+    limit: 10
   })
-  const { franchiseList, isLoading } = useFranchiseList()
-  const { menuList } = useSearchMenuList(searchOptions)
+  const { franchiseList, isLoading: isFranchiseListLoading } =
+    useFranchiseList()
+  const {
+    menuList,
+    isLoading: isMenuListLoading,
+    fetchNextPage
+  } = useSearchMenuList(searchOptions)
 
   useEffect(() => {
     if (!router.isReady) return
@@ -31,6 +36,7 @@ const Search = () => {
   const ref = useIntersectionObserver(
     async (entry, observer) => {
       observer.unobserve(entry.target)
+      fetchNextPage()
     },
     { threshold: 0.5 }
   )
@@ -47,12 +53,19 @@ const Search = () => {
     <Container>
       <FixedWrapper>
         <InnerWrapper>
-          <FranchiseInfo franchise={getFranchise()} isLoading={isLoading} />
+          <FranchiseInfo
+            franchise={getFranchise()}
+            isLoading={isFranchiseListLoading}
+          />
           <SearchForm onSubmit={handleSubmit} />
         </InnerWrapper>
       </FixedWrapper>
       <CardListWrapper>
-        <MenuCardList menuList={menuList} divRef={ref} />
+        <MenuCardList
+          menuList={menuList || []}
+          divRef={ref}
+          isLoading={isMenuListLoading}
+        />
       </CardListWrapper>
     </Container>
   )

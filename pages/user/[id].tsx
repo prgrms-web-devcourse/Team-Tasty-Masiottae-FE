@@ -21,11 +21,12 @@ const UserMenu = () => {
     offset: 0,
     limit: 10
   })
-  const { menuList } = useSearchMyMenuList(1, searchOptions)
+  const { menuList, fetchNextPage } = useSearchMyMenuList(searchOptions)
   const [option, setOption] = useState(SELECT_DUMMY[0])
   const ref = useIntersectionObserver(
     async (entry, observer) => {
       observer.unobserve(entry.target)
+      fetchNextPage()
     },
     { threshold: 0.5 }
   )
@@ -63,7 +64,11 @@ const UserMenu = () => {
       </StickyWrapper>
 
       <CardListContainer>
-        <MenuCardList menuList={menuList} divRef={ref} />
+        <MenuCardList
+          menuList={menuList || []}
+          divRef={ref}
+          isLoading={false}
+        />
       </CardListContainer>
     </>
   )
