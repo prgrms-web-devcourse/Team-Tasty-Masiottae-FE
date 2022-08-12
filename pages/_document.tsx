@@ -19,7 +19,12 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
-          <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+          <link
+            rel="icon"
+            type="image/png"
+            sizes="100x100"
+            href="https://user-images.githubusercontent.com/79133602/184347140-49f7d858-89a9-41de-aa39-c78f26332b97.png"
+          />
           <meta property="og:type" content="website" />
           <meta property="og:title" content="맛이 어때" />
           <meta
