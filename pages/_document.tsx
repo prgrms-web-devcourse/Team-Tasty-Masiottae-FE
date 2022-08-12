@@ -29,7 +29,7 @@ class MyDocument extends Document {
           <meta property="og:title" content="맛이 어때" />
           <meta
             property="og:image"
-            content="https://user-images.githubusercontent.com/79133602/184341912-1625fb09-1af2-41a0-b16e-6a2f76db30ef.svg"
+            content="https://user-images.githubusercontent.com/79133602/184348626-1aa6a49e-814a-4748-956c-1e0a0dfd1389.png"
           />
           <meta
             property="og:description"
