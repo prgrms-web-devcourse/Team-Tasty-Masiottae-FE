@@ -5,6 +5,7 @@ import { Comment, User } from '@interfaces'
 import { BiDotsHorizontalRounded, BiTrash } from 'react-icons/bi'
 import { getDate } from '@utils/getDate'
 import Avatar from '@components/Avatar'
+import { useDeleteCommentMutation } from '@hooks/mutations/useDeleteCommentMutation'
 
 interface Props {
   user: User
@@ -12,14 +13,30 @@ interface Props {
 }
 
 const CommentList = ({ user, commentList }: Props) => {
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [commentId, setCommentId] = useState(0)
+  const { mutate: deleteComment } = useDeleteCommentMutation()
 
-  const handleDeleteCommentClick = () => {
-    setIsDeleteModalOpen(true)
+  const handleCommentModalClick = (id: number) => {
+    setIsModalOpen(true)
+    setCommentId(id)
   }
 
-  const handleDeleteCommentClose = () => {
-    setIsDeleteModalOpen(false)
+  const handleCommentModalClose = () => {
+    setIsModalOpen(false)
+  }
+
+  const handleDeleteCommentClick = () => {
+    deleteComment(
+      {
+        commentId
+      },
+      {
+        onSuccess: () => {
+          setIsModalOpen(false)
+        }
+      }
+    )
   }
 
   return (
@@ -38,7 +55,10 @@ const CommentList = ({ user, commentList }: Props) => {
                   </NameAndDateWrapper>
                   {user.id === author.id && (
                     <>
-                      <Dots size={20} onClick={handleDeleteCommentClick} />
+                      <Dots
+                        size={20}
+                        onClick={() => handleCommentModalClick(id)}
+                      />
                     </>
                   )}
                 </CommentHeader>
@@ -49,11 +69,11 @@ const CommentList = ({ user, commentList }: Props) => {
         ))}
       </CommentListContainer>
       <Modal
-        visible={isDeleteModalOpen}
-        onClose={handleDeleteCommentClose}
+        visible={isModalOpen}
+        onClose={handleCommentModalClose}
         option="drawer"
       >
-        <ModalItem>
+        <ModalItem onClick={handleDeleteCommentClick}>
           <BiTrash size={25} />
           삭제
         </ModalItem>
