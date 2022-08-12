@@ -7,13 +7,9 @@ import MenuCard from '@components/MenuCard'
 interface Props {
   menuList: Menu[]
   divRef: RefObject<HTMLDivElement> | null
-  isLoading: boolean
 }
 
-const MenuCardList = ({ menuList, divRef, isLoading }: Props) => {
-  if (isLoading) {
-    return <div></div>
-  }
+const MenuCardList = ({ menuList, divRef }: Props) => {
   return (
     <Container>
       {menuList.map((menu, idx) => (
