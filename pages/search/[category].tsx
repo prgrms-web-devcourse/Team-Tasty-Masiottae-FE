@@ -17,8 +17,7 @@ const Search = () => {
     offset: 0,
     limit: 10
   })
-  const { franchiseList, isLoading: isFranchiseListLoading } =
-    useFranchiseList()
+  const { franchiseList } = useFranchiseList()
   const {
     menuList,
     isLoading: isMenuListLoading,
@@ -54,10 +53,7 @@ const Search = () => {
     <Container>
       <FixedWrapper>
         <InnerWrapper>
-          <FranchiseInfo
-            franchise={getFranchise()}
-            isLoading={isFranchiseListLoading}
-          />
+          <FranchiseInfo franchise={getFranchise()} />
           <SearchForm onSubmit={handleSubmit} />
         </InnerWrapper>
       </FixedWrapper>
