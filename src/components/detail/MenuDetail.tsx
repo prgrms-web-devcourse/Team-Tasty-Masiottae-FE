@@ -77,7 +77,7 @@ const MenuDetail = ({ menu, userId }: Props) => {
               <EmptyHeart size={50} onClick={handleHeartClick} />
             )}
             <LikesCountText clicked={isLikeClicked}>
-              {menu.likes}
+              <span>{menu.likes}</span>
             </LikesCountText>
             {menu.author.id === userId && (
               <Dots size={30} onClick={handleEditMenuClick} />
@@ -190,10 +190,11 @@ const Title = styled.div`
 `
 
 const RightHeader = styled(Flex)<{ guest: boolean }>`
+  width: 8rem;
   align-items: center;
   position: relative;
   top: -2rem;
-  left: ${({ guest }) => (guest ? '0' : '1rem')};
+  left: ${({ guest }) => (guest ? '2rem' : '0')};
 `
 
 const EmptyHeart = styled(IoMdHeart)`
@@ -208,10 +209,13 @@ const Heart = styled(IoMdHeart)`
   cursor: pointer;
 `
 
-const LikesCountText = styled.div<{ clicked: boolean }>`
+const LikesCountText = styled(Flex)<{ clicked: boolean }>`
+  justify-content: center;
+  width: 0.6rem;
   color: white;
   position: relative;
-  right: 1.9rem;
+  right: 1.8rem;
+  bottom: 0.2rem;
   font-size: 1.4rem;
   font-weight: 700;
 `

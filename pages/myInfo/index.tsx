@@ -1,17 +1,16 @@
 import styled from '@emotion/styled'
 import Button from '@components/Button'
-import { LOGIN_URL, PASSWORD_CHANGE_URL } from '@constants/pageUrl'
+import { PASSWORD_CHANGE_URL } from '@constants/pageUrl'
 import { useRouter } from 'next/router'
-import { removeTokenData, removeCookie } from '@utils/cookie'
 import UserProfile from '@components/myInfo/UserProfile'
 import UserData from '@components/myInfo/UserData'
+import { useLogoutMutation } from '@hooks/mutations/useLogoutMutation'
 
 const MyInfoPage = () => {
   const router = useRouter()
+  const { mutate: postLogout } = useLogoutMutation()
   const handleLogout = () => {
-    removeTokenData()
-    removeCookie('currentUser')
-    router.replace(LOGIN_URL)
+    postLogout()
   }
 
   return (

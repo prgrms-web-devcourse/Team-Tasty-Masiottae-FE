@@ -6,9 +6,7 @@ interface Params {
 }
 
 const postLike = async ({ menuId }: Params) => {
-  const { status } = await axios.post(`/menu/${menuId}/like`, {
-    menuId
-  })
+  const { status } = await axios.post(`/menu/${menuId}/like`)
 
   return status
 }
