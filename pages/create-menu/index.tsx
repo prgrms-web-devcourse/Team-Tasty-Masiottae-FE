@@ -6,10 +6,9 @@ import ImageUploader from '@components/ImageUploader'
 import Button from '@components/Button'
 import { Option } from '@customTypes/index'
 import { usePostMenu } from '@hooks/mutations/usePostMenuMutation'
-import { useRecoilState } from 'recoil'
-import { currentUser } from '@recoil/currentUser'
 
 import { InputList } from '@components/create-menu/InputList'
+import { getToken } from '@utils/cookie'
 
 export interface InputListType {
   franchiseId: number
@@ -23,7 +22,6 @@ export interface InputListType {
 const CreateMenu = () => {
   // 필드 값
   const router = useRouter()
-  const [{ id: userId }] = useRecoilState(currentUser)
   const { mutate } = usePostMenu()
 
   const [file, setFile] = useState<File | null>(null)
@@ -49,7 +47,6 @@ const CreateMenu = () => {
     )
 
     const data = {
-      userId,
       franchiseId,
       title,
       content: '',
@@ -59,7 +56,7 @@ const CreateMenu = () => {
       tasteIdList
     }
     mutate(
-      { image: file, data },
+      { token: getToken(), image: file, data },
       {
         onSuccess: (data) => {
           router.replace(`/detail/${data.menuId}`)

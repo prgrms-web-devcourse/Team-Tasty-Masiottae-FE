@@ -8,8 +8,8 @@ import { useMenu } from '@hooks/queries/useMenu'
 import { useChangeMenu } from '@hooks/mutations/useChangeMenuMutation'
 import { useRouter } from 'next/router'
 import { InputList } from '@components/create-menu/InputList'
-import { useRecoilState } from 'recoil'
-import { currentUser } from '@recoil/currentUser'
+
+import { getToken } from '@utils/cookie'
 export interface InputListType {
   franchiseId: number
   title: string
@@ -21,7 +21,7 @@ export interface InputListType {
 
 const EditMenu = () => {
   // 필드 값
-  const [{ id: userId }] = useRecoilState(currentUser)
+
   const router = useRouter()
   const { id } = router.query
 
@@ -38,6 +38,8 @@ const EditMenu = () => {
       setIsPriceButtonClicked(!menuData.expectedPrice)
     }
   }, [menuData])
+  const [file, setFile] = useState<File | null>(null)
+  const [isFileChange, setIsFileChange] = useState(false)
 
   const [franchiseId, setFranchiseId] = useState(1)
   const [title, setTitle] = useState('')
@@ -46,7 +48,6 @@ const EditMenu = () => {
   const [expectedPrice, setExpectedPrice] = useState(0)
   const [isPriceButtonClicked, setIsPriceButtonClicked] = useState(false)
 
-  const [file, setFile] = useState<File | null>(null)
   const [tasteIdList, setTasteIdList] = useState<number[]>([])
 
   const handleInputChange = ({
@@ -68,6 +69,9 @@ const EditMenu = () => {
   // onChange handler
   const handleImageChange = (file: File | null) => {
     setFile(file)
+    if (file === null) {
+      setIsFileChange(true)
+    }
   }
 
   const handleTagListChange = (tagIdList: number[]) => {
@@ -76,17 +80,17 @@ const EditMenu = () => {
 
   const handleEditSubmit = (e: React.FormEvent<HTMLButtonElement>) => {
     const data = {
-      userId: userId,
       franchiseId,
       title,
       originalTitle,
       optionList,
       expectedPrice,
       tasteIdList,
+      isRemoveImage: isFileChange,
       content: ''
     }
     mutate(
-      { menuId: Number(id), image: file, data: data },
+      { token: getToken(), menuId: Number(id), image: file, data: data },
       {
         onSuccess: () => {
           router.replace(`/detail/${id}`)

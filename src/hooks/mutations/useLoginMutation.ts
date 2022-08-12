@@ -24,7 +24,7 @@ interface Data {
 
 const postLogin = async ({ email, password }: Params) => {
   const { data } = await axios.post<Data>(
-    '/',
+    '/login',
     JSON.stringify({ email, password })
   )
 

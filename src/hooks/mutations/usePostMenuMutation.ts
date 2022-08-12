@@ -3,7 +3,6 @@ import { Option } from '@interfaces'
 import { useMutation } from '@tanstack/react-query'
 
 interface Data {
-  userId: number
   franchiseId: number
   title: string
   content: string
@@ -13,11 +12,12 @@ interface Data {
   tasteIdList: number[]
 }
 interface Params {
+  token: string
   image: File | null
   data: Data
 }
 
-export const postMenu = async ({ image, data }: Params) => {
+export const postMenu = async ({ token, image, data }: Params) => {
   const formData = new FormData()
   if (image) {
     formData.append('image', image)
@@ -28,12 +28,16 @@ export const postMenu = async ({ image, data }: Params) => {
       type: 'application/json'
     })
   )
+  console.log(image, JSON.stringify(data))
 
   const { data: MenuId } = await axios.post<{ menuId: number }>(
     `/menu`,
     formData,
     {
-      headers: { 'Content-Type': 'multipart/form-data' }
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `${token}`
+      }
     }
   )
 
