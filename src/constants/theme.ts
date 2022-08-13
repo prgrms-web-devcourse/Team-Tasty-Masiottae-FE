@@ -16,8 +16,8 @@ const theme = {
     franchiseLight: '#9EA4AA'
   },
   layout: {
-    headerHeight: '7.2rem',
-    navHeight: '7.2rem',
+    headerHeight: '6.4rem',
+    navHeight: '6.4rem',
     pagePadding: '2rem'
   }
 }
