@@ -57,6 +57,7 @@ export interface searchParams {
   tasteIdList?: number[]
   offset: number
   limit: number
+  option?: { label: string; value: string }
 }
 
 export interface SearchFormOptions {

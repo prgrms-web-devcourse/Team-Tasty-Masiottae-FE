@@ -5,11 +5,16 @@ import styled from '@emotion/styled'
 import useIntersectionObserver from '@hooks/useIntersectionObserver'
 import { MouseEvent, useState } from 'react'
 import { useSearchMyMenuList } from '../../src/hooks/queries/useSearchMyMenuList'
-import { SearchFormOptions } from '@interfaces'
+import { SearchFormOptions, searchParams } from '@interfaces'
 import SkeletonCardList from '@components/SkeletonCardList'
+import { useUser } from '../../src/hooks/queries/useUser'
+import { useRouter } from 'next/router'
+import { SkeletonFranchiseInfo } from '@components/SkeletonFranchiseList'
 
-const SELECT_DUMMY = ['작성한 메뉴', '좋아요한 메뉴']
-const SIZE_100_IMG_URL = 'https://via.placeholder.com/100'
+const SELECT_OPTION = [
+  { label: '작성한 메뉴', value: 'my' },
+  { label: '좋아요한 메뉴', value: 'like' }
+]
 
 interface TabProps {
   selected: boolean
@@ -18,13 +23,19 @@ interface TabProps {
 }
 
 const UserMenu = () => {
-  const [searchOptions, setSearchOptions] = useState({
+  const id = parseInt(useRouter().query.id as string)
+  const [searchOptions, setSearchOptions] = useState<searchParams>({
+    option: SELECT_OPTION[0],
     offset: 0,
     limit: 10
   })
-  const { menuList, isLoading, fetchNextPage } =
-    useSearchMyMenuList(searchOptions)
-  const [option, setOption] = useState(SELECT_DUMMY[0])
+  const {
+    menuList,
+    isLoading: isMenuLoading,
+    fetchNextPage
+  } = useSearchMyMenuList(searchOptions)
+  const { data: user, isLoading: isUserLoading } = useUser(id)
+
   const ref = useIntersectionObserver(
     async (entry, observer) => {
       observer.unobserve(entry.target)
@@ -37,36 +48,48 @@ const UserMenu = () => {
     setSearchOptions({ ...searchOptions, ...values })
   }
 
-  const handleClick = (e: MouseEvent<HTMLElement>) => {
-    const divElement = e.target as HTMLElement
-    setOption(divElement.innerText)
+  const handleTabClick = (e: MouseEvent<HTMLElement>) => {
+    const divElement = e.target as HTMLButtonElement
+    setSearchOptions({
+      ...searchOptions,
+      sort: 'recent',
+      tasteIdList: [],
+      keyword: '',
+      option: { label: divElement.innerText, value: divElement.value }
+    })
   }
 
   return (
     <>
-      <ProfileContainer>
-        <Avatar size={7} src={SIZE_100_IMG_URL} isLoading={false} />
-        <Author>작성자</Author>
-      </ProfileContainer>
-
+      {isUserLoading ? (
+        <SkeletonFranchiseInfo />
+      ) : (
+        <ProfileContainer>
+          <Avatar size={7} src={user?.image} isLoading={false} />
+          <Author>{user?.nickName}</Author>
+        </ProfileContainer>
+      )}
       <TabContainer>
-        {SELECT_DUMMY.map((selectOption) => (
+        {SELECT_OPTION.map((selectOption, idx) => (
           <Tab
-            key={selectOption}
-            selected={option === selectOption}
-            value={selectOption}
-            onClick={handleClick}
+            key={idx}
+            selected={searchOptions.option?.value === selectOption.value}
+            value={selectOption.value}
+            onClick={handleTabClick}
           >
-            {selectOption}
+            {selectOption.label}
           </Tab>
         ))}
       </TabContainer>
       <StickyWrapper>
-        <SearchForm onSubmit={handleSubmit} />
+        <SearchForm
+          onSubmit={handleSubmit}
+          searchDomain={searchOptions.option?.value}
+        />
       </StickyWrapper>
 
       <CardListContainer>
-        {isLoading ? (
+        {isMenuLoading ? (
           <SkeletonCardList />
         ) : (
           <MenuCardList menuList={menuList || []} divRef={ref} />
@@ -114,6 +137,8 @@ const Tab = styled.button<TabProps>`
   font-weight: 700;
   border-bottom: ${({ selected }) => (selected ? '3px solid red' : 'none')};
   height: 5rem;
+  box-sizing: content-box;
+  cursor: pointer;
 `
 
 const CardListContainer = styled.ul``
