@@ -1,11 +1,17 @@
 import styled from '@emotion/styled'
 import { useRouter } from 'next/router'
-import { VscChevronLeft } from 'react-icons/vsc'
+import { IoChevronBackSharp } from 'react-icons/io5'
 import { FiLogIn, FiUser } from 'react-icons/fi'
 import Link from 'next/link'
 import { useEffect, useState, useCallback } from 'react'
 import { MYINFO_URL, LOGIN_URL, USER_URL, HOME_URL } from '@constants/pageUrl'
 import { getToken } from '@utils/cookie'
+import { SMALL_LOGO } from '@constants/image'
+import Image from 'next/image'
+
+type IconType = {
+  selected?: boolean
+}
 
 const MYINFO = '내정보'
 const USER = '메뉴판'
@@ -48,7 +54,14 @@ export const Header = () => {
       ) : (
         <Link href={HOME_URL}>
           <a>
-            <Logo>맛이 어때</Logo>
+            <Logo>
+              <Image
+                src={SMALL_LOGO}
+                width="100rem"
+                height="60rem"
+                alt={SMALL_LOGO}
+              />
+            </Logo>
           </a>
         </Link>
       )}
@@ -57,7 +70,7 @@ export const Header = () => {
           {token ? (
             <Link href={MYINFO_URL}>
               <a>
-                <StyledUserIcon />
+                <StyledUserIcon selected={pathname === MYINFO_URL} />
               </a>
             </Link>
           ) : (
@@ -81,15 +94,15 @@ const HeaderContainer = styled.div`
   left: 0;
   right: 0;
   z-index: 100;
-  background-color: ${(props) => props.theme.color.mainPink};
+  background-color: ${(props) => props.theme.color.mainWhite};
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 ${(props) => props.theme.layout.pagePadding};
-  color: ${(props) => props.theme.color.mainWhite};
+  border-bottom: 0.1rem solid ${(props) => props.theme.color.borderLight};
 `
 
-const StyledBackIcon = styled(VscChevronLeft)`
+const StyledBackIcon = styled(IoChevronBackSharp)`
   width: 3rem;
   height: 3rem;
   cursor: pointer;
@@ -107,12 +120,15 @@ const Title = styled.div`
 
 const Logo = styled.div`
   position: absolute;
-  top: 50%;
+  display: block;
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 2rem;
   font-weight: 700;
   white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
 `
 
@@ -128,9 +144,10 @@ const InnerRight = styled.div`
   }
 `
 
-const StyledUserIcon = styled(FiUser)`
+const StyledUserIcon = styled(FiUser)<IconType>`
   width: 3rem;
   height: 3rem;
+  color: ${(props) => props.selected && props.theme.color.mainPink};
   cursor: pointer;
 `
 const StyledLoginIcon = styled(FiLogIn)`
