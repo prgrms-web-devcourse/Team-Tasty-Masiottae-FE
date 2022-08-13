@@ -24,7 +24,7 @@ const getMyMenuList = async (params: searchParams) => {
       offset: params.offset + params.limit,
       limit: params.limit
     },
-    isLast: !data
+    isLast: !data.menu
   }
 }
 
