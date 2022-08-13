@@ -1,9 +1,9 @@
 import axios from '@lib/axios'
 import { Option } from '@interfaces'
 import { useMutation } from '@tanstack/react-query'
+import { getToken } from '@utils/cookie'
 
 interface Data {
-  userId: number
   franchiseId: number
   title: string
   content: string
@@ -33,7 +33,10 @@ export const postMenu = async ({ image, data }: Params) => {
     `/menu`,
     formData,
     {
-      headers: { 'Content-Type': 'multipart/form-data' }
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `${getToken()}`
+      }
     }
   )
   return MenuId
