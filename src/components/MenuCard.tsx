@@ -16,8 +16,6 @@ interface Props {
   divRef: RefObject<HTMLDivElement> | null
 }
 
-const extensions = ['jpg', 'png', 'jpeg', 'jfif']
-
 const MenuCard = ({
   title,
   franchise,
@@ -29,12 +27,6 @@ const MenuCard = ({
   divRef
 }: Props) => {
   if (!imageUrl) imageUrl = 'https://via.placeholder.com/150'
-
-  if (imageUrl) {
-    if (!extensions.includes(imageUrl.split('.').slice(-1)[0])) {
-      imageUrl = 'https://via.placeholder.com/150'
-    }
-  }
 
   return (
     <CardContainer ref={divRef}>

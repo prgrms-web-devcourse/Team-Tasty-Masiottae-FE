@@ -6,6 +6,7 @@ import useIntersectionObserver from '@hooks/useIntersectionObserver'
 import { MouseEvent, useState } from 'react'
 import { useSearchMyMenuList } from '../../src/hooks/queries/useSearchMyMenuList'
 import { SearchFormOptions } from '@interfaces'
+import SkeletonCardList from '@components/SkeletonCardList'
 
 const SELECT_DUMMY = ['작성한 메뉴', '좋아요한 메뉴']
 const SIZE_100_IMG_URL = 'https://via.placeholder.com/100'
@@ -21,11 +22,13 @@ const UserMenu = () => {
     offset: 0,
     limit: 10
   })
-  const { menuList } = useSearchMyMenuList(1, searchOptions)
+  const { menuList, isLoading, fetchNextPage } =
+    useSearchMyMenuList(searchOptions)
   const [option, setOption] = useState(SELECT_DUMMY[0])
   const ref = useIntersectionObserver(
     async (entry, observer) => {
       observer.unobserve(entry.target)
+      fetchNextPage()
     },
     { threshold: 0.5 }
   )
@@ -63,7 +66,11 @@ const UserMenu = () => {
       </StickyWrapper>
 
       <CardListContainer>
-        <MenuCardList menuList={menuList} divRef={ref} />
+        {isLoading ? (
+          <SkeletonCardList />
+        ) : (
+          <MenuCardList menuList={menuList || []} divRef={ref} />
+        )}
       </CardListContainer>
     </>
   )
