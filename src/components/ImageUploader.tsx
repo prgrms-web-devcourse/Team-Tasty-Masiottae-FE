@@ -34,7 +34,6 @@ const ImageUploader = ({
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const reader = new FileReader()
     const file = e.target.files ? e.target.files[0] : null
-    console.log(file)
     if (!file) {
       return
     }

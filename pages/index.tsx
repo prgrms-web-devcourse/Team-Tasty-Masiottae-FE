@@ -2,6 +2,7 @@ import type { NextPage } from 'next'
 import useIntersectionObserver from '@hooks/useIntersectionObserver'
 import MenuCardList from '@components/MenuCardList'
 import { useSearchMenuList } from '@hooks/queries/useSearchMenuList'
+import SkeletonCardList from '@components/SkeletonCardList'
 
 const Home: NextPage = () => {
   const { menuList, isLoading, fetchNextPage } = useSearchMenuList({
@@ -20,11 +21,11 @@ const Home: NextPage = () => {
 
   return (
     <>
-      <MenuCardList
-        menuList={menuList || []}
-        divRef={ref}
-        isLoading={isLoading}
-      />
+      {isLoading ? (
+        <SkeletonCardList />
+      ) : (
+        <MenuCardList menuList={menuList || []} divRef={ref} />
+      )}
     </>
   )
 }
