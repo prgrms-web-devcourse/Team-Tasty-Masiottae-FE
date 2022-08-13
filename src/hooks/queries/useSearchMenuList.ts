@@ -46,7 +46,7 @@ export const useSearchMenuList = (params: searchParams) => {
       getNextPageParam: (lastPage) => {
         return !lastPage.isLast ? lastPage.nextPage : undefined
       },
-      enabled: !!franchiseId
+      enabled: franchiseId !== undefined
     }
   )
 
