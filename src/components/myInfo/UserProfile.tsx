@@ -141,13 +141,13 @@ const UserProfile = () => {
 }
 
 const ProfileModal = styled(Modal)`
+  position: relative;
   border-radius: 1rem;
-  margin-top: 2rem;
   padding: 2rem 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  top: 10rem;
+  top: 25rem;
 `
 
 const ModalTitle = styled.div`

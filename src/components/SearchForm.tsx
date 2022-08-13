@@ -60,7 +60,7 @@ const SearchForm = ({ onSubmit }: Props) => {
           <FilterIcon />
           <Text>필터</Text>
         </FilterWrapper>
-        <FilterModal visible={modalVisible} onClose={handleModalClose}>
+        <Modal visible={modalVisible} onClose={handleModalClose}>
           <FilterForm
             onSubmit={handleSubmit}
             tasteIdList={tasteIdList}
@@ -69,7 +69,7 @@ const SearchForm = ({ onSubmit }: Props) => {
               setTasteIdList(newTagList)
             }}
           />
-        </FilterModal>
+        </Modal>
       </OptionContainer>
     </Form>
   )
@@ -116,12 +116,6 @@ const Text = styled.span`
   font-size: 2rem;
   user-select: none;
   font-weight: 700;
-`
-
-const FilterModal = styled(Modal)`
-  border-radius: 1rem;
-  margin-top: 2rem;
-  top: 16rem;
 `
 
 export default SearchForm
