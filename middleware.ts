@@ -5,6 +5,7 @@ import { SIGNUP_URL, LOGIN_URL, HOME_URL } from '@constants/pageUrl'
 
 export function middleware(req: NextRequest, ev: NextFetchEvent) {
   const { pathname } = req.nextUrl
+  console.log(req.cookies.get(TOKEN_KEY))
   const url = req.nextUrl.clone()
   if (pathname === SIGNUP_URL && req.cookies.get(TOKEN_KEY)) {
     url.pathname = HOME_URL
