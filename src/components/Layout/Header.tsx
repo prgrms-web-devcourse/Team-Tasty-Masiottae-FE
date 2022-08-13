@@ -5,39 +5,37 @@ import { FiLogIn, FiUser } from 'react-icons/fi'
 import Link from 'next/link'
 import { useEffect, useState, useCallback } from 'react'
 import { MYINFO_URL, LOGIN_URL, USER_URL, HOME_URL } from '@constants/pageUrl'
-import { getToken } from '@utils/cookie'
+import { TOKEN_KEY } from '@constants/token'
 import { SMALL_LOGO } from '@constants/image'
 import Image from 'next/image'
+import { GetServerSidePropsContext } from 'next'
+
+interface Props {
+  token?: string
+}
 
 type IconType = {
   selected?: boolean
 }
 
-const MYINFO = '내정보'
-const USER = '메뉴판'
+const TITLE_MYINFO = '내정보'
+const TITLE_USER = '메뉴판'
 
-export const Header = () => {
+export const Header = (token: Props) => {
   const router = useRouter()
   const { pathname } = router
   const [title, setTitle] = useState('')
-  const [token, setToken] = useState('')
 
   const onClickPrev = () => {
     router.back()
   }
 
-  useEffect(() => {
-    if (pathname === LOGIN_URL || pathname === HOME_URL) {
-      setToken(getToken() || '')
-    }
-  }, [token, pathname])
-
   const handlePathChange = useCallback((pathname: string) => {
     if (pathname === MYINFO_URL) {
-      setTitle(MYINFO)
+      setTitle(TITLE_MYINFO)
     }
     if (pathname.includes(USER_URL)) {
-      setTitle(USER)
+      setTitle(TITLE_USER)
     }
   }, [])
 
@@ -84,6 +82,16 @@ export const Header = () => {
       )}
     </HeaderContainer>
   )
+}
+
+export const getServerSideProps = async (
+  context: GetServerSidePropsContext
+) => {
+  if (!context.req.cookies[TOKEN_KEY]) {
+    return
+  }
+
+  return context.req.cookies[TOKEN_KEY]
 }
 
 const HeaderContainer = styled.div`
