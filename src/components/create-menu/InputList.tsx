@@ -148,7 +148,7 @@ export const InputList = ({
       ></InputMessage>
       <InputName>커스텀 메뉴 이름</InputName>
       <TitleInput
-        height={2.4}
+        height={4.8}
         type="text"
         name={NAME_TITLE}
         value={title}
@@ -162,7 +162,7 @@ export const InputList = ({
       ></InputMessage>
       <InputName>기본 메뉴 이름</InputName>
       <TitleInput
-        height={2.4}
+        height={4.8}
         type="text"
         name={NAME_ORIGINAL_TITLE}
         value={originalTitle}
@@ -193,7 +193,7 @@ export const InputList = ({
         <div key={idx}>
           <OptionWrapper key={idx}>
             <OptionName
-              height={2.4}
+              height={4.8}
               type="text"
               name={NAME_OPTION_NAME}
               value={option.name}
@@ -205,7 +205,7 @@ export const InputList = ({
               isValid={option.name ? true : false}
             />
             <OptionDescription
-              height={2.4}
+              height={4.8}
               type="text"
               name={NAME_OPTION_DESCRIPTION}
               value={option.description}
@@ -235,7 +235,7 @@ export const InputList = ({
         <PriceTitle>가격</PriceTitle>
         <PriceInput
           width={20}
-          height={2.4}
+          height={4.8}
           type="text"
           name={NAME_EXPECTED_PRICE}
           value={
