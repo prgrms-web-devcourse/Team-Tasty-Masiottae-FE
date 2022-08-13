@@ -48,7 +48,7 @@ const LoginPage = () => {
       (key) => errors[key as keyof typeof errors] !== ''
     )
 
-    if (!isError) {
+    if (email && password && !isError) {
       postLogin(
         { email, password },
         {
