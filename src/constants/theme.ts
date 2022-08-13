@@ -18,7 +18,8 @@ const theme = {
   layout: {
     headerHeight: '7.2rem',
     navHeight: '7.2rem',
-    pagePadding: '2rem'
+    pagePadding: '2rem',
+    layoutWidth: '50rem'
   }
 }
 
