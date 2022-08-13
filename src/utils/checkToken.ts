@@ -1,18 +1,30 @@
 import { AxiosRequestConfig } from 'axios'
-import { getTokenData, setToken } from '@utils/cookie'
+import { getTokenData, setToken, removeTokenData } from '@utils/cookie'
 import moment from 'moment'
 import axios from 'axios'
 
 export const checkToken = async (config: AxiosRequestConfig) => {
-  const { currentUser, tastyToken, tastyToken_expire, tastyRefreshToken } =
-    getTokenData()
+  const {
+    currentUser,
+    tastyToken,
+    tastyToken_expire,
+    tastyRefreshToken,
+    tastyRefreshToken_expire
+  } = getTokenData()
 
   if (!config?.headers) {
     throw new Error(`Axios config headers must be provided`)
   }
 
   if (
-    moment(tastyToken_expire).diff(moment(), 'minutes') < 10 &&
+    moment(tastyRefreshToken_expire).diff(moment(), 'minutes') < 1 &&
+    tastyRefreshToken
+  ) {
+    removeTokenData()
+  }
+
+  if (
+    moment(tastyToken_expire).diff(moment(), 'minutes') < 1 &&
     tastyRefreshToken
   ) {
     const { data } = await axios.post(

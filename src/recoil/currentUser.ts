@@ -3,6 +3,7 @@ import { User } from '@interfaces'
 import { v1 } from 'uuid'
 import { DEFAULT_USER_IMAGE } from '@constants/image'
 import { setCookie, getCookie } from '@utils/cookie'
+import { TOKEN_EXPIRE_DATE, CURRENT_USER } from '@constants/token'
 
 export const initialUser = {
   id: 0,
@@ -24,12 +25,18 @@ const makeCookieEffect =
     }
 
     onSet((newValue: User, _: any, isReset: boolean) => {
-      isReset ? setCookie(key, '') : setCookie(key, JSON.stringify(newValue))
+      const expirationDate = getCookie(TOKEN_EXPIRE_DATE)
+      isReset
+        ? setCookie(key, '')
+        : setCookie(key, JSON.stringify(newValue), {
+            path: '/',
+            expires: new Date(expirationDate)
+          })
     })
   }
 
 export const currentUser = atom<User>({
   key: `currentUser/${v1()}`,
   default: initialUser,
-  effects: [makeCookieEffect('currentUser')]
+  effects: [makeCookieEffect(CURRENT_USER)]
 })
