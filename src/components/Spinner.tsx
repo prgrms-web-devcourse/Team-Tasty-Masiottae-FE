@@ -26,6 +26,7 @@ const LogoContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1;
 `
 const LogoLetter = styled.div<{ url: string; idx: number }>`
   width: 3.2rem;
