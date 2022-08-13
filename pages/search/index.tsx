@@ -31,8 +31,10 @@ const FixedWrapper = styled.div`
 const InnerWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
   min-width: 33.5rem;
   max-width: 46rem;
+  height: 6.4rem;
   width: 100%;
   background-color: white;
   margin: 0 auto;
