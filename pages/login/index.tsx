@@ -35,11 +35,20 @@ const LoginPage = () => {
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.preventDefault()
+
+    if (!password) {
+      setErrors({ ...errors, [INPUT_PASSWORD]: MESSAGE_PASSWORD })
+    }
+
+    if (!email) {
+      setErrors({ ...errors, [INPUT_EMAIL]: ERROR_EMAIL })
+    }
+
     const isError = Object.keys(errors).some(
       (key) => errors[key as keyof typeof errors] !== ''
     )
-    const isLoginValid = password && email && !isError
-    if (isLoginValid) {
+
+    if (!isError) {
       postLogin(
         { email, password },
         {
@@ -78,9 +87,8 @@ const LoginPage = () => {
 
     if (name === INPUT_PASSWORD) {
       setErrors({ ...errors, [name]: '' })
-      if (value.length > 10) {
-        e.target.value = value.slice(0, 10)
-      }
+      e.target.value = value.slice(0, 10)
+
       if (!REGEX_PASSWORD.test(value)) {
         setErrors({ ...errors, [name]: MESSAGE_PASSWORD })
       }
