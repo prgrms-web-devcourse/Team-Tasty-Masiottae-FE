@@ -1,6 +1,7 @@
 import axios from '@lib/axios'
 import { Option } from '@interfaces'
 import { useMutation } from '@tanstack/react-query'
+import { getToken } from '@utils/cookie'
 
 interface Data {
   franchiseId: number
@@ -12,12 +13,11 @@ interface Data {
   tasteIdList: number[]
 }
 interface Params {
-  token: string
   image: File | null
   data: Data
 }
 
-export const postMenu = async ({ token, image, data }: Params) => {
+export const postMenu = async ({ image, data }: Params) => {
   const formData = new FormData()
   if (image) {
     formData.append('image', image)
@@ -28,7 +28,6 @@ export const postMenu = async ({ token, image, data }: Params) => {
       type: 'application/json'
     })
   )
-  console.log(image, JSON.stringify(data))
 
   const { data: MenuId } = await axios.post<{ menuId: number }>(
     `/menu`,
@@ -36,7 +35,7 @@ export const postMenu = async ({ token, image, data }: Params) => {
     {
       headers: {
         'Content-Type': 'multipart/form-data',
-        Authorization: `${token}`
+        Authorization: `${getToken()}`
       }
     }
   )

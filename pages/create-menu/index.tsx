@@ -6,9 +6,7 @@ import ImageUploader from '@components/ImageUploader'
 import Button from '@components/Button'
 import { Option } from '@customTypes/index'
 import { usePostMenu } from '@hooks/mutations/usePostMenuMutation'
-
 import { InputList } from '@components/create-menu/InputList'
-import { getToken } from '@utils/cookie'
 
 export interface InputListType {
   franchiseId: number
@@ -67,7 +65,7 @@ const CreateMenu = () => {
       tasteIdList
     }
     mutate(
-      { token: getToken(), image: file, data },
+      { image: file, data },
       {
         onSuccess: (data) => {
           router.replace(`/detail/${data.menuId}`)

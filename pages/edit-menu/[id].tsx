@@ -27,7 +27,6 @@ const EditMenu = () => {
   const router = useRouter()
   const { id } = router.query
   const user = useRecoilValue(currentUser)
-  console.log(user)
   const { mutate } = useChangeMenu()
   const { data: menuData } = useMenu(Number(id))
   useEffect(() => {
