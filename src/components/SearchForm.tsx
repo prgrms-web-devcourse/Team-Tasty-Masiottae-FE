@@ -121,7 +121,7 @@ const Text = styled.span`
 const FilterModal = styled(Modal)`
   border-radius: 1rem;
   margin-top: 2rem;
-  top: 10rem;
+  top: 20rem;
 `
 
 export default SearchForm
