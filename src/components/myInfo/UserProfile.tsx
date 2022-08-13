@@ -147,7 +147,7 @@ const ProfileModal = styled(Modal)`
   display: flex;
   flex-direction: column;
   align-items: center;
-  top: 40%;
+  top: 10rem;
 `
 
 const ModalTitle = styled.div`
@@ -223,8 +223,9 @@ const Text = styled.div`
   font-weight: 700;
 `
 const EditNameIcon = styled(BsFillPencilFill)`
-  width: 2rem;
-  height: 2rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-top: 0.3rem;
 `
 
 export default UserProfile

@@ -59,8 +59,8 @@ const BackgroundDim = styled.div<{ visible: boolean }>`
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 1000;
 `
@@ -74,7 +74,7 @@ const ModalContainer = styled.div<{
   justify-content: ${({ option }) => (option === 'drawer' ? '' : 'center')};
   position: fixed;
   top: ${({ option }) => (option === 'drawer' ? '' : '50%')};
-  bottom: ${({ option }) => (option === 'drawer' ? '0' : '')};
+  bottom: ${({ option }) => (option === 'drawer' ? '8rem' : '')};
   left: 50%;
   transform: translate(-50%, 0%);
   width: ${({ option }) => (option === 'drawer' ? `100%` : '45rem')};

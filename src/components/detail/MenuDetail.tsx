@@ -178,14 +178,14 @@ const Header = styled(Flex)`
 const LeftHeader = styled.div``
 
 const FranchiseText = styled.div`
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   font-weight: 700;
   color: #a3a3a3;
   margin-bottom: 0.8rem;
 `
 
 const Title = styled.div`
-  font-size: 2.8rem;
+  font-size: 3rem;
   font-weight: 700;
 `
 
@@ -194,7 +194,7 @@ const RightHeader = styled(Flex)<{ guest: boolean }>`
   align-items: center;
   position: relative;
   top: -2rem;
-  left: ${({ guest }) => (guest ? '2rem' : '0')};
+  left: ${({ guest }) => (guest ? '3rem' : '1.5rem')};
 `
 
 const EmptyHeart = styled(IoMdHeart)`
@@ -225,9 +225,11 @@ const Dots = styled(BiDotsVerticalRounded)`
 `
 
 const ModalItem = styled(Flex)`
-  font-size: 2rem;
+  font-size: 2.4rem;
+  height: 4rem;
   justify-content: center;
-  width: 100vw;
+  align-items: center;
+  width: 100%;
   max-width: 50rem;
   cursor: pointer;
 
@@ -259,16 +261,16 @@ const OptionsWrapper = styled(Flex)`
 `
 
 const OriginalTitle = styled.div`
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   font-weight: 700;
 `
 
 const OptionText = styled.span`
-  font-size: 1.4rem;
+  font-size: 1.6rem;
 `
 
 const PriceText = styled.span`
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   font-weight: 700;
   align-self: flex-end;
 `
@@ -285,11 +287,12 @@ const UserNameText = styled.div`
 `
 
 const TagContainer = styled(Flex)`
-  gap: 1rem;
+  width: 100%;
+  gap: 0.4rem;
+  overflow-x: scroll;
 `
 
 const Tag = styled(Flex)<{ color: string }>`
-  display: flex;
   align-items: center;
   color: white;
   font-size: 1.8rem;
