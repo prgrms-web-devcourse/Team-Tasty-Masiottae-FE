@@ -1,7 +1,6 @@
 import styled from '@emotion/styled'
 import { IoMdHeart } from 'react-icons/io'
 import { BiComment } from 'react-icons/bi'
-import Avatar from './Avatar'
 import theme from '@constants/theme'
 
 const SkeletonCardList = () => {
@@ -70,50 +69,47 @@ const SkeletonDiv = styled.div`
   }
 `
 
-const Container = styled.div`
+const Flex = styled.div`
   display: flex;
+`
+
+const Container = styled(Flex)`
   flex-direction: column;
   gap: 0.5rem;
   margin-top: 0.5rem;
 `
 
-const UserInfoWrapper = styled.div`
-  display: flex;
+const UserInfoWrapper = styled(Flex)`
   justify-content: flex-end;
   align-items: center;
   gap: 1rem;
 `
 
-const PostInfoWrapper = styled.div`
-  display: flex;
+const PostInfoWrapper = styled(Flex)`
   justify-content: flex-end;
   align-items: center;
   gap: 1rem;
 `
 
-const CardHeader = styled.div`
-  display: flex;
+const CardHeader = styled(Flex)`
   flex-direction: column;
   gap: 0.3rem;
   padding: 0.5rem;
 `
-const CardFooter = styled.div`
-  display: flex;
+const CardFooter = styled(Flex)`
   flex-direction: column;
   gap: 1rem;
   padding: 0.5rem;
 `
 
-const CardContainer = styled.div`
-  display: flex;
+const CardContainer = styled(Flex)`
   width: 100%;
   border-radius: 1rem;
   gap: 1rem;
   cursor: pointer;
 `
 
-const CardInfo = styled.div`
-  display: flex;
+const CardInfo = styled(Flex)`
   width: 100%;
   flex-direction: column;
   justify-content: space-between;
