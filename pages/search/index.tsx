@@ -23,6 +23,7 @@ const Category = () => {
 
 const FixedWrapper = styled.div`
   position: fixed;
+  top: 6.4rem;
   left: 0;
   width: 100%;
 `
