@@ -1,32 +1,27 @@
 import { NextResponse } from 'next/server'
 import type { NextFetchEvent, NextRequest } from 'next/server'
 import { TOKEN_KEY } from '@constants/token'
-import {
-  CREATE_MENU_URL,
-  EDIT_MENU_URL,
-  MYINFO_URL,
-  PASSWORD_CHANGE_URL,
-  USER_URL,
-  LOGIN_URL,
-  SIGNUP_URL
-} from '@constants/pageUrl'
-const TOKEN_REQUIRED_URL_LIST = [
-  CREATE_MENU_URL,
-  MYINFO_URL,
-  PASSWORD_CHANGE_URL,
-  EDIT_MENU_URL,
-  USER_URL,
-  SIGNUP_URL
-]
+import { SIGNUP_URL, LOGIN_URL, HOME_URL } from '@constants/pageUrl'
 
 export function middleware(req: NextRequest, ev: NextFetchEvent) {
   const { pathname } = req.nextUrl
-  if (
-    TOKEN_REQUIRED_URL_LIST.includes(pathname) &&
-    !req.cookies.get(TOKEN_KEY)
-  ) {
-    const url = req.nextUrl.clone()
-    url.pathname = LOGIN_URL
-    return NextResponse.redirect(`${url}`)
+  const url = req.nextUrl.clone()
+  if (pathname === SIGNUP_URL && req.cookies.get(TOKEN_KEY)) {
+    url.pathname = HOME_URL
+    return NextResponse.redirect(url)
   }
+  if (pathname !== SIGNUP_URL && !req.cookies.get(TOKEN_KEY)) {
+    url.pathname = LOGIN_URL
+    return NextResponse.redirect(url)
+  }
+}
+
+export const config = {
+  matcher: [
+    '/create-menu',
+    '/edit-menu/:path*',
+    '/myInfo/:path*',
+    '/user/:path*',
+    '/signup'
+  ]
 }

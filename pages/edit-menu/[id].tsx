@@ -12,6 +12,7 @@ import { useRecoilValue } from 'recoil'
 import { currentUser } from '@recoil/currentUser'
 
 import { getToken } from '@utils/cookie'
+import Spinner from '@components/Spinner'
 export interface InputListType {
   franchiseId: number
   title: string
@@ -27,7 +28,7 @@ const EditMenu = () => {
   const router = useRouter()
   const { id } = router.query
   const user = useRecoilValue(currentUser)
-  const { mutate } = useChangeMenu()
+  const { mutate, isLoading } = useChangeMenu()
   const { data: menuData } = useMenu(Number(id))
   useEffect(() => {
     if (menuData) {
@@ -108,7 +109,7 @@ const EditMenu = () => {
       content: ''
     }
     mutate(
-      { token: getToken(), menuId: Number(id), image: file, data: data },
+      { menuId: Number(id), image: file, data: data },
       {
         onSuccess: () => {
           router.replace(`/detail/${id}`)
@@ -119,6 +120,7 @@ const EditMenu = () => {
 
   return (
     <FlexContainer>
+      {isLoading ? <Spinner /> : ''}
       <ImageUploaderWrapper>
         <ImageUploader
           value={menuData?.image}

@@ -7,6 +7,7 @@ import Button from '@components/Button'
 import { Option } from '@customTypes/index'
 import { usePostMenu } from '@hooks/mutations/usePostMenuMutation'
 import { InputList } from '@components/create-menu/InputList'
+import Spinner from '@components/Spinner'
 
 export interface InputListType {
   franchiseId: number
@@ -20,7 +21,7 @@ export interface InputListType {
 const CreateMenu = () => {
   // 필드 값
   const router = useRouter()
-  const { mutate } = usePostMenu()
+  const { mutate, isLoading } = usePostMenu()
 
   const [file, setFile] = useState<File | null>(null)
   const [franchiseId, setFranchiseId] = useState<number>(0)
@@ -90,33 +91,46 @@ const CreateMenu = () => {
   }
 
   return (
-    <FlexContainer>
-      <ImageUploaderWrapper>
-        <ImageUploader isDeletable={true} onChange={handleImageChange} />
-      </ImageUploaderWrapper>
-      <InputList
-        franchiseId={franchiseId}
-        title={title}
-        originalTitle={originalTitle}
-        optionList={optionList}
-        expectedPrice={expectedPrice}
-        isPriceButtonClicked={isPriceButtonClicked}
-        onChange={handleInputChange}
-      ></InputList>
-      <SubTitle>맛</SubTitle>
-      <TagContainer
-        selectedTasteIdList={tasteIdList}
-        onChange={handleTagListChange}
-      />
-      <SubmitButton
-        color={'#fff'}
-        backgroundColor={'#000'}
-        disabled={checkButtonDisabled()}
-        onClick={handleEditSubmit}
-      >
-        등록 하기
-      </SubmitButton>
-    </FlexContainer>
+    <>
+      <FlexContainer>
+        {isLoading ? <Spinner /> : ''}
+        <ImageUploaderWrapper>
+          <ImageUploader isDeletable={true} onChange={handleImageChange} />
+        </ImageUploaderWrapper>
+        <InputList
+          franchiseId={franchiseId}
+          title={title}
+          originalTitle={originalTitle}
+          optionList={optionList}
+          expectedPrice={expectedPrice}
+          isPriceButtonClicked={isPriceButtonClicked}
+          onChange={handleInputChange}
+        ></InputList>
+        <SubTitle>맛</SubTitle>
+        <TagContainer
+          selectedTasteIdList={tasteIdList}
+          onChange={handleTagListChange}
+        />
+        <SubmitButton
+          color={'#fff'}
+          backgroundColor={'#000'}
+          disabled={
+            !(
+              franchiseId &&
+              title &&
+              originalTitle &&
+              optionList.filter((option) => option.name && option.description)
+                .length &&
+              tasteIdList.length &&
+              (isPriceButtonClicked || expectedPrice > 0)
+            )
+          }
+          onClick={handleEditSubmit}
+        >
+          등록 하기
+        </SubmitButton>
+      </FlexContainer>
+    </>
   )
 }
 

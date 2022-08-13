@@ -15,12 +15,11 @@ interface Data {
 }
 interface Params {
   menuId: number
-  token: string
   image: File | null
   data: Data
 }
 
-export const patchMenu = async ({ token, menuId, image, data }: Params) => {
+export const patchMenu = async ({ menuId, image, data }: Params) => {
   const formData = new FormData()
   if (image) {
     formData.append('image', image)
