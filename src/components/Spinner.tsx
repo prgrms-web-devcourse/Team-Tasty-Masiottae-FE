@@ -9,24 +9,27 @@ const LOGO_LETTER_URL = [
 
 const Spinner = () => {
   return (
-    <LogoContainer>
+    <Container>
       <Background />
       {LOGO_LETTER_URL.map((url, idx) => (
         <LogoLetter key={idx} url={url} idx={idx} />
       ))}
-    </LogoContainer>
+    </Container>
   )
 }
 export default Spinner
-const LogoContainer = styled.div`
+const Container = styled.div`
   position: fixed;
-  width: 500px;
+  width: 50rem;
   height: ${(props) =>
     `calc(100vh - ${props.theme.layout.headerHeight} - ${props.theme.layout.navHeight} )`};
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1;
+  @media all and (max-width: 500px) {
+    width: 100%;
+  }
 `
 const LogoLetter = styled.div<{ url: string; idx: number }>`
   width: 3.2rem;
