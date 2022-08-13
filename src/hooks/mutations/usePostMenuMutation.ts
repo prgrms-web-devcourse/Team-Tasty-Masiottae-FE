@@ -36,7 +36,6 @@ export const postMenu = async ({ image, data }: Params) => {
       headers: { 'Content-Type': 'multipart/form-data' }
     }
   )
-
   return MenuId
 }
 
