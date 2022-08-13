@@ -6,10 +6,9 @@ import FranchiseInfo from './FranchiseInfo'
 
 interface Props {
   franchiseList: Franchise[]
-  isLoading: boolean
 }
 
-const FranchiseInfoList = ({ franchiseList, isLoading }: Props) => {
+const FranchiseInfoList = ({ franchiseList }: Props) => {
   return (
     <BoxContainer>
       <BoxWrapper>
@@ -17,7 +16,6 @@ const FranchiseInfoList = ({ franchiseList, isLoading }: Props) => {
           <a>
             <FranchiseInfo
               franchise={{ id: 0, name: '전체', image: '/ALL.png' }}
-              isLoading={isLoading}
             />
           </a>
         </Link>
@@ -27,7 +25,7 @@ const FranchiseInfoList = ({ franchiseList, isLoading }: Props) => {
         <BoxWrapper key={franchise.id}>
           <Link href={`/search/${franchise.id}`}>
             <a>
-              <FranchiseInfo franchise={franchise} isLoading={isLoading} />
+              <FranchiseInfo franchise={franchise} />
             </a>
           </Link>
         </BoxWrapper>

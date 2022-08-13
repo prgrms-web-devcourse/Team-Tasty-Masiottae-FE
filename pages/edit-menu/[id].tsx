@@ -10,6 +10,7 @@ import { useRouter } from 'next/router'
 import { InputList } from '@components/create-menu/InputList'
 import { useRecoilState } from 'recoil'
 import { currentUser } from '@recoil/currentUser'
+import Spinner from '@components/Spinner'
 export interface InputListType {
   franchiseId: number
   title: string
@@ -25,7 +26,7 @@ const EditMenu = () => {
   const router = useRouter()
   const { id } = router.query
 
-  const { mutate } = useChangeMenu()
+  const { mutate, isLoading } = useChangeMenu()
   const { data: menuData } = useMenu(Number(id))
   useEffect(() => {
     if (menuData) {
@@ -97,6 +98,7 @@ const EditMenu = () => {
 
   return (
     <FlexContainer>
+      {isLoading ? <Spinner /> : ''}
       <ImageUploaderWrapper>
         <ImageUploader
           value={menuData?.image}
