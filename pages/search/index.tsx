@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 import { useFranchiseList } from '@hooks/queries/useFranchiseList'
 import FranchiseInfoList from '@components/FranchiseInfoList'
+import SkeletonFranchiseList from '@components/SkeletonFranchiseList'
 
 const Category = () => {
   const { franchiseList, isLoading } = useFranchiseList()
@@ -11,10 +12,11 @@ const Category = () => {
           <Header>카테고리</Header>
         </InnerWrapper>
       </FixedWrapper>
-      <FranchiseInfoList
-        franchiseList={franchiseList || []}
-        isLoading={isLoading}
-      />
+      {isLoading ? (
+        <SkeletonFranchiseList />
+      ) : (
+        <FranchiseInfoList franchiseList={franchiseList || []} />
+      )}
     </>
   )
 }
