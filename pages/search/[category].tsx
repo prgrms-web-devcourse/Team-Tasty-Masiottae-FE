@@ -8,6 +8,7 @@ import { useFranchiseList } from '@hooks/queries/useFranchiseList'
 import { useEffect, useState } from 'react'
 import { useSearchMenuList } from '@hooks/queries/useSearchMenuList'
 import { SearchFormOptions, searchParams } from '@interfaces'
+import SkeletonCardList from '@components/SkeletonCardList'
 
 const Search = () => {
   const router = useRouter()
@@ -16,8 +17,7 @@ const Search = () => {
     offset: 0,
     limit: 10
   })
-  const { franchiseList, isLoading: isFranchiseListLoading } =
-    useFranchiseList()
+  const { franchiseList } = useFranchiseList()
   const {
     menuList,
     isLoading: isMenuListLoading,
@@ -53,19 +53,16 @@ const Search = () => {
     <Container>
       <FixedWrapper>
         <InnerWrapper>
-          <FranchiseInfo
-            franchise={getFranchise()}
-            isLoading={isFranchiseListLoading}
-          />
+          <FranchiseInfo franchise={getFranchise()} />
           <SearchForm onSubmit={handleSubmit} />
         </InnerWrapper>
       </FixedWrapper>
       <CardListWrapper>
-        <MenuCardList
-          menuList={menuList || []}
-          divRef={ref}
-          isLoading={isMenuListLoading}
-        />
+        {isMenuListLoading ? (
+          <SkeletonCardList />
+        ) : (
+          <MenuCardList menuList={menuList || []} divRef={ref} />
+        )}
       </CardListWrapper>
     </Container>
   )

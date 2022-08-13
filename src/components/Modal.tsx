@@ -76,7 +76,10 @@ const ModalContainer = styled.div<{
   top: ${({ option }) => (option === 'drawer' ? '' : '50%')};
   bottom: ${({ option }) => (option === 'drawer' ? '0' : '')};
   left: 50%;
-  transform: translate(-50%, 0%);
+  transform: translate(
+    -50%,
+    ${({ option }) => (option === 'drawer' ? '0' : '-50%')}
+  );
   width: ${({ option }) => (option === 'drawer' ? `100%` : '45rem')};
   max-width: 50rem;
   height: ${({ height }) => `${height}rem`};
