@@ -8,6 +8,8 @@ import { useMenu } from '@hooks/queries/useMenu'
 import { useChangeMenu } from '@hooks/mutations/useChangeMenuMutation'
 import { useRouter } from 'next/router'
 import { InputList } from '@components/create-menu/InputList'
+import { useRecoilValue } from 'recoil'
+import { currentUser } from '@recoil/currentUser'
 
 import { getToken } from '@utils/cookie'
 export interface InputListType {
@@ -24,11 +26,17 @@ const EditMenu = () => {
 
   const router = useRouter()
   const { id } = router.query
-
+  const user = useRecoilValue(currentUser)
+  console.log(user)
   const { mutate } = useChangeMenu()
   const { data: menuData } = useMenu(Number(id))
   useEffect(() => {
     if (menuData) {
+      if (menuData.author.id !== user.id) {
+        alert('글쓴이만 수정할 수 있어요')
+        router.replace(`/detail/${id}`)
+      }
+
       setFranchiseId(menuData.franchise.id)
       setTitle(menuData.title)
       setOriginalTitle(menuData.originalTitle)
@@ -49,6 +57,17 @@ const EditMenu = () => {
   const [isPriceButtonClicked, setIsPriceButtonClicked] = useState(false)
 
   const [tasteIdList, setTasteIdList] = useState<number[]>([])
+
+  const checkButtonDisabled = () => {
+    return !(
+      franchiseId &&
+      title &&
+      originalTitle &&
+      optionList.filter((option) => option.name && option.description).length &&
+      tasteIdList.length &&
+      (isPriceButtonClicked || expectedPrice > 0)
+    )
+  }
 
   const handleInputChange = ({
     franchiseId,
@@ -125,17 +144,7 @@ const EditMenu = () => {
       <SubmitButton
         color={'#fff'}
         backgroundColor={'#000'}
-        disabled={
-          !(
-            franchiseId &&
-            title &&
-            originalTitle &&
-            optionList.filter(({ name, description }) => name && description)
-              .length &&
-            tasteIdList.length &&
-            (expectedPrice || isPriceButtonClicked)
-          )
-        }
+        disabled={checkButtonDisabled()}
         onClick={handleEditSubmit}
       >
         수정 하기

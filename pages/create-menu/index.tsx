@@ -33,6 +33,17 @@ const CreateMenu = () => {
   const [expectedPrice, setExpectedPrice] = useState(0)
   const [isPriceButtonClicked, setIsPriceButtonClicked] = useState(false)
 
+  const checkButtonDisabled = () => {
+    return !(
+      franchiseId &&
+      title &&
+      originalTitle &&
+      optionList.filter((option) => option.name && option.description).length &&
+      tasteIdList.length &&
+      (isPriceButtonClicked || expectedPrice > 0)
+    )
+  }
+
   const handleImageChange = (file: File | null) => {
     setFile(file)
   }
@@ -102,17 +113,7 @@ const CreateMenu = () => {
       <SubmitButton
         color={'#fff'}
         backgroundColor={'#000'}
-        disabled={
-          !(
-            franchiseId &&
-            title &&
-            originalTitle &&
-            optionList.filter((option) => option.name && option.description)
-              .length &&
-            tasteIdList.length &&
-            (isPriceButtonClicked || expectedPrice > 0)
-          )
-        }
+        disabled={checkButtonDisabled()}
         onClick={handleEditSubmit}
       >
         등록 하기
