@@ -23,7 +23,6 @@ const MenuCardList = ({ menuList, divRef }: Props) => {
             <Link href={`/detail/${menu.id}`}>
               <a>
                 <MenuCard
-                  key={idx}
                   title={menu.title}
                   franchise={menu.franchise.name}
                   imageUrl={menu.image}
