@@ -87,7 +87,7 @@ const CreateMenu = () => {
   return (
     <>
       <FlexContainer>
-        {<Spinner />}
+        {isLoading ? <Spinner /> : ''}
         <ImageUploaderWrapper>
           <ImageUploader isDeletable={true} onChange={handleImageChange} />
         </ImageUploaderWrapper>

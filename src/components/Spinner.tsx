@@ -37,8 +37,8 @@ const LogoLetter = styled.div<{ url: string; idx: number }>`
   background-image: ${({ url }) => `url(${url})`};
   background-repeat: no-repeat;
   background-size: cover;
-  animation: ball 1s ease-in infinite alternate;
-  animation-delay: ${({ idx }) => `${idx * 0.5}s`};
+  animation: ball 0.5s ease-in infinite alternate;
+  animation-delay: ${({ idx }) => `-${(4 - idx) * 0.25}s`};
   @keyframes ball {
     0% {
       margin-bottom: 1rem;
