@@ -18,13 +18,16 @@ const FilterForm = ({ tasteIdList, onSubmit, onChange, onClose }: Props) => {
       <TagContainer
         selectedTasteIdList={tasteIdList}
         backgroundColor="white"
-        gap={2}
-        tagHeight={3.3}
+        gap={0.8}
+        height={15}
+        tagHeight={3}
         onChange={onChange}
       />
       <FormButton
         backgroundColor={theme.color.mainBlack}
         onClick={onClose}
+        height={5.6}
+        fontSize={1.6}
         color={theme.color.mainWhite}
       >
         필터 적용
@@ -35,6 +38,7 @@ const FilterForm = ({ tasteIdList, onSubmit, onChange, onClose }: Props) => {
 
 const FormButton = styled(Button)`
   font-weight: 700;
+  margin-bottom: -0.5rem;
 `
 
 const Title = styled.div`
