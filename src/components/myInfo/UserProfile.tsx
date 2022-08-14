@@ -98,6 +98,7 @@ const UserProfile = () => {
         alt={user.nickName}
         width={140}
         height={140}
+        objectFit="cover"
         onClick={handleProfileModalOpen}
       />
       {isNameEditorOpen ? (
@@ -147,7 +148,7 @@ const ProfileModal = styled(Modal)`
   display: flex;
   flex-direction: column;
   align-items: center;
-  top: 40%;
+  top: 25rem;
 `
 
 const ModalTitle = styled.div`
@@ -223,8 +224,9 @@ const Text = styled.div`
   font-weight: 700;
 `
 const EditNameIcon = styled(BsFillPencilFill)`
-  width: 2rem;
-  height: 2rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-top: 0.3rem;
 `
 
 export default UserProfile
