@@ -5,6 +5,7 @@ import { BiComment } from 'react-icons/bi'
 import { RefObject } from 'react'
 import theme from '@constants/theme'
 import { useFranchiseList } from '../hooks/queries/useFranchiseList'
+import { NO_IMAGE } from '@constants/image'
 
 interface Props {
   title: string
@@ -30,8 +31,7 @@ const MenuCard = ({
   const { franchiseList } = useFranchiseList()
 
   if (!imageUrl) {
-    imageUrl =
-      franchiseList?.filter((data) => data.name === franchise)[0]['image'] || ''
+    imageUrl = NO_IMAGE
   }
 
   return (
