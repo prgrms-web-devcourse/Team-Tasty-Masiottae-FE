@@ -3,13 +3,14 @@ import { BsFilterLeft } from 'react-icons/bs'
 import Input from '@components/Input'
 import { FiSearch } from 'react-icons/fi'
 import Modal from './Modal'
-import { useState, ChangeEvent, FormEvent } from 'react'
+import { useState, ChangeEvent, FormEvent, useEffect } from 'react'
 import { SearchFormOptions } from '@interfaces'
 import SortOption from './SortOption'
 import FilterForm from './FilterForm'
 
 interface Props {
   onSubmit: (values: SearchFormOptions) => void
+  searchDomain?: string
 }
 
 interface SortOption {
@@ -19,11 +20,17 @@ interface SortOption {
 
 const PLACEHOLDER_SEARCH_INPUT = '메뉴 검색'
 
-const SearchForm = ({ onSubmit }: Props) => {
+const SearchForm = ({ onSubmit, searchDomain }: Props) => {
   const [modalVisible, setModalVisible] = useState(false)
   const [tasteIdList, setTasteIdList] = useState<number[]>([])
   const [keyword, setKeyword] = useState('')
   const [sort, setSort] = useState('recent')
+
+  useEffect(() => {
+    setTasteIdList([])
+    setSort('recent')
+    setKeyword('')
+  }, [searchDomain])
 
   const handleFilterClick = () => setModalVisible(true)
   const handleModalClose = () => setModalVisible(false)
