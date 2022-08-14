@@ -238,6 +238,8 @@ const Dots = styled(BiDotsVerticalRounded)`
 `
 
 const ModalItem = styled(Flex)`
+  align-items: center;
+  height: 5rem;
   font-size: 2rem;
   justify-content: center;
   width: 100vw;
