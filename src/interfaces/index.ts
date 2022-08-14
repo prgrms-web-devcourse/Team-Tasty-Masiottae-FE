@@ -58,6 +58,7 @@ export interface searchParams {
   offset: number
   limit: number
   option?: { label: string; value: string }
+  accountId?: number
 }
 
 export interface SearchFormOptions {
