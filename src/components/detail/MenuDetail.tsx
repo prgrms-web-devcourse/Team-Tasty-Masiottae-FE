@@ -185,6 +185,7 @@ const FranchiseText = styled.div`
 `
 
 const Title = styled.div`
+  max-width: 30rem;
   font-size: 2.8rem;
   font-weight: 700;
 `
@@ -286,6 +287,7 @@ const UserNameText = styled.div`
 
 const TagContainer = styled(Flex)`
   gap: 1rem;
+  flex-wrap: wrap;
 `
 
 const Tag = styled(Flex)<{ color: string }>`
