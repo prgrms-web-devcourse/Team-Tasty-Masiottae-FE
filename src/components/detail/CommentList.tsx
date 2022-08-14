@@ -89,7 +89,7 @@ const Flex = styled.div`
 const CommentListContainer = styled.div``
 
 const CommnetCountText = styled.div`
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   font-weight: 700;
   margin-bottom: 2rem;
 `
@@ -116,12 +116,12 @@ const NameAndDateWrapper = styled(Flex)`
 `
 
 const UserNameText = styled.div`
-  font-size: 1.2rem;
+  font-size: 1.6rem;
   font-weight: 700;
 `
 
 const DateText = styled.span`
-  margin-left: 1rem;
+  margin-left: 1.4rem;
   color: #a3a3a3;
 `
 
@@ -131,7 +131,7 @@ const Dots = styled(BiDotsHorizontalRounded)`
 `
 
 const CommentText = styled.div`
-  font-size: 1.4rem;
+  font-size: 1.6rem;
 `
 
 const ModalItem = styled(Flex)`

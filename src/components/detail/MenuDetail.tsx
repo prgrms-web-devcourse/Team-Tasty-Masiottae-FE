@@ -12,7 +12,7 @@ import { usePostLikeMutation } from '@hooks/mutations/usePostLikeMutation'
 
 interface Props {
   menu: Menu
-  userId: number
+  userId: number | null
 }
 
 const MenuDetail = ({ menu, userId }: Props) => {
@@ -259,12 +259,12 @@ const OptionsWrapper = styled(Flex)`
 `
 
 const OriginalTitle = styled.div`
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   font-weight: 700;
 `
 
 const OptionText = styled.span`
-  font-size: 1.4rem;
+  font-size: 1.6rem;
 `
 
 const PriceText = styled.span`
