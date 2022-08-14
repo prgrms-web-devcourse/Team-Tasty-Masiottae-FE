@@ -3,16 +3,11 @@ import { useRouter } from 'next/router'
 import { IoChevronBackSharp } from 'react-icons/io5'
 import { FiLogIn, FiUser } from 'react-icons/fi'
 import Link from 'next/link'
-import { useEffect, useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import { MYINFO_URL, LOGIN_URL, USER_URL, HOME_URL } from '@constants/pageUrl'
-import { TOKEN_KEY } from '@constants/token'
+import { getToken } from '@utils/cookie'
 import { SMALL_LOGO } from '@constants/image'
 import Image from 'next/image'
-import { GetServerSidePropsContext } from 'next'
-
-interface Props {
-  token?: string
-}
 
 type IconType = {
   selected?: boolean
@@ -21,10 +16,16 @@ type IconType = {
 const TITLE_MYINFO = '내정보'
 const TITLE_USER = '메뉴판'
 
-export const Header = (token: Props) => {
+export const Header = () => {
   const router = useRouter()
   const { pathname } = router
   const [title, setTitle] = useState('')
+
+  const [token, setToken] = useState('')
+
+  useEffect(() => {
+    setToken(getToken() || '')
+  }, [token, pathname])
 
   const onClickPrev = () => {
     router.back()
@@ -82,16 +83,6 @@ export const Header = (token: Props) => {
       )}
     </HeaderContainer>
   )
-}
-
-export const getServerSideProps = async (
-  context: GetServerSidePropsContext
-) => {
-  if (!context.req.cookies[TOKEN_KEY]) {
-    return
-  }
-
-  return context.req.cookies[TOKEN_KEY]
 }
 
 const HeaderContainer = styled.div`
