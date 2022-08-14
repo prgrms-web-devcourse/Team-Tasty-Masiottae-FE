@@ -4,7 +4,6 @@ import { IoMdHeart } from 'react-icons/io'
 import { BiComment } from 'react-icons/bi'
 import { RefObject } from 'react'
 import theme from '@constants/theme'
-import { useFranchiseList } from '../hooks/queries/useFranchiseList'
 import { NO_IMAGE } from '@constants/image'
 
 interface Props {
@@ -28,8 +27,6 @@ const MenuCard = ({
   comments,
   divRef
 }: Props) => {
-  const { franchiseList } = useFranchiseList()
-
   if (!imageUrl) {
     imageUrl = NO_IMAGE
   }

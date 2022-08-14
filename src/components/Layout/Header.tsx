@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import { IoChevronBackSharp } from 'react-icons/io5'
 import { FiLogIn, FiUser } from 'react-icons/fi'
 import Link from 'next/link'
-import { useEffect, useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import { MYINFO_URL, LOGIN_URL, USER_URL, HOME_URL } from '@constants/pageUrl'
 import { getToken } from '@utils/cookie'
 import { SMALL_LOGO } from '@constants/image'
@@ -13,31 +13,30 @@ type IconType = {
   selected?: boolean
 }
 
-const MYINFO = '내정보'
-const USER = '메뉴판'
+const TITLE_MYINFO = '내정보'
+const TITLE_USER = '메뉴판'
 
 export const Header = () => {
   const router = useRouter()
   const { pathname } = router
   const [title, setTitle] = useState('')
+
   const [token, setToken] = useState('')
+
+  useEffect(() => {
+    setToken(getToken() || '')
+  }, [token, pathname])
 
   const onClickPrev = () => {
     router.back()
   }
 
-  useEffect(() => {
-    if (pathname === LOGIN_URL || pathname === HOME_URL) {
-      setToken(getToken() || '')
-    }
-  }, [token, pathname])
-
   const handlePathChange = useCallback((pathname: string) => {
     if (pathname === MYINFO_URL) {
-      setTitle(MYINFO)
+      setTitle(TITLE_MYINFO)
     }
     if (pathname.includes(USER_URL)) {
-      setTitle(USER)
+      setTitle(TITLE_USER)
     }
   }, [])
 

@@ -59,7 +59,7 @@ const Search = () => {
       </FixedWrapper>
       <CardListWrapper>
         {isMenuListLoading ? (
-          <SkeletonCardList />
+          <SkeletonCardList size={2} />
         ) : (
           <MenuCardList menuList={menuList || []} divRef={ref} />
         )}
