@@ -23,6 +23,13 @@ const MenuDetail = ({ menu, userId }: Props) => {
   const [isLikeClicked, setIsLikeClicked] = useState(false)
   const { mutate: postLike } = usePostLikeMutation({ menuId: menu.id })
 
+  const handleUserClick = (userId: number | null) => {
+    if (!userId) {
+      return
+    }
+    router.push(`/user/${userId}`)
+  }
+
   const handleHeartClick = () => {
     postLike(
       {
@@ -59,7 +66,7 @@ const MenuDetail = ({ menu, userId }: Props) => {
       }
     )
   }
-  console.log(menu.image)
+
   return (
     <>
       <MenuContainer>
@@ -90,7 +97,7 @@ const MenuDetail = ({ menu, userId }: Props) => {
           </RightHeader>
         </Header>
 
-        <UserWrapper>
+        <UserWrapper onClick={() => handleUserClick(menu.author.id)}>
           <Avatar size={4} src={menu.author.image} isLoading={false} />
           <UserNameText>{menu.author.nickName}</UserNameText>
         </UserWrapper>
@@ -288,6 +295,7 @@ const UserNameText = styled.div`
   font-size: 2rem;
   font-weight: 700;
   margin-left: 1.2rem;
+  cursor: pointer;
 `
 
 const TagContainer = styled(Flex)`

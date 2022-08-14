@@ -13,6 +13,7 @@ const Avatar = styled.div<Props>`
     isLoading ? `gray` : `no-repeat top center url(${src})`};
   background-size: cover;
   border-radius: 50%;
+  cursor: pointer;
 `
 
 export default Avatar
