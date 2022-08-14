@@ -37,6 +37,7 @@ const InnerWrapper = styled.div`
   margin: 0 auto;
   padding-bottom: 0.5rem;
   box-sizing: border-box;
+  opacity: 0.99;
 
   @media screen and (max-width: 31.25rem) {
     padding: 0 2rem;

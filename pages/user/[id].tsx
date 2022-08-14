@@ -97,7 +97,7 @@ const UserMenu = () => {
 
       <CardListContainer>
         {isMenuLoading ? (
-          <SkeletonCardList />
+          <SkeletonCardList size={2} />
         ) : (
           <MenuCardList menuList={menuList || []} divRef={ref} />
         )}
