@@ -8,6 +8,7 @@ import { Option } from '@customTypes/index'
 import { usePostMenu } from '@hooks/mutations/usePostMenuMutation'
 import { InputList } from '@components/create-menu/InputList'
 import Spinner from '@components/Spinner'
+import useRouterLoading from '@hooks/useRouterLoading'
 
 export interface InputListType {
   franchiseId: number
@@ -21,18 +22,7 @@ export interface InputListType {
 const CreateMenu = () => {
   // 필드 값
   const router = useRouter()
-  const [isRouterChange, setIsRouterChange] = useState(false)
-  const handleRouteChangeStart = useCallback(() => {
-    setIsRouterChange((isChange) => !isChange)
-  }, [])
-
-  useEffect(() => {
-    router.events.on('routeChangeStart', handleRouteChangeStart)
-    return () => {
-      router.events.off('routeChangeStart', handleRouteChangeStart)
-    }
-  }, [handleRouteChangeStart, router.events])
-
+  const isRouterLoading = useRouterLoading()
   const { mutate, isLoading } = usePostMenu()
 
   const [file, setFile] = useState<File | null>(null)
@@ -109,7 +99,7 @@ const CreateMenu = () => {
   return (
     <>
       <FlexContainer>
-        {isRouterChange || isLoading ? <Spinner /> : ''}
+        {isRouterLoading || isLoading ? <Spinner /> : ''}
         <ImageUploaderWrapper>
           <ImageUploader isDeletable={true} onChange={handleImageChange} />
         </ImageUploaderWrapper>
