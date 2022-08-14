@@ -38,13 +38,13 @@ const MenuCard = ({
         </CardHeader>
         <CardFooter>
           <UserInfoWrapper>
-            <Avatar size={3} src={avatarImageUrl} isLoading={false} />
+            <Avatar size={2.4} src={avatarImageUrl} isLoading={false} />
             <Author>{author}</Author>
           </UserInfoWrapper>
           <PostInfoWrapper>
-            <IoMdHeart color={theme.color.mainPink} size={20} />
+            <IoMdHeart color={theme.color.mainPink} size={16} />
             <Text>{likes}</Text>
-            <BiComment size={20} />
+            <BiComment size={16} />
             <Text>{comments}</Text>
           </PostInfoWrapper>
         </CardFooter>
@@ -125,11 +125,11 @@ const PostInfoWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.4rem;
 `
 
 const Text = styled.div`
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   user-select: none;
 `
 
