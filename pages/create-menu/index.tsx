@@ -32,8 +32,11 @@ const CreateMenu = () => {
   const [expectedPrice, setExpectedPrice] = useState(0)
   const [isPriceButtonClicked, setIsPriceButtonClicked] = useState(false)
 
+  const [isSubmitted, setIsSubmitted] = useState(false)
+
   const checkButtonDisabled = () => {
     return !(
+      !isSubmitted &&
       franchiseId &&
       title &&
       originalTitle &&
@@ -52,6 +55,7 @@ const CreateMenu = () => {
   }
 
   const handleEditSubmit = async () => {
+    setIsSubmitted(true)
     setOptionList(
       optionList.filter((option) => option.name && option.description)
     )
@@ -114,7 +118,7 @@ const CreateMenu = () => {
         <SubmitButton
           color={'#fff'}
           backgroundColor={'#000'}
-          disabled={checkButtonDisabled() && true}
+          disabled={checkButtonDisabled()}
           onClick={handleEditSubmit}
         >
           등록 하기

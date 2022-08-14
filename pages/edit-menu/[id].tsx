@@ -27,8 +27,8 @@ const EditMenu = () => {
   const router = useRouter()
   const { id } = router.query
   const user = useRecoilValue(currentUser)
-  const { mutate, isLoading } = useChangeMenu()
-  const { data: menuData } = useMenu(Number(id))
+  const { mutate, isLoading: changeMenuLoading } = useChangeMenu()
+  const { data: menuData, isLoading: getMenuLoading } = useMenu(Number(id))
   useEffect(() => {
     if (menuData) {
       if (menuData.author.id !== user.id) {
@@ -54,11 +54,13 @@ const EditMenu = () => {
   const [optionList, setOptionList] = useState<Option[]>([])
   const [expectedPrice, setExpectedPrice] = useState(0)
   const [isPriceButtonClicked, setIsPriceButtonClicked] = useState(false)
-
   const [tasteIdList, setTasteIdList] = useState<number[]>([])
+
+  const [isSubmitted, setIsSubmitted] = useState(false)
 
   const checkButtonDisabled = () => {
     return !(
+      !isSubmitted &&
       franchiseId &&
       title &&
       originalTitle &&
@@ -97,6 +99,7 @@ const EditMenu = () => {
   }
 
   const handleEditSubmit = (e: React.FormEvent<HTMLButtonElement>) => {
+    setIsSubmitted(true)
     const data = {
       franchiseId,
       title,
@@ -119,7 +122,7 @@ const EditMenu = () => {
 
   return (
     <FlexContainer>
-      {isLoading ? <Spinner /> : ''}
+      {changeMenuLoading || getMenuLoading ? <Spinner /> : ''}
       <ImageUploaderWrapper>
         <ImageUploader
           value={menuData?.image}
@@ -144,7 +147,7 @@ const EditMenu = () => {
       <SubmitButton
         color={'#fff'}
         backgroundColor={'#000'}
-        disabled={checkButtonDisabled() && true}
+        disabled={checkButtonDisabled()}
         onClick={handleEditSubmit}
       >
         수정 하기
