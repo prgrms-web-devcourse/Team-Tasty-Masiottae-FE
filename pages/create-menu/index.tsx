@@ -114,17 +114,7 @@ const CreateMenu = () => {
         <SubmitButton
           color={'#fff'}
           backgroundColor={'#000'}
-          disabled={
-            !(
-              franchiseId &&
-              title &&
-              originalTitle &&
-              optionList.filter((option) => option.name && option.description)
-                .length &&
-              tasteIdList.length &&
-              (isPriceButtonClicked || expectedPrice > 0)
-            )
-          }
+          disabled={checkButtonDisabled()}
           onClick={handleEditSubmit}
         >
           등록 하기

@@ -11,7 +11,6 @@ import { InputList } from '@components/create-menu/InputList'
 import { useRecoilValue } from 'recoil'
 import { currentUser } from '@recoil/currentUser'
 
-import { getToken } from '@utils/cookie'
 import Spinner from '@components/Spinner'
 export interface InputListType {
   franchiseId: number
