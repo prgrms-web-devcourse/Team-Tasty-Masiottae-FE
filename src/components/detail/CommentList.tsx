@@ -6,6 +6,7 @@ import { BiDotsHorizontalRounded, BiTrash } from 'react-icons/bi'
 import { getDate } from '@utils/getDate'
 import Avatar from '@components/Avatar'
 import { useDeleteCommentMutation } from '@hooks/mutations/useDeleteCommentMutation'
+import { useRouter } from 'next/router'
 
 interface Props {
   user: User
@@ -16,6 +17,14 @@ const CommentList = ({ user, commentList }: Props) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [commentId, setCommentId] = useState(0)
   const { mutate: deleteComment } = useDeleteCommentMutation()
+  const router = useRouter()
+
+  const handleUserClick = (userId: number | null) => {
+    if (!userId) {
+      return
+    }
+    router.push(`/user/${userId}`)
+  }
 
   const handleCommentModalClick = (id: number) => {
     setIsModalOpen(true)
@@ -46,11 +55,18 @@ const CommentList = ({ user, commentList }: Props) => {
         {commentList.map(({ id, author, createdAt, comment }) => (
           <Fragment key={id}>
             <CommentWrapper>
-              <Avatar size={4} src={author.image} isLoading={false} />
+              <Avatar
+                size={4}
+                src={author.image}
+                isLoading={false}
+                onClick={() => handleUserClick(author.id)}
+              />
               <CommentContainer>
                 <CommentHeader>
                   <NameAndDateWrapper>
-                    <UserNameText>{author.nickName}</UserNameText>
+                    <UserNameText onClick={() => handleUserClick(author.id)}>
+                      {author.nickName}
+                    </UserNameText>
                     <DateText>{getDate(createdAt)}</DateText>
                   </NameAndDateWrapper>
                   {user.id === author.id && (
@@ -89,7 +105,7 @@ const Flex = styled.div`
 const CommentListContainer = styled.div``
 
 const CommnetCountText = styled.div`
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   font-weight: 700;
   margin-bottom: 2rem;
 `
@@ -116,12 +132,13 @@ const NameAndDateWrapper = styled(Flex)`
 `
 
 const UserNameText = styled.div`
-  font-size: 1.2rem;
+  font-size: 1.6rem;
   font-weight: 700;
+  cursor: pointer;
 `
 
 const DateText = styled.span`
-  margin-left: 1rem;
+  margin-left: 1.4rem;
   color: #a3a3a3;
 `
 
@@ -131,10 +148,12 @@ const Dots = styled(BiDotsHorizontalRounded)`
 `
 
 const CommentText = styled.div`
-  font-size: 1.4rem;
+  font-size: 1.6rem;
 `
 
 const ModalItem = styled(Flex)`
+  align-items: center;
+  height: 5rem;
   font-size: 2rem;
   justify-content: center;
   width: 100vw;

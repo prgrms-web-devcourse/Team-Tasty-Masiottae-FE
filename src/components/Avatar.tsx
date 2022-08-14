@@ -16,6 +16,7 @@ const Avatar = styled.div<Props>`
       : `no-repeat top center url(${src || DEFAULT_USER_IMAGE})`};
   background-size: cover;
   border-radius: 50%;
+  cursor: pointer;
 `
 
 export default Avatar

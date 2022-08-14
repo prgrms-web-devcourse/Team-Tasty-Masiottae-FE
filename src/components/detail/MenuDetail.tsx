@@ -9,10 +9,11 @@ import Avatar from '@components/Avatar'
 import { BsFillPencilFill } from 'react-icons/bs'
 import { IoMdHeart } from 'react-icons/io'
 import { usePostLikeMutation } from '@hooks/mutations/usePostLikeMutation'
+import { BIG_LOGO } from '@constants/image'
 
 interface Props {
   menu: Menu
-  userId: number
+  userId: number | null
 }
 
 const MenuDetail = ({ menu, userId }: Props) => {
@@ -21,6 +22,13 @@ const MenuDetail = ({ menu, userId }: Props) => {
   const { mutate: deleteMenu } = useDeleteMenuMutation()
   const { mutate: postLike } = usePostLikeMutation({ menuId: menu.id })
   const router = useRouter()
+
+  const handleUserClick = (userId: number | null) => {
+    if (!userId) {
+      return
+    }
+    router.push(`/user/${userId}`)
+  }
 
   const handleHeartClick = () => {
     postLike(
@@ -43,13 +51,17 @@ const MenuDetail = ({ menu, userId }: Props) => {
     setIsModalOpen(false)
   }
 
+  const handleMenuEditClick = () => {
+    router.push(`/edit-menu/${menu.id}`)
+  }
+
   const handleMenuDeleteClick = () => {
     deleteMenu(
       { menuId: menu.id },
       {
         onSuccess: () => {
           setIsModalOpen(false)
-          router.replace('/')
+          router.back()
         }
       }
     )
@@ -59,7 +71,7 @@ const MenuDetail = ({ menu, userId }: Props) => {
     <>
       <MenuContainer>
         <ImageWrapper>
-          <Img src={menu.image} />
+          <Img src={menu.image ? menu.image : BIG_LOGO} />
         </ImageWrapper>
 
         <HatWrapper>
@@ -85,7 +97,7 @@ const MenuDetail = ({ menu, userId }: Props) => {
           </RightHeader>
         </Header>
 
-        <UserWrapper>
+        <UserWrapper onClick={() => handleUserClick(menu.author.id)}>
           <Avatar size={4} src={menu.author.image} isLoading={false} />
           <UserNameText>{menu.author.nickName}</UserNameText>
         </UserWrapper>
@@ -116,7 +128,7 @@ const MenuDetail = ({ menu, userId }: Props) => {
         option="drawer"
       >
         <ModalItem>
-          <IconWrapper>
+          <IconWrapper onClick={handleMenuEditClick}>
             <BsFillPencilFill size={20} />
           </IconWrapper>
           수정
@@ -185,6 +197,7 @@ const FranchiseText = styled.div`
 `
 
 const Title = styled.div`
+  max-width: 30rem;
   font-size: 2.8rem;
   font-weight: 700;
 `
@@ -225,6 +238,8 @@ const Dots = styled(BiDotsVerticalRounded)`
 `
 
 const ModalItem = styled(Flex)`
+  align-items: center;
+  height: 5rem;
   font-size: 2rem;
   justify-content: center;
   width: 100vw;
@@ -259,12 +274,12 @@ const OptionsWrapper = styled(Flex)`
 `
 
 const OriginalTitle = styled.div`
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   font-weight: 700;
 `
 
 const OptionText = styled.span`
-  font-size: 1.4rem;
+  font-size: 1.6rem;
 `
 
 const PriceText = styled.span`
@@ -282,10 +297,12 @@ const UserNameText = styled.div`
   font-size: 2rem;
   font-weight: 700;
   margin-left: 1.2rem;
+  cursor: pointer;
 `
 
 const TagContainer = styled(Flex)`
   gap: 1rem;
+  flex-wrap: wrap;
 `
 
 const Tag = styled(Flex)<{ color: string }>`

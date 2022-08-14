@@ -7,12 +7,12 @@ const LOGGEDIN_INPUT_PLACEHOLDER = '댓글을 입력해주세요.'
 
 interface Props {
   menuId: number
-  userId: number
+  userId: number | null
 }
 
 const CommentInput = ({ menuId, userId }: Props) => {
   const [comment, setComment] = useState('')
-  const [isLoggedIn] = useState(!userId)
+  const [isLoggedIn] = useState(userId)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const { mutate: postComment } = usePostCommentMutation()
 
@@ -28,6 +28,10 @@ const CommentInput = ({ menuId, userId }: Props) => {
   }, [])
 
   const handleAddButtonClick = () => {
+    if (!userId) {
+      return
+    }
+
     postComment(
       {
         userId,
