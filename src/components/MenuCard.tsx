@@ -38,13 +38,13 @@ const MenuCard = ({
         </CardHeader>
         <CardFooter>
           <UserInfoWrapper>
-            <Avatar size={4} src={avatarImageUrl} isLoading={false} />
+            <Avatar size={3} src={avatarImageUrl} isLoading={false} />
             <Author>{author}</Author>
           </UserInfoWrapper>
           <PostInfoWrapper>
-            <IoMdHeart color={theme.color.mainPink} size={24} />
+            <IoMdHeart color={theme.color.mainPink} size={20} />
             <Text>{likes}</Text>
-            <BiComment size={24} />
+            <BiComment size={20} />
             <Text>{comments}</Text>
           </PostInfoWrapper>
         </CardFooter>
@@ -63,6 +63,7 @@ const CardInfo = styled.div`
 const CardContainer = styled.div`
   display: flex;
   width: 100%;
+  height: 15rem;
   border-radius: 1rem;
   gap: 1rem;
   cursor: pointer;
@@ -82,13 +83,13 @@ const CardFooter = styled.div`
 `
 
 const Franchise = styled.div`
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   font-weight: 700;
   color: ${theme.color.franchiseLight};
 `
 
 const Title = styled.div`
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   font-weight: 700;
   user-select: none;
 `
@@ -105,12 +106,12 @@ const UserInfoWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  gap: 1rem;
+  gap: 0.5rem;
 `
 
 const Author = styled.div`
   font-size: 1.4rem;
-  font-weight: 700;
+  font-weight: 400;
   user-select: none;
 `
 
@@ -118,11 +119,11 @@ const PostInfoWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  gap: 1rem;
+  gap: 0.5rem;
 `
 
 const Text = styled.div`
-  font-size: 2rem;
+  font-size: 1.4rem;
   user-select: none;
 `
 
