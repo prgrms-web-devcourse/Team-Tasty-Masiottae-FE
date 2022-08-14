@@ -3,13 +3,16 @@ import { IoMdHeart } from 'react-icons/io'
 import { BiComment } from 'react-icons/bi'
 import theme from '@constants/theme'
 
-const SkeletonCardList = () => {
+interface Props {
+  size: number
+}
+
+const SkeletonCardList = ({ size }: Props) => {
   return (
     <Container>
-      <SkeletonMenuCard />
-      <SkeletonMenuCard />
-      <SkeletonMenuCard />
-      <SkeletonMenuCard />
+      {Array.from({ length: size }).map((_, idx) => (
+        <SkeletonMenuCard key={idx} />
+      ))}
     </Container>
   )
 }

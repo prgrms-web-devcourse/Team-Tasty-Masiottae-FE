@@ -1,4 +1,4 @@
-import { useCallback } from 'react'
+import { RefObject, useCallback } from 'react'
 import styled from '@emotion/styled'
 
 interface Props {
@@ -15,6 +15,7 @@ interface Props {
   onChange?: React.ChangeEventHandler<HTMLInputElement>
   onBlur?: React.FocusEventHandler<HTMLInputElement>
   className?: string
+  InputRef?: RefObject<HTMLInputElement>
 }
 
 const Input = ({
@@ -30,7 +31,8 @@ const Input = ({
   placeholder,
   onChange,
   onBlur,
-  className
+  className,
+  InputRef
 }: Props) => {
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -60,6 +62,7 @@ const Input = ({
       onBlur={handleBlur}
       className={className}
       disabled={isDisabled}
+      ref={InputRef}
     />
   )
 }

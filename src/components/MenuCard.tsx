@@ -4,7 +4,8 @@ import { IoMdHeart } from 'react-icons/io'
 import { BiComment } from 'react-icons/bi'
 import { RefObject } from 'react'
 import theme from '@constants/theme'
-import { useFranchiseList } from '../hooks/queries/useFranchiseList'
+import { BIG_LOGO } from '@constants/image'
+import { SMALL_LOGO } from '../constants/image'
 
 interface Props {
   title: string
@@ -27,12 +28,7 @@ const MenuCard = ({
   comments,
   divRef
 }: Props) => {
-  const { franchiseList } = useFranchiseList()
-
-  if (!imageUrl) {
-    imageUrl =
-      franchiseList?.filter((data) => data.name === franchise)[0]['image'] || ''
-  }
+  if (!imageUrl) imageUrl = BIG_LOGO
 
   return (
     <CardContainer ref={divRef}>
