@@ -77,6 +77,7 @@ const Container = styled.div`
 
 const FixedWrapper = styled.div`
   position: fixed;
+  top: 6.4rem;
   left: 0;
   width: 100%;
 `
@@ -99,7 +100,7 @@ const InnerWrapper = styled.div`
 `
 
 const CardListWrapper = styled.ul`
-  padding-top: 22rem;
+  padding-top: 20rem;
 `
 
 export default Search
