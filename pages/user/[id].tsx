@@ -109,7 +109,7 @@ const UserMenu = () => {
 const StickyWrapper = styled.div`
   width: 100% auto;
   position: sticky;
-  top: 7.5rem;
+  top: 6.4rem;
   padding: 0.5rem 0;
   background-color: white;
 `

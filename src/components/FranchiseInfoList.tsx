@@ -38,7 +38,7 @@ const BoxContainer = styled.ul`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding-top: 8.5rem;
+  padding-top: 6.4rem;
 `
 
 const BoxWrapper = styled.li`
