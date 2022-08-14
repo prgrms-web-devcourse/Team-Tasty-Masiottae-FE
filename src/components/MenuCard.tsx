@@ -4,6 +4,7 @@ import { IoMdHeart } from 'react-icons/io'
 import { BiComment } from 'react-icons/bi'
 import { RefObject } from 'react'
 import theme from '@constants/theme'
+import { useFranchiseList } from '../hooks/queries/useFranchiseList'
 
 interface Props {
   title: string
@@ -26,7 +27,12 @@ const MenuCard = ({
   comments,
   divRef
 }: Props) => {
-  if (!imageUrl) imageUrl = 'https://via.placeholder.com/150'
+  const { franchiseList } = useFranchiseList()
+
+  if (!imageUrl) {
+    imageUrl =
+      franchiseList?.filter((data) => data.name === franchise)[0]['image'] || ''
+  }
 
   return (
     <CardContainer ref={divRef}>
@@ -38,13 +44,13 @@ const MenuCard = ({
         </CardHeader>
         <CardFooter>
           <UserInfoWrapper>
-            <Avatar size={4} src={avatarImageUrl} isLoading={false} />
+            <Avatar size={2.4} src={avatarImageUrl} isLoading={false} />
             <Author>{author}</Author>
           </UserInfoWrapper>
           <PostInfoWrapper>
-            <IoMdHeart color={theme.color.mainPink} size={24} />
+            <IoMdHeart color={theme.color.mainPink} size={16} />
             <Text>{likes}</Text>
-            <BiComment size={24} />
+            <BiComment size={16} />
             <Text>{comments}</Text>
           </PostInfoWrapper>
         </CardFooter>
@@ -63,6 +69,7 @@ const CardInfo = styled.div`
 const CardContainer = styled.div`
   display: flex;
   width: 100%;
+  height: 15rem;
   border-radius: 1rem;
   gap: 1rem;
   cursor: pointer;
@@ -82,15 +89,21 @@ const CardFooter = styled.div`
 `
 
 const Franchise = styled.div`
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   font-weight: 700;
   color: ${theme.color.franchiseLight};
 `
 
 const Title = styled.div`
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   font-weight: 700;
   user-select: none;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 `
 
 const Img = styled.div<{ src: string }>`
@@ -105,12 +118,12 @@ const UserInfoWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  gap: 1rem;
+  gap: 0.5rem;
 `
 
 const Author = styled.div`
   font-size: 1.4rem;
-  font-weight: 700;
+  font-weight: 400;
   user-select: none;
 `
 
@@ -118,11 +131,11 @@ const PostInfoWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  gap: 1rem;
+  gap: 0.4rem;
 `
 
 const Text = styled.div`
-  font-size: 2rem;
+  font-size: 1.6rem;
   user-select: none;
 `
 

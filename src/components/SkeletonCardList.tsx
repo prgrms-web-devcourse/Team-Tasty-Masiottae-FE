@@ -106,7 +106,6 @@ const CardContainer = styled(Flex)`
   width: 100%;
   border-radius: 1rem;
   gap: 1rem;
-  cursor: pointer;
 `
 
 const CardInfo = styled(Flex)`
