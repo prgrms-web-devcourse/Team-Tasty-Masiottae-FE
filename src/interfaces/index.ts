@@ -20,6 +20,7 @@ export interface Menu {
   expectedPrice: number
   tasteList: Taste[]
   likes: number
+  isLiked: boolean
   comments: number
   createdAt: string
   updatedAt: string
@@ -58,6 +59,7 @@ export interface searchParams {
   offset: number
   limit: number
   option?: { label: string; value: string }
+  accountId?: number
 }
 
 export interface SearchFormOptions {

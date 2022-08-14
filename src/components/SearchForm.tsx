@@ -3,7 +3,7 @@ import { BsFilterLeft } from 'react-icons/bs'
 import Input from '@components/Input'
 import { FiSearch } from 'react-icons/fi'
 import Modal from './Modal'
-import { useState, ChangeEvent, FormEvent, useEffect } from 'react'
+import { useState, ChangeEvent, FormEvent, useEffect, useRef } from 'react'
 import { SearchFormOptions } from '@interfaces'
 import SortOption from './SortOption'
 import FilterForm from './FilterForm'
@@ -26,6 +26,7 @@ const SearchForm = ({ onSubmit, searchDomain }: Props) => {
   const [keyword, setKeyword] = useState('')
   const [sort, setSort] = useState('recent')
 
+  const inputElement = useRef<HTMLInputElement>(null)
   useEffect(() => {
     setTasteIdList([])
     setSort('recent')
@@ -47,6 +48,7 @@ const SearchForm = ({ onSubmit, searchDomain }: Props) => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     onSubmit({ keyword, tasteIdList, sort })
+    inputElement.current?.blur()
   }
 
   return (
@@ -58,8 +60,11 @@ const SearchForm = ({ onSubmit, searchDomain }: Props) => {
           type="text"
           placeholder={PLACEHOLDER_SEARCH_INPUT}
           onChange={handleKeywordChange}
+          InputRef={inputElement}
         />
-        <SearchIcon />
+        <SearchButton>
+          <SearchIcon />
+        </SearchButton>
       </SearchWrapper>
       <OptionContainer>
         <SortOption selectedValue={sort} onChange={handleSortChange} />
@@ -82,6 +87,15 @@ const SearchForm = ({ onSubmit, searchDomain }: Props) => {
   )
 }
 
+const SearchButton = styled.button`
+  font-size: 2.5rem;
+  margin-top: 0.5rem;
+  margin-left: -4.5rem;
+  background-color: #ffffff;
+  border: none;
+  cursor: pointer;
+`
+
 const Form = styled.form`
   display: flex;
   flex-direction: column;
@@ -96,10 +110,7 @@ const SearchInput = styled(Input)`
   width: 100%;
 `
 
-const SearchIcon = styled(FiSearch)`
-  font-size: 2.5rem;
-  margin-left: -3.5rem;
-`
+const SearchIcon = styled(FiSearch)``
 
 const OptionContainer = styled.div`
   display: flex;

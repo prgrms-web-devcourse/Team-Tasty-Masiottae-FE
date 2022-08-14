@@ -23,6 +23,7 @@ const Category = () => {
 
 const FixedWrapper = styled.div`
   position: fixed;
+  top: 6.4rem;
   left: 0;
   width: 100%;
 `
@@ -30,13 +31,16 @@ const FixedWrapper = styled.div`
 const InnerWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
   min-width: 33.5rem;
   max-width: 46rem;
+  height: 6.4rem;
   width: 100%;
   background-color: white;
   margin: 0 auto;
   padding-bottom: 0.5rem;
   box-sizing: border-box;
+  opacity: 0.99;
 
   @media screen and (max-width: 31.25rem) {
     padding: 0 2rem;

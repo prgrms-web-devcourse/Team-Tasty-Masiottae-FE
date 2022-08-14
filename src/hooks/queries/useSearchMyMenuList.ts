@@ -29,13 +29,23 @@ const getMyMenuList = async (option: string, params: searchParams) => {
 }
 
 export const useSearchMyMenuList = (params: searchParams) => {
-  const { keyword, tasteIdList, sort, limit, offset, option } = params
+  const { keyword, tasteIdList, sort, limit, offset, accountId, option } =
+    params
 
   const { data, isLoading, error, fetchNextPage } = useInfiniteQuery<
     searchResponse,
     Error
   >(
-    ['myMenuList', keyword, tasteIdList, sort, limit, offset, option],
+    [
+      'myMenuList',
+      keyword,
+      tasteIdList,
+      sort,
+      limit,
+      offset,
+      option,
+      accountId
+    ],
     ({ pageParam = { offset: 0, limit: 5 } }) => {
       return getMyMenuList(option?.value || 'my', {
         ...params,

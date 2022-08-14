@@ -22,7 +22,7 @@ const Home: NextPage = () => {
   return (
     <>
       {isLoading ? (
-        <SkeletonCardList />
+        <SkeletonCardList size={4} />
       ) : (
         <MenuCardList menuList={menuList || []} divRef={ref} />
       )}

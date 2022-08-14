@@ -17,11 +17,11 @@ interface Props {
 }
 
 const MenuDetail = ({ menu, userId }: Props) => {
+  const [isLikeClicked, setIsLikeClicked] = useState(menu.isLiked)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const { mutate: deleteMenu } = useDeleteMenuMutation()
-  const router = useRouter()
-  const [isLikeClicked, setIsLikeClicked] = useState(false)
   const { mutate: postLike } = usePostLikeMutation({ menuId: menu.id })
+  const router = useRouter()
 
   const handleUserClick = (userId: number | null) => {
     if (!userId) {

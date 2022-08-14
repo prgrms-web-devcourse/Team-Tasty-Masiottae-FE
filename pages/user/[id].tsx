@@ -3,7 +3,7 @@ import MenuCardList from '@components/MenuCardList'
 import SearchForm from '@components/SearchForm'
 import styled from '@emotion/styled'
 import useIntersectionObserver from '@hooks/useIntersectionObserver'
-import { MouseEvent, useState } from 'react'
+import { MouseEvent, useEffect, useState } from 'react'
 import { useSearchMyMenuList } from '../../src/hooks/queries/useSearchMyMenuList'
 import { SearchFormOptions, searchParams } from '@interfaces'
 import SkeletonCardList from '@components/SkeletonCardList'
@@ -23,11 +23,13 @@ interface TabProps {
 }
 
 const UserMenu = () => {
-  const id = parseInt(useRouter().query.id as string)
+  const router = useRouter()
+  const id = parseInt(router.query.id as string)
   const [searchOptions, setSearchOptions] = useState<searchParams>({
     option: SELECT_OPTION[0],
     offset: 0,
-    limit: 10
+    limit: 10,
+    accountId: id
   })
   const {
     menuList,
@@ -43,6 +45,11 @@ const UserMenu = () => {
     },
     { threshold: 0.5 }
   )
+
+  useEffect(() => {
+    if (!router.isReady) return
+    setSearchOptions({ ...searchOptions, accountId: id })
+  }, [router.isReady])
 
   const handleSubmit = (values: SearchFormOptions) => {
     setSearchOptions({ ...searchOptions, ...values })
@@ -90,7 +97,7 @@ const UserMenu = () => {
 
       <CardListContainer>
         {isMenuLoading ? (
-          <SkeletonCardList />
+          <SkeletonCardList size={2} />
         ) : (
           <MenuCardList menuList={menuList || []} divRef={ref} />
         )}
@@ -102,7 +109,7 @@ const UserMenu = () => {
 const StickyWrapper = styled.div`
   width: 100% auto;
   position: sticky;
-  top: 7.5rem;
+  top: 6.4rem;
   padding: 0.5rem 0;
   background-color: white;
 `
