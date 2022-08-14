@@ -9,7 +9,7 @@ import Avatar from '@components/Avatar'
 import { BsFillPencilFill } from 'react-icons/bs'
 import { IoMdHeart } from 'react-icons/io'
 import { usePostLikeMutation } from '@hooks/mutations/usePostLikeMutation'
-import { BIG_LOGO } from '@constants/image'
+import { NO_IMAGE } from '@constants/image'
 
 interface Props {
   menu: Menu
@@ -71,7 +71,7 @@ const MenuDetail = ({ menu, userId }: Props) => {
     <>
       <MenuContainer>
         <ImageWrapper>
-          <Img src={menu.image ? menu.image : BIG_LOGO} />
+          <Img src={menu.image ? menu.image : NO_IMAGE} />
         </ImageWrapper>
 
         <HatWrapper>
