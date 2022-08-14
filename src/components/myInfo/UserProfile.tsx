@@ -20,6 +20,7 @@ import {
 import { useChangeImageMutation } from '@hooks/mutations/useChangeImageMutation'
 import { useChangeNickNameMutation } from '@hooks/mutations/useChangeNickNameMutation'
 import InputMessage from '@components/InputMessage'
+import { useRouter } from 'next/router'
 
 const UserProfile = () => {
   const [isNameEditorOpen, setIsNameEditorOpen] = useState(false)
@@ -29,7 +30,7 @@ const UserProfile = () => {
   const [imageFile, setImageFile] = useState<File | null>(null)
   const [user, setUser] = useRecoilState<User>(currentUser)
   const [isReset, setIsReset] = useState(true)
-
+  const router = useRouter()
   const { mutate: patchImage } = useChangeImageMutation()
   const { mutate: patchNickName } = useChangeNickNameMutation()
 
@@ -55,6 +56,10 @@ const UserProfile = () => {
       reader.readAsDataURL(imageFile)
       reader.onload = () => {
         setUser({ ...user, image: String(reader.result) })
+      }
+      if (!user.id) {
+        router.replace('/login')
+        return
       }
       patchImage({ userId: user.id, image: imageFile })
     }
@@ -84,6 +89,11 @@ const UserProfile = () => {
       return
     }
 
+    if (!user.id) {
+      router.replace('/login')
+      return
+    }
+
     if (!error) {
       patchNickName({ userId: user.id, nickName: nickName })
       setUser({ ...user, nickName: nickName })
@@ -98,6 +108,7 @@ const UserProfile = () => {
         alt={user.nickName}
         width={140}
         height={140}
+        objectFit="cover"
         onClick={handleProfileModalOpen}
       />
       {isNameEditorOpen ? (
@@ -147,7 +158,7 @@ const ProfileModal = styled(Modal)`
   display: flex;
   flex-direction: column;
   align-items: center;
-  top: 40%;
+  top: 25rem;
 `
 
 const ModalTitle = styled.div`
@@ -223,8 +234,9 @@ const Text = styled.div`
   font-weight: 700;
 `
 const EditNameIcon = styled(BsFillPencilFill)`
-  width: 2rem;
-  height: 2rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-top: 0.3rem;
 `
 
 export default UserProfile

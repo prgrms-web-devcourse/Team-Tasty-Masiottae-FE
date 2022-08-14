@@ -1,5 +1,5 @@
 export interface User {
-  id: number
+  id: number | null
   image: string
   email: string
   nickName: string
@@ -57,6 +57,7 @@ export interface searchParams {
   tasteIdList?: number[]
   offset: number
   limit: number
+  option?: { label: string; value: string }
 }
 
 export interface SearchFormOptions {

@@ -6,7 +6,7 @@ import { setCookie, getCookie } from '@utils/cookie'
 import { TOKEN_EXPIRE_DATE, CURRENT_USER } from '@constants/token'
 
 export const initialUser = {
-  id: 0,
+  id: null,
   image: DEFAULT_USER_IMAGE,
   email: '',
   nickName: '',

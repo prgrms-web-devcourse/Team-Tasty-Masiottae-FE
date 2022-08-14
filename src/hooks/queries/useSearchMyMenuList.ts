@@ -13,10 +13,10 @@ interface searchResponse {
   isLast: boolean
 }
 
-const getMyMenuList = async (params: searchParams) => {
+const getMyMenuList = async (option: string, params: searchParams) => {
   const requestParameter = createSearchRequestParameter(params)
   const { data } = await axios.get<searchResponse>(
-    `/my-menu?${requestParameter}`
+    `/${option}-menu?${requestParameter}`
   )
   return {
     menu: data.menu,
@@ -29,15 +29,15 @@ const getMyMenuList = async (params: searchParams) => {
 }
 
 export const useSearchMyMenuList = (params: searchParams) => {
-  const { keyword, tasteIdList, sort, limit, offset } = params
+  const { keyword, tasteIdList, sort, limit, offset, option } = params
 
   const { data, isLoading, error, fetchNextPage } = useInfiniteQuery<
     searchResponse,
     Error
   >(
-    ['myMenuList', keyword, tasteIdList, sort, limit, offset],
+    ['myMenuList', keyword, tasteIdList, sort, limit, offset, option],
     ({ pageParam = { offset: 0, limit: 5 } }) => {
-      return getMyMenuList({
+      return getMyMenuList(option?.value || 'my', {
         ...params,
         offset: pageParam.offset,
         limit: pageParam.limit

@@ -6,6 +6,10 @@ import { useMenu } from '@hooks/queries/useMenu'
 import { useRecoilState } from 'recoil'
 import { currentUser } from '@recoil/currentUser'
 import { useCommentList } from '@hooks/queries/useCommentList'
+import { dehydrate, QueryClient } from '@tanstack/react-query'
+import { GetServerSidePropsContext } from 'next'
+import axios from 'axios'
+import { Menu } from '@interfaces'
 
 const Detail = () => {
   const router = useRouter()
@@ -17,7 +21,7 @@ const Detail = () => {
 
   return (
     <>
-      {isMenuSuccess && (
+      {isMenuSuccess && user.id && (
         <>
           <MenuDetail menu={menu} userId={user.id} />
           <CommentInput menuId={menu.id} userId={user.id} />
@@ -28,6 +32,34 @@ const Detail = () => {
       )}
     </>
   )
+}
+
+export const getServerSideProps = async (
+  context: GetServerSidePropsContext
+) => {
+  const menuId = parseInt(context.query.id as string, 10)
+  const queryClient = new QueryClient()
+
+  const getMenuById = async (menuId: number) => {
+    if (!context.req.cookies['tastyToken']) {
+      return
+    }
+
+    const { data } = await axios.get<Menu>(
+      `${process.env.NEXT_PUBLIC_API_URL}/menu/${menuId}`,
+      {
+        headers: { Authorization: context.req.cookies['tastyToken'] }
+      }
+    )
+
+    return data
+  }
+
+  await queryClient.prefetchQuery(['menu', menuId], () => getMenuById(menuId), {
+    staleTime: 10000
+  })
+
+  return { props: { dehydratedState: dehydrate(queryClient) } }
 }
 
 export default Detail

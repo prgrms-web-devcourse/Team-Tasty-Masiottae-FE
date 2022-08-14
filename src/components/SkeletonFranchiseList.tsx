@@ -13,7 +13,7 @@ const SkeletonFranchiseList = () => {
   )
 }
 
-const SkeletonFranchiseInfo = () => {
+export const SkeletonFranchiseInfo = () => {
   return (
     <FranchiseWrapper>
       <SkeletonAvatar />
