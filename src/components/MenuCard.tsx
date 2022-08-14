@@ -92,6 +92,12 @@ const Title = styled.div`
   font-size: 1.6rem;
   font-weight: 700;
   user-select: none;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 `
 
 const Img = styled.div<{ src: string }>`
