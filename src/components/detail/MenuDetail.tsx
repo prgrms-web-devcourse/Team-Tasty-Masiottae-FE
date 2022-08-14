@@ -9,6 +9,7 @@ import Avatar from '@components/Avatar'
 import { BsFillPencilFill } from 'react-icons/bs'
 import { IoMdHeart } from 'react-icons/io'
 import { usePostLikeMutation } from '@hooks/mutations/usePostLikeMutation'
+import { BIG_LOGO } from '@constants/image'
 
 interface Props {
   menu: Menu
@@ -43,23 +44,27 @@ const MenuDetail = ({ menu, userId }: Props) => {
     setIsModalOpen(false)
   }
 
+  const handleMenuEditClick = () => {
+    router.push(`/edit-menu/${menu.id}`)
+  }
+
   const handleMenuDeleteClick = () => {
     deleteMenu(
       { menuId: menu.id },
       {
         onSuccess: () => {
           setIsModalOpen(false)
-          router.replace('/')
+          router.back()
         }
       }
     )
   }
-
+  console.log(menu.image)
   return (
     <>
       <MenuContainer>
         <ImageWrapper>
-          <Img src={menu.image} />
+          <Img src={menu.image ? menu.image : BIG_LOGO} />
         </ImageWrapper>
 
         <HatWrapper>
@@ -116,7 +121,7 @@ const MenuDetail = ({ menu, userId }: Props) => {
         option="drawer"
       >
         <ModalItem>
-          <IconWrapper>
+          <IconWrapper onClick={handleMenuEditClick}>
             <BsFillPencilFill size={20} />
           </IconWrapper>
           수정
