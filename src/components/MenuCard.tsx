@@ -4,8 +4,7 @@ import { IoMdHeart } from 'react-icons/io'
 import { BiComment } from 'react-icons/bi'
 import { RefObject } from 'react'
 import theme from '@constants/theme'
-import { BIG_LOGO } from '@constants/image'
-import { SMALL_LOGO } from '../constants/image'
+import { NO_IMAGE } from '@constants/image'
 
 interface Props {
   title: string
@@ -28,7 +27,9 @@ const MenuCard = ({
   comments,
   divRef
 }: Props) => {
-  if (!imageUrl) imageUrl = BIG_LOGO
+  if (!imageUrl) {
+    imageUrl = NO_IMAGE
+  }
 
   return (
     <CardContainer ref={divRef}>
