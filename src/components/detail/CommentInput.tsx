@@ -12,7 +12,7 @@ interface Props {
 
 const CommentInput = ({ menuId, userId }: Props) => {
   const [comment, setComment] = useState('')
-  const [isLoggedIn, setIsLoggedIn] = useState(true)
+  const [isLoggedIn] = useState(!userId)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const { mutate: postComment } = usePostCommentMutation()
 
