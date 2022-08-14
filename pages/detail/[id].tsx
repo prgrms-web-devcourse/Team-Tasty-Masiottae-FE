@@ -21,7 +21,7 @@ const Detail = () => {
 
   return (
     <>
-      {isMenuSuccess && (
+      {isMenuSuccess && user.id && (
         <>
           <MenuDetail menu={menu} userId={user.id} />
           <CommentInput menuId={menu.id} userId={user.id} />
