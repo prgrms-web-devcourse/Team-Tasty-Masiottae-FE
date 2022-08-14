@@ -114,7 +114,7 @@ const CreateMenu = () => {
         <SubmitButton
           color={'#fff'}
           backgroundColor={'#000'}
-          disabled={checkButtonDisabled()}
+          disabled={checkButtonDisabled() && true}
           onClick={handleEditSubmit}
         >
           등록 하기

@@ -144,7 +144,7 @@ const EditMenu = () => {
       <SubmitButton
         color={'#fff'}
         backgroundColor={'#000'}
-        disabled={checkButtonDisabled()}
+        disabled={checkButtonDisabled() && true}
         onClick={handleEditSubmit}
       >
         수정 하기
