@@ -20,6 +20,7 @@ import {
 import { useChangeImageMutation } from '@hooks/mutations/useChangeImageMutation'
 import { useChangeNickNameMutation } from '@hooks/mutations/useChangeNickNameMutation'
 import InputMessage from '@components/InputMessage'
+import { useRouter } from 'next/router'
 
 const UserProfile = () => {
   const [isNameEditorOpen, setIsNameEditorOpen] = useState(false)
@@ -29,7 +30,7 @@ const UserProfile = () => {
   const [imageFile, setImageFile] = useState<File | null>(null)
   const [user, setUser] = useRecoilState<User>(currentUser)
   const [isReset, setIsReset] = useState(true)
-
+  const router = useRouter()
   const { mutate: patchImage } = useChangeImageMutation()
   const { mutate: patchNickName } = useChangeNickNameMutation()
 
@@ -56,6 +57,10 @@ const UserProfile = () => {
       reader.onload = () => {
         setUser({ ...user, image: String(reader.result) })
       }
+      if (!user.id) {
+        router.replace('/login')
+        return
+      }
       patchImage({ userId: user.id, image: imageFile })
     }
     setIsProfileModalOpen(false)
@@ -81,6 +86,11 @@ const UserProfile = () => {
     const { errorMessage } = data
     if (errorMessage) {
       setError(errorMessage)
+      return
+    }
+
+    if (!user.id) {
+      router.replace('/login')
       return
     }
 
