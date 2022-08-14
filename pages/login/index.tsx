@@ -8,9 +8,11 @@ import {
   REGEX_PASSWORD,
   REGEX_EMAIL,
   MESSAGE_PASSWORD,
-  ERROR_EMAIL
+  ERROR_EMAIL,
+  ERROR_PASSWORD_CONFIRM,
+  ERROR_NOT_FOUND_USER
 } from '@constants/inputConstants'
-import React, { useState, useCallback, useEffect } from 'react'
+import React, { useState, useCallback } from 'react'
 import { BsEye } from 'react-icons/bs'
 import Button from '@components/Button'
 import { useLoginMutation } from '@hooks/mutations/useLoginMutation'
@@ -27,29 +29,54 @@ const LoginPage = () => {
   const [password, setPassword] = useState('')
   const [errors, setErrors] = useState<Errors>({ email: '', password: '' })
   const [isTypePassword, setIsTypePassword] = useState(false)
-  const { mutate: postLogin, isError } = useLoginMutation()
-
-  useEffect(() => {
-    isError &&
-      setErrors({
-        ...errors,
-        [INPUT_EMAIL]:
-          '존재하지 않는 회원이에요. 이메일, 비밀번호를 확인해주세요.'
-      })
-  }, [isError])
+  const { mutate: postLogin } = useLoginMutation()
 
   const handleLoginSubmit = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.preventDefault()
+
+    if (!password) {
+      setErrors({ ...errors, [INPUT_PASSWORD]: MESSAGE_PASSWORD })
+    }
+
+    if (!email) {
+      setErrors({ ...errors, [INPUT_EMAIL]: ERROR_EMAIL })
+    }
+
     const isError = Object.keys(errors).some(
       (key) => errors[key as keyof typeof errors] !== ''
     )
-    const isLoginValid = password && email && !isError
-    if (isLoginValid) {
-      postLogin({ email, password })
+
+    if (email && password && !isError) {
+      postLogin(
+        { email, password },
+        {
+          onError: handleLoginError
+        }
+      )
     }
   }
+
+  const handleLoginError = useCallback(
+    (error: any) => {
+      const { message } = error.response.data
+
+      if (message === ERROR_PASSWORD_CONFIRM) {
+        setErrors({
+          ...errors,
+          [INPUT_PASSWORD]: ERROR_PASSWORD_CONFIRM
+        })
+        return
+      }
+
+      setErrors({
+        ...errors,
+        [INPUT_EMAIL]: ERROR_NOT_FOUND_USER
+      })
+    },
+    [errors]
+  )
 
   const handleEyeClick = useCallback(() => {
     setIsTypePassword((isTypePassword) => !isTypePassword)
@@ -60,9 +87,8 @@ const LoginPage = () => {
 
     if (name === INPUT_PASSWORD) {
       setErrors({ ...errors, [name]: '' })
-      if (value.length > 10) {
-        e.target.value = value.slice(0, 10)
-      }
+      e.target.value = value.slice(0, 10)
+
       if (!REGEX_PASSWORD.test(value)) {
         setErrors({ ...errors, [name]: MESSAGE_PASSWORD })
       }

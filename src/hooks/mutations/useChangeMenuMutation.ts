@@ -1,9 +1,10 @@
 import axios from '@lib/axios'
 import { Option } from '@interfaces'
 import { useMutation } from '@tanstack/react-query'
+import { getToken } from '@utils/cookie'
 
 interface Data {
-  userId: number
+  isRemoveImage: boolean
   franchiseId: number
   title: string
   content: string
@@ -31,7 +32,10 @@ export const patchMenu = async ({ menuId, image, data }: Params) => {
   )
 
   await axios.post(`/menu/${menuId}`, formData, {
-    headers: { 'Content-Type': 'multipart/form-data' }
+    headers: {
+      'Content-Type': 'multipart/form-data',
+      Authorization: `${getToken()}`
+    }
   })
 }
 

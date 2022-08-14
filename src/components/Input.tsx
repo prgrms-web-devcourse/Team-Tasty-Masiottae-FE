@@ -70,7 +70,7 @@ const StyledInput = styled.input<Props>`
   border: 0.1rem solid
     ${({ theme, isValid }) =>
       isValid ? theme.color.borderBasic : theme.color.error};
-  padding: 2.2rem 2.2rem;
+  padding: 2rem 1.5rem;
   border-radius: 1rem;
   box-sizing: border-box;
   ::placeholder {
