@@ -59,6 +59,10 @@ const Item = styled.div<{
   &:hover {
     cursor: ${({ readOnly }) => (readOnly ? '' : 'pointer')};
   }
+
+  @media screen and (max-width: 26.25rem) {
+    padding: 1.6rem 1.6rem;
+  }
 `
 
 export default Tag
