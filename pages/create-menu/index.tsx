@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/router'
 import styled from '@emotion/styled'
 import TagContainer from '@components/TagContainer'
@@ -21,6 +21,18 @@ export interface InputListType {
 const CreateMenu = () => {
   // 필드 값
   const router = useRouter()
+  const [isRouterChange, setIsRouterChange] = useState(false)
+  const handleRouteChangeStart = useCallback(() => {
+    setIsRouterChange((isChange) => !isChange)
+  }, [])
+
+  useEffect(() => {
+    router.events.on('routeChangeStart', handleRouteChangeStart)
+    return () => {
+      router.events.off('routeChangeStart', handleRouteChangeStart)
+    }
+  }, [handleRouteChangeStart, router.events])
+
   const { mutate, isLoading } = usePostMenu()
 
   const [file, setFile] = useState<File | null>(null)
@@ -97,7 +109,7 @@ const CreateMenu = () => {
   return (
     <>
       <FlexContainer>
-        {isLoading ? <Spinner /> : ''}
+        {isRouterChange || isLoading ? <Spinner /> : ''}
         <ImageUploaderWrapper>
           <ImageUploader isDeletable={true} onChange={handleImageChange} />
         </ImageUploaderWrapper>

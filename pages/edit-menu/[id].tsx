@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import styled from '@emotion/styled'
 import TagContainer from '@components/TagContainer'
 import ImageUploader from '@components/ImageUploader'
@@ -25,6 +25,19 @@ const EditMenu = () => {
   // 필드 값
 
   const router = useRouter()
+
+  const [isRouterChange, setIsRouterChange] = useState(false)
+  const handleRouteChangeStart = useCallback(() => {
+    setIsRouterChange((r) => !r)
+  }, [])
+
+  useEffect(() => {
+    router.events.on('routeChangeStart', handleRouteChangeStart)
+    return () => {
+      router.events.off('routeChangeStart', handleRouteChangeStart)
+    }
+  }, [handleRouteChangeStart, router.events])
+
   const { id } = router.query
   const user = useRecoilValue(currentUser)
   const { mutate, isLoading: changeMenuLoading } = useChangeMenu()
@@ -122,7 +135,7 @@ const EditMenu = () => {
 
   return (
     <FlexContainer>
-      {changeMenuLoading || getMenuLoading ? <Spinner /> : ''}
+      {isRouterChange || changeMenuLoading || getMenuLoading ? <Spinner /> : ''}
       <ImageUploaderWrapper>
         <ImageUploader
           value={menuData?.image}
