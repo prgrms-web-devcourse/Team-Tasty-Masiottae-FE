@@ -45,8 +45,6 @@ npm install
 ### 개발 서버 실행 
 ```bash
 npm run dev
-# or
-yarn dev
 ```
 ### 프로덕션 빌드 후 실행
 ```bash
@@ -65,7 +63,7 @@ npx next start
  <td>
   <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=HTML5&logoColor=ffffff"/>
   <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=CSS3&logoColor=ffffff"/>
-  <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=ffffff"/>
+  <img src="https://img.shields.io/badge/TypeScript-3178c6?style=for-the-badge&logo=Typescript&logoColor=ffffff"/>
  </td>
 </tr>
 <tr>
@@ -76,7 +74,7 @@ npx next start
 <tr>
  <td align="center">상태관리</td>
  <td>
-  <img src="https://img.shields.io/badge/ContextAPI-FFCD11?style=for-the-badge&logo=React&logoColor=ffffff"/>&nbsp
+  <img src="https://img.shields.io/badge/Recoil-0064FF?style=for-the-badge">&nbsp
  </td>
 </tr>
 <tr>
