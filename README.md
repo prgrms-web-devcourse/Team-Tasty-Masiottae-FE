@@ -72,39 +72,41 @@ npx next start
     <img src="https://img.shields.io/badge/VisualStudioCode-007ACC?style=for-the-badge&logo=Visual%20Studio%20Code&logoColor=white"/>&nbsp </td>
 </tr>
 <tr>
- <td align="center">상태관리</td>
+ <td align="center">프레임워크</td>
  <td>
-  <img src="https://img.shields.io/badge/Recoil-0064FF?style=for-the-badge">&nbsp
+     <img src="https://img.shields.io/badge/Next.js-000?style=for-the-badge&logo=Next.js&logoColor=ffffff"/>&nbsp
  </td>
 </tr>
 <tr>
  <td align="center">라이브러리</td>
  <td>
   <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=ffffff"/>&nbsp
-  <img src="https://img.shields.io/badge/Emotion-DB7093?style=for-the-badge&logo=emotion&logoColor=ffffff"/> &nbsp
-  <img src="https://img.shields.io/badge/Axios-8DD6F9?style=for-the-badge"/>...&nbsp </td>
+  <img src="https://img.shields.io/badge/Emotion-DB7093?style=for-the-badge&logo=emotion&logoColor=ffffff"/>&nbsp
+  <img src="https://img.shields.io/badge/Axios-8DD6F9?style=for-the-badge"/>&nbsp </td>
 </tr>
 <tr>
- <td align="center">프레임워크</td>
+ <td align="center">상태관리</td>
  <td>
-     <img src="https://img.shields.io/badge/Storybook-FF4785?style=for-the-badge&logo=GitHub&logoColor=white"/>&nbsp
+  <img src="https://img.shields.io/badge/Recoil-0064FF?style=for-the-badge">&nbsp
  </td>
 </tr>
 <tr>
  <td align="center">패키지관리</td>
  <td>
-    <img src="https://img.shields.io/badge/Yarn-2C8EBB?style=for-the-badge&logo=GitHub&logoColor=white"/>&nbsp
+    <img src="https://img.shields.io/badge/NPM-2C8EBB?style=for-the-badge&logo=npm&logoColor=white"/>&nbsp
   </td>
 </tr>
 <tr>
  <td align="center">Formatter</td>
  <td>
   <img src="https://img.shields.io/badge/ESLint-4B32C3?style=for-the-badge&logo=ESLint&logoColor=ffffff"/> &nbsp
-  <img src="https://img.shields.io/badge/Prettier-F7B93E?style=for-the-badge&logo=Prettier&logoColor=ffffff"/>&nbsp </td>
+  <img src="https://img.shields.io/badge/Prettier-F7B93E?style=for-the-badge&logo=Prettier&logoColor=ffffff"/>&nbsp
+  <img src="https://img.shields.io/badge/husky-42b983?style=for-the-badge"/>&nbsp
+  <img src="https://img.shields.io/badge/lint staged-654321?style=for-the-badge"/>&nbsp</td>
 </tr>
 <tr>
  <td align="center">배포</td>
- <td><img src="https://img.shields.io/badge/Netlify-00C7B7?style=for-the-badge&logo=Netlify&logoColor=ffffff"/>&nbsp </td>
+ <td><img src="https://img.shields.io/badge/Vercel-000?style=for-the-badge&logo=Vercel&logoColor=ffffff"/>&nbsp </td>
 </tr>
 <tr>
  <td align="center">협업툴</td>
