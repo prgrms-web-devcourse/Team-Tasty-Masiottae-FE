@@ -6,19 +6,19 @@
 📦src
  ┣ 📂components
  ┣ 📂constants
- ┣ 📂hooks
- ┃ ┣ 📂mutations
- ┃ ┣ 📂queries
- ┃ ┣ 📜useClickAway.ts
+ ┣ 📂hooks 
+ ┃ ┣ 📂mutations // react-query 의 useMutation 디렉토리
+ ┃ ┣ 📂queries // react-query 의 useQuery 디렉토리
+ ┃ ┣ 📜useClickAway.ts // 기타 다른 hooks
  ┃ ┣ 📜useForm.ts
  ┃ ┣ 📜useIntersectionObserver.ts
  ┃ ┗ 📜useRouterLoading.ts
- ┣ 📂interfaces
- ┣ 📂lib
+ ┣ 📂interfaces // typescript 사용을 위한 interface
+ ┣ 📂lib 
  ┃ ┗ 📂axios
  ┣ 📂recoil
  ┃ ┗ 📜currentUser.ts
- ┣ 📂types
+ ┣ 📂types // typescript 사용을 위한 types
  ┃ ┗ 📜index.ts
  ┗ 📂utils
 ```
@@ -57,11 +57,104 @@ npx next start
 ## 프로젝트 결과물 
 
 
-## 설치 패키지 
-
 ## 기술 스택
 
+<table>
+<tr>
+ <td align="center">언어</td>
+ <td>
+  <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=HTML5&logoColor=ffffff"/>
+  <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=CSS3&logoColor=ffffff"/>
+  <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=ffffff"/>
+ </td>
+</tr>
+<tr>
+ <td align="center">IDE</td>
+ <td>
+    <img src="https://img.shields.io/badge/VisualStudioCode-007ACC?style=for-the-badge&logo=Visual%20Studio%20Code&logoColor=white"/>&nbsp </td>
+</tr>
+<tr>
+ <td align="center">상태관리</td>
+ <td>
+  <img src="https://img.shields.io/badge/ContextAPI-FFCD11?style=for-the-badge&logo=React&logoColor=ffffff"/>&nbsp
+ </td>
+</tr>
+<tr>
+ <td align="center">라이브러리</td>
+ <td>
+  <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=ffffff"/>&nbsp
+  <img src="https://img.shields.io/badge/Emotion-DB7093?style=for-the-badge&logo=emotion&logoColor=ffffff"/> &nbsp
+  <img src="https://img.shields.io/badge/Axios-8DD6F9?style=for-the-badge"/>...&nbsp </td>
+</tr>
+<tr>
+ <td align="center">프레임워크</td>
+ <td>
+     <img src="https://img.shields.io/badge/Storybook-FF4785?style=for-the-badge&logo=GitHub&logoColor=white"/>&nbsp
+ </td>
+</tr>
+<tr>
+ <td align="center">패키지관리</td>
+ <td>
+    <img src="https://img.shields.io/badge/Yarn-2C8EBB?style=for-the-badge&logo=GitHub&logoColor=white"/>&nbsp
+  </td>
+</tr>
+<tr>
+ <td align="center">Formatter</td>
+ <td>
+  <img src="https://img.shields.io/badge/ESLint-4B32C3?style=for-the-badge&logo=ESLint&logoColor=ffffff"/> &nbsp
+  <img src="https://img.shields.io/badge/Prettier-F7B93E?style=for-the-badge&logo=Prettier&logoColor=ffffff"/>&nbsp </td>
+</tr>
+<tr>
+ <td align="center">배포</td>
+ <td><img src="https://img.shields.io/badge/Netlify-00C7B7?style=for-the-badge&logo=Netlify&logoColor=ffffff"/>&nbsp </td>
+</tr>
+<tr>
+ <td align="center">협업툴</td>
+ <td>
+    <img src="https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=Figma&logoColor=white"/>&nbsp
+    <img src="https://img.shields.io/badge/Slack-4A154B?style=for-the-badge&logo=Slack&logoColor=white"/>&nbsp
+    <img src="https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=Notion&logoColor=white"/>&nbsp
+    <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=GitHub&logoColor=white"/>&nbsp
+ </td>
+</tr>
+</table>
+
+
+## 설치 패키지 
+```
+  "dependencies": {
+    "@emotion/react": "^11.9.3",
+    "@emotion/styled": "^11.9.3",
+    "@tanstack/react-query": "^4.0.10",
+    "axios": "^0.27.2",
+    "moment": "^2.29.4",
+    "next": "12.2.2",
+    "react": "18.2.0",
+    "react-cookie": "^4.1.1",
+    "react-dom": "18.2.0",
+    "react-icons": "^4.4.0",
+    "recoil": "^0.7.4",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "@types/node": "18.0.6",
+    "@types/react": "18.0.15",
+    "@types/react-dom": "18.0.6",
+    "@types/uuid": "^8.3.4",
+    "@typescript-eslint/eslint-plugin": "^5.30.7",
+    "@typescript-eslint/parser": "^5.30.7",
+    "eslint": "8.20.0",
+    "eslint-config-next": "12.2.2",
+    "eslint-config-prettier": "^8.5.0",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.3",
+    "prettier": "^2.7.1",
+    "typescript": "^4.7.4"
+  }
+```
+
 ## 개발 기간
+7월 21일 ~ 8월 15일 
 
 ## 팀원
 
