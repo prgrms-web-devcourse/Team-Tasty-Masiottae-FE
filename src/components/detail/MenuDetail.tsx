@@ -127,8 +127,8 @@ const MenuDetail = ({ menu, userId }: Props) => {
         onClose={handleEditMenuClose}
         option="drawer"
       >
-        <ModalItem>
-          <IconWrapper onClick={handleMenuEditClick}>
+        <ModalItem onClick={handleMenuEditClick}>
+          <IconWrapper>
             <BsFillPencilFill size={20} />
           </IconWrapper>
           수정
