@@ -42,7 +42,7 @@ git clone https://github.com/prgrms-web-devcourse/Team-Tasty-Masiottae-FE.git
 cd Team-Tasty-Masiottae-FE
 npm install
 ```
-기본 포트는 [http://localhost:3000](http://localhost:3000) 3000으로, 서버 실행 후 해당 주소로 접속하시면 됩니다. 
+기본 주소는 [http://localhost:3000](http://localhost:3000)으로, 서버 실행 후 해당 주소로 접속하시면 됩니다. 
 
 ### 개발 서버 실행 
 ```bash
