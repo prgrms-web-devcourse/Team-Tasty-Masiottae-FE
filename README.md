@@ -7,8 +7,7 @@
 자신에게 딱 맞는 메뉴를 자유롭게 만들고, 공유하고, 찾아보세요! 
 
 ### 🔗 프로젝트 관련 링크
-> 🏠 서비스 배포 사이트
-> 
+> 🏠 [서비스 배포 사이트](https://team-tasty-masiottae-fe.vercel.app)
 
 - [맛이어때 api 문서](http://13.125.177.126:8080/docs/index.html)
 - [백엔드 Repo](https://github.com/prgrms-web-devcourse/Team-Tasty-Masiottae-BE)
