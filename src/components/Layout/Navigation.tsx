@@ -44,11 +44,13 @@ export const Navigation = () => {
             </NavItem>
           </StyledAnchor>
         </Link>
-        <StyledAnchor href={`${USER_URL}/${user.id}`}>
-          <NavItem>
-            <StyledMenu selected={pathname.includes(USER_URL)} />
-          </NavItem>
-        </StyledAnchor>
+        <Link href={`${USER_URL}/${user.id}`}>
+          <StyledAnchor>
+            <NavItem>
+              <StyledMenu selected={pathname.includes(USER_URL)} />
+            </NavItem>
+          </StyledAnchor>
+        </Link>
       </NavList>
     </NavContainer>
   )
