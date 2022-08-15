@@ -68,6 +68,6 @@ npx next start
 |하신영|권내영|이지원|조계진|
 |------|------|------|-------|
 |팀장|팀원|팀원|팀원|
-| ![iOS 이미지](https://user-images.githubusercontent.com/75849590/184590304-21ad7bff-3c2e-4d4e-ad8c-9c4b6e6712ca.jpg)| ![iOS 이미지 (1)](https://user-images.githubusercontent.com/75849590/184590314-3a1462b7-744e-4545-a164-45b2d6538c3b.jpg) | ![KakaoTalk_20220501_012921404](https://user-images.githubusercontent.com/75849590/184590324-39818449-abfe-4b20-8179-c34626b357ec.jpg) | <img width="134" alt="스크린샷 2022-08-15 14 51 40" src="https://user-images.githubusercontent.com/75849590/184590329-5db723c6-ad14-4aec-9669-bfa621c70433.png">|
+| <img width="400" alt="하신영" src="https://user-images.githubusercontent.com/75849590/184590304-21ad7bff-3c2e-4d4e-ad8c-9c4b6e6712ca.jpg">| <img width="400" alt="권내영" src="https://user-images.githubusercontent.com/75849590/184590314-3a1462b7-744e-4545-a164-45b2d6538c3b.jpg"> | <img width="400" alt="이지원" src="https://user-images.githubusercontent.com/75849590/184590324-39818449-abfe-4b20-8179-c34626b357ec.jpg"> | <img width="400" alt="조계진" src="https://user-images.githubusercontent.com/75849590/184590329-5db723c6-ad14-4aec-9669-bfa621c70433.png">|
 
 
