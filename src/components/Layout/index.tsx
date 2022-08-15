@@ -37,7 +37,7 @@ const Layout = ({ children }: Props) => {
 
 const StyledMain = styled.main`
   flex: 1;
-  padding: 7.5rem 2rem;
+  padding: 6.4rem 2rem;
   background-color: #ffffff;
 `
 
