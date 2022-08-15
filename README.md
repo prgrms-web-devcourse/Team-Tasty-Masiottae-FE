@@ -1,13 +1,13 @@
 # 😋 맛이어때 Masiottae-FE
 ### 🙌 커스텀 메뉴 공유 플랫폼 : 맛이어때
-<img alt="logo" width="300px" src="https://user-images.githubusercontent.com/75849590/184645784-d3568c34-872b-457b-a1b9-84679ee1e374.png">
+<div align="center"><img alt="logo" width="300px" src="https://user-images.githubusercontent.com/75849590/184645784-d3568c34-872b-457b-a1b9-84679ee1e374.png"></div>
 <br>
 
 맛이어때는 커스텀 메뉴에 흥미가 있는 사용자들이 자신의 커스텀 메뉴를 공유하고 리뷰할 수 있는 SNS 플랫폼 입니다.<br>
 자신에게 딱 맞는 메뉴를 자유롭게 만들고, 공유하고, 찾아보세요! 
 
 ### 🔗 프로젝트 관련 링크
-> 🏠 배포 사이트
+> 🏠 서비스 배포 사이트
 > 
 
 - [맛이어때 api 문서](http://13.125.177.126:8080/docs/index.html)
