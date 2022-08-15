@@ -2,96 +2,105 @@ import styled from '@emotion/styled'
 import { BsFilterLeft } from 'react-icons/bs'
 import Input from '@components/Input'
 import { FiSearch } from 'react-icons/fi'
-import useForm from '@hooks/useForm'
 import Modal from './Modal'
-import { useState, ChangeEvent } from 'react'
-import { useRouter } from 'next/router'
+import { useState, ChangeEvent, FormEvent, useEffect, useRef } from 'react'
+import { SearchFormOptions } from '@interfaces'
+import SortOption from './SortOption'
+import FilterForm from './FilterForm'
 
 interface Props {
-  sortOptions: string[]
+  onSubmit: (values: SearchFormOptions) => void
+  searchDomain?: string
 }
 
-interface SearchInput {
-  keyword: string
-}
-
-interface FormError {
-  length?: string
+interface SortOption {
+  label: string
+  value: string
 }
 
 const PLACEHOLDER_SEARCH_INPUT = '메뉴 검색'
 
-const validate = ({ keyword }: SearchInput) => {
-  const result: FormError = {}
-
-  if (keyword.length < 2) {
-    result.length = '2글자 이상 입력해주세요!'
-  }
-
-  return result
-}
-
-const SearchForm = ({ sortOptions }: Props) => {
-  const router = useRouter()
+const SearchForm = ({ onSubmit, searchDomain }: Props) => {
   const [modalVisible, setModalVisible] = useState(false)
-  const { values, errors, handleChange, handleSubmit } = useForm({
-    initialValues: {
-      keyword: ''
-    },
-    onSubmit: (values) => {
-      return {
-        keywords: values.keyword,
-        sortOption: router.query.sort
-      }
-    },
-    validate
-  })
+  const [tasteIdList, setTasteIdList] = useState<number[]>([])
+  const [keyword, setKeyword] = useState('')
+  const [sort, setSort] = useState('recent')
+
+  const inputElement = useRef<HTMLInputElement>(null)
+  useEffect(() => {
+    setTasteIdList([])
+    setSort('recent')
+    setKeyword('')
+  }, [searchDomain])
 
   const handleFilterClick = () => setModalVisible(true)
   const handleModalClose = () => setModalVisible(false)
 
-  const handleSortOptionChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    router.replace({
-      pathname: router.pathname,
-      query: { ...router.query, sort: e.target.value }
-    })
+  const handleSortChange = (value: string) => {
+    setSort(value)
+    onSubmit({ keyword, tasteIdList, sort: value })
+  }
+
+  const handleKeywordChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setKeyword(e.target.value)
+  }
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    onSubmit({ keyword, tasteIdList, sort })
+    inputElement.current?.blur()
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <Form onSubmit={handleSubmit}>
       <SearchWrapper>
         <SearchInput
-          name="keyword"
-          value={values.keyword}
+          value={keyword}
           height={5}
           type="text"
           placeholder={PLACEHOLDER_SEARCH_INPUT}
-          onChange={handleChange}
+          onChange={handleKeywordChange}
+          InputRef={inputElement}
         />
-        <SearchIcon />
+        <SearchButton>
+          <SearchIcon />
+        </SearchButton>
       </SearchWrapper>
-      <ErrorMessage>
-        {Object.keys(errors).length > 0 && Object.values(errors)}
-      </ErrorMessage>
       <OptionContainer>
+        <SortOption selectedValue={sort} onChange={handleSortChange} />
         <FilterWrapper onClick={handleFilterClick}>
           <FilterIcon />
           <Text>필터</Text>
         </FilterWrapper>
         <Modal visible={modalVisible} onClose={handleModalClose}>
-          TEMP MODAL CHILD
+          <FilterForm
+            onSubmit={handleSubmit}
+            tasteIdList={tasteIdList}
+            onClose={handleModalClose}
+            onChange={(newTagList) => {
+              setTasteIdList(newTagList)
+            }}
+          />
         </Modal>
-        <select onChange={handleSortOptionChange}>
-          {sortOptions.map((option) => (
-            <option key={option} value={option}>
-              {option}
-            </option>
-          ))}
-        </select>
       </OptionContainer>
-    </form>
+    </Form>
   )
 }
+
+const SearchButton = styled.button`
+  font-size: 2.5rem;
+  margin-top: 0.5rem;
+  margin-left: -4.5rem;
+  background-color: #ffffff;
+  border: none;
+  cursor: pointer;
+`
+
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+`
 
 const SearchWrapper = styled.div`
   display: flex;
@@ -101,22 +110,11 @@ const SearchInput = styled(Input)`
   width: 100%;
 `
 
-const ErrorMessage = styled.div`
-  font-size: 1.6rem;
-  color: red;
-  height: 2rem;
-  padding: 1rem;
-  box-sizing: border-box;
-`
-
-const SearchIcon = styled(FiSearch)`
-  font-size: 2.5rem;
-  margin-left: -3.5rem;
-`
+const SearchIcon = styled(FiSearch)``
 
 const OptionContainer = styled.div`
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   gap: 1rem;
 `
 
@@ -135,6 +133,7 @@ const FilterIcon = styled(BsFilterLeft)`
 const Text = styled.span`
   font-size: 2rem;
   user-select: none;
+  font-weight: 700;
 `
 
 export default SearchForm

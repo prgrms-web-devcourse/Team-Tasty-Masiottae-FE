@@ -1,25 +1,43 @@
 import styled from '@emotion/styled'
-import { ReactNode } from 'react'
+import { ReactNode, useState, useEffect } from 'react'
 import Header from './Header'
 import Navigation from './Navigation'
+import { useRouter } from 'next/router'
+import { PASSWORD_CHANGE_URL, LOGIN_URL, SIGNUP_URL } from '@constants/pageUrl'
 
 interface Props {
   children: ReactNode
 }
 
 const Layout = ({ children }: Props) => {
+  const [isShow, setIsShow] = useState(true)
+  const router = useRouter()
+  const { pathname } = router
+  const isPathChangeNavigation =
+    pathname === LOGIN_URL ||
+    pathname === PASSWORD_CHANGE_URL ||
+    pathname === SIGNUP_URL
+
+  useEffect(() => {
+    if (isPathChangeNavigation) {
+      setIsShow(false)
+      return
+    }
+    setIsShow(true)
+  }, [pathname, isPathChangeNavigation])
+
   return (
     <Container id="default-template-container">
       <Header />
       <StyledMain>{children}</StyledMain>
-      <Navigation />
+      {isShow && <Navigation />}
     </Container>
   )
 }
 
 const StyledMain = styled.main`
   flex: 1;
-  padding: 7.5rem 2rem;
+  padding: 6.4rem 2rem;
   background-color: #ffffff;
 `
 
@@ -29,7 +47,6 @@ const Container = styled.div`
   position: relative;
   width: 50rem;
   min-height: 100vh;
-  overflow-x: hidden;
   margin: 0 auto;
   background-color: '#FFFFFF';
   -ms-overflow-style: none;

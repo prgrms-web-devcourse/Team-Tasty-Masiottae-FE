@@ -1,59 +1,100 @@
-import Modal from '@components/Modal'
-import styled from '@emotion/styled'
 import React, { Fragment, useState } from 'react'
-import { BiTrash } from 'react-icons/bi'
-import commentListDummy from './commentsDummy.json'
+import styled from '@emotion/styled'
+import Modal from '@components/Modal'
+import { Comment, User } from '@interfaces'
+import { BiDotsHorizontalRounded, BiTrash } from 'react-icons/bi'
+import { getDate } from '@utils/getDate'
+import Avatar from '@components/Avatar'
+import { useDeleteCommentMutation } from '@hooks/mutations/useDeleteCommentMutation'
+import { useRouter } from 'next/router'
 
-const CommentList = () => {
-  const [user, setUser] = useState({
-    id: 111,
-    name: '계란이 조아',
-    profileImageUrl: 'https://via.placeholder.com/300x150'
-  })
-  const [commentList, setCommentList] = useState(commentListDummy)
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+interface Props {
+  user: User
+  commentList: Comment[]
+}
 
-  const handleDeleteCommentClick = (
-    e: React.MouseEvent<HTMLDivElement, MouseEvent>
-  ) => {
-    setIsDeleteModalOpen(true)
+const CommentList = ({ user, commentList }: Props) => {
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [commentId, setCommentId] = useState(0)
+  const { mutate: deleteComment } = useDeleteCommentMutation()
+  const router = useRouter()
+
+  const handleUserClick = (userId: number | null) => {
+    if (!userId) {
+      return
+    }
+    router.push(`/user/${userId}`)
   }
 
-  const handleDeleteCommentClose = () => {
-    setIsDeleteModalOpen(false)
+  const handleCommentModalClick = (id: number) => {
+    setIsModalOpen(true)
+    setCommentId(id)
+  }
+
+  const handleCommentModalClose = () => {
+    setIsModalOpen(false)
+  }
+
+  const handleDeleteCommentClick = () => {
+    deleteComment(
+      {
+        commentId
+      },
+      {
+        onSuccess: () => {
+          setIsModalOpen(false)
+        }
+      }
+    )
   }
 
   return (
-    <CommentListContainer>
-      <CommnetCountText>댓글 {commentList.length} 개</CommnetCountText>
-      {commentList.map((comment) => (
-        <Fragment key={comment.id}>
-          <CommentWrapper>
-            <Avatar src={comment.author.profileImageUrl} />
-            <CommentContainer>
-              <UserNameText>{comment.author.name}</UserNameText>
-              <Comment>
-                <CommentText>{comment.comment}</CommentText>
-                <ButtonWrapper onClick={handleDeleteCommentClick}>
-                  {user.id === comment.author.id && (
+    <>
+      <CommentListContainer>
+        <CommnetCountText>댓글 {commentList.length}개</CommnetCountText>
+        {commentList.map(({ id, author, createdAt, comment }) => (
+          <Fragment key={id}>
+            <CommentWrapper>
+              <Avatar
+                size={4}
+                src={author.image}
+                isLoading={false}
+                onClick={() => handleUserClick(author.id)}
+              />
+              <CommentContainer>
+                <CommentHeader>
+                  <NameAndDateWrapper>
+                    <UserNameText onClick={() => handleUserClick(author.id)}>
+                      {author.nickName}
+                    </UserNameText>
+                    <DateText>{getDate(createdAt)}</DateText>
+                  </NameAndDateWrapper>
+                  {user.id === author.id && (
                     <>
-                      <DeleteButton size={20} />
-                      <Modal
-                        visible={isDeleteModalOpen}
-                        onClose={handleDeleteCommentClose}
-                        option="drawer"
-                      >
-                        <ModalItem>삭제</ModalItem>
-                      </Modal>
+                      <Dots
+                        size={20}
+                        onClick={() => handleCommentModalClick(id)}
+                      />
                     </>
                   )}
-                </ButtonWrapper>
-              </Comment>
-            </CommentContainer>
-          </CommentWrapper>
-        </Fragment>
-      ))}
-    </CommentListContainer>
+                </CommentHeader>
+                <CommentText>{comment}</CommentText>
+              </CommentContainer>
+            </CommentWrapper>
+          </Fragment>
+        ))}
+      </CommentListContainer>
+      <Modal
+        visible={isModalOpen}
+        onClose={handleCommentModalClose}
+        option="drawer"
+      >
+        <ModalItem onClick={handleDeleteCommentClick}>
+          <BiTrash size={25} />
+          삭제
+        </ModalItem>
+      </Modal>
+    </>
   )
 }
 
@@ -64,51 +105,55 @@ const Flex = styled.div`
 const CommentListContainer = styled.div``
 
 const CommnetCountText = styled.div`
-  font-size: 1.4rem;
+  font-size: 1.6rem;
+  font-weight: 700;
   margin-bottom: 2rem;
 `
 
 const CommentWrapper = styled(Flex)`
   margin-bottom: 1rem;
-`
-
-const Avatar = styled.img`
-  width: 3rem;
-  height: 3rem;
-  margin-right: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 0.1rem solid #f1f1f1;
 `
 
 const CommentContainer = styled.div`
-  width: 100%;
+  width: calc(100% - 4rem);
+  margin-left: 1rem;
+  padding-bottom: 0.8rem;
+`
+
+const CommentHeader = styled(Flex)`
+  justify-content: space-between;
+  margin-bottom: 0.4rem;
+`
+
+const NameAndDateWrapper = styled(Flex)`
+  align-items: center;
 `
 
 const UserNameText = styled.div`
-  font-size: 1.2rem;
+  font-size: 1.6rem;
   font-weight: 700;
-  margin-bottom: 0.5rem;
-`
-
-const Comment = styled(Flex)`
-  justify-content: space-between;
-  font-size: 1.4rem;
-  min-width: 100%;
-  border-radius: 0.5rem;
-  padding: 1rem;
-  background-color: rgba(0, 0, 0, 0.03);
-`
-
-const CommentText = styled.div`
-  padding-right: 2rem;
-  width: 100%;
-`
-
-const ButtonWrapper = styled.div`
-  justify-self: flex-end;
-  margin-left: 0.5rem;
   cursor: pointer;
 `
 
+const DateText = styled.span`
+  margin-left: 1.4rem;
+  color: #a3a3a3;
+`
+
+const Dots = styled(BiDotsHorizontalRounded)`
+  justify-self: end;
+  cursor: pointer;
+`
+
+const CommentText = styled.div`
+  font-size: 1.6rem;
+`
+
 const ModalItem = styled(Flex)`
+  align-items: center;
+  height: 5rem;
   font-size: 2rem;
   justify-content: center;
   width: 100vw;
@@ -119,7 +164,5 @@ const ModalItem = styled(Flex)`
     margin-top: 1rem;
   }
 `
-
-const DeleteButton = styled(BiTrash)``
 
 export default CommentList

@@ -1,16 +1,42 @@
 import { atom } from 'recoil'
 import { User } from '@interfaces'
+import { v1 } from 'uuid'
+import { DEFAULT_USER_IMAGE } from '@constants/image'
+import { setCookie, getCookie } from '@utils/cookie'
+import { TOKEN_EXPIRE_DATE, CURRENT_USER } from '@constants/token'
+
+export const initialUser = {
+  id: null,
+  image: DEFAULT_USER_IMAGE,
+  email: '',
+  nickName: '',
+  snsAccount: '',
+  createdAt: '',
+  menuCount: 0
+}
+
+const makeCookieEffect =
+  (key: string) =>
+  ({ setSelf, onSet }: any) => {
+    const savedValue = getCookie(key)
+
+    if (savedValue != null) {
+      setSelf(savedValue || initialUser)
+    }
+
+    onSet((newValue: User, _: any, isReset: boolean) => {
+      const expirationDate = getCookie(TOKEN_EXPIRE_DATE)
+      isReset
+        ? setCookie(key, '')
+        : setCookie(key, JSON.stringify(newValue), {
+            path: '/',
+            expires: new Date(expirationDate)
+          })
+    })
+  }
 
 export const currentUser = atom<User>({
-  key: 'currentUser',
-  default: {
-    id: 1,
-    image:
-      'https://user-images.githubusercontent.com/79133602/181918487-b0e0d98c-3520-40f2-947b-7ba9f4422cd4.PNG',
-    email: 'example@naver.com',
-    nickName: '계란이 좋아',
-    snsAccount: 'example@naver.com',
-    createdAt: '2022-07-28T15:10:59.2186394',
-    menuCount: 0
-  }
+  key: `currentUser/${v1()}`,
+  default: initialUser,
+  effects: [makeCookieEffect(CURRENT_USER)]
 })

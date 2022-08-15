@@ -1,15 +1,49 @@
-import Modal from '@components/Modal'
+import React, { useState } from 'react'
 import styled from '@emotion/styled'
-import React, { Fragment, useState } from 'react'
-import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai'
-import { BiDotsHorizontalRounded } from 'react-icons/bi'
-import menuDummy from './menuDummy.json'
+import Modal from '@components/Modal'
+import { BiDotsVerticalRounded, BiTrash } from 'react-icons/bi'
+import { Menu } from '@interfaces'
+import { useDeleteMenuMutation } from '@hooks/mutations/useDeleteMenuMutation'
+import { useRouter } from 'next/router'
+import Avatar from '@components/Avatar'
+import { BsFillPencilFill } from 'react-icons/bs'
+import { IoMdHeart } from 'react-icons/io'
+import { usePostLikeMutation } from '@hooks/mutations/usePostLikeMutation'
+import { NO_IMAGE } from '@constants/image'
 
-const MenuDetail = () => {
-  const [menu, setMenu] = useState(menuDummy)
+interface Props {
+  menu: Menu
+  userId: number | null
+}
+
+const MenuDetail = ({ menu, userId }: Props) => {
+  const [isLikeClicked, setIsLikeClicked] = useState(menu.isLiked)
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const { mutate: deleteMenu } = useDeleteMenuMutation()
+  const { mutate: postLike } = usePostLikeMutation({ menuId: menu.id })
+  const router = useRouter()
 
-  const handleEditMenuClick = (e: React.MouseEvent<SVGElement, MouseEvent>) => {
+  const handleUserClick = (userId: number | null) => {
+    if (!userId) {
+      return
+    }
+    router.push(`/user/${userId}`)
+  }
+
+  const handleHeartClick = () => {
+    postLike(
+      {
+        menuId: menu.id
+      },
+      {
+        onSuccess: () => {
+          setIsLikeClicked((prev) => !prev)
+        }
+      }
+    )
+  }
+
+  const handleEditMenuClick = () => {
     setIsModalOpen(true)
   }
 
@@ -17,51 +51,94 @@ const MenuDetail = () => {
     setIsModalOpen(false)
   }
 
+  const handleMenuEditClick = () => {
+    router.push(`/edit-menu/${menu.id}`)
+  }
+
+  const handleMenuDeleteClick = () => {
+    deleteMenu(
+      { menuId: menu.id },
+      {
+        onSuccess: () => {
+          setIsModalOpen(false)
+          router.back()
+        }
+      }
+    )
+  }
+
   return (
-    <MenuContainer>
-      <Header>
-        <Title>{menu.title}</Title>
-        <Dots size={30} onClick={handleEditMenuClick} />
-        <Modal
-          visible={isModalOpen}
-          onClose={handleEditMenuClose}
-          option="drawer"
-        >
-          <ModalItem>수정</ModalItem>
-          <ModalItem>삭제</ModalItem>
-        </Modal>
-      </Header>
+    <>
+      <MenuContainer>
+        <ImageWrapper>
+          <Img src={menu.image ? menu.image : NO_IMAGE} />
+        </ImageWrapper>
 
-      <ImageWrapper>
-        <Image src={menu.imageUrl} alt="" />
-      </ImageWrapper>
+        <HatWrapper>
+          <Hat />
+        </HatWrapper>
+        <Header>
+          <LeftHeader>
+            <FranchiseText>{menu.franchise.name} </FranchiseText>
+            <Title>{menu.title}</Title>
+          </LeftHeader>
+          <RightHeader guest={menu.author.id !== userId}>
+            {isLikeClicked ? (
+              <Heart size={50} onClick={handleHeartClick}></Heart>
+            ) : (
+              <EmptyHeart size={50} onClick={handleHeartClick} />
+            )}
+            <LikesCountText clicked={isLikeClicked}>
+              <span>{menu.likes}</span>
+            </LikesCountText>
+            {menu.author.id === userId && (
+              <Dots size={30} onClick={handleEditMenuClick} />
+            )}
+          </RightHeader>
+        </Header>
 
-      <Footer>
-        <UserWrapper>
-          <Avatar src={menu.author.profileImageUrl} />
-          <UserNameText>{menu.author.name}</UserNameText>
+        <UserWrapper onClick={() => handleUserClick(menu.author.id)}>
+          <Avatar size={4} src={menu.author.image} isLoading={false} />
+          <UserNameText>{menu.author.nickName}</UserNameText>
         </UserWrapper>
-        <LikeWrapper>
-          <Heart size={30} />
-          <LikesCountText>{menu.likes}</LikesCountText>
-        </LikeWrapper>
-      </Footer>
 
-      <OptionsWrapper>
-        <div>
-          <FranchiseText>[{menu.franchise}] </FranchiseText>
-          <span>{menu.originalTitle}</span>
-        </div>
-        {menu.options.map((option) => (
-          <Fragment key={option.name}>
-            <OptionText>
-              + {option.name} {option.description}
+        <OptionsWrapper>
+          <OriginalTitle>{menu.originalTitle}</OriginalTitle>
+          {menu.optionList.map(({ name, description }) => (
+            <OptionText key={name}>
+              {name} {description}
             </OptionText>
-          </Fragment>
-        ))}
-        <PriceText>예상 가격: {menu.expectedPrice} 원</PriceText>
-      </OptionsWrapper>
-    </MenuContainer>
+          ))}
+          <PriceText>
+            {menu.expectedPrice === 0 ? '미정' : `${menu.expectedPrice} 원`}
+          </PriceText>
+        </OptionsWrapper>
+
+        <TagContainer>
+          {menu.tasteList.map(({ id, name, color }) => (
+            <Tag key={id} color={color}>
+              <span>{name}</span>
+            </Tag>
+          ))}
+        </TagContainer>
+      </MenuContainer>
+      <Modal
+        visible={isModalOpen}
+        onClose={handleEditMenuClose}
+        option="drawer"
+      >
+        <ModalItem>
+          <IconWrapper onClick={handleMenuEditClick}>
+            <BsFillPencilFill size={20} />
+          </IconWrapper>
+          수정
+        </ModalItem>
+        <ModalItem onClick={handleMenuDeleteClick}>
+          <BiTrash size={25} />
+          삭제
+        </ModalItem>
+      </Modal>
+    </>
   )
 }
 
@@ -73,22 +150,96 @@ const MenuContainer = styled.div`
   margin-bottom: 2rem;
 `
 
+const ImageWrapper = styled.div`
+  margin: 0 -2rem;
+`
+
+const Img = styled.div<{ src: string }>`
+  display: flex;
+  width: 100%;
+  height: 100%;
+  padding-top: 50%;
+  padding-bottom: 50%;
+  background-image: ${({ src }) => (src ? `url(${src})` : null)};
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+`
+
+const HatWrapper = styled.div`
+  margin: 0 -2rem;
+`
+
+const Hat = styled.div`
+  position: relative;
+  top: -1.5rem;
+  background-color: white;
+  width: 100%;
+  height: 3rem;
+  border-radius: 1.5rem;
+`
+
 const Header = styled(Flex)`
   justify-content: space-between;
   align-items: center;
-  margin-top: 1rem;
+  position: relative;
+  margin-top: -1.5rem;
   margin-bottom: 2rem;
 `
 
-const Title = styled.span`
-  font-size: 3.6rem;
+const LeftHeader = styled.div``
+
+const FranchiseText = styled.div`
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #a3a3a3;
+  margin-bottom: 0.8rem;
 `
 
-const Dots = styled(BiDotsHorizontalRounded)`
+const Title = styled.div`
+  max-width: 30rem;
+  font-size: 2.8rem;
+  font-weight: 700;
+`
+
+const RightHeader = styled(Flex)<{ guest: boolean }>`
+  width: 8rem;
+  align-items: center;
+  position: relative;
+  top: -2rem;
+  left: ${({ guest }) => (guest ? '2rem' : '0')};
+`
+
+const EmptyHeart = styled(IoMdHeart)`
+  margin-right: -1rem;
+  color: gray;
+  cursor: pointer;
+`
+
+const Heart = styled(IoMdHeart)`
+  margin-right: -1rem;
+  color: red;
+  cursor: pointer;
+`
+
+const LikesCountText = styled(Flex)<{ clicked: boolean }>`
+  justify-content: center;
+  width: 0.6rem;
+  color: white;
+  position: relative;
+  right: 1.8rem;
+  bottom: 0.2rem;
+  font-size: 1.4rem;
+  font-weight: 700;
+`
+
+const Dots = styled(BiDotsVerticalRounded)`
   cursor: pointer;
 `
 
 const ModalItem = styled(Flex)`
+  align-items: center;
+  height: 5rem;
   font-size: 2rem;
   justify-content: center;
   width: 100vw;
@@ -100,17 +251,11 @@ const ModalItem = styled(Flex)`
   }
 `
 
-const ImageWrapper = styled(Flex)`
+const IconWrapper = styled(Flex)`
   justify-content: center;
-  max-width: 50rem;
-  height: 100vw;
-  max-height: 50rem;
-  margin-bottom: -45%;
-`
-
-const Footer = styled(Flex)`
-  justify-content: space-between;
-  margin-bottom: 2rem;
+  align-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
 `
 
 const OptionsWrapper = styled(Flex)`
@@ -118,8 +263,6 @@ const OptionsWrapper = styled(Flex)`
   font-size: 2rem;
   margin-bottom: 1rem;
   padding: 1rem;
-  border: 0.1rem solid rgba(0, 0, 0, 0.4);
-  border-radius: 1rem;
 
   & > div:first-of-type {
     margin-bottom: 2rem;
@@ -130,53 +273,49 @@ const OptionsWrapper = styled(Flex)`
   }
 `
 
-const FranchiseText = styled.span`
+const OriginalTitle = styled.div`
+  font-size: 1.8rem;
   font-weight: 700;
 `
 
 const OptionText = styled.span`
-  font-size: 1.4rem;
+  font-size: 1.6rem;
 `
 
 const PriceText = styled.span`
   font-size: 1.6rem;
+  font-weight: 700;
   align-self: flex-end;
-`
-
-const Image = styled.img`
-  width: 50%;
-  height: 50%;
-`
-
-const Avatar = styled.img`
-  width: 3rem;
-  height: 3rem;
-  margin-right: 1rem;
 `
 
 const UserWrapper = styled(Flex)`
   align-items: center;
+  margin-bottom: 1rem;
 `
 
 const UserNameText = styled.div`
   font-size: 2rem;
   font-weight: 700;
-`
-
-const LikeWrapper = styled(Flex)`
-  align-items: center;
-`
-
-const Heart = styled(AiFillHeart)`
-  color: red;
+  margin-left: 1.2rem;
   cursor: pointer;
 `
 
-const LikesCountText = styled.span`
-  font-size: 1.4rem;
-  font-weight: 700;
+const TagContainer = styled(Flex)`
+  gap: 1rem;
+  flex-wrap: wrap;
 `
 
-const EmptyHeart = styled(AiOutlineHeart)``
+const Tag = styled(Flex)<{ color: string }>`
+  display: flex;
+  align-items: center;
+  color: white;
+  font-size: 1.8rem;
+  font-weight: 700;
+  background-color: ${({ color }) => color};
+  min-width: fit-content;
+  height: 3.2rem;
+  padding: 1.8rem 2.4rem;
+  border-radius: 1.8rem;
+`
 
 export default MenuDetail

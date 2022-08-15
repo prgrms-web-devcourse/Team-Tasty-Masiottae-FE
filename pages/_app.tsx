@@ -5,20 +5,26 @@ import { ThemeProvider } from '@emotion/react'
 import theme from '@constants/theme'
 import { RecoilRoot } from 'recoil'
 import React from 'react'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import {
+  Hydrate,
+  QueryClient,
+  QueryClientProvider
+} from '@tanstack/react-query'
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [queryClient] = React.useState(() => new QueryClient())
 
   return (
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider theme={theme}>
-        <Layout>
+      <Hydrate state={pageProps.dehydratedState}>
+        <ThemeProvider theme={theme}>
           <RecoilRoot>
-            <Component {...pageProps} />
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
           </RecoilRoot>
-        </Layout>
-      </ThemeProvider>
+        </ThemeProvider>
+      </Hydrate>
     </QueryClientProvider>
   )
 }

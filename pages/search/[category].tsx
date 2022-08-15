@@ -3,32 +3,66 @@ import useIntersectionObserver from '@hooks/useIntersectionObserver'
 import { useRouter } from 'next/router'
 import MenuCardList from '@components/MenuCardList'
 import SearchForm from '@components/SearchForm'
-import { useMenuList } from '@hooks/queries/useMenuList'
-
-const SORT_OPTIONS = ['최신순', '좋아요순', '댓글순']
+import FranchiseInfo from '@components/FranchiseInfo'
+import { useFranchiseList } from '@hooks/queries/useFranchiseList'
+import { useEffect, useState } from 'react'
+import { useSearchMenuList } from '@hooks/queries/useSearchMenuList'
+import { SearchFormOptions, searchParams } from '@interfaces'
+import SkeletonCardList from '@components/SkeletonCardList'
 
 const Search = () => {
   const router = useRouter()
-  const { category } = router.query
-  const { menuList } = useMenuList()
+  const id = parseInt(router.query.category as string)
+  const [searchOptions, setSearchOptions] = useState<searchParams>({
+    offset: 0,
+    limit: 10
+  })
+  const { franchiseList } = useFranchiseList()
+  const {
+    menuList,
+    isLoading: isMenuListLoading,
+    fetchNextPage
+  } = useSearchMenuList(searchOptions)
+
+  useEffect(() => {
+    if (!router.isReady) return
+    setSearchOptions({ offset: 0, limit: 10, franchiseId: id })
+  }, [router.isReady, id])
+
+  const handleSubmit = (values: SearchFormOptions) => {
+    setSearchOptions({ ...searchOptions, ...values })
+  }
 
   const ref = useIntersectionObserver(
     async (entry, observer) => {
       observer.unobserve(entry.target)
+      fetchNextPage()
     },
     { threshold: 0.5 }
   )
+
+  const getFranchise = () => {
+    return searchOptions.franchiseId === 0
+      ? { id: 0, name: '전체', image: '/ALL.png' }
+      : franchiseList?.find(
+          (franchise) => franchise.id === searchOptions.franchiseId
+        )
+  }
 
   return (
     <Container>
       <FixedWrapper>
         <InnerWrapper>
-          <CategoryHeader>{category}</CategoryHeader>
-          <SearchForm sortOptions={SORT_OPTIONS} />
+          <FranchiseInfo franchise={getFranchise()} />
+          <SearchForm onSubmit={handleSubmit} />
         </InnerWrapper>
       </FixedWrapper>
       <CardListWrapper>
-        <MenuCardList menuList={menuList} divRef={ref} />
+        {isMenuListLoading ? (
+          <SkeletonCardList size={2} />
+        ) : (
+          <MenuCardList menuList={menuList || []} divRef={ref} />
+        )}
       </CardListWrapper>
     </Container>
   )
@@ -43,6 +77,7 @@ const Container = styled.div`
 
 const FixedWrapper = styled.div`
   position: fixed;
+  top: 6.4rem;
   left: 0;
   width: 100%;
 `
@@ -65,17 +100,7 @@ const InnerWrapper = styled.div`
 `
 
 const CardListWrapper = styled.ul`
-  padding-top: 22rem;
-`
-
-const CategoryHeader = styled.div`
-  height: 8rem;
-  font-size: 2rem;
-  text-align: center;
-  padding: 3rem;
-  background-color: gray;
-  box-sizing: border-box;
-  user-select: none;
+  padding-top: 20rem;
 `
 
 export default Search

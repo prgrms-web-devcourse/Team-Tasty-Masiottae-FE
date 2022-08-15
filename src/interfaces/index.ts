@@ -1,5 +1,5 @@
 export interface User {
-  id: number
+  id: number | null
   image: string
   email: string
   nickName: string
@@ -20,6 +20,8 @@ export interface Menu {
   expectedPrice: number
   tasteList: Taste[]
   likes: number
+  isLiked: boolean
+  comments: number
   createdAt: string
   updatedAt: string
 }
@@ -30,23 +32,38 @@ export interface Comment {
   author: User
   comment: string
   createdAt: string
-  updatedAt: string
 }
 
 export interface Option {
-  id: number
   name: string
-  optionDescription: string
+  description: string
 }
 
 export interface Franchise {
   id: number
   image: string
-  franchise: string
+  name: string
 }
 
 export interface Taste {
   id: number
   name: string
   color: string
+}
+
+export interface searchParams {
+  franchiseId?: number
+  keyword?: string
+  sort?: string
+  tasteIdList?: number[]
+  offset: number
+  limit: number
+  option?: { label: string; value: string }
+  accountId?: number
+}
+
+export interface SearchFormOptions {
+  keyword: string
+  sort?: string
+  tasteIdList: number[]
 }

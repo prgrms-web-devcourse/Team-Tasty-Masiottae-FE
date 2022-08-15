@@ -65,7 +65,7 @@ const StyledButton = styled.button<StyleType>`
     opacity: 0.7;
   }
   :disabled {
-    opacity: 0.7;
+    opacity: 0.5;
   }
 `
 

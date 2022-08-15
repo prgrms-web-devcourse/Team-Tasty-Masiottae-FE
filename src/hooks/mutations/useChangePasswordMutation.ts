@@ -2,7 +2,7 @@ import axios from '@lib/axios'
 import { useMutation } from '@tanstack/react-query'
 
 interface Params {
-  userId: string
+  userId: number
   password: string
 }
 

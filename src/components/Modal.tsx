@@ -11,6 +11,7 @@ interface Props {
   visible: boolean
   onClose: () => void
   option?: 'drawer'
+  className?: string
 }
 
 const Modal = ({
@@ -19,7 +20,8 @@ const Modal = ({
   height,
   visible,
   onClose,
-  option
+  option,
+  className
 }: Props) => {
   const ref = useClickAway(onClose)
   const [element, setElement] = useState<HTMLElement | null>(null)
@@ -38,9 +40,14 @@ const Modal = ({
       onClick={(e) => e.stopPropagation()}
       onTouchStart={(e) => e.stopPropagation()}
     >
-      <ModalContainer ref={ref} width={width} height={height} option={option}>
+      <ModalContainer
+        ref={ref}
+        width={width}
+        height={height}
+        option={option}
+        className={className}
+      >
         {children}
-        <div></div>
       </ModalContainer>
     </BackgroundDim>,
     element
@@ -63,12 +70,16 @@ const ModalContainer = styled.div<{
   height: number | undefined
   option: 'drawer' | undefined
 }>`
+  display: ${({ option }) => (option === 'drawer' ? '' : 'flex')};
+  justify-content: ${({ option }) => (option === 'drawer' ? '' : 'center')};
   position: fixed;
-  top: ${({ option }) => (option !== 'drawer' ? '50%' : '')};
-  bottom: ${({ option }) => (option === 'drawer' ? 0 : '')};
+  top: ${({ option }) => (option === 'drawer' ? '' : '50%')};
+  bottom: ${({ option }) => (option === 'drawer' ? '0' : '')};
   left: 50%;
-  transform: translate(-50%, -50%);
-  width: ${({ width }) => (width ? `${width}rem` : '100%')};
+  transform: translate(
+    -50%,
+    ${({ option }) => (option === 'drawer' ? '0' : '-50%')}
+  );
   width: ${({ option }) => (option === 'drawer' ? `100%` : '45rem')};
   max-width: 50rem;
   height: ${({ height }) => `${height}rem`};
@@ -76,6 +87,7 @@ const ModalContainer = styled.div<{
   background-color: white;
   box-shadow: 0 0.3rem 0.6rem rgba(0, 0, 0, 0.2);
   animation: ${({ option }) => (option === 'drawer' ? 'drawer-show 0.3s' : '')};
+  border-radius: 1rem;
 
   @keyframes drawer-show {
     from {

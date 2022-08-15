@@ -1,4 +1,4 @@
-import { useCallback } from 'react'
+import { RefObject, useCallback } from 'react'
 import styled from '@emotion/styled'
 
 interface Props {
@@ -10,10 +10,12 @@ interface Props {
   accept?: string
   required?: boolean
   isValid?: boolean
+  isDisabled?: boolean
   placeholder: string
   onChange?: React.ChangeEventHandler<HTMLInputElement>
   onBlur?: React.FocusEventHandler<HTMLInputElement>
   className?: string
+  InputRef?: RefObject<HTMLInputElement>
 }
 
 const Input = ({
@@ -25,10 +27,12 @@ const Input = ({
   accept,
   required = false,
   isValid = true,
+  isDisabled = false,
   placeholder,
   onChange,
   onBlur,
-  className
+  className,
+  InputRef
 }: Props) => {
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -57,6 +61,8 @@ const Input = ({
       onChange={handleChange}
       onBlur={handleBlur}
       className={className}
+      disabled={isDisabled}
+      ref={InputRef}
     />
   )
 }
@@ -66,8 +72,8 @@ const StyledInput = styled.input<Props>`
   height: ${({ height }) => `${height}rem`};
   border: 0.1rem solid
     ${({ theme, isValid }) =>
-      isValid ? theme.color.borderNormal : theme.color.mainRed};
-  padding: 2.2rem 2.2rem;
+      isValid ? theme.color.borderBasic : theme.color.error};
+  padding: 2rem 1.5rem;
   border-radius: 1rem;
   box-sizing: border-box;
   ::placeholder {
@@ -78,6 +84,7 @@ const StyledInput = styled.input<Props>`
     box-shadow: 0 0 0 100rem white inset;
   }
   &:focus {
+    outline: none;
     border: 0.1rem solid black;
   }
 `
