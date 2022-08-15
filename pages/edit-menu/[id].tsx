@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import styled from '@emotion/styled'
 import TagContainer from '@components/TagContainer'
 import ImageUploader from '@components/ImageUploader'
@@ -12,6 +12,7 @@ import { useRecoilValue } from 'recoil'
 import { currentUser } from '@recoil/currentUser'
 
 import Spinner from '@components/Spinner'
+import useRouterLoading from '@hooks/useRouterLoading'
 export interface InputListType {
   franchiseId: number
   title: string
@@ -25,6 +26,9 @@ const EditMenu = () => {
   // 필드 값
 
   const router = useRouter()
+
+  const isRouterLoading = useRouterLoading()
+
   const { id } = router.query
   const user = useRecoilValue(currentUser)
   const { mutate, isLoading: changeMenuLoading } = useChangeMenu()
@@ -122,7 +126,11 @@ const EditMenu = () => {
 
   return (
     <FlexContainer>
-      {changeMenuLoading || getMenuLoading ? <Spinner /> : ''}
+      {isRouterLoading || changeMenuLoading || getMenuLoading ? (
+        <Spinner />
+      ) : (
+        ''
+      )}
       <ImageUploaderWrapper>
         <ImageUploader
           value={menuData?.image}

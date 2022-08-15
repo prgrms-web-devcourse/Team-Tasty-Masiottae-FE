@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/router'
 import styled from '@emotion/styled'
 import TagContainer from '@components/TagContainer'
@@ -8,6 +8,7 @@ import { Option } from '@customTypes/index'
 import { usePostMenu } from '@hooks/mutations/usePostMenuMutation'
 import { InputList } from '@components/create-menu/InputList'
 import Spinner from '@components/Spinner'
+import useRouterLoading from '@hooks/useRouterLoading'
 
 export interface InputListType {
   franchiseId: number
@@ -21,6 +22,7 @@ export interface InputListType {
 const CreateMenu = () => {
   // 필드 값
   const router = useRouter()
+  const isRouterLoading = useRouterLoading()
   const { mutate, isLoading } = usePostMenu()
 
   const [file, setFile] = useState<File | null>(null)
@@ -97,7 +99,7 @@ const CreateMenu = () => {
   return (
     <>
       <FlexContainer>
-        {isLoading ? <Spinner /> : ''}
+        {isRouterLoading || isLoading ? <Spinner /> : ''}
         <ImageUploaderWrapper>
           <ImageUploader isDeletable={true} onChange={handleImageChange} />
         </ImageUploaderWrapper>
