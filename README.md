@@ -120,39 +120,6 @@ npx next start
 </table>
 
 
-## 설치 패키지 
-```
-  "dependencies": {
-    "@emotion/react": "^11.9.3",
-    "@emotion/styled": "^11.9.3",
-    "@tanstack/react-query": "^4.0.10",
-    "axios": "^0.27.2",
-    "moment": "^2.29.4",
-    "next": "12.2.2",
-    "react": "18.2.0",
-    "react-cookie": "^4.1.1",
-    "react-dom": "18.2.0",
-    "react-icons": "^4.4.0",
-    "recoil": "^0.7.4",
-    "uuid": "^8.3.2"
-  },
-  "devDependencies": {
-    "@types/node": "18.0.6",
-    "@types/react": "18.0.15",
-    "@types/react-dom": "18.0.6",
-    "@types/uuid": "^8.3.4",
-    "@typescript-eslint/eslint-plugin": "^5.30.7",
-    "@typescript-eslint/parser": "^5.30.7",
-    "eslint": "8.20.0",
-    "eslint-config-next": "12.2.2",
-    "eslint-config-prettier": "^8.5.0",
-    "husky": "^8.0.1",
-    "lint-staged": "^13.0.3",
-    "prettier": "^2.7.1",
-    "typescript": "^4.7.4"
-  }
-```
-
 ## 개발 기간
 7월 21일 ~ 8월 15일 
 
