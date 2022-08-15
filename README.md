@@ -1,34 +1,54 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 맛이어때 Masiottae-FE
+## 프로젝트 소개
 
-## Getting Started
+### 디렉토리 구조
+```
+📦src
+ ┣ 📂components
+ ┣ 📂constants
+ ┣ 📂hooks
+ ┃ ┣ 📂mutations
+ ┃ ┣ 📂queries
+ ┃ ┣ 📜useClickAway.ts
+ ┃ ┣ 📜useForm.ts
+ ┃ ┣ 📜useIntersectionObserver.ts
+ ┃ ┗ 📜useRouterLoading.ts
+ ┣ 📂interfaces
+ ┣ 📂lib
+ ┃ ┗ 📂axios
+ ┣ 📂recoil
+ ┃ ┗ 📜currentUser.ts
+ ┣ 📂types
+ ┃ ┗ 📜index.ts
+ ┗ 📂utils
+```
+### 기능 요약
 
-First, run the development server:
 
+## 실행 방법
+
+프로젝트 clone 후 서버를 실행합니다. 
+기본 포트는 [http://localhost:3000](http://localhost:3000) 3000으로, 서버 실행 후 해당 주소로 접속하시면 됩니다. 
+
+### 개발 서버 실행 
 ```bash
 npm run dev
 # or
 yarn dev
 ```
+### 프로덕션 서버 실행
+```bash
+npx next build
+npx next start
+```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 프로젝트 결과물 
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+## 설치 패키지 
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## 기술 스택
 
-## Learn More
+## 개발 기간
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## 팀원
