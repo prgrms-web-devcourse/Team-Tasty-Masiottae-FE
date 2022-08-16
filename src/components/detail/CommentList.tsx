@@ -1,10 +1,9 @@
 import React, { Fragment, useState } from 'react'
 import styled from '@emotion/styled'
-import Modal from '@components/Modal'
+import { Modal, Avatar } from '@components/common'
 import { Comment, User } from '@interfaces'
 import { BiDotsHorizontalRounded, BiTrash } from 'react-icons/bi'
 import { getDate } from '@utils/getDate'
-import Avatar from '@components/Avatar'
 import { useDeleteCommentMutation } from '@hooks/mutations/useDeleteCommentMutation'
 import { useRouter } from 'next/router'
 

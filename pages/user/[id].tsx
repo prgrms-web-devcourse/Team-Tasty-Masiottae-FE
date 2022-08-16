@@ -1,15 +1,17 @@
-import Avatar from '@components/Avatar'
-import MenuCardList from '@components/MenuCardList'
-import SearchForm from '@components/SearchForm'
-import styled from '@emotion/styled'
-import useIntersectionObserver from '@hooks/useIntersectionObserver'
 import { MouseEvent, useEffect, useState } from 'react'
-import { useSearchMyMenuList } from '../../src/hooks/queries/useSearchMyMenuList'
+import {
+  Avatar,
+  MenuCardList,
+  SearchForm,
+  SkeletonCardList,
+  SkeletonFranchiseList
+} from '@components/common'
+import styled from '@emotion/styled'
+import useIntersectionObserver from '@hooks/common/useIntersectionObserver'
+import { useSearchMyMenuList } from '@hooks/queries/useSearchMyMenuList'
 import { SearchFormOptions, searchParams } from '@interfaces'
-import SkeletonCardList from '@components/SkeletonCardList'
-import { useUser } from '../../src/hooks/queries/useUser'
+import { useUser } from '@hooks/queries/useUser'
 import { useRouter } from 'next/router'
-import { SkeletonFranchiseInfo } from '@components/SkeletonFranchiseList'
 
 const SELECT_OPTION = [
   { label: '작성한 메뉴', value: 'my' },
@@ -69,7 +71,7 @@ const UserMenu = () => {
   return (
     <>
       {isUserLoading ? (
-        <SkeletonFranchiseInfo />
+        <SkeletonFranchiseList />
       ) : (
         <ProfileContainer>
           <Avatar size={7} src={user?.image} isLoading={false} />

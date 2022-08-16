@@ -1,16 +1,19 @@
 import React, { useState, useCallback } from 'react'
 import styled from '@emotion/styled'
-import Input from '@components/Input'
-import Button from '@components/Button'
+import {
+  Input,
+  Button,
+  Modal,
+  ImageUploader,
+  InputMessage
+} from '@components/common'
 import { BsFillPencilFill } from 'react-icons/bs'
-import useClickAway from '@hooks/useClickAway'
+import useClickAway from '@hooks/common/useClickAway'
 import { useRecoilState } from 'recoil'
 import { currentUser } from '@recoil/currentUser'
 import { User } from '@interfaces'
 import Image from 'next/image'
-import Modal from '@components/Modal'
 import axios from '@lib/axios'
-import ImageUploader from '@components/ImageUploader'
 import {
   MESSAGE_NICKNAME,
   REGEX_NICKNAME,
@@ -19,7 +22,6 @@ import {
 } from '@constants/inputConstants'
 import { useChangeImageMutation } from '@hooks/mutations/useChangeImageMutation'
 import { useChangeNickNameMutation } from '@hooks/mutations/useChangeNickNameMutation'
-import InputMessage from '@components/InputMessage'
 import { useRouter } from 'next/router'
 
 const UserProfile = () => {

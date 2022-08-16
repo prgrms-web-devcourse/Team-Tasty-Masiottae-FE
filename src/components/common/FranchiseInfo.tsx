@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import Avatar from './Avatar'
-import { Franchise } from '../interfaces/index'
+import { Franchise } from '@interfaces'
 
 interface Props {
   franchise?: Franchise

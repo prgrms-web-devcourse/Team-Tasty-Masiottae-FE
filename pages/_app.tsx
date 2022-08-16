@@ -1,10 +1,10 @@
+import React from 'react'
 import '../styles/globals.css'
 import Layout from '@components/Layout'
 import type { AppProps } from 'next/app'
 import { ThemeProvider } from '@emotion/react'
 import theme from '@constants/theme'
 import { RecoilRoot } from 'recoil'
-import React from 'react'
 import {
   Hydrate,
   QueryClient,

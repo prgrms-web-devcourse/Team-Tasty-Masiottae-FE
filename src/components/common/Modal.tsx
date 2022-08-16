@@ -1,7 +1,7 @@
-import styled from '@emotion/styled'
 import { useEffect, useState } from 'react'
+import styled from '@emotion/styled'
 import ReactDOM from 'react-dom'
-import useClickAway from '@hooks/useClickAway'
+import useClickAway from '@hooks/common/useClickAway'
 import { ReactNode } from 'react'
 
 interface Props {

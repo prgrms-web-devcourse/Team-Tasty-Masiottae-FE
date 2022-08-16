@@ -1,5 +1,5 @@
-import styled from '@emotion/styled'
 import React, { useEffect, useState } from 'react'
+import styled from '@emotion/styled'
 import { ImageType } from '@customTypes/index'
 import { TbCameraPlus } from 'react-icons/tb'
 import { TiDelete } from 'react-icons/ti'

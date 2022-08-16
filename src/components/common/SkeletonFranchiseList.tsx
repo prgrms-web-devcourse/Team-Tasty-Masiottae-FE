@@ -1,5 +1,5 @@
-import theme from '@constants/theme'
 import styled from '@emotion/styled'
+import theme from '@constants/theme'
 
 const SkeletonFranchiseList = () => {
   return (

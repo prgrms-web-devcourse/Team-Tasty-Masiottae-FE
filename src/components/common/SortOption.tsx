@@ -1,6 +1,6 @@
-import theme from '@constants/theme'
-import styled from '@emotion/styled'
 import { ChangeEvent } from 'react'
+import styled from '@emotion/styled'
+import theme from '@constants/theme'
 import { SORT_OPTIONS } from '@constants/searchOption'
 
 interface SortOptionProps {

@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import Tag from './Tag'
+import { Tag } from '@components/common'
 import { useTasteList } from '@hooks/queries/useTasteList'
 
 const MAX_TAG = 4

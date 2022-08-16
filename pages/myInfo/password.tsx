@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { useState, useCallback } from 'react'
-import Input from '@components/Input'
-import Button from '@components/Button'
+import Input from '@components/common/Input'
+import Button from '@components/common/Button'
 import { BsEye } from 'react-icons/bs'
 import {
   PLACEHOLDER_EDIT_PASSWORD,
@@ -12,7 +12,7 @@ import {
   ERROR_PASSWORD_CONFIRM,
   REGEX_PASSWORD
 } from '@constants/inputConstants'
-import InputMessage from '@components/InputMessage'
+import InputMessage from '@components/common/InputMessage'
 import { useChangePasswordMutation } from '@hooks/mutations/useChangePasswordMutation'
 import { useRecoilState } from 'recoil'
 import { currentUser } from '@recoil/currentUser'
