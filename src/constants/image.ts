@@ -6,7 +6,10 @@ export const BIG_LOGO =
   'https://user-images.githubusercontent.com/79133602/184341912-1625fb09-1af2-41a0-b16e-6a2f76db30ef.svg'
 export const NO_IMAGE =
   'https://user-images.githubusercontent.com/81891292/184542528-0d65f560-293e-45d5-a8dd-5d390ebeba85.png'
-
+export const MAIN_BANNER_IMAGE =
+  'https://user-images.githubusercontent.com/81891292/184827094-64bbedaa-d763-42d4-9ada-75ff55cc138c.png'
+export const SPINNER_LOGO =
+  'https://user-images.githubusercontent.com/81891292/184830621-f244b579-038f-41d4-a3c8-4a1f0c7bcbb1.png'
 export const LOGOS = {
   공차: 'https://user-images.githubusercontent.com/79133602/184493341-8981fc37-8867-4756-a09d-cd667548492f.png',
   도미노피자:

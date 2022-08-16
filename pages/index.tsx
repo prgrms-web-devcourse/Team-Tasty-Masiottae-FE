@@ -3,6 +3,12 @@ import useIntersectionObserver from '@hooks/useIntersectionObserver'
 import MenuCardList from '@components/MenuCardList'
 import { useSearchMenuList } from '@hooks/queries/useSearchMenuList'
 import SkeletonCardList from '@components/SkeletonCardList'
+import BannerCard from '@components/BannerCard'
+import { MAIN_BANNER_IMAGE } from '@constants/image'
+import styled from '@emotion/styled'
+import { useState } from 'react'
+
+const BANNER_TEXT = '나만의 커스텀 메뉴를 공유해보세요'
 
 const Home: NextPage = () => {
   const { menuList, isLoading, fetchNextPage } = useSearchMenuList({
@@ -10,6 +16,8 @@ const Home: NextPage = () => {
     limit: 10,
     franchiseId: 0
   })
+
+  const [isBannerClosed, setIsBannerClosed] = useState(true)
 
   const ref = useIntersectionObserver(
     async (entry, observer) => {
@@ -21,6 +29,16 @@ const Home: NextPage = () => {
 
   return (
     <>
+      {isBannerClosed && (
+        <BannerContainer>
+          <BannerCard
+            src={MAIN_BANNER_IMAGE}
+            isClosed={false}
+            content={BANNER_TEXT}
+          />
+        </BannerContainer>
+      )}
+
       {isLoading ? (
         <SkeletonCardList size={4} />
       ) : (
@@ -29,5 +47,9 @@ const Home: NextPage = () => {
     </>
   )
 }
+
+const BannerContainer = styled.div`
+  margin: 1rem 0;
+`
 
 export default Home
