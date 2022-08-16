@@ -20,7 +20,7 @@ export const useLogoutMutation = () => {
   return useMutation(postLogout, {
     onSuccess: () => {
       removeTokenData()
-      router.replace('/login')
+      router.reload()
     }
   })
 }

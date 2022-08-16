@@ -32,11 +32,13 @@ export const Navigation = () => {
             </NavItem>
           </StyledAnchor>
         </Link>
-        <StyledAnchor href={CREATE_MENU_URL}>
-          <NavItem>
-            <StyledPlus selected={pathname === CREATE_MENU_URL} />
-          </NavItem>
-        </StyledAnchor>
+        <Link href={CREATE_MENU_URL}>
+          <StyledAnchor>
+            <NavItem>
+              <StyledPlus selected={pathname === CREATE_MENU_URL} />
+            </NavItem>
+          </StyledAnchor>
+        </Link>
         <Link href={SEARCH_URL}>
           <StyledAnchor>
             <NavItem>
@@ -44,11 +46,13 @@ export const Navigation = () => {
             </NavItem>
           </StyledAnchor>
         </Link>
-        <StyledAnchor href={`${USER_URL}/${user.id}`}>
-          <NavItem>
-            <StyledMenu selected={pathname.includes(USER_URL)} />
-          </NavItem>
-        </StyledAnchor>
+        <Link href={`${USER_URL}/${user.id}`}>
+          <StyledAnchor>
+            <NavItem>
+              <StyledMenu selected={pathname.includes(USER_URL)} />
+            </NavItem>
+          </StyledAnchor>
+        </Link>
       </NavList>
     </NavContainer>
   )

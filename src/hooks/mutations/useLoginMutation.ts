@@ -40,7 +40,7 @@ export const useLoginMutation = () => {
         image: image ?? DEFAULT_USER_IMAGE
       })
       setTokenData(data)
-      router.replace('/')
+      router.reload()
     }
   })
 }
