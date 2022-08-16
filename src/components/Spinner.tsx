@@ -10,7 +10,6 @@ const LOGO_LETTER_URL = [
 const Spinner = () => {
   return (
     <Container>
-      <Background />
       {LOGO_LETTER_URL.map((url, idx) => (
         <LogoLetter key={idx} url={url} idx={idx} />
       ))}
@@ -19,7 +18,7 @@ const Spinner = () => {
 }
 
 const Container = styled.div`
-  margin-left: -2rem; // layout padding
+  margin-left: -2rem; // for layout left padding
   position: fixed;
   top: 6.4rem; // header height
   width: 50rem;
@@ -45,22 +44,10 @@ const LogoLetter = styled.div<{ url: string; idx: number }>`
   z-index: 999;
 
   @keyframes ball {
-    0% {
-      margin-bottom: 1rem;
-    }
     100% {
-      margin-bottom: 5rem;
+      margin-bottom: 4rem;
     }
   }
-`
-
-const Background = styled.div`
-  position: absolute;
-  width: 100%;
-  height: ${(props) =>
-    `calc(100vh - ${props.theme.layout.headerHeight} - ${props.theme.layout.navHeight} )`};
-  background-color: #000;
-  opacity: 20%;
 `
 
 export default Spinner
