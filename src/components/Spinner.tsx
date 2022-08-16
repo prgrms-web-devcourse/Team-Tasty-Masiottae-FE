@@ -17,9 +17,11 @@ const Spinner = () => {
     </Container>
   )
 }
-export default Spinner
+
 const Container = styled.div`
+  margin-left: -2rem; // layout padding
   position: fixed;
+  top: 6.4rem; // header height
   width: 50rem;
   height: ${(props) =>
     `calc(100vh - ${props.theme.layout.headerHeight} - ${props.theme.layout.navHeight} )`};
@@ -27,6 +29,7 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   z-index: 1;
+
   @media all and (max-width: 500px) {
     width: 100%;
   }
@@ -39,6 +42,8 @@ const LogoLetter = styled.div<{ url: string; idx: number }>`
   background-size: cover;
   animation: ball 0.5s ease-in infinite alternate;
   animation-delay: ${({ idx }) => `-${(4 - idx) * 0.25}s`};
+  z-index: 999;
+
   @keyframes ball {
     0% {
       margin-bottom: 1rem;
@@ -47,13 +52,15 @@ const LogoLetter = styled.div<{ url: string; idx: number }>`
       margin-bottom: 5rem;
     }
   }
-  z-index: 1;
 `
 
 const Background = styled.div`
   position: absolute;
   width: 100%;
-  height: 100vh;
+  height: ${(props) =>
+    `calc(100vh - ${props.theme.layout.headerHeight} - ${props.theme.layout.navHeight} )`};
   background-color: #000;
-  opacity: 25%;
+  opacity: 20%;
 `
+
+export default Spinner
