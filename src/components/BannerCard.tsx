@@ -8,9 +8,10 @@ interface Props {
   content: string
   src: string
   isClosed: boolean
+  onClose: () => void
 }
 
-const BannerCard = ({ content, src }: Props) => {
+const BannerCard = ({ content, src, onClose }: Props) => {
   return (
     <Container>
       <BannerLeft>
@@ -18,7 +19,7 @@ const BannerCard = ({ content, src }: Props) => {
         <Content>{content}</Content>
       </BannerLeft>
       <Image src={src} width={150} height={150} alt="메인배너" />
-      <CloseButton />
+      <CloseButton onClick={onClose} />
     </Container>
   )
 }

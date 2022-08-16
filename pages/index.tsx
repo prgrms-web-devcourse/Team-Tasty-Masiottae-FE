@@ -6,9 +6,17 @@ import SkeletonCardList from '@components/SkeletonCardList'
 import BannerCard from '@components/BannerCard'
 import { MAIN_BANNER_IMAGE } from '@constants/image'
 import styled from '@emotion/styled'
-import { useState } from 'react'
-
-const BANNER_TEXT = '나만의 커스텀 메뉴를 공유해보세요'
+import { useState, useEffect } from 'react'
+import {
+  BANNER_CLOSE,
+  BANNER_OPEN,
+  BANNER_STORAGE_KEY,
+  BANNER_TEXT
+} from '@constants/mainPage'
+import {
+  getSessionStorageItem,
+  setSessionStorageItem
+} from '@utils/sessionStorage'
 
 const Home: NextPage = () => {
   const { menuList, isLoading, fetchNextPage } = useSearchMenuList({
@@ -17,7 +25,11 @@ const Home: NextPage = () => {
     franchiseId: 0
   })
 
-  const [isBannerClosed, setIsBannerClosed] = useState(true)
+  const [bannerState, setBannerState] = useState(BANNER_CLOSE)
+
+  useEffect(() => {
+    setBannerState(getSessionStorageItem(BANNER_STORAGE_KEY) || BANNER_OPEN)
+  }, [])
 
   const ref = useIntersectionObserver(
     async (entry, observer) => {
@@ -27,14 +39,20 @@ const Home: NextPage = () => {
     { threshold: 0.5 }
   )
 
+  const handleBannerClose = () => {
+    setBannerState(BANNER_CLOSE)
+    setSessionStorageItem(BANNER_STORAGE_KEY, BANNER_CLOSE)
+  }
+
   return (
     <>
-      {isBannerClosed && (
+      {bannerState === BANNER_OPEN && (
         <BannerContainer>
           <BannerCard
             src={MAIN_BANNER_IMAGE}
             isClosed={false}
             content={BANNER_TEXT}
+            onClose={handleBannerClose}
           />
         </BannerContainer>
       )}
