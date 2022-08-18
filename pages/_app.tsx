@@ -10,9 +10,12 @@ import {
   QueryClient,
   QueryClientProvider
 } from '@tanstack/react-query'
+import { Spinner } from '@components/common'
+import { useLoading } from '@hooks/useLoading'
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [queryClient] = React.useState(() => new QueryClient())
+  const [isLoading] = useLoading()
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -20,6 +23,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <ThemeProvider theme={theme}>
           <RecoilRoot>
             <Layout>
+              {isLoading && <Spinner />}
               <Component {...pageProps} />
             </Layout>
           </RecoilRoot>
