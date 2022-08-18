@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import Avatar from './Avatar'
+import { Avatar } from '@components/common'
 import { IoMdHeart } from 'react-icons/io'
 import { BiComment } from 'react-icons/bi'
 import { RefObject } from 'react'

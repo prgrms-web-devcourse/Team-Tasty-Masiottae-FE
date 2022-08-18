@@ -1,7 +1,7 @@
 import theme from '@constants/theme'
 import styled from '@emotion/styled'
 import Link from 'next/link'
-import { Franchise } from '../interfaces/index'
+import { Franchise } from '@interfaces'
 import FranchiseInfo from './FranchiseInfo'
 
 interface Props {

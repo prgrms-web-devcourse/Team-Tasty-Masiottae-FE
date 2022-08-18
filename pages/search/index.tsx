@@ -1,10 +1,10 @@
 import styled from '@emotion/styled'
 import { useFranchiseList } from '@hooks/queries/useFranchiseList'
-import FranchiseInfoList from '@components/FranchiseInfoList'
-import SkeletonFranchiseList from '@components/SkeletonFranchiseList'
+import { FranchiseInfoList, SkeletonFranchiseList } from '@components/common'
 
 const Category = () => {
   const { franchiseList, isLoading } = useFranchiseList()
+
   return (
     <>
       <FixedWrapper>

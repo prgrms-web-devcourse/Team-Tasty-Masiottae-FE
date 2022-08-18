@@ -1,7 +1,7 @@
 import theme from '@constants/theme'
 import styled from '@emotion/styled'
 import { FormEvent } from 'react'
-import Button from './Button'
+import { Button } from '@components/common'
 import TagContainer from './TagContainer'
 
 interface Props {

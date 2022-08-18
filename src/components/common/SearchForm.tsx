@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { BsFilterLeft } from 'react-icons/bs'
-import Input from '@components/Input'
+import { Input } from '@components/common'
 import { FiSearch } from 'react-icons/fi'
 import Modal from './Modal'
 import { useState, ChangeEvent, FormEvent, useEffect, useRef } from 'react'

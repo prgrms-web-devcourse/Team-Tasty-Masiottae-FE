@@ -1,14 +1,16 @@
-import styled from '@emotion/styled'
-import useIntersectionObserver from '@hooks/useIntersectionObserver'
-import { useRouter } from 'next/router'
-import MenuCardList from '@components/MenuCardList'
-import SearchForm from '@components/SearchForm'
-import FranchiseInfo from '@components/FranchiseInfo'
-import { useFranchiseList } from '@hooks/queries/useFranchiseList'
 import { useEffect, useState } from 'react'
-import { useSearchMenuList } from '@hooks/queries/useSearchMenuList'
 import { SearchFormOptions, searchParams } from '@interfaces'
-import SkeletonCardList from '@components/SkeletonCardList'
+import styled from '@emotion/styled'
+import useIntersectionObserver from '@hooks/common/useIntersectionObserver'
+import { useRouter } from 'next/router'
+import {
+  SearchForm,
+  MenuCardList,
+  FranchiseInfo,
+  SkeletonCardList
+} from '@components/common'
+import { useFranchiseList } from '@hooks/queries/useFranchiseList'
+import { useSearchMenuList } from '@hooks/queries/useSearchMenuList'
 
 const Search = () => {
   const router = useRouter()

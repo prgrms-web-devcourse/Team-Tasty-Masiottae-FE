@@ -1,14 +1,14 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState } from 'react'
 import { useRouter } from 'next/router'
 import styled from '@emotion/styled'
-import TagContainer from '@components/TagContainer'
-import ImageUploader from '@components/ImageUploader'
-import Button from '@components/Button'
-import { Option } from '@customTypes/index'
+import TagContainer from '@components/common/TagContainer'
+import ImageUploader from '@components/common/ImageUploader'
+import Button from '@components/common/Button'
+import { Option } from '@interfaces'
 import { usePostMenu } from '@hooks/mutations/usePostMenuMutation'
 import { InputList } from '@components/create-menu/InputList'
-import Spinner from '@components/Spinner'
-import useRouterLoading from '@hooks/useRouterLoading'
+import Spinner from '@components/common/Spinner'
+import useRouterLoading from '@hooks/common/useRouterLoading'
 
 export interface InputListType {
   franchiseId: number

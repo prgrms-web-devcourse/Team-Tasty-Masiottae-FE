@@ -1,8 +1,8 @@
 import { RefObject } from 'react'
-import { Menu } from '@interfaces'
 import styled from '@emotion/styled'
+import { Menu } from '@interfaces'
 import Link from 'next/link'
-import MenuCard from '@components/MenuCard'
+import { MenuCard } from '@components/common'
 import theme from '@constants/theme'
 
 interface Props {

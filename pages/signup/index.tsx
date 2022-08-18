@@ -1,10 +1,8 @@
 import styled from '@emotion/styled'
 import { useCallback, useState } from 'react'
-import Input from '@components/Input'
-import Button from '@components/Button'
+import { Input, InputMessage, Button, ImageUploader } from '@components/common'
 import { BsEye } from 'react-icons/bs'
 import { useSignupMutation } from '@hooks/mutations/useSignupMutation'
-import InputMessage from '@components/InputMessage'
 import axios from '@lib/axios'
 import {
   TEXT,
@@ -30,7 +28,6 @@ import {
   MESSAGE_CHECK_AVAILABLE,
   AVAILABLE
 } from '@constants/inputConstants'
-import ImageUploader from '@components/ImageUploader'
 
 interface SignUpValues {
   image?: File | null

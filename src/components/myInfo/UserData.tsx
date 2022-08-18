@@ -4,7 +4,7 @@ import { currentUser } from '@recoil/currentUser'
 import { User } from '@interfaces'
 
 const UserData = () => {
-  const [user, setUser] = useRecoilState<User>(currentUser)
+  const [user] = useRecoilState<User>(currentUser)
   return (
     <UserDataContainer>
       <UserDetailWrapper>

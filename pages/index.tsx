@@ -1,12 +1,10 @@
-import type { NextPage } from 'next'
-import useIntersectionObserver from '@hooks/useIntersectionObserver'
-import MenuCardList from '@components/MenuCardList'
-import { useSearchMenuList } from '@hooks/queries/useSearchMenuList'
-import SkeletonCardList from '@components/SkeletonCardList'
-import BannerCard from '@components/BannerCard'
-import { MAIN_BANNER_IMAGE } from '@constants/image'
-import styled from '@emotion/styled'
 import { useState, useEffect } from 'react'
+import styled from '@emotion/styled'
+import type { NextPage } from 'next'
+import useIntersectionObserver from '@hooks/common/useIntersectionObserver'
+import { MenuCardList, SkeletonCardList, BannerCard } from '@components/common'
+import { useSearchMenuList } from '@hooks/queries/useSearchMenuList'
+import { MAIN_BANNER_IMAGE } from '@constants/image'
 import {
   BANNER_CLOSE,
   BANNER_OPEN,

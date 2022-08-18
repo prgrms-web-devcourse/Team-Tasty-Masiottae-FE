@@ -10,7 +10,7 @@ import {
   QueryClient,
   QueryClientProvider
 } from '@tanstack/react-query'
-import Spinner from '@components/Spinner'
+import { Spinner } from '@components/common'
 import { useLoading } from '@hooks/useLoading'
 
 function MyApp({ Component, pageProps }: AppProps) {

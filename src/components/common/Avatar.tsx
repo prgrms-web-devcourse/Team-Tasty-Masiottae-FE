@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { DEFAULT_USER_IMAGE } from '../constants/image'
+import { DEFAULT_USER_IMAGE } from '@constants/image'
 
 interface Props {
   size: number
