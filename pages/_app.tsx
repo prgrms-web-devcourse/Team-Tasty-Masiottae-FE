@@ -11,7 +11,7 @@ import {
   QueryClientProvider
 } from '@tanstack/react-query'
 import { Spinner } from '@components/common'
-import { useLoading } from '@hooks/useLoading'
+import { useLoading } from '@hooks/common/useLoading'
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [queryClient] = React.useState(() => new QueryClient())
