@@ -1,13 +1,15 @@
 import React, { useState } from 'react'
 import { useRouter } from 'next/router'
 import styled from '@emotion/styled'
-import TagContainer from '@components/common/TagContainer'
-import ImageUploader from '@components/common/ImageUploader'
-import Button from '@components/common/Button'
+import {
+  TagContainer,
+  ImageUploader,
+  Button,
+  Spinner
+} from '@components/common'
 import { Option } from '@interfaces'
 import { usePostMenu } from '@hooks/mutations/usePostMenuMutation'
 import { InputList } from '@components/create-menu/InputList'
-import Spinner from '@components/common/Spinner'
 import useRouterLoading from '@hooks/common/useRouterLoading'
 
 export interface InputListType {

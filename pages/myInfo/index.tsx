@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import Button from '@components/common/Button'
+import { Button } from '@components/common'
 import { PASSWORD_CHANGE_URL } from '@constants/pageUrl'
 import { useRouter } from 'next/router'
 import UserProfile from '@components/myInfo/UserProfile'
