@@ -79,7 +79,9 @@ export const InputList = ({
 
   const handlePriceChange = (e: React.FormEvent<HTMLInputElement>) => {
     const priceRegExp = /[^0-9]/g
-    expectedPrice = Number(e.currentTarget.value.replace(priceRegExp, ''))
+    expectedPrice = Number(
+      e.currentTarget.value.replace(priceRegExp, '').slice(0, 7)
+    )
     handleOnChange()
   }
 
@@ -242,7 +244,7 @@ export const InputList = ({
           name={NAME_EXPECTED_PRICE}
           value={
             expectedPrice
-              ? String(expectedPrice)
+              ? `${expectedPrice}`
               : isPriceButtonClicked
               ? '미정'
               : '0'
