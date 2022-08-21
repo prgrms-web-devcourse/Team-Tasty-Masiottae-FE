@@ -109,6 +109,7 @@ const CommentBox = ({ id, author, createdAt, comment, user }: Props) => {
               <CommentWriteContainer>
                 <Textarea
                   ref={textareaRef}
+                  value={newComment}
                   maxLength={80}
                   onChange={handleCommentChange}
                 />
@@ -183,6 +184,7 @@ const TextareaWrapper = styled(Flex)`
 `
 
 const CommentWriteContainer = styled(Flex)`
+  width: 90%;
   align-items: center;
   position: relative;
 `

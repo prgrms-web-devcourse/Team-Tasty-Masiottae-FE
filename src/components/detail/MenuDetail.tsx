@@ -19,7 +19,9 @@ const MenuDetail = ({ menu, userId }: Props) => {
   const [isLikeClicked, setIsLikeClicked] = useState(menu.isLiked)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const { mutate: deleteMenu } = useDeleteMenuMutation()
-  const { mutate: postLike } = usePostLikeMutation({ menuId: menu.id })
+  const { mutate: postLike, isLoading } = usePostLikeMutation({
+    menuId: menu.id
+  })
   const router = useRouter()
 
   const handleUserClick = (userId: number | null) => {
@@ -30,6 +32,10 @@ const MenuDetail = ({ menu, userId }: Props) => {
   }
 
   const handleHeartClick = () => {
+    if (isLoading) {
+      return
+    }
+
     postLike(
       {
         menuId: menu.id
