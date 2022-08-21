@@ -23,7 +23,7 @@ const CommentBox = ({ id, author, createdAt, comment, user }: Props) => {
   const [isEditing, setIsEditing] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [commentId, setCommentId] = useState(0)
-  const [newComment, setNewComment] = useState('')
+  const [newComment, setNewComment] = useState(comment)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const { mutate: deleteComment } = useDeleteCommentMutation()
   const { mutate: patchComment } = usePatchCommentMutation()
@@ -59,21 +59,14 @@ const CommentBox = ({ id, author, createdAt, comment, user }: Props) => {
   )
 
   const handleChangeButtonClick = () => {
-    if (!user.id) {
-      return
-    }
-
     patchComment(
       {
         commentId,
-        comment
+        comment: newComment
       },
       {
         onSuccess: () => {
-          if (textareaRef.current) {
-            textareaRef.current.value = ''
-            textareaRef.current.style.height = '4.8rem'
-          }
+          setIsEditing(false)
         }
       }
     )
@@ -112,7 +105,7 @@ const CommentBox = ({ id, author, createdAt, comment, user }: Props) => {
         />
         <CommentContainer>
           {isEditing ? (
-            <Flex>
+            <TextareaWrapper>
               <CommentWriteContainer>
                 <Textarea
                   ref={textareaRef}
@@ -124,7 +117,7 @@ const CommentBox = ({ id, author, createdAt, comment, user }: Props) => {
                 </AddCommentButton>
               </CommentWriteContainer>
               <CancelButton size={20} onClick={handleCancelEditingClick} />
-            </Flex>
+            </TextareaWrapper>
           ) : (
             <>
               <CommentHeader>
@@ -143,7 +136,7 @@ const CommentBox = ({ id, author, createdAt, comment, user }: Props) => {
                   </>
                 )}
               </CommentHeader>
-              <CommentText>{comment}</CommentText>
+              <CommentText>{newComment}</CommentText>
             </>
           )}
         </CommentContainer>
@@ -184,10 +177,14 @@ const CommentContainer = styled.div`
   padding-bottom: 0.8rem;
 `
 
-const CommentWriteContainer = styled(Flex)`
-  position: relative;
+const TextareaWrapper = styled(Flex)`
+  justify-content: space-between;
   align-items: center;
-  margin-bottom: 1rem;
+`
+
+const CommentWriteContainer = styled(Flex)`
+  align-items: center;
+  position: relative;
 `
 
 const Textarea = styled.textarea`
@@ -198,7 +195,6 @@ const Textarea = styled.textarea`
   border-radius: 1rem;
   padding: 1.4rem 6rem 1rem 1rem;
   resize: none;
-  overflow: hidden;
 
   &:focus {
     outline: none;
@@ -251,6 +247,7 @@ const Dots = styled(BiDotsHorizontalRounded)`
 
 const CommentText = styled.div`
   font-size: 1.6rem;
+  word-break: break-all;
 `
 
 const IconWrapper = styled(Flex)`
