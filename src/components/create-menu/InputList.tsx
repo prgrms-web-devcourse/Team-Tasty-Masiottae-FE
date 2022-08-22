@@ -244,7 +244,7 @@ export const InputList = ({
           name={NAME_EXPECTED_PRICE}
           value={
             expectedPrice
-              ? `${expectedPrice}`
+              ? expectedPrice.toLocaleString('ko-KR')
               : isPriceButtonClicked
               ? '미정'
               : '0'
