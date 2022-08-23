@@ -22,7 +22,7 @@ const CommentBox = ({ id, author, createdAt, comment, user }: Props) => {
   const router = useRouter()
   const [isEditing, setIsEditing] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [commentId, setCommentId] = useState(0)
+  const [selectedCommentId, setSelectedCommentId] = useState(0)
   const [newComment, setNewComment] = useState(comment)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const { mutate: deleteComment } = useDeleteCommentMutation()
@@ -30,18 +30,15 @@ const CommentBox = ({ id, author, createdAt, comment, user }: Props) => {
 
   const handleCommentModalClick = (id: number) => {
     setIsModalOpen(true)
-    setCommentId(id)
+    setSelectedCommentId(id)
   }
 
   const handleCommentModalClose = () => {
     setIsModalOpen(false)
   }
 
-  const handleUserClick = (userId: number | null) => {
-    if (!userId) {
-      return
-    }
-    router.push(`/user/${userId}`)
+  const handleUserClick = () => {
+    router.push(`/user/${author.id}`)
   }
 
   const handleCommentChange = useCallback(
@@ -61,7 +58,7 @@ const CommentBox = ({ id, author, createdAt, comment, user }: Props) => {
   const handleChangeButtonClick = () => {
     patchComment(
       {
-        commentId,
+        commentId: selectedCommentId,
         comment: newComment
       },
       {
@@ -84,7 +81,7 @@ const CommentBox = ({ id, author, createdAt, comment, user }: Props) => {
   const handleDeleteCommentClick = () => {
     deleteComment(
       {
-        commentId
+        commentId: selectedCommentId
       },
       {
         onSuccess: () => {
@@ -101,7 +98,7 @@ const CommentBox = ({ id, author, createdAt, comment, user }: Props) => {
           size={4}
           src={author.image}
           isLoading={false}
-          onClick={() => handleUserClick(author.id)}
+          onClick={handleUserClick}
         />
         <CommentContainer>
           {isEditing ? (
@@ -123,7 +120,7 @@ const CommentBox = ({ id, author, createdAt, comment, user }: Props) => {
             <>
               <CommentHeader>
                 <NameAndDateWrapper>
-                  <UserNameText onClick={() => handleUserClick(author.id)}>
+                  <UserNameText onClick={handleUserClick}>
                     {author.nickName}
                   </UserNameText>
                   <DateText>{getDate(createdAt)}</DateText>
