@@ -34,7 +34,7 @@ export const useSearchMenuList = (params: searchParams) => {
     searchResponse,
     Error
   >(
-    ['myMenuList', keyword, tasteIdList, sort, limit, offset, franchiseId],
+    ['menuList', keyword, tasteIdList, sort, limit, offset, franchiseId],
     ({ pageParam = { offset: 0, limit: 10 } }) => {
       return getMenuList({
         ...params,
