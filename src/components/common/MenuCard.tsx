@@ -5,6 +5,8 @@ import { BiComment } from 'react-icons/bi'
 import { RefObject } from 'react'
 import theme from '@constants/theme'
 import { NO_IMAGE } from '@constants/image'
+import useIntersectionObserver from '@hooks/common/useIntersectionObserver'
+import { useState } from 'react'
 
 interface Props {
   title: string
@@ -31,9 +33,19 @@ const MenuCard = ({
     imageUrl = NO_IMAGE
   }
 
+  const [isObserved, setIsObserved] = useState(false)
+
+  const imageRef = useIntersectionObserver(
+    async (entry, observer) => {
+      observer.unobserve(entry.target)
+      setIsObserved(true)
+    },
+    { threshold: 0.5, rootMargin: '-100px 0px' }
+  )
+
   return (
     <CardContainer ref={divRef}>
-      <Img src={imageUrl} />
+      <Img src={isObserved ? imageUrl : NO_IMAGE} ref={imageRef} />
       <CardInfo>
         <CardHeader>
           <Franchise>{franchise}</Franchise>

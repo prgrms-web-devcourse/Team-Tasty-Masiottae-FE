@@ -12,6 +12,20 @@ import {
 import { useFranchiseList } from '@hooks/queries/useFranchiseList'
 import { useSearchMenuList } from '@hooks/queries/useSearchMenuList'
 
+/**
+ *
+ * 상태가 필요한 부분?
+ * queryString으로 검색 조건을 전부 맞추면 어떨까?
+ *
+ *
+ *
+ * Submit 발생 부
+ * 1. 정렬 선택 : url 바꾸고 나서
+ *
+ * 1. 정렬 => 선택시 상태변경이 아니라 라우터 변경
+ * 2. 맛태그 =>
+ */
+
 const Search = () => {
   const router = useRouter()
   const id = parseInt(router.query.category as string)
