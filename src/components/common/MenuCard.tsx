@@ -40,7 +40,7 @@ const MenuCard = ({
       observer.unobserve(entry.target)
       setIsObserved(true)
     },
-    { threshold: 0.5, rootMargin: '-100px 0px' }
+    { threshold: 0.5, rootMargin: '-65px 0px' }
   )
 
   return (
@@ -53,7 +53,11 @@ const MenuCard = ({
         </CardHeader>
         <CardFooter>
           <UserInfoWrapper>
-            <Avatar size={2.4} src={avatarImageUrl} isLoading={false} />
+            <Avatar
+              size={2.4}
+              src={isObserved ? avatarImageUrl : undefined}
+              isLoading={false}
+            />
             <Author>{author}</Author>
           </UserInfoWrapper>
           <PostInfoWrapper>
