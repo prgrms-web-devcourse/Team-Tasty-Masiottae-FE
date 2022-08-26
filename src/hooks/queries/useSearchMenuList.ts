@@ -30,11 +30,11 @@ const getMenuList = async (params: searchParams) => {
 export const useSearchMenuList = (params: searchParams) => {
   const { keyword, tasteIdList, sort, limit, franchiseId, offset } = params
 
-  const { data, isLoading, error, fetchNextPage, refetch } = useInfiniteQuery<
+  const { data, isLoading, error, fetchNextPage } = useInfiniteQuery<
     searchResponse,
     Error
   >(
-    ['myMenuList', keyword, tasteIdList, sort, limit, offset, franchiseId],
+    ['menuList', keyword, tasteIdList, sort, limit, offset, franchiseId],
     ({ pageParam = { offset: 0, limit: 10 } }) => {
       return getMenuList({
         ...params,
@@ -55,17 +55,10 @@ export const useSearchMenuList = (params: searchParams) => {
     .flat()
     .filter((val) => !!val)
 
-  refetch({
-    refetchPage: (page, index) => {
-      return true
-    }
-  })
-
   return {
     menuList,
     isLoading,
     error,
-    fetchNextPage,
-    refetch
+    fetchNextPage
   }
 }
