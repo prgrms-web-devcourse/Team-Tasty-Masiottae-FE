@@ -73,11 +73,7 @@ const PasswordEditPage = () => {
     const isError = Object.keys(errors).some(
       (key) => errors[key as keyof typeof errors] !== ''
     )
-    if (!user.id) {
-      router.replace('/login')
-      return
-    }
-    if (password && !isError) {
+    if (user.id && password && !isError) {
       patchPassword({ userId: user.id, password })
       router.back()
     }
