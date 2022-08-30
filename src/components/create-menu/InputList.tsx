@@ -27,6 +27,7 @@ import {
   ERROR_MESSAGE_REQUIRED_OPTION,
   ERROR_MESSAGE_REQUIRED_OPTION_TEXT
 } from '@constants/menuConstant'
+import { useState } from 'react'
 
 export interface InputListType {
   franchiseId: number
@@ -56,6 +57,14 @@ export const InputList = ({
   isPriceButtonClicked,
   onChange
 }: Props) => {
+  const [isInit, setIsInit] = useState({
+    franchise: true,
+    title: true,
+    originalTitle: true,
+    optionList: true,
+    expectedPrice: true
+  })
+
   const handleOnChange = () => {
     onChange({
       franchiseId,
@@ -69,11 +78,17 @@ export const InputList = ({
 
   const handleTitleChange = (e: React.FormEvent<HTMLInputElement>) => {
     title = e.currentTarget.value
+    setIsInit((isInit) => {
+      return { ...isInit, title: false }
+    })
     handleOnChange()
   }
 
   const handleOriginalTitleChange = (e: React.FormEvent<HTMLInputElement>) => {
     originalTitle = e.currentTarget.value
+    setIsInit((isInit) => {
+      return { ...isInit, originalTitle: false }
+    })
     handleOnChange()
   }
 
@@ -92,6 +107,9 @@ export const InputList = ({
     const newOptionList = [...optionList, { name: '', description: '' }]
     optionList = newOptionList
     handleOnChange()
+    setIsInit((isInit) => {
+      return { ...isInit, optionList: false }
+    })
   }
 
   const handleOptionDelBtnClick = (deletedIdx: number) => {
@@ -131,6 +149,9 @@ export const InputList = ({
   const handleFranchiseChange = (e: React.FormEvent<HTMLSelectElement>) => {
     franchiseId = Number(e.currentTarget.value)
     handleOnChange()
+    setIsInit((isInit) => {
+      return { ...isInit, franchise: false }
+    })
   }
 
   const handlePriceButtonClick = () => {
@@ -147,7 +168,7 @@ export const InputList = ({
         defaultValue={franchiseId}
       />
       <InputMessage
-        isValid={Boolean(franchiseId)}
+        isValid={Boolean(franchiseId) || isInit.franchise}
         errorMessage={ERROR_MESSAGE_REQUIRED_FRANCHISE}
       ></InputMessage>
       <InputName>커스텀 메뉴 이름</InputName>
@@ -158,10 +179,10 @@ export const InputList = ({
         value={title}
         placeholder={PLACEHOLDER_TITLE}
         onChange={handleTitleChange}
-        isValid={Boolean(title)}
+        isValid={Boolean(title) || isInit.title}
       />
       <InputMessage
-        isValid={Boolean(title)}
+        isValid={Boolean(title) || isInit.title}
         errorMessage={ERROR_MESSAGE_REQUIRED_TITLE}
       ></InputMessage>
       <InputName>기본 메뉴 이름</InputName>
@@ -172,10 +193,10 @@ export const InputList = ({
         value={originalTitle}
         placeholder={PLACEHOLDER_ORIGINAL_TITLE}
         onChange={handleOriginalTitleChange}
-        isValid={Boolean(originalTitle)}
+        isValid={Boolean(originalTitle) || isInit.originalTitle}
       />
       <InputMessage
-        isValid={Boolean(originalTitle)}
+        isValid={Boolean(originalTitle) || isInit.originalTitle}
         errorMessage={ERROR_MESSAGE_REQUIRED_ORIGINAL_TITLE}
       ></InputMessage>
       <OptionButtonWrapper>
@@ -189,7 +210,7 @@ export const InputList = ({
           옵션 추가
         </OptionButton>
         <InputMessage
-          isValid={Boolean(optionList.length)}
+          isValid={Boolean(optionList.length) || isInit.optionList}
           errorMessage={ERROR_MESSAGE_REQUIRED_OPTION}
         ></InputMessage>
       </OptionButtonWrapper>
@@ -230,7 +251,11 @@ export const InputList = ({
             </Button>
           </OptionWrapper>
           <InputMessage
-            isValid={option.name && option.description ? true : false}
+            isValid={
+              option.name && option.description
+                ? true
+                : false || isInit.optionList
+            }
             errorMessage={ERROR_MESSAGE_REQUIRED_OPTION_TEXT}
           ></InputMessage>
         </div>

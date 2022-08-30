@@ -1,12 +1,7 @@
 import React, { useState } from 'react'
 import { useRouter } from 'next/router'
 import styled from '@emotion/styled'
-import {
-  TagContainer,
-  ImageUploader,
-  Button,
-  Spinner
-} from '@components/common'
+import { TagContainer, ImageUploader, Button } from '@components/common'
 import { Option } from '@interfaces'
 import { usePostMenu } from '@hooks/mutations/usePostMenuMutation'
 import { InputList } from '@components/create-menu/InputList'
@@ -101,7 +96,6 @@ const CreateMenu = () => {
   return (
     <>
       <FlexContainer>
-        {isRouterLoading || isLoading ? <Spinner /> : ''}
         <ImageUploaderWrapper>
           <ImageUploader isDeletable={true} onChange={handleImageChange} />
         </ImageUploaderWrapper>
