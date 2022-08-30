@@ -27,7 +27,7 @@ const CommentInput = ({ menuId, userId }: Props) => {
     setComment(e.target.value)
   }, [])
 
-  const handleAddButtonClick = () => {
+  const addComment = () => {
     if (!userId) {
       return
     }
@@ -50,6 +50,16 @@ const CommentInput = ({ menuId, userId }: Props) => {
     )
   }
 
+  const handleAddClick = () => {
+    addComment()
+  }
+
+  const handleEnterPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Enter') {
+      addComment()
+    }
+  }
+
   return (
     <CommentWriteContainer>
       <Textarea
@@ -59,8 +69,9 @@ const CommentInput = ({ menuId, userId }: Props) => {
         }
         maxLength={80}
         onChange={handleChange}
+        onKeyDown={handleEnterPress}
       />
-      <AddCommentButton onClick={handleAddButtonClick}>등록</AddCommentButton>
+      <AddCommentButton onClick={handleAddClick}>등록</AddCommentButton>
     </CommentWriteContainer>
   )
 }
