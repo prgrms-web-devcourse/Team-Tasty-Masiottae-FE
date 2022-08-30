@@ -20,7 +20,7 @@ const getMenuList = async (params: searchParams) => {
   return {
     menu: data.menu,
     nextPage: {
-      page: params.page,
+      page: params.page + 1,
       size: params.size
     },
     isLast: data.isLast
@@ -49,8 +49,6 @@ export const useSearchMenuList = (params: searchParams) => {
       enabled: franchiseId !== undefined
     }
   )
-
-  console.log(data?.pages)
 
   const menuList = data?.pages
     .map((value) => value?.menu)

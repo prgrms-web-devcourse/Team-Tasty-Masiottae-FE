@@ -21,7 +21,7 @@ const getMyMenuList = async (option: string, params: searchParams) => {
   return {
     menu: data.menu,
     nextPage: {
-      page: params.page,
+      page: params.page + 1,
       size: params.size
     },
     isLast: data.isLast
