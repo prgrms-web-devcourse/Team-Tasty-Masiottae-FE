@@ -24,7 +24,7 @@ export const checkToken = async (config: AxiosRequestConfig) => {
   }
 
   if (
-    moment(tastyToken_expire).diff(moment(), 'minutes') < 1 &&
+    (moment(tastyToken_expire).diff(moment(), 'minutes') < 1 || !tastyToken) &&
     tastyRefreshToken
   ) {
     const { data } = await axios.post(
