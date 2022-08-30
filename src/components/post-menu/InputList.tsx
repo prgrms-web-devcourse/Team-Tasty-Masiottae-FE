@@ -29,7 +29,7 @@ import {
 } from '@constants/menuConstant'
 import { useState } from 'react'
 
-export interface InputListType {
+interface InputListType {
   franchiseId: number
   title: string
   originalTitle: string
