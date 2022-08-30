@@ -19,35 +19,39 @@ interface SortOption {
 }
 
 const PLACEHOLDER_SEARCH_INPUT = '메뉴 검색'
+const INITIAL_SEARCH_FORM_STATE = {
+  sort: 'recent',
+  keyword: '',
+  tasteIdList: []
+}
 
 const SearchForm = ({ onSubmit, searchDomain }: Props) => {
   const [modalVisible, setModalVisible] = useState(false)
-  const [tasteIdList, setTasteIdList] = useState<number[]>([])
-  const [keyword, setKeyword] = useState('')
-  const [sort, setSort] = useState('recent')
-
+  const [searchOptions, setSearchOptions] = useState<SearchFormOptions>(
+    INITIAL_SEARCH_FORM_STATE
+  )
   const inputElement = useRef<HTMLInputElement>(null)
+
   useEffect(() => {
-    setTasteIdList([])
-    setSort('recent')
-    setKeyword('')
+    setSearchOptions(INITIAL_SEARCH_FORM_STATE)
   }, [searchDomain])
 
   const handleFilterClick = () => setModalVisible(true)
   const handleModalClose = () => setModalVisible(false)
 
-  const handleSortChange = (value: string) => {
-    setSort(value)
-    onSubmit({ keyword, tasteIdList, sort: value })
+  const handleSortChange = (sort: string) => {
+    setSearchOptions({ ...searchOptions, sort })
+    onSubmit({ ...searchOptions, sort })
   }
 
   const handleKeywordChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setKeyword(e.target.value)
+    const { value: keyword } = e.target
+    setSearchOptions({ ...searchOptions, keyword })
   }
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    onSubmit({ keyword, tasteIdList, sort })
+    onSubmit(searchOptions)
     inputElement.current?.blur()
   }
 
@@ -55,7 +59,7 @@ const SearchForm = ({ onSubmit, searchDomain }: Props) => {
     <Form onSubmit={handleSubmit}>
       <SearchWrapper>
         <SearchInput
-          value={keyword}
+          value={searchOptions.keyword}
           height={5}
           type="text"
           placeholder={PLACEHOLDER_SEARCH_INPUT}
@@ -67,7 +71,10 @@ const SearchForm = ({ onSubmit, searchDomain }: Props) => {
         </SearchButton>
       </SearchWrapper>
       <OptionContainer>
-        <SortOption selectedValue={sort} onChange={handleSortChange} />
+        <SortOption
+          selectedValue={searchOptions.sort || 'recent'}
+          onChange={handleSortChange}
+        />
         <FilterWrapper onClick={handleFilterClick}>
           <FilterIcon />
           <Text>필터</Text>
@@ -75,10 +82,10 @@ const SearchForm = ({ onSubmit, searchDomain }: Props) => {
         <Modal visible={modalVisible} onClose={handleModalClose}>
           <FilterForm
             onSubmit={handleSubmit}
-            tasteIdList={tasteIdList}
+            tasteIdList={searchOptions.tasteIdList}
             onClose={handleModalClose}
             onChange={(newTagList) => {
-              setTasteIdList(newTagList)
+              setSearchOptions({ ...searchOptions, tasteIdList: newTagList })
             }}
           />
         </Modal>
