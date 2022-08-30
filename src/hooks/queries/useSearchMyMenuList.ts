@@ -7,8 +7,8 @@ import { searchParams } from '@interfaces'
 interface searchResponse {
   menu: Menu[]
   nextPage: {
-    offset: number
-    limit: number
+    page: number
+    size: number
   }
   isLast: boolean
 }
@@ -21,36 +21,26 @@ const getMyMenuList = async (option: string, params: searchParams) => {
   return {
     menu: data.menu,
     nextPage: {
-      offset: params.offset + params.limit,
-      limit: params.limit
+      page: params.page + 1,
+      size: params.size
     },
-    isLast: !data.menu
+    isLast: data.isLast
   }
 }
 
 export const useSearchMyMenuList = (params: searchParams) => {
-  const { keyword, tasteIdList, sort, limit, offset, accountId, option } =
-    params
+  const { page, size, keyword, tasteIdList, sort, accountId, option } = params
 
   const { data, isLoading, error, fetchNextPage } = useInfiniteQuery<
     searchResponse,
     Error
   >(
-    [
-      'myMenuList',
-      keyword,
-      tasteIdList,
-      sort,
-      limit,
-      offset,
-      option,
-      accountId
-    ],
-    ({ pageParam = { offset: 0, limit: 5 } }) => {
+    ['myMenuList', page, size, keyword, tasteIdList, sort, option, accountId],
+    ({ pageParam = { page: 1, size: 10 } }) => {
       return getMyMenuList(option?.value || 'my', {
         ...params,
-        offset: pageParam.offset,
-        limit: pageParam.limit
+        page: pageParam.page,
+        size: pageParam.size
       })
     },
     {

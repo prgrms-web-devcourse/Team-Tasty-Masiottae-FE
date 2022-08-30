@@ -18,8 +18,8 @@ import {
 
 const Home: NextPage = () => {
   const { menuList, isLoading, fetchNextPage } = useSearchMenuList({
-    offset: 0,
-    limit: 10,
+    page: 1,
+    size: 10,
     franchiseId: 0
   })
 

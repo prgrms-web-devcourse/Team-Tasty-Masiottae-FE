@@ -29,8 +29,8 @@ const UserMenu = () => {
   const id = parseInt(router.query.id as string)
   const [searchOptions, setSearchOptions] = useState<searchParams>({
     option: SELECT_OPTION[0],
-    offset: 0,
-    limit: 10,
+    page: 1,
+    size: 10,
     accountId: id
   })
   const {
