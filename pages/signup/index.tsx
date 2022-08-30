@@ -15,7 +15,6 @@ import {
   PLACEHOLDER_NICKNAME,
   PLACEHOLDER_PASSWORD,
   PLACEHOLDER_PASSWORD_CONFIRM,
-  PLACEHOLDER_SNS,
   MESSAGE_NICKNAME,
   MESSAGE_PASSWORD,
   ERROR_EMAIL,
@@ -151,10 +150,14 @@ const Signup = () => {
       if (!REGEX_PASSWORD.test(value)) {
         setErrors({ ...errors, [name]: MESSAGE_PASSWORD })
       }
+
+      if (values.passwordConfirm && values.passwordConfirm !== e.target.value) {
+        setErrors({ ...errors, [name]: ERROR_PASSWORD_CONFIRM })
+      }
     }
 
     if (name === INPUT_PASSWORD_CONFIRM) {
-      setErrors({ ...errors, [name]: '' })
+      setErrors({ ...errors, password: '', [name]: '' })
       e.target.value = value.replace(/\s/, '').slice(0, MAX_PASSWORD)
 
       if (!REGEX_PASSWORD.test(value)) {
@@ -167,12 +170,12 @@ const Signup = () => {
     setValues({ ...values, [name]: e.target.value })
   }
 
-  const handleEyeClick = useCallback((name: string) => {
-    name === INPUT_PASSWORD
-      ? setIsTypePassword((isTypePassword) => !isTypePassword)
-      : setIsTypeConfirmPassword(
-          (isTypeConfirmPassword) => !isTypeConfirmPassword
-        )
+  const handleEyeClick = useCallback(() => {
+    setIsTypePassword((isTypePassword) => !isTypePassword)
+  }, [])
+
+  const handleConfirmEyeClick = useCallback(() => {
+    setIsTypeConfirmPassword((isTypeConfirmPassword) => !isTypeConfirmPassword)
   }, [])
 
   const handleImageChange = (file: File | null) => {
@@ -228,7 +231,7 @@ const Signup = () => {
           />
           <ShowPasswordIcon
             onClick={() => {
-              handleEyeClick(INPUT_PASSWORD)
+              handleEyeClick()
             }}
           />
           <InputMessage errorMessage={errors[INPUT_PASSWORD]} />
@@ -243,17 +246,10 @@ const Signup = () => {
           />
           <ShowPasswordIcon
             onClick={() => {
-              handleEyeClick(INPUT_PASSWORD_CONFIRM)
+              handleConfirmEyeClick()
             }}
           />
           <InputMessage errorMessage={errors[INPUT_PASSWORD_CONFIRM]} />
-        </InputWrapper>
-        <InputWrapper>
-          <TextInput
-            type={TEXT}
-            name={INPUT_SNS}
-            placeholder={PLACEHOLDER_SNS}
-          />
         </InputWrapper>
       </InputContainer>
       <SignUpButton height={7} onClick={handleSignUpSubmit}>
