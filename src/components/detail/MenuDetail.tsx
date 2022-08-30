@@ -93,7 +93,7 @@ const MenuDetail = ({ menu, userId }: Props) => {
             ) : (
               <EmptyHeart size={50} onClick={handleHeartClick} />
             )}
-            <LikesCountText clicked={isLikeClicked}>
+            <LikesCountText clicked={isLikeClicked} onClick={handleHeartClick}>
               <span>{menu.likes}</span>
             </LikesCountText>
             {menu.author.id === userId && (
@@ -236,6 +236,7 @@ const LikesCountText = styled(Flex)<{ clicked: boolean }>`
   bottom: 0.2rem;
   font-size: 1.4rem;
   font-weight: 700;
+  cursor: pointer;
 `
 
 const Dots = styled(BiDotsVerticalRounded)`
