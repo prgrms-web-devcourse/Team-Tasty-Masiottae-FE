@@ -7,8 +7,8 @@ import { searchParams } from '@interfaces'
 interface searchResponse {
   menu: Menu[]
   nextPage: {
-    offset: number
-    limit: number
+    page: number
+    size: number
   }
   isLast: boolean
 }
@@ -20,26 +20,26 @@ const getMenuList = async (params: searchParams) => {
   return {
     menu: data.menu,
     nextPage: {
-      offset: params.offset + params.limit,
-      limit: params.limit
+      page: params.page,
+      size: params.size
     },
-    isLast: !data.menu
+    isLast: data.isLast
   }
 }
 
 export const useSearchMenuList = (params: searchParams) => {
-  const { keyword, tasteIdList, sort, limit, franchiseId, offset } = params
+  const { page, size, keyword, tasteIdList, sort, franchiseId } = params
 
   const { data, isLoading, error, fetchNextPage } = useInfiniteQuery<
     searchResponse,
     Error
   >(
-    ['menuList', keyword, tasteIdList, sort, limit, offset, franchiseId],
-    ({ pageParam = { offset: 0, limit: 10 } }) => {
+    ['menuList', page, size, keyword, tasteIdList, sort, franchiseId],
+    ({ pageParam = { page: 1, size: 10 } }) => {
       return getMenuList({
         ...params,
-        offset: pageParam.offset,
-        limit: pageParam.limit
+        page: pageParam.page,
+        size: pageParam.size
       })
     },
     {
@@ -49,6 +49,8 @@ export const useSearchMenuList = (params: searchParams) => {
       enabled: franchiseId !== undefined
     }
   )
+
+  console.log(data?.pages)
 
   const menuList = data?.pages
     .map((value) => value?.menu)

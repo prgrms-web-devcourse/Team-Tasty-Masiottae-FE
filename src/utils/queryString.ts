@@ -2,7 +2,7 @@ import { searchParams } from '@interfaces'
 
 export const createSearchRequestParameter = (params: searchParams) => {
   const requestParameter = new URLSearchParams(
-    `?offset=${params.offset}&limit=${params.limit}&sort=recent`
+    `?page=${params.page}&size=${params.size}&sort=recent`
   )
   if (params.accountId) {
     requestParameter.set('accountId', params.accountId.toString())

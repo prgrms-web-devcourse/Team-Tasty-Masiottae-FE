@@ -52,12 +52,12 @@ export interface Taste {
 }
 
 export interface searchParams {
+  page: number
+  size: number
   franchiseId?: number
   keyword?: string
   sort?: string
   tasteIdList?: number[]
-  offset: number
-  limit: number
   option?: { label: string; value: string }
   accountId?: number
 }
