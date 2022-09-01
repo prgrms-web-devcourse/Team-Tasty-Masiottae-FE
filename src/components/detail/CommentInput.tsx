@@ -1,4 +1,10 @@
-import React, { ChangeEvent, useCallback, useRef, useState } from 'react'
+import React, {
+  ChangeEvent,
+  useCallback,
+  useEffect,
+  useRef,
+  useState
+} from 'react'
 import styled from '@emotion/styled'
 import { usePostCommentMutation } from '@hooks/mutations/usePostCommentMutation'
 import { Modal } from '@components/common'
@@ -13,10 +19,14 @@ interface Props {
 
 const CommentInput = ({ menuId, userId }: Props) => {
   const [comment, setComment] = useState('')
-  const [isLoggedIn] = useState(!!userId)
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const { mutate: postComment } = usePostCommentMutation()
+
+  useEffect(() => {
+    setIsLoggedIn(!!userId)
+  }, [userId])
 
   const handleChange = useCallback((e: ChangeEvent<HTMLTextAreaElement>) => {
     if (textareaRef.current === null) {
