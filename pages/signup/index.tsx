@@ -1,16 +1,16 @@
 import styled from '@emotion/styled'
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Input, InputMessage, Button, ImageUploader } from '@components/common'
 import { BsEye } from 'react-icons/bs'
 import { useSignupMutation } from '@hooks/mutations/useSignupMutation'
 import axios from '@lib/axios'
 import {
-  TEXT,
   INPUT_EMAIL,
   INPUT_NICKNAME,
   INPUT_PASSWORD,
   INPUT_PASSWORD_CONFIRM,
-  INPUT_SNS,
+  INPUT_EMAIL_CHECK,
+  INPUT_NICKNAME_CHECK,
   PLACEHOLDER_EMAIL,
   PLACEHOLDER_NICKNAME,
   PLACEHOLDER_PASSWORD,
@@ -31,18 +31,20 @@ import {
 interface SignUpValues {
   image?: File | null
   email: string
+  nickNameCheck: string
+  emailCheck: string
   nickName: string
   password: string
   passwordConfirm: string
-  snsAccount?: string
 }
 
 const initialValues = {
   email: '',
   nickName: '',
+  emailCheck: '',
+  nickNameCheck: '',
   password: '',
-  passwordConfirm: '',
-  snsAccount: ''
+  passwordConfirm: ''
 }
 
 const Signup = () => {
@@ -58,46 +60,65 @@ const Signup = () => {
   })
   const { mutate: postSignup } = useSignupMutation()
 
-  const handleSignUpSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault()
-    const { email, nickName, password } = values
-    const isValidValues = email !== '' && nickName !== '' && password !== ''
+  const handleSignUpSubmit = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement>) => {
+      e.preventDefault()
+      const { email, nickName, password, passwordConfirm } = values
+      const isValidValues =
+        email !== '' &&
+        nickName !== '' &&
+        password !== '' &&
+        passwordConfirm !== ''
 
-    const isError = Object.keys(errors).filter(
-      (key) => errors[key as keyof SignUpValues] !== ''
-    ).length
+      const isError = Object.keys(errors).filter(
+        (key) => errors[key as keyof SignUpValues] !== ''
+      ).length
 
-    if (!isNickNameCheck) {
-      setErrors({ ...errors, nickName: MESSAGE_CHECK_AVAILABLE })
-    }
+      if (password !== passwordConfirm) {
+        setErrors({
+          ...errors,
+          [INPUT_PASSWORD_CONFIRM]: ERROR_PASSWORD_CONFIRM
+        })
+      }
 
-    if (!isEmailCheck) {
-      setErrors({ ...errors, email: MESSAGE_CHECK_AVAILABLE })
-    }
+      if (!isNickNameCheck) {
+        setErrors({
+          ...errors,
+          [INPUT_NICKNAME_CHECK]: MESSAGE_CHECK_AVAILABLE
+        })
+      }
 
-    if (!isError && isValidValues && isEmailCheck && isNickNameCheck) {
-      postSignup(values)
-    }
-  }
+      if (!isEmailCheck) {
+        setErrors({ ...errors, [INPUT_EMAIL_CHECK]: MESSAGE_CHECK_AVAILABLE })
+      }
+
+      if (!isError && isValidValues && isEmailCheck && isNickNameCheck) {
+        postSignup(values)
+      }
+    },
+    [errors, isEmailCheck, isNickNameCheck, postSignup, values]
+  )
 
   const handleCheckEmailClick = async (
     e: React.MouseEvent<HTMLButtonElement>
   ) => {
     e.preventDefault()
 
-    setErrors({ ...errors, email: '' })
-    const property = 'email'
+    setErrors({ ...errors, [INPUT_EMAIL_CHECK]: '' })
     const value = values.email
     const { data } = await axios.get(
-      `/accounts/check?property=${property}&value=${value}`
+      `/accounts/check?property=${INPUT_EMAIL}&value=${value}`
     )
     const { errorMessage } = data
     if (errorMessage) {
-      setErrors({ ...errors, email: errorMessage })
+      setErrors({ ...errors, [INPUT_EMAIL_CHECK]: errorMessage })
       return
     }
     setIsEmailCheck(true)
-    setCheckSuccessText({ ...checkSuccessText, [property]: AVAILABLE })
+    setCheckSuccessText({
+      ...checkSuccessText,
+      [INPUT_EMAIL]: AVAILABLE
+    })
   }
 
   const handleCheckNickNameClick = async (
@@ -105,26 +126,28 @@ const Signup = () => {
   ) => {
     e.preventDefault()
 
-    setErrors({ ...errors, nickName: '' })
-    const property = 'nickName'
+    setErrors({ ...errors, [INPUT_NICKNAME_CHECK]: '' })
     const value = values.nickName
     const { data } = await axios.get(
-      `/accounts/check?property=${property}&value=${value}`
+      `/accounts/check?property=${INPUT_NICKNAME}&value=${value}`
     )
     const { errorMessage } = data
     if (errorMessage) {
-      setErrors({ ...errors, nickName: errorMessage })
+      setErrors({ ...errors, [INPUT_NICKNAME_CHECK]: errorMessage })
       return
     }
     setIsNickNameCheck(true)
-    setCheckSuccessText({ ...checkSuccessText, [property]: AVAILABLE })
+    setCheckSuccessText({
+      ...checkSuccessText,
+      [INPUT_NICKNAME]: AVAILABLE
+    })
   }
 
   const handleSignUpChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target
 
     if (name === INPUT_EMAIL) {
-      setErrors({ ...errors, [name]: '' })
+      setErrors({ ...errors, [name]: '', [INPUT_EMAIL_CHECK]: '' })
       if (!REGEX_EMAIL.test(value)) {
         setErrors({ ...errors, [name]: ERROR_EMAIL })
       }
@@ -133,7 +156,7 @@ const Signup = () => {
     }
 
     if (name === INPUT_NICKNAME) {
-      setErrors({ ...errors, [name]: '' })
+      setErrors({ ...errors, [name]: '', [INPUT_NICKNAME_CHECK]: '' })
       e.target.value = value.replace(/\s/, '').slice(0, MAX_NICKNAME)
 
       if (!REGEX_NICKNAME.test(value)) {
@@ -190,7 +213,9 @@ const Signup = () => {
         <InputWrapper>
           <TextInput
             type="text"
-            isValid={errors[INPUT_EMAIL] === ''}
+            isValid={
+              errors[INPUT_EMAIL] === '' && errors[INPUT_EMAIL_CHECK] === ''
+            }
             name={INPUT_EMAIL}
             placeholder={PLACEHOLDER_EMAIL}
             onChange={handleSignUpChange}
@@ -199,15 +224,24 @@ const Signup = () => {
             중복 확인
           </ExistCheckButton>
           <InputMessage
-            isValid={errors[INPUT_EMAIL] === ''}
-            errorMessage={errors[INPUT_EMAIL]}
+            isValid={
+              errors[INPUT_EMAIL] === '' && errors[INPUT_EMAIL_CHECK] === ''
+            }
+            errorMessage={
+              errors[INPUT_EMAIL]
+                ? errors[INPUT_EMAIL]
+                : errors[INPUT_EMAIL_CHECK]
+            }
             successMessage={checkSuccessText.email}
           />
         </InputWrapper>
         <InputWrapper>
           <TextInput
             type="text"
-            isValid={errors[INPUT_NICKNAME] === ''}
+            isValid={
+              errors[INPUT_NICKNAME] === '' &&
+              errors[INPUT_NICKNAME_CHECK] === ''
+            }
             name={INPUT_NICKNAME}
             placeholder={PLACEHOLDER_NICKNAME}
             onChange={handleSignUpChange}
@@ -216,8 +250,15 @@ const Signup = () => {
             중복 확인
           </ExistCheckButton>
           <InputMessage
-            isValid={errors[INPUT_NICKNAME] === ''}
-            errorMessage={errors[INPUT_NICKNAME]}
+            isValid={
+              errors[INPUT_NICKNAME] === '' &&
+              errors[INPUT_NICKNAME_CHECK] === ''
+            }
+            errorMessage={
+              errors[INPUT_NICKNAME]
+                ? errors[INPUT_NICKNAME]
+                : errors[INPUT_NICKNAME_CHECK]
+            }
             successMessage={checkSuccessText.nickName}
           />
         </InputWrapper>
