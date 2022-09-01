@@ -4,7 +4,13 @@ import { useRouter } from 'next/router'
 import { IoChevronBackSharp } from 'react-icons/io5'
 import { FiLogIn, FiUser } from 'react-icons/fi'
 import Link from 'next/link'
-import { MYINFO_URL, LOGIN_URL, USER_URL, HOME_URL } from '@constants/pageUrl'
+import {
+  MYINFO_URL,
+  LOGIN_URL,
+  USER_URL,
+  HOME_URL,
+  DETAIL_URL
+} from '@constants/pageUrl'
 import { getToken } from '@utils/cookie'
 import { SMALL_LOGO } from '@constants/image'
 import Image from 'next/image'
@@ -20,7 +26,6 @@ export const Header = () => {
   const router = useRouter()
   const { pathname } = router
   const [title, setTitle] = useState('')
-
   const [token, setToken] = useState('')
 
   useEffect(() => {
@@ -38,6 +43,9 @@ export const Header = () => {
     if (pathname.includes(USER_URL)) {
       setTitle(TITLE_USER)
     }
+    if (pathname.includes(DETAIL_URL)) {
+      setTitle(' ')
+    }
   }, [])
 
   useEffect(() => {
@@ -47,7 +55,7 @@ export const Header = () => {
 
   return (
     <HeaderContainer>
-      <StyledBackIcon onClick={onClickPrev} />
+      {pathname !== HOME_URL && <StyledBackIcon onClick={onClickPrev} />}
       {title ? (
         <Title>{title}</Title>
       ) : (
