@@ -251,11 +251,7 @@ export const InputList = ({
             </Button>
           </OptionWrapper>
           <InputMessage
-            isValid={
-              option.name && option.description
-                ? true
-                : false || isInit.optionList
-            }
+            isValid={option.name && option.description ? true : false}
             errorMessage={ERROR_MESSAGE_REQUIRED_OPTION_TEXT}
           ></InputMessage>
         </div>
