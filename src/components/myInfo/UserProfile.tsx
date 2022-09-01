@@ -32,7 +32,6 @@ const UserProfile = () => {
   const [imageFile, setImageFile] = useState<File | null>(null)
   const [user, setUser] = useRecoilState<User>(currentUser)
   const [isReset, setIsReset] = useState(true)
-  const router = useRouter()
   const { mutate: patchImage } = useChangeImageMutation()
   const { mutate: patchNickName } = useChangeNickNameMutation()
 
@@ -59,11 +58,9 @@ const UserProfile = () => {
       reader.onload = () => {
         setUser({ ...user, image: String(reader.result) })
       }
-      if (!user.id) {
-        router.replace('/login')
-        return
+      if (user.id) {
+        patchImage({ userId: user.id, image: imageFile })
       }
-      patchImage({ userId: user.id, image: imageFile })
     }
     setIsProfileModalOpen(false)
   }, [imageFile, patchImage, user, setUser])
@@ -91,12 +88,7 @@ const UserProfile = () => {
       return
     }
 
-    if (!user.id) {
-      router.replace('/login')
-      return
-    }
-
-    if (!error) {
+    if (user.id && !error) {
       patchNickName({ userId: user.id, nickName: nickName })
       setUser({ ...user, nickName: nickName })
       setIsNameEditorOpen(false)
