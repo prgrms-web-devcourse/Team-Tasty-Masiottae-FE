@@ -71,7 +71,9 @@ const CommentInput = ({ menuId, userId }: Props) => {
   }
 
   const handleEnterPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === 'Enter') {
+    if (e.shiftKey) {
+      return
+    } else if (e.key === 'Enter') {
       addComment()
     }
   }
@@ -100,7 +102,7 @@ const CommentInput = ({ menuId, userId }: Props) => {
       <AddCommentButton onClick={handleAddClick}>등록</AddCommentButton>
       <Modal visible={isModalOpen} onClose={handleModalClose}>
         <ModalItem>
-          <span>로그인하세요.</span>
+          <span>로그인해주세요.</span>
         </ModalItem>
       </Modal>
     </CommentWriteContainer>
