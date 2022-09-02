@@ -388,8 +388,10 @@ const PriceTitle = styled.div`
 `
 
 const PriceDefaultButton = styled(Button)<{ isClicked: boolean }>`
-  background-color: ${({ isClicked }) => (isClicked ? '#000' : '#fff')};
-  color: ${({ isClicked }) => (isClicked ? '#fff' : '#000')};
+  background-color: ${({ theme, isClicked }) =>
+    isClicked ? theme.color.mainBlack : theme.color.mainWhite};
+  color: ${({ theme, isClicked }) =>
+    isClicked ? theme.color.mainWhite : theme.color.mainBlack};
   border: 0.2rem solid black;
 `
 

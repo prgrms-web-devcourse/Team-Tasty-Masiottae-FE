@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
+import theme from '@constants/theme'
 import { useRouter } from 'next/router'
 import styled from '@emotion/styled'
 import { TagContainer, ImageUploader, Button } from '@components/common'
-import { Menu, Option } from '@interfaces'
+import { Option } from '@interfaces'
 import { usePostMenu } from '@hooks/mutations/usePostMenuMutation'
 import { InputList } from '@components/post-menu/InputList'
 import { useChangeMenu } from '@hooks/mutations/useChangeMenuMutation'
@@ -227,8 +228,8 @@ const PostMenuPage = ({
           onChange={handleTagListChange}
         />
         <SubmitButton
-          color={'#fff'}
-          backgroundColor={'#000'}
+          color={theme.color.mainWhite}
+          backgroundColor={theme.color.mainBlack}
           disabled={checkButtonDisabled()}
           onClick={handleEditSubmit}
         >
