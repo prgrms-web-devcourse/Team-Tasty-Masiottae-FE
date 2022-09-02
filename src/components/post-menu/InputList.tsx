@@ -29,13 +29,22 @@ import {
 } from '@constants/menuConstant'
 import { useState } from 'react'
 
-interface InputListType {
+interface InputList {
   franchiseId: number
   title: string
   originalTitle: string
   optionList: Option[]
   expectedPrice: number
   isPriceButtonClicked: boolean
+}
+
+interface Init {
+  franchise: boolean
+  title: boolean
+  originalTitle: boolean
+  option: boolean
+  expectedPrice: boolean
+  optionList: boolean[]
 }
 
 interface Props {
@@ -45,7 +54,7 @@ interface Props {
   optionList: Option[]
   expectedPrice: number
   isPriceButtonClicked: boolean
-  onChange: (inputList: InputListType) => void
+  onChange: (inputList: InputList) => void
 }
 
 export const InputList = ({
@@ -57,12 +66,13 @@ export const InputList = ({
   isPriceButtonClicked,
   onChange
 }: Props) => {
-  const [isInit, setIsInit] = useState({
+  const [isInit, setIsInit] = useState<Init>({
     franchise: true,
     title: true,
     originalTitle: true,
-    optionList: true,
-    expectedPrice: true
+    option: true,
+    expectedPrice: true,
+    optionList: []
   })
 
   const handleOnChange = () => {
@@ -106,14 +116,20 @@ export const InputList = ({
     }
     const newOptionList = [...optionList, { name: '', description: '' }]
     optionList = newOptionList
-    handleOnChange()
     setIsInit((isInit) => {
-      return { ...isInit, optionList: false }
+      return { ...isInit, optionList: [...isInit.optionList, true] }
     })
+    handleOnChange()
   }
 
   const handleOptionDelBtnClick = (deletedIdx: number) => {
     const newOptionList = optionList.filter((_, idx) => deletedIdx !== idx)
+    setIsInit((isInit) => {
+      return {
+        ...isInit,
+        optionList: isInit.optionList.filter((_, idx) => deletedIdx !== idx)
+      }
+    })
     optionList = newOptionList
     handleOnChange()
   }
@@ -129,6 +145,14 @@ export const InputList = ({
     }
     const newOptionList = [...optionList]
     optionList = newOptionList
+    setIsInit((isInit) => {
+      return {
+        ...isInit,
+        optionList: isInit.optionList.map((init, index) =>
+          idx === index || init === false ? false : true
+        )
+      }
+    })
     handleOnChange()
   }
 
@@ -143,6 +167,14 @@ export const InputList = ({
     }
     const newOptionList = [...optionList]
     optionList = newOptionList
+    setIsInit((isInit) => {
+      return {
+        ...isInit,
+        optionList: isInit.optionList.map((init, index) =>
+          idx === index || init === false ? false : true
+        )
+      }
+    })
     handleOnChange()
   }
 
@@ -210,7 +242,7 @@ export const InputList = ({
           옵션 추가
         </OptionButton>
         <InputMessage
-          isValid={Boolean(optionList.length) || isInit.optionList}
+          isValid={Boolean(optionList.length) || isInit.option}
           errorMessage={ERROR_MESSAGE_REQUIRED_OPTION}
         ></InputMessage>
       </OptionButtonWrapper>
@@ -227,7 +259,7 @@ export const InputList = ({
               onChange={(e) => {
                 handleOptionNameChange(e, idx)
               }}
-              isValid={option.name ? true : false}
+              isValid={option.name ? true : false || isInit.optionList[idx]}
             />
             <OptionDescription
               height={4.8}
@@ -239,7 +271,9 @@ export const InputList = ({
               onChange={(e) => {
                 handleOptionDescriptionChange(e, idx)
               }}
-              isValid={option.description ? true : false}
+              isValid={
+                option.description ? true : false || isInit.optionList[idx]
+              }
             />
             <Button
               width={6}
@@ -251,7 +285,11 @@ export const InputList = ({
             </Button>
           </OptionWrapper>
           <InputMessage
-            isValid={option.name && option.description ? true : false}
+            isValid={
+              option.name && option.description
+                ? true
+                : false || isInit.optionList[idx]
+            }
             errorMessage={ERROR_MESSAGE_REQUIRED_OPTION_TEXT}
           ></InputMessage>
         </div>
