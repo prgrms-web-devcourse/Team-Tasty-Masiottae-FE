@@ -5,6 +5,7 @@ import useIntersectionObserver from '@hooks/common/useIntersectionObserver'
 import { MenuCardList, SkeletonCardList, BannerCard } from '@components/common'
 import { useSearchMenuList } from '@hooks/queries/useSearchMenuList'
 import { MAIN_BANNER_IMAGE } from '@constants/image'
+import { getLocalStorageItem } from '../src/utils/localStorage'
 import {
   BANNER_CLOSE,
   BANNER_OPEN,
@@ -26,6 +27,8 @@ const Home: NextPage = () => {
   const [bannerState, setBannerState] = useState(BANNER_CLOSE)
 
   useEffect(() => {
+    const scrollY = getLocalStorageItem('scrollY')
+    if (scrollY !== '0') window.scrollTo(0, Number(scrollY))
     setBannerState(getSessionStorageItem(BANNER_STORAGE_KEY) || BANNER_OPEN)
   }, [])
 
@@ -44,21 +47,20 @@ const Home: NextPage = () => {
 
   return (
     <>
-      {bannerState === BANNER_OPEN && (
-        <BannerContainer>
-          <BannerCard
-            src={MAIN_BANNER_IMAGE}
-            isClosed={false}
-            content={BANNER_TEXT}
-            onClose={handleBannerClose}
-          />
-        </BannerContainer>
-      )}
-
       {isLoading ? (
         <SkeletonCardList size={4} />
       ) : (
-        <MenuCardList menuList={menuList || []} divRef={ref} />
+        <>
+          <BannerContainer>
+            <BannerCard
+              src={MAIN_BANNER_IMAGE}
+              isClosed={bannerState === BANNER_CLOSE}
+              content={BANNER_TEXT}
+              onClose={handleBannerClose}
+            />
+          </BannerContainer>
+          <MenuCardList menuList={menuList || []} divRef={ref} />
+        </>
       )}
     </>
   )
