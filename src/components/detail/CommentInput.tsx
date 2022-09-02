@@ -1,6 +1,13 @@
-import React, { ChangeEvent, useCallback, useRef, useState } from 'react'
+import React, {
+  ChangeEvent,
+  useCallback,
+  useEffect,
+  useRef,
+  useState
+} from 'react'
 import styled from '@emotion/styled'
 import { usePostCommentMutation } from '@hooks/mutations/usePostCommentMutation'
+import { Modal } from '@components/common'
 
 const GUEST_INPUT_PLACEHOLDER = '로그인 후 작성해주세요(최대 80자).'
 const LOGGEDIN_INPUT_PLACEHOLDER = '댓글을 입력해주세요.'
@@ -12,9 +19,14 @@ interface Props {
 
 const CommentInput = ({ menuId, userId }: Props) => {
   const [comment, setComment] = useState('')
-  const [isLoggedIn] = useState(userId)
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
   const { mutate: postComment } = usePostCommentMutation()
+
+  useEffect(() => {
+    setIsLoggedIn(!!userId)
+  }, [userId])
 
   const handleChange = useCallback((e: ChangeEvent<HTMLTextAreaElement>) => {
     if (textareaRef.current === null) {
@@ -27,7 +39,11 @@ const CommentInput = ({ menuId, userId }: Props) => {
     setComment(e.target.value)
   }, [])
 
-  const handleAddButtonClick = () => {
+  const addComment = () => {
+    if (comment.replace(/\s/g, '').length === 0) {
+      return
+    }
+
     if (!userId) {
       return
     }
@@ -50,8 +66,30 @@ const CommentInput = ({ menuId, userId }: Props) => {
     )
   }
 
+  const handleAddClick = () => {
+    addComment()
+  }
+
+  const handleEnterPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.shiftKey) {
+      return
+    } else if (e.key === 'Enter') {
+      addComment()
+    }
+  }
+
+  const handleTextareaClick = (isLoggedIn: boolean) => {
+    if (!isLoggedIn) {
+      setIsModalOpen(true)
+    }
+  }
+
+  const handleModalClose = () => {
+    setIsModalOpen(false)
+  }
+
   return (
-    <CommentWriteContainer>
+    <CommentWriteContainer onClick={() => handleTextareaClick(isLoggedIn)}>
       <Textarea
         ref={textareaRef}
         placeholder={
@@ -59,8 +97,14 @@ const CommentInput = ({ menuId, userId }: Props) => {
         }
         maxLength={80}
         onChange={handleChange}
+        onKeyDown={handleEnterPress}
       />
-      <AddCommentButton onClick={handleAddButtonClick}>등록</AddCommentButton>
+      <AddCommentButton onClick={handleAddClick}>등록</AddCommentButton>
+      <Modal visible={isModalOpen} onClose={handleModalClose}>
+        <ModalItem>
+          <span>로그인해주세요.</span>
+        </ModalItem>
+      </Modal>
     </CommentWriteContainer>
   )
 }
@@ -103,6 +147,17 @@ const AddCommentButton = styled.button`
   background-color: black;
   margin-left: -6rem;
   cursor: pointer;
+`
+
+const ModalItem = styled(Flex)`
+  justify-content: center;
+  align-items: center;
+  height: 5rem;
+
+  & > span {
+    font-weight: 700;
+    font-size: 1.8rem;
+  }
 `
 
 export default CommentInput
