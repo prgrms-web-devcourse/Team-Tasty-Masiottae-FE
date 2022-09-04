@@ -118,7 +118,11 @@ const UserProfile = () => {
               수정
             </ChangeNickNameButton>
           </NickName>
-          <InputMessage errorMessage={error} />
+          {error ? (
+            <InputMessage errorMessage={error} />
+          ) : (
+            <Message>{MESSAGE_NICKNAME}</Message>
+          )}
         </>
       ) : (
         <NickName>
@@ -139,6 +143,7 @@ const UserProfile = () => {
           value={user.image}
           isReset={isReset}
         />
+        <Message>* 사진을 클릭 후, 파일을 등록해 주세요.</Message>
         <ModalButton onClick={handleProfileSubmit}>확인</ModalButton>
       </ProfileModal>
     </UserProfileWrapper>
@@ -168,7 +173,7 @@ const ModalButton = styled(Button)`
   height: 5.6rem;
   border-radius: 1rem;
   display: flex;
-  margin-top: 1rem;
+  margin-top: 2rem;
   align-items: center;
   justify-content: center;
   background-color: ${(props) => props.theme.color.mainBlack};
@@ -176,7 +181,7 @@ const ModalButton = styled(Button)`
 `
 
 const UserProfileWrapper = styled.div`
-  margin: 5rem auto 3rem auto;
+  margin: 2.5rem auto 2rem auto;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -223,7 +228,7 @@ const ChangeNickNameButton = styled(Button)`
 `
 
 const Text = styled.div`
-  font-size: 2rem;
+  font-size: 1.8rem;
   margin: 0.2rem 0 0 1rem;
   font-weight: 700;
 `
@@ -231,6 +236,11 @@ const EditNameIcon = styled(BsFillPencilFill)`
   width: 1.5rem;
   height: 1.5rem;
   margin-top: 0.3rem;
+`
+
+const Message = styled.span`
+  font-size: 1.4rem;
+  margin-left: 1rem;
 `
 
 export default UserProfile

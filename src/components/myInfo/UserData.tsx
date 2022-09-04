@@ -26,19 +26,7 @@ const UserData = () => {
 }
 
 const UserDataContainer = styled.div`
-  margin-top: 7rem;
   position: relative;
-`
-
-const Title = styled.div`
-  font-size: 2.4rem;
-  margin: 0.2rem 0 0 2.8rem;
-`
-
-const Text = styled.div`
-  font-size: 2.4rem;
-  margin: 0.2rem 0 0 1rem;
-  color: ${(props) => props.theme.color.fontLight};
 `
 
 const UserDetailWrapper = styled.div`
@@ -55,10 +43,21 @@ const UserDetailWrapper = styled.div`
 
 const UserDetail = styled.div`
   width: 100%;
-  height: 8rem;
+  height: 5.6rem;
   border-bottom: 0.1rem solid ${(props) => props.theme.color.borderLight};
   display: flex;
   align-items: center;
+`
+
+const Title = styled.div`
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 0.2rem 0 0 2.8rem;
+`
+
+const Text = styled.div`
+  font-size: 1.8rem;
+  margin: 0.2rem 0 0 1rem;
 `
 
 export default UserData
