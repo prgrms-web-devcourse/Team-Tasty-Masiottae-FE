@@ -66,7 +66,7 @@ export const setTokenData = ({ accessToken, account, refreshToken }: Data) => {
   })
   setCookie(TOKEN_EXPIRE_DATE, accessToken.expirationDate, {
     path: '/',
-    expires: new Date(accessToken.expirationDate)
+    expires: new Date(refreshToken.expirationDate)
   })
   setCookie(REFRESH_TOKEN_KEY, refreshToken.token, {
     path: '/',
