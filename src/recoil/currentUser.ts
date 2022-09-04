@@ -3,7 +3,7 @@ import { User } from '@interfaces'
 import { v1 } from 'uuid'
 import { DEFAULT_USER_IMAGE } from '@constants/image'
 import { setCookie, getCookie } from '@utils/cookie'
-import { TOKEN_EXPIRE_DATE, CURRENT_USER } from '@constants/token'
+import { REFRESH_TOKEN_EXPIRE_DATE, CURRENT_USER } from '@constants/token'
 
 export const initialUser = {
   id: null,
@@ -25,7 +25,7 @@ const makeCookieEffect =
     }
 
     onSet((newValue: User, _: any, isReset: boolean) => {
-      const expirationDate = getCookie(TOKEN_EXPIRE_DATE)
+      const expirationDate = getCookie(REFRESH_TOKEN_EXPIRE_DATE)
       isReset
         ? setCookie(key, '')
         : setCookie(key, JSON.stringify(newValue), {
