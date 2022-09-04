@@ -10,7 +10,7 @@
 > 🏠 [서비스 배포 사이트](https://team-tasty-masiottae-fe.vercel.app)
 - [맛이어때 팀 노션](https://backend-devcourse.notion.site/11-45b039d71121406ebde2397bb6551090)
 - [맛이어때 api 문서](http://13.125.177.126:8080/docs/index.html)
-- [맛이어때 rule book](https://prgrms.notion.site/1-RuleBook-188d2eddfe9a4bd68b2bbb3f961be1c3)
+- [맛이어때 FE rule book](https://prgrms.notion.site/1-RuleBook-188d2eddfe9a4bd68b2bbb3f961be1c3)
 - [백엔드 Repo](https://github.com/prgrms-web-devcourse/Team-Tasty-Masiottae-BE)
 
 
