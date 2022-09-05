@@ -7,6 +7,7 @@ import theme from '@constants/theme'
 import { NO_IMAGE } from '@constants/image'
 import useIntersectionObserver from '@hooks/common/useIntersectionObserver'
 import { useState } from 'react'
+import { setLocalStorageItem } from '@utils/localStorage'
 
 interface Props {
   title: string
@@ -43,8 +44,13 @@ const MenuCard = ({
     { threshold: 0.5, rootMargin: '-65px 0px' }
   )
 
+  const handleClick = () => {
+    if (typeof window === undefined) return
+    setLocalStorageItem('scrollY', window.scrollY.toString())
+  }
+
   return (
-    <CardContainer ref={divRef}>
+    <CardContainer ref={divRef} onClick={handleClick}>
       <Img src={isObserved ? imageUrl : NO_IMAGE} ref={imageRef} />
       <CardInfo>
         <CardHeader>

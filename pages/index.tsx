@@ -5,7 +5,8 @@ import useIntersectionObserver from '@hooks/common/useIntersectionObserver'
 import { MenuCardList, SkeletonCardList, BannerCard } from '@components/common'
 import { useSearchMenuList } from '@hooks/queries/useSearchMenuList'
 import { MAIN_BANNER_IMAGE } from '@constants/image'
-import { getLocalStorageItem } from '../src/utils/localStorage'
+import { getLocalStorageItem } from '@utils/localStorage'
+import { setLocalStorageItem } from '../src/utils/localStorage'
 import {
   BANNER_CLOSE,
   BANNER_OPEN,
@@ -28,7 +29,13 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     const scrollY = getLocalStorageItem('scrollY')
-    if (scrollY !== '0') window.scrollTo(0, Number(scrollY))
+    const isPopState = getLocalStorageItem('isPopState')
+    if (isPopState === 'true' && scrollY !== '0') {
+      setLocalStorageItem('isPopState', 'false')
+      window.scrollTo(0, Number(scrollY))
+      setLocalStorageItem('scrollY', '0')
+    }
+
     setBannerState(getSessionStorageItem(BANNER_STORAGE_KEY) || BANNER_OPEN)
   }, [])
 

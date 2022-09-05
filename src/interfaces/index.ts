@@ -64,6 +64,8 @@ export interface searchParams {
 
 export interface SearchFormOptions {
   keyword: string
-  sort?: string
   tasteIdList: number[]
+  sort?: string
+  accountId?: number
+  franchiseId?: number
 }

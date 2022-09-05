@@ -10,9 +10,14 @@ import { dehydrate, QueryClient } from '@tanstack/react-query'
 import { GetServerSidePropsContext } from 'next'
 import axios from 'axios'
 import { Menu } from '@interfaces'
+import { setLocalStorageItem } from '../../src/utils/localStorage'
 
 const Detail = () => {
   const router = useRouter()
+  router.beforePopState(() => {
+    setLocalStorageItem('isPopState', 'true')
+    return true
+  })
   const id = parseInt(router.query.id as string, 10)
   const [user] = useRecoilState(currentUser)
   const { data: menu, isSuccess: isMenuSuccess } = useMenu(id)

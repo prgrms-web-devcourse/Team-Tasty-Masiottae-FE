@@ -7,7 +7,6 @@ import { useState, ChangeEvent, FormEvent, useEffect, useRef } from 'react'
 import { SearchFormOptions } from '@interfaces'
 import SortOption from './SortOption'
 import FilterForm from './FilterForm'
-
 interface Props {
   onSubmit: (values: SearchFormOptions) => void
   searchDomain?: string
