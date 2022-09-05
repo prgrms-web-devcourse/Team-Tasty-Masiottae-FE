@@ -29,10 +29,10 @@ const Search = () => {
   const urlOptions = convertQueryStringToObject(router.query)
 
   const [searchOptions, setSearchOptions] = useState<searchParams>({
+    ...urlOptions,
     page: 1,
     size: 10,
-    franchiseId: id,
-    ...urlOptions
+    franchiseId: id
   })
   const { franchiseList } = useFranchiseList()
   const {
@@ -83,7 +83,14 @@ const Search = () => {
       <FixedWrapper>
         <InnerWrapper>
           <FranchiseInfo franchise={getFranchise()} />
-          <SearchForm onSubmit={handleSubmit} />
+          <SearchForm
+            onSubmit={handleSubmit}
+            initialValue={{
+              sort: searchOptions.sort || 'recent',
+              keyword: searchOptions.keyword || '',
+              tasteIdList: searchOptions.tasteIdList || []
+            }}
+          />
         </InnerWrapper>
       </FixedWrapper>
       <CardListWrapper>

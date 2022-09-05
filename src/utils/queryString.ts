@@ -24,19 +24,21 @@ export const createSearchRequestParameter = (params: searchParams) => {
 }
 
 export const createSearchOptionParameter = (params: SearchFormOptions) => {
-  const qs = `/search/${params.franchiseId}?${
-    params.sort ? `sort=${params.sort}` : `sort=recent`
-  }${params.keyword ? `&keyword=${params.keyword}` : ''}${
+  const qs = `/${params.franchiseId ? 'search' : 'user'}/${
+    params.franchiseId ? params.franchiseId : params.accountId
+  }?${params.sort ? `sort=${params.sort}` : `sort=recent`}${
+    params.keyword ? `&keyword=${params.keyword}` : ''
+  }${
     params.tasteIdList.length > 0
       ? `&tasteIdList=${params.tasteIdList.join(',')}`
       : ''
-  }`
+  }${params.option ? `&option=${params.option}` : '&option=my'}`
 
   return qs
 }
 
 export const convertQueryStringToObject = (query: ParsedUrlQuery) => {
-  const { sort, tasteIdList, keyword } = query
+  const { sort, tasteIdList, keyword, option } = query
 
   return {
     sort: typeof sort === 'string' ? sort : 'recent',
@@ -44,6 +46,7 @@ export const convertQueryStringToObject = (query: ParsedUrlQuery) => {
       typeof tasteIdList === 'string'
         ? tasteIdList.split(',').map((val) => parseInt(val))
         : undefined,
-    keyword: typeof keyword === 'string' ? keyword : undefined
+    keyword: typeof keyword === 'string' ? keyword : undefined,
+    option: typeof option === 'string' ? option : 'my'
   }
 }

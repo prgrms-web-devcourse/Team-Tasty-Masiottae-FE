@@ -37,7 +37,7 @@ export const useSearchMyMenuList = (params: searchParams) => {
   >(
     ['myMenuList', page, size, keyword, tasteIdList, sort, option, accountId],
     ({ pageParam = { page: 1, size: 10 } }) => {
-      return getMyMenuList(option?.value || 'my', {
+      return getMyMenuList(option || 'my', {
         ...params,
         page: pageParam.page,
         size: pageParam.size

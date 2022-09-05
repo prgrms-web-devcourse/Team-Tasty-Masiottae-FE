@@ -10,6 +10,7 @@ import FilterForm from './FilterForm'
 interface Props {
   onSubmit: (values: SearchFormOptions) => void
   searchDomain?: string
+  initialValue: SearchFormOptions
 }
 
 interface SortOption {
@@ -18,21 +19,15 @@ interface SortOption {
 }
 
 const PLACEHOLDER_SEARCH_INPUT = '메뉴 검색'
-const INITIAL_SEARCH_FORM_STATE = {
-  sort: 'recent',
-  keyword: '',
-  tasteIdList: []
-}
 
-const SearchForm = ({ onSubmit, searchDomain }: Props) => {
+const SearchForm = ({ onSubmit, searchDomain, initialValue }: Props) => {
   const [modalVisible, setModalVisible] = useState(false)
-  const [searchOptions, setSearchOptions] = useState<SearchFormOptions>(
-    INITIAL_SEARCH_FORM_STATE
-  )
+  const [searchOptions, setSearchOptions] =
+    useState<SearchFormOptions>(initialValue)
   const inputElement = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
-    setSearchOptions(INITIAL_SEARCH_FORM_STATE)
+    setSearchOptions(initialValue)
   }, [searchDomain])
 
   const handleFilterClick = () => setModalVisible(true)
