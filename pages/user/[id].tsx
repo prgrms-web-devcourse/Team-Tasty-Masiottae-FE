@@ -17,6 +17,7 @@ import {
 } from '@utils/queryString'
 import { getLocalStorageItem, setLocalStorageItem } from '@utils/localStorage'
 import { SkeletonFranchiseInfo } from '@components/common/SkeletonFranchiseList'
+import { scrollRestore } from '@utils/scroll'
 
 export async function getServerSideProps() {
   return {
@@ -57,13 +58,7 @@ const UserMenu = () => {
   )
 
   useEffect(() => {
-    const scrollY = getLocalStorageItem('scrollY')
-    const isPopState = getLocalStorageItem('isPopState')
-    if (isPopState === 'true' && scrollY !== '0') {
-      setLocalStorageItem('isPopState', 'false')
-      window.scrollTo(0, Number(scrollY))
-      setLocalStorageItem('scrollY', '0')
-    }
+    scrollRestore()
   }, [])
 
   const handleSubmit = (values: SearchFormOptions) => {

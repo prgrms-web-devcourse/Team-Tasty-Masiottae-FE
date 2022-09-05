@@ -11,11 +11,11 @@ import {
 } from '@components/common'
 import { useFranchiseList } from '@hooks/queries/useFranchiseList'
 import { useSearchMenuList } from '@hooks/queries/useSearchMenuList'
-import { getLocalStorageItem, setLocalStorageItem } from '@utils/localStorage'
 import {
   convertQueryStringToObject,
   createSearchOptionParameter
 } from '@utils/queryString'
+import { scrollRestore } from '@utils/scroll'
 
 export async function getServerSideProps() {
   return {
@@ -35,20 +35,11 @@ const Search = () => {
     franchiseId: id
   })
   const { franchiseList } = useFranchiseList()
-  const {
-    menuList,
-    isLoading: isMenuListLoading,
-    fetchNextPage
-  } = useSearchMenuList(searchOptions)
+  const { menuList, isLoading, fetchNextPage } =
+    useSearchMenuList(searchOptions)
 
   useEffect(() => {
-    const scrollY = getLocalStorageItem('scrollY')
-    const isPopState = getLocalStorageItem('isPopState')
-    if (isPopState === 'true' && scrollY !== '0') {
-      setLocalStorageItem('isPopState', 'false')
-      window.scrollTo(0, Number(scrollY))
-      setLocalStorageItem('scrollY', '0')
-    }
+    scrollRestore()
   }, [])
 
   const handleSubmit = (values: SearchFormOptions) => {
@@ -94,7 +85,7 @@ const Search = () => {
         </InnerWrapper>
       </FixedWrapper>
       <CardListWrapper>
-        {isMenuListLoading ? (
+        {isLoading ? (
           <SkeletonCardList size={2} />
         ) : (
           <MenuCardList menuList={menuList || []} divRef={ref} />
