@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import styled from '@emotion/styled'
-import { TagContainer, ImageUploader, Button } from '@components/common'
 import { Option } from '@interfaces'
 import { useMenu } from '@hooks/queries/useMenu'
-import { useChangeMenu } from '@hooks/mutations/useChangeMenuMutation'
 import { useRouter } from 'next/router'
-import { InputList } from '@components/create-menu/InputList'
 import { useRecoilValue } from 'recoil'
 import { currentUser } from '@recoil/currentUser'
+import PostMenuPage from '@components/post-menu/postMenuPage'
 
 export interface InputListType {
   franchiseId: number
@@ -18,158 +15,76 @@ export interface InputListType {
   isPriceButtonClicked: boolean
 }
 
+interface MenuData {
+  menuImage: string | null
+  franchiseId: number
+  title: string
+  originalTitle: string
+  optionList: Option[]
+  expectedPrice: number
+  tasteIdList: number[]
+}
+
 const EditMenu = () => {
-  const [file, setFile] = useState<File | null>(null)
-  const [isFileChange, setIsFileChange] = useState(false)
-  const [franchiseId, setFranchiseId] = useState(1)
-  const [title, setTitle] = useState('')
-  const [originalTitle, setOriginalTitle] = useState('')
-  const [optionList, setOptionList] = useState<Option[]>([])
-  const [expectedPrice, setExpectedPrice] = useState(0)
-  const [isPriceButtonClicked, setIsPriceButtonClicked] = useState(false)
-  const [tasteIdList, setTasteIdList] = useState<number[]>([])
-  const [isSubmitted, setIsSubmitted] = useState(false)
   const router = useRouter()
   const { id } = router.query
   const user = useRecoilValue(currentUser)
-  const { mutate, isLoading: changeMenuLoading } = useChangeMenu()
-  const { data: menuData, isLoading: getMenuLoading } = useMenu(Number(id))
+  const { data } = useMenu(Number(id))
+
+  const [menuData, setMenuData] = useState<MenuData>({
+    menuImage: null,
+    franchiseId: 0,
+    title: '',
+    originalTitle: '',
+    optionList: [],
+    tasteIdList: [],
+    expectedPrice: 0
+  })
 
   useEffect(() => {
-    if (menuData) {
-      if (menuData.author.id !== user.id) {
+    if (data) {
+      if (data.author.id !== user.id) {
         alert('글쓴이만 수정할 수 있어요')
         router.replace(`/detail/${id}`)
       }
 
-      setFranchiseId(menuData.franchise.id)
-      setTitle(menuData.title)
-      setOriginalTitle(menuData.originalTitle)
-      setOptionList(menuData.optionList)
-      setExpectedPrice(menuData.expectedPrice)
-      setTasteIdList(menuData.tasteList.map((taste) => taste.id))
-      setIsPriceButtonClicked(!menuData.expectedPrice)
-    }
-  }, [menuData])
+      const {
+        image,
+        franchise,
+        title,
+        originalTitle,
+        optionList,
+        expectedPrice,
+        tasteList
+      } = data
 
-  const checkButtonDisabled = () => {
-    return !(
-      !isSubmitted &&
-      franchiseId &&
-      title &&
-      originalTitle &&
-      optionList.filter((option) => option.name && option.description).length &&
-      tasteIdList.length &&
-      (isPriceButtonClicked || expectedPrice > 0)
-    )
-  }
-
-  const handleInputChange = ({
-    franchiseId,
-    title,
-    originalTitle,
-    optionList,
-    expectedPrice,
-    isPriceButtonClicked
-  }: InputListType) => {
-    setFranchiseId(franchiseId)
-    setTitle(title)
-    setOriginalTitle(originalTitle)
-    setOptionList(optionList)
-    setExpectedPrice(expectedPrice)
-    setIsPriceButtonClicked(isPriceButtonClicked)
-  }
-
-  // onChange handler
-  const handleImageChange = (file: File | null) => {
-    setFile(file)
-    if (file === null) {
-      setIsFileChange(true)
-    }
-  }
-
-  const handleTagListChange = (tagIdList: number[]) => {
-    setTasteIdList(tagIdList)
-  }
-
-  const handleEditSubmit = () => {
-    setIsSubmitted(true)
-    const data = {
-      franchiseId,
-      title,
-      originalTitle,
-      optionList,
-      expectedPrice,
-      tasteIdList,
-      isRemoveImage: isFileChange,
-      content: ''
-    }
-    mutate(
-      { menuId: Number(id), image: file, data: data },
-      {
-        onSuccess: () => {
-          router.replace(`/detail/${id}`)
+      setMenuData((menuData) => {
+        return {
+          ...menuData,
+          menuImage: image,
+          franchiseId: franchise.id,
+          title,
+          originalTitle,
+          optionList,
+          expectedPrice,
+          tasteIdList: tasteList.map((taste) => taste.id)
         }
-      }
-    )
-  }
+      })
+    }
+  }, [data, id, router, user.id])
 
   return (
-    <FlexContainer>
-      <ImageUploaderWrapper>
-        <ImageUploader
-          value={menuData?.image}
-          isDeletable={true}
-          onChange={handleImageChange}
-        />
-      </ImageUploaderWrapper>
-      <InputList
-        franchiseId={franchiseId}
-        title={title}
-        originalTitle={originalTitle}
-        optionList={optionList}
-        expectedPrice={expectedPrice}
-        isPriceButtonClicked={isPriceButtonClicked}
-        onChange={handleInputChange}
-      ></InputList>
-      <SubTitle>맛</SubTitle>
-      <TagContainer
-        selectedTasteIdList={tasteIdList}
-        onChange={handleTagListChange}
-      />
-      <SubmitButton
-        color={'#fff'}
-        backgroundColor={'#000'}
-        disabled={checkButtonDisabled()}
-        onClick={handleEditSubmit}
-      >
-        수정 하기
-      </SubmitButton>
-    </FlexContainer>
+    <PostMenuPage
+      menuId={Number(id)}
+      menuImage={menuData.menuImage}
+      franchiseId={menuData.franchiseId}
+      title={menuData.title}
+      originalTitle={menuData.originalTitle}
+      optionList={menuData.optionList}
+      expectedPrice={menuData.expectedPrice}
+      tasteIdList={menuData.tasteIdList}
+    />
   )
 }
-
-const Flex = styled.div`
-  display: flex;
-`
-
-const FlexContainer = styled(Flex)`
-  flex-direction: column;
-  align-items: center;
-`
-
-const ImageUploaderWrapper = styled.div`
-  width: calc(100% + 4rem);
-`
-
-const SubTitle = styled.h3`
-  font-size: 2.4rem;
-  align-self: start;
-`
-
-const SubmitButton = styled(Button)`
-  font-weight: 700;
-  font-size: 2rem;
-`
 
 export default EditMenu
