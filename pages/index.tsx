@@ -15,6 +15,7 @@ import {
   getSessionStorageItem,
   setSessionStorageItem
 } from '@utils/sessionStorage'
+import { scrollRestore } from '@utils/scroll'
 
 const Home: NextPage = () => {
   const { menuList, isLoading, fetchNextPage } = useSearchMenuList({
@@ -26,6 +27,7 @@ const Home: NextPage = () => {
   const [bannerState, setBannerState] = useState(BANNER_CLOSE)
 
   useEffect(() => {
+    scrollRestore()
     setBannerState(getSessionStorageItem(BANNER_STORAGE_KEY) || BANNER_OPEN)
   }, [])
 
@@ -44,21 +46,20 @@ const Home: NextPage = () => {
 
   return (
     <>
-      {bannerState === BANNER_OPEN && (
-        <BannerContainer>
-          <BannerCard
-            src={MAIN_BANNER_IMAGE}
-            isClosed={false}
-            content={BANNER_TEXT}
-            onClose={handleBannerClose}
-          />
-        </BannerContainer>
-      )}
-
       {isLoading ? (
         <SkeletonCardList size={4} />
       ) : (
-        <MenuCardList menuList={menuList || []} divRef={ref} />
+        <>
+          <BannerContainer>
+            <BannerCard
+              src={MAIN_BANNER_IMAGE}
+              isClosed={bannerState === BANNER_CLOSE}
+              content={BANNER_TEXT}
+              onClose={handleBannerClose}
+            />
+          </BannerContainer>
+          <MenuCardList menuList={menuList || []} divRef={ref} />
+        </>
       )}
     </>
   )

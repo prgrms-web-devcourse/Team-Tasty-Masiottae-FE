@@ -3,8 +3,7 @@ import {
   Avatar,
   MenuCardList,
   SearchForm,
-  SkeletonCardList,
-  SkeletonFranchiseList
+  SkeletonCardList
 } from '@components/common'
 import styled from '@emotion/styled'
 import useIntersectionObserver from '@hooks/common/useIntersectionObserver'
@@ -12,11 +11,19 @@ import { useSearchMyMenuList } from '@hooks/queries/useSearchMyMenuList'
 import { SearchFormOptions, searchParams } from '@interfaces'
 import { useUser } from '@hooks/queries/useUser'
 import { useRouter } from 'next/router'
+import {
+  convertQueryStringToObject,
+  createSearchOptionParameter
+} from '@utils/queryString'
+import { getLocalStorageItem, setLocalStorageItem } from '@utils/localStorage'
+import { SkeletonFranchiseInfo } from '@components/common/SkeletonFranchiseList'
+import { scrollRestore } from '@utils/scroll'
 
-const SELECT_OPTION = [
-  { label: '작성한 메뉴', value: 'my' },
-  { label: '좋아요한 메뉴', value: 'like' }
-]
+export async function getServerSideProps() {
+  return {
+    props: {}
+  }
+}
 
 interface TabProps {
   selected: boolean
@@ -27,8 +34,10 @@ interface TabProps {
 const UserMenu = () => {
   const router = useRouter()
   const id = parseInt(router.query.id as string)
+  const urlOptions = convertQueryStringToObject(router.query)
+
   const [searchOptions, setSearchOptions] = useState<searchParams>({
-    option: SELECT_OPTION[0],
+    ...urlOptions,
     page: 1,
     size: 10,
     accountId: id
@@ -49,12 +58,18 @@ const UserMenu = () => {
   )
 
   useEffect(() => {
-    if (!router.isReady) return
-    setSearchOptions({ ...searchOptions, accountId: id })
-  }, [router.isReady])
+    scrollRestore()
+  }, [])
 
   const handleSubmit = (values: SearchFormOptions) => {
     setSearchOptions({ ...searchOptions, ...values })
+    router.replace(
+      `${createSearchOptionParameter({
+        ...searchOptions,
+        ...values,
+        accountId: id
+      })}`
+    )
   }
 
   const handleTabClick = (e: MouseEvent<HTMLElement>) => {
@@ -64,14 +79,23 @@ const UserMenu = () => {
       sort: 'recent',
       tasteIdList: [],
       keyword: '',
-      option: { label: divElement.innerText, value: divElement.value }
+      option: divElement.value
     })
+    router.replace(
+      `${createSearchOptionParameter({
+        ...searchOptions,
+        sort: 'recent',
+        tasteIdList: [],
+        keyword: '',
+        option: divElement.value
+      })}`
+    )
   }
 
   return (
     <>
       {isUserLoading ? (
-        <SkeletonFranchiseList />
+        <SkeletonFranchiseInfo />
       ) : (
         <ProfileContainer>
           <Avatar size={7} src={user?.image} isLoading={false} />
@@ -79,21 +103,30 @@ const UserMenu = () => {
         </ProfileContainer>
       )}
       <TabContainer>
-        {SELECT_OPTION.map((selectOption, idx) => (
-          <Tab
-            key={idx}
-            selected={searchOptions.option?.value === selectOption.value}
-            value={selectOption.value}
-            onClick={handleTabClick}
-          >
-            {selectOption.label}
-          </Tab>
-        ))}
+        <Tab
+          selected={searchOptions.option === 'my'}
+          value="my"
+          onClick={handleTabClick}
+        >
+          작성한 메뉴
+        </Tab>
+        <Tab
+          selected={searchOptions.option === 'like'}
+          value="like"
+          onClick={handleTabClick}
+        >
+          좋아요한 메뉴
+        </Tab>
       </TabContainer>
       <StickyWrapper>
         <SearchForm
           onSubmit={handleSubmit}
-          searchDomain={searchOptions.option?.value}
+          searchDomain={searchOptions.option}
+          initialValue={{
+            sort: searchOptions.sort || 'recent',
+            keyword: searchOptions.keyword || '',
+            tasteIdList: searchOptions.tasteIdList || []
+          }}
         />
       </StickyWrapper>
 

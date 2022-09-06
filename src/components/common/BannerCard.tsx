@@ -11,9 +11,9 @@ interface Props {
   onClose: () => void
 }
 
-const BannerCard = ({ content, src, onClose }: Props) => {
+const BannerCard = ({ content, src, isClosed, onClose }: Props) => {
   return (
-    <Container>
+    <Container isClosed={isClosed}>
       <BannerLeft>
         <Image src={SPINNER_LOGO} width={60} height={16} alt="로고" />
         <Content>{content}</Content>
@@ -49,17 +49,15 @@ const Content = styled.div`
   line-height: 2.8rem;
 `
 
-const Container = styled.div`
+const Container = styled.div<{ isClosed: boolean }>`
   position: relative;
-  display: flex;
+  display: ${({ isClosed }) => (isClosed ? `none` : `flex`)};
   justify-content: space-between;
   align-items: center;
   width: 100%;
   border-radius: 1rem;
   padding: 2rem;
-
   height: 18rem;
-
   background: #ffffff;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
 `
