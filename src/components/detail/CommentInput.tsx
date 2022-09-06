@@ -92,6 +92,7 @@ const CommentInput = ({ menuId, userId }: Props) => {
     <CommentWriteContainer onClick={() => handleTextareaClick(isLoggedIn)}>
       <Textarea
         ref={textareaRef}
+        disabled={!isLoggedIn}
         placeholder={
           isLoggedIn ? LOGGEDIN_INPUT_PLACEHOLDER : GUEST_INPUT_PLACEHOLDER
         }
@@ -131,6 +132,11 @@ const Textarea = styled.textarea`
 
   &:focus {
     outline: none;
+  }
+
+  &:disabled {
+    background-color: white;
+    border: 0.1rem solid rgb(133, 133, 133);
   }
 `
 
