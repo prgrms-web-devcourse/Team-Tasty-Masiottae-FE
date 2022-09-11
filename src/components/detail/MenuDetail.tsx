@@ -325,7 +325,8 @@ const PriceText = styled.span`
   align-self: flex-end;
 `
 
-const UserWrapper = styled(Flex)`
+const UserWrapper = styled.div`
+  display: inline-flex;
   align-items: center;
   margin-bottom: 1rem;
 `
