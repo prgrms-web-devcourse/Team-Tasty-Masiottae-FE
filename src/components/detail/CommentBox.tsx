@@ -77,6 +77,7 @@ const CommentBox = ({ id, author, createdAt, comment, user }: Props) => {
 
   const handleCancelEditingClick = () => {
     setIsEditing(false)
+    setNewComment(comment)
   }
 
   const handleEditCommentClick = () => {
