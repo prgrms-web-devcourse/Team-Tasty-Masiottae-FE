@@ -42,7 +42,7 @@ const MenuDetail = ({ menu, userId }: Props) => {
       return
     }
 
-    if (!isLogInModalOpen) {
+    if (!isLoggedIn) {
       setIsLogInModalOpen(true)
       return
     }
