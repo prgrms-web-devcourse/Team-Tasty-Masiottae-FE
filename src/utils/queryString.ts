@@ -24,8 +24,8 @@ export const createSearchRequestParameter = (params: searchParams) => {
 }
 
 export const createSearchOptionParameter = (params: SearchFormOptions) => {
-  const qs = `/${params.franchiseId ? 'search' : 'user'}/${
-    params.franchiseId ? params.franchiseId : params.accountId
+  const qs = `/${params.accountId ? 'user' : 'search'}/${
+    params.accountId ? params.accountId : params.franchiseId
   }?${params.sort ? `sort=${params.sort}` : `sort=recent`}${
     params.keyword ? `&keyword=${params.keyword}` : ''
   }${

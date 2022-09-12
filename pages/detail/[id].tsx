@@ -11,18 +11,23 @@ import { GetServerSidePropsContext } from 'next'
 import axios from 'axios'
 import { Menu } from '@interfaces'
 import { setLocalStorageItem } from '../../src/utils/localStorage'
+import { useEffect } from 'react'
 
 const Detail = () => {
   const router = useRouter()
-  router.beforePopState(() => {
-    setLocalStorageItem('isPopState', 'true')
-    return true
-  })
   const id = parseInt(router.query.id as string, 10)
   const [user] = useRecoilState(currentUser)
   const { data: menu, isSuccess: isMenuSuccess } = useMenu(id)
   const { data: commentList, isSuccess: isCommentListSuccess } =
     useCommentList(id)
+
+  useEffect(() => {
+    if (!router.isReady) return
+    router.beforePopState(() => {
+      setLocalStorageItem('isPopState', 'true')
+      return true
+    })
+  }, [router, router.isReady])
 
   return (
     <>
