@@ -1,4 +1,10 @@
-import React, { ChangeEvent, useCallback, useRef, useState } from 'react'
+import React, {
+  ChangeEvent,
+  useCallback,
+  useEffect,
+  useRef,
+  useState
+} from 'react'
 import styled from '@emotion/styled'
 import { User } from '@interfaces'
 import { Avatar, Modal } from '@components/common'
@@ -71,12 +77,24 @@ const CommentBox = ({ id, author, createdAt, comment, user }: Props) => {
 
   const handleCancelEditingClick = () => {
     setIsEditing(false)
+    setNewComment(comment)
   }
 
   const handleEditCommentClick = () => {
     setIsEditing(true)
     setIsModalOpen(false)
   }
+
+  useEffect(() => {
+    const element = textareaRef.current
+    if (!element) {
+      return
+    }
+    const end = element.value.length
+
+    element.setSelectionRange(end, end)
+    element.focus()
+  }, [isEditing])
 
   const handleDeleteCommentClick = () => {
     deleteComment(
@@ -191,12 +209,14 @@ const Textarea = styled.textarea`
   height: 4.8rem;
   min-height: 4.8rem;
   font-size: 1.6rem;
+  border: 0.1rem solid ${({ theme }) => theme.color.borderBasic};
   border-radius: 1rem;
   padding: 1.4rem 6rem 1rem 1rem;
   resize: none;
 
   &:focus {
     outline: none;
+    border: 0.1rem solid black;
   }
 `
 
