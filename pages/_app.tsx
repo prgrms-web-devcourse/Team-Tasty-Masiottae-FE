@@ -12,24 +12,28 @@ import {
 } from '@tanstack/react-query'
 import { Spinner } from '@components/common'
 import { useLoading } from '@hooks/common/useLoading'
+import PageTitle from '@components/common/PageTitle'
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [queryClient] = React.useState(() => new QueryClient())
   const [isLoading] = useLoading()
-
+  console.log(pageProps)
   return (
-    <QueryClientProvider client={queryClient}>
-      <Hydrate state={pageProps.dehydratedState}>
-        <ThemeProvider theme={theme}>
-          <RecoilRoot>
-            <Layout>
-              {isLoading && <Spinner />}
-              <Component {...pageProps} />
-            </Layout>
-          </RecoilRoot>
-        </ThemeProvider>
-      </Hydrate>
-    </QueryClientProvider>
+    <>
+      <PageTitle />
+      <QueryClientProvider client={queryClient}>
+        <Hydrate state={pageProps.dehydratedState}>
+          <ThemeProvider theme={theme}>
+            <RecoilRoot>
+              <Layout>
+                {isLoading && <Spinner />}
+                <Component {...pageProps} />
+              </Layout>
+            </RecoilRoot>
+          </ThemeProvider>
+        </Hydrate>
+      </QueryClientProvider>
+    </>
   )
 }
 
