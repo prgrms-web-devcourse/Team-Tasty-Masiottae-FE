@@ -11,28 +11,46 @@ import {
 } from '@components/common'
 import { useFranchiseList } from '@hooks/queries/useFranchiseList'
 import { useSearchMenuList } from '@hooks/queries/useSearchMenuList'
+import {
+  convertQueryStringToObject,
+  createSearchOptionParameter
+} from '@utils/queryString'
+import { scrollRestore } from '@utils/scroll'
+
+export async function getServerSideProps() {
+  return {
+    props: {}
+  }
+}
 
 const Search = () => {
   const router = useRouter()
   const id = parseInt(router.query.category as string)
+  const urlOptions = convertQueryStringToObject(router.query)
+
   const [searchOptions, setSearchOptions] = useState<searchParams>({
+    ...urlOptions,
     page: 1,
-    size: 10
+    size: 10,
+    franchiseId: id
   })
   const { franchiseList } = useFranchiseList()
-  const {
-    menuList,
-    isLoading: isMenuListLoading,
-    fetchNextPage
-  } = useSearchMenuList(searchOptions)
+  const { menuList, isLoading, fetchNextPage } =
+    useSearchMenuList(searchOptions)
 
   useEffect(() => {
-    if (!router.isReady) return
-    setSearchOptions({ page: 1, size: 10, franchiseId: id })
-  }, [router.isReady, id])
+    scrollRestore()
+  }, [])
 
   const handleSubmit = (values: SearchFormOptions) => {
     setSearchOptions({ ...searchOptions, ...values })
+    router.replace(
+      `${createSearchOptionParameter({
+        ...searchOptions,
+        ...values,
+        franchiseId: id
+      })}`
+    )
   }
 
   const ref = useIntersectionObserver(
@@ -56,11 +74,18 @@ const Search = () => {
       <FixedWrapper>
         <InnerWrapper>
           <FranchiseInfo franchise={getFranchise()} />
-          <SearchForm onSubmit={handleSubmit} />
+          <SearchForm
+            onSubmit={handleSubmit}
+            initialValue={{
+              sort: searchOptions.sort || 'recent',
+              keyword: searchOptions.keyword || '',
+              tasteIdList: searchOptions.tasteIdList || []
+            }}
+          />
         </InnerWrapper>
       </FixedWrapper>
       <CardListWrapper>
-        {isMenuListLoading ? (
+        {isLoading ? (
           <SkeletonCardList size={2} />
         ) : (
           <MenuCardList menuList={menuList || []} divRef={ref} />

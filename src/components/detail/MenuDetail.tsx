@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from '@emotion/styled'
 import { Menu } from '@interfaces'
 import { Modal, Avatar } from '@components/common'
@@ -18,11 +18,17 @@ interface Props {
 const MenuDetail = ({ menu, userId }: Props) => {
   const [isLikeClicked, setIsLikeClicked] = useState(menu.isLiked)
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isLogInModalOpen, setIsLogInModalOpen] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
   const { mutate: deleteMenu } = useDeleteMenuMutation()
   const { mutate: postLike, isLoading } = usePostLikeMutation({
     menuId: menu.id
   })
   const router = useRouter()
+
+  useEffect(() => {
+    setIsLoggedIn(!!userId)
+  }, [userId])
 
   const handleUserClick = (userId: number | null) => {
     if (!userId) {
@@ -33,6 +39,11 @@ const MenuDetail = ({ menu, userId }: Props) => {
 
   const handleHeartClick = () => {
     if (isLoading) {
+      return
+    }
+
+    if (!isLoggedIn) {
+      setIsLogInModalOpen(true)
       return
     }
 
@@ -70,6 +81,10 @@ const MenuDetail = ({ menu, userId }: Props) => {
         }
       }
     )
+  }
+
+  const handleModalClose = () => {
+    setIsLogInModalOpen(false)
   }
 
   return (
@@ -142,6 +157,11 @@ const MenuDetail = ({ menu, userId }: Props) => {
           <BiTrash size={25} />
           삭제
         </ModalItem>
+      </Modal>
+      <Modal visible={isLogInModalOpen} onClose={handleModalClose}>
+        <ModalSpanItem>
+          <span>로그인해주세요.</span>
+        </ModalSpanItem>
       </Modal>
     </>
   )
@@ -257,6 +277,17 @@ const ModalItem = styled(Flex)`
   }
 `
 
+const ModalSpanItem = styled(Flex)`
+  justify-content: center;
+  align-items: center;
+  height: 5rem;
+
+  & > span {
+    font-weight: 700;
+    font-size: 1.8rem;
+  }
+`
+
 const IconWrapper = styled(Flex)`
   justify-content: center;
   align-items: center;
@@ -294,7 +325,8 @@ const PriceText = styled.span`
   align-self: flex-end;
 `
 
-const UserWrapper = styled(Flex)`
+const UserWrapper = styled.div`
+  display: inline-flex;
   align-items: center;
   margin-bottom: 1rem;
 `

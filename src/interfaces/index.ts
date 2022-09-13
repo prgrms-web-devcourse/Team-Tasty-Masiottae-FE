@@ -58,12 +58,15 @@ export interface searchParams {
   keyword?: string
   sort?: string
   tasteIdList?: number[]
-  option?: { label: string; value: string }
+  option?: string
   accountId?: number
 }
 
 export interface SearchFormOptions {
   keyword: string
-  sort?: string
   tasteIdList: number[]
+  sort?: string
+  accountId?: number
+  franchiseId?: number
+  option?: string
 }
