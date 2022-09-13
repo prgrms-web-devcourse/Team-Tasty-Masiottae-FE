@@ -5,8 +5,6 @@ import {
   INPUT_PASSWORD,
   PLACEHOLDER_EMAIL,
   PLACEHOLDER_PASSWORD,
-  REGEX_PASSWORD,
-  REGEX_EMAIL,
   MESSAGE_PASSWORD,
   ERROR_EMAIL,
   ERROR_PASSWORD_CONFIRM,
@@ -16,18 +14,13 @@ import React, { useState, useCallback } from 'react'
 import { BsEye } from 'react-icons/bs'
 import { useLoginMutation } from '@hooks/mutations/useLoginMutation'
 import Link from 'next/link'
-
-interface Errors {
-  email: string
-  password: string
-}
+import useValidate from '@hooks/common/useValidate'
 
 const LoginPage = () => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [errors, setErrors] = useState<Errors>({ email: '', password: '' })
   const [isTypePassword, setIsTypePassword] = useState(false)
   const { mutate: postLogin } = useLoginMutation()
+  const { values, errors, setErrors, validate } = useValidate()
+  const { email, password } = values
 
   const handleLoginSubmit = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -79,27 +72,6 @@ const LoginPage = () => {
   const handleEyeClick = useCallback(() => {
     setIsTypePassword((isTypePassword) => !isTypePassword)
   }, [])
-
-  const validate = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value, name } = e.target
-
-    if (name === INPUT_PASSWORD) {
-      setErrors({ ...errors, [name]: '' })
-      e.target.value = value.slice(0, 10)
-
-      if (!REGEX_PASSWORD.test(value)) {
-        setErrors({ ...errors, [name]: MESSAGE_PASSWORD })
-      }
-      setPassword(e.target.value)
-    }
-    if (name === INPUT_EMAIL) {
-      setErrors({ ...errors, [name]: '' })
-      if (!REGEX_EMAIL.test(value)) {
-        setErrors({ ...errors, [name]: ERROR_EMAIL })
-      }
-      setEmail(e.target.value)
-    }
-  }
 
   return (
     <LoginContainer>
