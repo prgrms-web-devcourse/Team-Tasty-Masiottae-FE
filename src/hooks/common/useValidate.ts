@@ -68,7 +68,10 @@ const useValidate = () => {
       if (values.passwordConfirm === e.target.value) {
         setErrors({ ...errors, [INPUT_PASSWORD_CONFIRM]: '' })
       }
-      if (values.passwordConfirm !== e.target.value) {
+      if (
+        values.passwordConfirm !== '' &&
+        values.passwordConfirm !== e.target.value
+      ) {
         setErrors({
           ...errors,
           [INPUT_PASSWORD_CONFIRM]: ERROR_PASSWORD_CONFIRM
