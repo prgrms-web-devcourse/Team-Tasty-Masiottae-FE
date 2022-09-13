@@ -16,16 +16,7 @@ import {
   INPUT_EMAIL_CHECK,
   INPUT_NICKNAME_CHECK
 } from '@constants/inputConstants'
-
-interface ValueTypes {
-  image?: File | null
-  email: string
-  nickNameCheck: string
-  emailCheck: string
-  nickName: string
-  password: string
-  passwordConfirm: string
-}
+import { UserFormValues } from '@interfaces'
 
 const initialValues = {
   email: '',
@@ -46,7 +37,7 @@ const initialErrors = {
 }
 
 const useValidate = () => {
-  const [values, setValues] = useState<ValueTypes>(initialValues)
+  const [values, setValues] = useState<UserFormValues>(initialValues)
   const [errors, setErrors] = useState(initialErrors)
 
   const validate = (e: React.ChangeEvent<HTMLInputElement>) => {

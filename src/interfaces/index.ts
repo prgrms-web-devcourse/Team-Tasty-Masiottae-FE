@@ -3,7 +3,6 @@ export interface User {
   image: string
   email: string
   nickName: string
-  snsAccount: string
   createdAt: string
   menuCount: number
 }
@@ -69,4 +68,14 @@ export interface SearchFormOptions {
   accountId?: number
   franchiseId?: number
   option?: string
+}
+
+export interface UserFormValues {
+  image?: File | null
+  email: string
+  nickNameCheck: string
+  emailCheck: string
+  nickName: string
+  password: string
+  passwordConfirm: string
 }
