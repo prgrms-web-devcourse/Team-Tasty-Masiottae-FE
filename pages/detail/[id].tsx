@@ -11,8 +11,6 @@ import { GetServerSidePropsContext } from 'next'
 import axios from 'axios'
 import { Menu } from '@interfaces'
 import PageTitle from '@components/common/PageTitle'
-import { setLocalStorageItem } from '../../src/utils/localStorage'
-import { useEffect } from 'react'
 
 const Detail = () => {
   const router = useRouter()
@@ -21,14 +19,6 @@ const Detail = () => {
   const { data: menu, isSuccess: isMenuSuccess } = useMenu(id)
   const { data: commentList, isSuccess: isCommentListSuccess } =
     useCommentList(id)
-
-  useEffect(() => {
-    if (!router.isReady) return
-    router.beforePopState(() => {
-      setLocalStorageItem('isPopState', 'true')
-      return true
-    })
-  }, [router, router.isReady])
 
   return (
     <>
@@ -53,14 +43,15 @@ export const getServerSideProps = async (
   const queryClient = new QueryClient()
 
   const getMenuById = async (menuId: number) => {
-    if (!context.req.cookies['tastyToken']) {
+    const cookie = context.req.cookies['tastyToken']
+    if (!cookie) {
       return
     }
 
     const { data } = await axios.get<Menu>(
       `${process.env.NEXT_PUBLIC_API_URL}/menu/${menuId}`,
       {
-        headers: { Authorization: context.req.cookies['tastyToken'] }
+        headers: { Authorization: cookie }
       }
     )
 
