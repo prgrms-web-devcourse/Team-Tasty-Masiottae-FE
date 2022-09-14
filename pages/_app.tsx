@@ -17,7 +17,7 @@ import PageTitle from '@components/common/PageTitle'
 function MyApp({ Component, pageProps }: AppProps) {
   const [queryClient] = React.useState(() => new QueryClient())
   const [isLoading] = useLoading()
-  console.log(pageProps)
+
   return (
     <>
       <PageTitle />
