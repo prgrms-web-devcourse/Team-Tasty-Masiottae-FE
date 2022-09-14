@@ -26,48 +26,37 @@ export const Navigation = () => {
     <NavContainer>
       <NavList>
         <Link href={HOME_URL}>
-          <StyledAnchor>
-            <NavItem>
+          <NavItem>
+            <a>
               <StyledHome selected={pathname === HOME_URL} />
-            </NavItem>
-          </StyledAnchor>
+            </a>
+          </NavItem>
         </Link>
         <Link href={CREATE_MENU_URL}>
-          <StyledAnchor>
-            <NavItem>
+          <NavItem>
+            <a>
               <StyledPlus selected={pathname === CREATE_MENU_URL} />
-            </NavItem>
-          </StyledAnchor>
+            </a>
+          </NavItem>
         </Link>
         <Link href={SEARCH_URL}>
-          <StyledAnchor>
-            <NavItem>
+          <NavItem>
+            <a>
               <StyledSearch selected={pathname.includes(SEARCH_URL)} />
-            </NavItem>
-          </StyledAnchor>
+            </a>
+          </NavItem>
         </Link>
         <Link href={`${USER_URL}/${user.id}`}>
-          <StyledAnchor>
-            <NavItem>
+          <NavItem>
+            <a>
               <StyledMenu selected={pathname.includes(USER_URL)} />
-            </NavItem>
-          </StyledAnchor>
+            </a>
+          </NavItem>
         </Link>
       </NavList>
     </NavContainer>
   )
 }
-
-const StyledAnchor = styled.a`
-  width: 25%;
-  text-align: center;
-  cursor: pointer;
-  list-style: none;
-
-  &:hover {
-    color: ${(props) => props.theme.color.mainPink};
-  }
-`
 
 const NavContainer = styled.div`
   height: ${(props) => props.theme.layout.navHeight};
@@ -95,7 +84,16 @@ const NavList = styled.ul`
   align-items: center;
 `
 
-const NavItem = styled.li``
+const NavItem = styled.li`
+  width: 25%;
+  text-align: center;
+  cursor: pointer;
+  list-style: none;
+
+  &:hover {
+    color: ${(props) => props.theme.color.mainPink};
+  }
+`
 
 const StyledHome = styled(BiHomeAlt)<IconType>`
   width: 3rem;
