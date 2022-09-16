@@ -25,28 +25,28 @@ export const Navigation = () => {
   return (
     <NavContainer>
       <NavList>
-        <Link href={HOME_URL}>
+        <Link href={HOME_URL} passHref>
           <StyledAnchor>
             <NavItem>
               <StyledHome selected={pathname === HOME_URL} />
             </NavItem>
           </StyledAnchor>
         </Link>
-        <Link href={CREATE_MENU_URL}>
+        <Link href={CREATE_MENU_URL} passHref>
           <StyledAnchor>
             <NavItem>
               <StyledPlus selected={pathname === CREATE_MENU_URL} />
             </NavItem>
           </StyledAnchor>
         </Link>
-        <Link href={SEARCH_URL}>
+        <Link href={SEARCH_URL} passHref>
           <StyledAnchor>
             <NavItem>
               <StyledSearch selected={pathname.includes(SEARCH_URL)} />
             </NavItem>
           </StyledAnchor>
         </Link>
-        <Link href={`${USER_URL}/${user.id}`}>
+        <Link href={`${USER_URL}/${user.id}`} passHref>
           <StyledAnchor>
             <NavItem>
               <StyledMenu selected={pathname.includes(USER_URL)} />
@@ -69,7 +69,7 @@ const StyledAnchor = styled.a`
   }
 `
 
-const NavContainer = styled.div`
+const NavContainer = styled.nav`
   height: ${(props) => props.theme.layout.navHeight};
   position: fixed;
   max-width: 50rem;

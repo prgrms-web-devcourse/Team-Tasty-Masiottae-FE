@@ -93,7 +93,7 @@ export const Header = () => {
   )
 }
 
-const HeaderContainer = styled.div`
+const HeaderContainer = styled.header`
   height: ${(props) => props.theme.layout.headerHeight};
   position: fixed;
   max-width: 50rem;
