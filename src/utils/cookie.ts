@@ -30,7 +30,7 @@ export const getCookie = (name: string) => {
 }
 
 export const removeCookie = (name: string) => {
-  cookies.remove(name)
+  cookies.remove(name, { path: '/' })
 }
 
 export const setToken = ({ token, expirationDate }: Token) => {
