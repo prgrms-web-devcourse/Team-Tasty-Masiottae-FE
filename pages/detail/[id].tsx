@@ -10,6 +10,7 @@ import { dehydrate, QueryClient } from '@tanstack/react-query'
 import { GetServerSidePropsContext } from 'next'
 import axios from 'axios'
 import { Menu } from '@interfaces'
+import PageTitle from '@components/common/PageTitle'
 import { setLocalStorageItem } from '../../src/utils/localStorage'
 import { useEffect } from 'react'
 
@@ -33,6 +34,7 @@ const Detail = () => {
     <>
       {isMenuSuccess && (
         <>
+          <PageTitle title={`맛이 어때 | ${menu.title}`} />
           <MenuDetail menu={menu} userId={user.id} />
           <CommentInput menuId={menu.id} userId={user.id} />
         </>

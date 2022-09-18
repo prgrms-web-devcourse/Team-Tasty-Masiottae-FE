@@ -17,7 +17,7 @@ class MyDocument extends Document {
   }
   render() {
     return (
-      <Html>
+      <Html lang="ko">
         <Head>
           <link
             rel="icon"
@@ -32,6 +32,7 @@ class MyDocument extends Document {
             content="https://user-images.githubusercontent.com/79133602/184350309-56e5c120-62ce-42e8-8f4f-ab767e5327b4.png"
           />
           <meta
+            name="description"
             property="og:description"
             content="커스텀메뉴 정보를 공유하는 SNS"
           />
