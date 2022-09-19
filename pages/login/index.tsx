@@ -14,7 +14,7 @@ import React, { useState, useCallback } from 'react'
 import { BsEye } from 'react-icons/bs'
 import { useLoginMutation } from '@hooks/mutations/useLoginMutation'
 import Link from 'next/link'
-import useValidate from '@hooks/common/useValidate'
+import useValidate from '@hooks/common/useUserValidate'
 
 const LoginPage = () => {
   const [isTypePassword, setIsTypePassword] = useState(false)

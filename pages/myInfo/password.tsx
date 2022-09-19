@@ -12,7 +12,7 @@ import { useChangePasswordMutation } from '@hooks/mutations/useChangePasswordMut
 import { useRecoilState } from 'recoil'
 import { currentUser } from '@recoil/currentUser'
 import { useRouter } from 'next/router'
-import useValidate from '@hooks/common/useValidate'
+import useValidate from '@hooks/common/useUserValidate'
 
 const PasswordEditPage = () => {
   const { values, errors, validate } = useValidate()

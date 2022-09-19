@@ -69,13 +69,3 @@ export interface SearchFormOptions {
   franchiseId?: number
   option?: string
 }
-
-export interface UserFormValues {
-  image?: File | null
-  email: string
-  nickNameCheck: string
-  emailCheck: string
-  nickName: string
-  password: string
-  passwordConfirm: string
-}

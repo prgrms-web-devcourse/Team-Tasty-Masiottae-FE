@@ -16,7 +16,16 @@ import {
   INPUT_EMAIL_CHECK,
   INPUT_NICKNAME_CHECK
 } from '@constants/inputConstants'
-import { UserFormValues } from '@interfaces'
+
+export interface UserFormValues {
+  image?: File | null
+  email: string
+  nickNameCheck: string
+  emailCheck: string
+  nickName: string
+  password: string
+  passwordConfirm: string
+}
 
 const initialValues = {
   email: '',

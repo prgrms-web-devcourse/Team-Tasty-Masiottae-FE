@@ -20,7 +20,7 @@ import {
   MESSAGE_CHECK_AVAILABLE,
   AVAILABLE
 } from '@constants/inputConstants'
-import useValidate from '@hooks/common/useValidate'
+import useValidate from '@hooks/common/useUserValidate'
 
 const Signup = () => {
   const { values, setValues, errors, setErrors, validate } = useValidate()
