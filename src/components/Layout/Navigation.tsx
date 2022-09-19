@@ -25,40 +25,51 @@ export const Navigation = () => {
   return (
     <NavContainer>
       <NavList>
-        <Link href={HOME_URL}>
-          <NavItem>
-            <a>
+        <Link href={HOME_URL} passHref>
+          <StyledAnchor>
+            <NavItem>
               <StyledHome selected={pathname === HOME_URL} />
-            </a>
-          </NavItem>
+            </NavItem>
+          </StyledAnchor>
         </Link>
-        <Link href={CREATE_MENU_URL}>
-          <NavItem>
-            <a>
+        <Link href={CREATE_MENU_URL} passHref>
+          <StyledAnchor>
+            <NavItem>
               <StyledPlus selected={pathname === CREATE_MENU_URL} />
-            </a>
-          </NavItem>
+            </NavItem>
+          </StyledAnchor>
         </Link>
-        <Link href={SEARCH_URL}>
-          <NavItem>
-            <a>
+        <Link href={SEARCH_URL} passHref>
+          <StyledAnchor>
+            <NavItem>
               <StyledSearch selected={pathname.includes(SEARCH_URL)} />
-            </a>
-          </NavItem>
+            </NavItem>
+          </StyledAnchor>
         </Link>
-        <Link href={`${USER_URL}/${user.id}`}>
-          <NavItem>
-            <a>
+        <Link href={`${USER_URL}/${user.id}`} passHref>
+          <StyledAnchor>
+            <NavItem>
               <StyledMenu selected={pathname.includes(USER_URL)} />
-            </a>
-          </NavItem>
+            </NavItem>
+          </StyledAnchor>
         </Link>
       </NavList>
     </NavContainer>
   )
 }
 
-const NavContainer = styled.div`
+const StyledAnchor = styled.a`
+  width: 25%;
+  text-align: center;
+  cursor: pointer;
+  list-style: none;
+
+  &:hover {
+    color: ${(props) => props.theme.color.mainPink};
+  }
+`
+
+const NavContainer = styled.nav`
   height: ${(props) => props.theme.layout.navHeight};
   position: fixed;
   max-width: 50rem;
@@ -84,16 +95,7 @@ const NavList = styled.ul`
   align-items: center;
 `
 
-const NavItem = styled.li`
-  width: 25%;
-  text-align: center;
-  cursor: pointer;
-  list-style: none;
-
-  &:hover {
-    color: ${(props) => props.theme.color.mainPink};
-  }
-`
+const NavItem = styled.li``
 
 const StyledHome = styled(BiHomeAlt)<IconType>`
   width: 3rem;
