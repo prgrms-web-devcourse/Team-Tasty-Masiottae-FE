@@ -3,7 +3,6 @@ export interface User {
   image: string
   email: string
   nickName: string
-  snsAccount: string
   createdAt: string
   menuCount: number
 }

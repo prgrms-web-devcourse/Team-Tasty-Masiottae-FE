@@ -6,75 +6,38 @@ import {
   PLACEHOLDER_EDIT_PASSWORD,
   PLACEHOLDER_EDIT_PASSWORD_CONFIRM,
   INPUT_PASSWORD,
-  INPUT_PASSWORD_CONFIRM,
-  MESSAGE_PASSWORD,
-  ERROR_PASSWORD_CONFIRM,
-  REGEX_PASSWORD
+  INPUT_PASSWORD_CONFIRM
 } from '@constants/inputConstants'
 import { useChangePasswordMutation } from '@hooks/mutations/useChangePasswordMutation'
 import { useRecoilState } from 'recoil'
 import { currentUser } from '@recoil/currentUser'
 import { useRouter } from 'next/router'
-
-interface Errors {
-  password: string
-  passwordConfirm: string
-}
+import useValidate from '@hooks/common/useUserValidate'
 
 const PasswordEditPage = () => {
-  const [password, setPassword] = useState('')
-  const [passwordConfirm, setPasswordConfirm] = useState('')
+  const { values, errors, validate } = useValidate()
   const [isTypePassword, setIsTypePassword] = useState(false)
   const [isTypeConfirmPassword, setIsTypeConfirmPassword] = useState(false)
   const [user] = useRecoilState(currentUser)
   const router = useRouter()
-  const [errors, setErrors] = useState<Errors>({
-    password: '',
-    passwordConfirm: ''
-  })
+
   const { mutate: patchPassword } = useChangePasswordMutation()
 
-  const handleEyeClick = useCallback((name: string) => {
-    name === INPUT_PASSWORD
-      ? setIsTypePassword((isTypePassword) => !isTypePassword)
-      : setIsTypeConfirmPassword(
-          (isTypeConfirmPassword) => !isTypeConfirmPassword
-        )
+  const handleEyeClick = useCallback(() => {
+    setIsTypePassword((isTypePassword) => !isTypePassword)
   }, [])
 
-  const validate = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value, name } = e.target
-    e.target.value = value.slice(0, 10)
-
-    if (name === INPUT_PASSWORD) {
-      setErrors({ ...errors, [name]: '' })
-      if (!REGEX_PASSWORD.test(value)) {
-        setErrors({ ...errors, [name]: MESSAGE_PASSWORD })
-      }
-      if (passwordConfirm === e.target.value) {
-        setErrors({ ...errors, [INPUT_PASSWORD_CONFIRM]: '' })
-      }
-      setPassword(e.target.value)
-    }
-    if (name === INPUT_PASSWORD_CONFIRM) {
-      setErrors({ ...errors, [name]: '' })
-      if (!REGEX_PASSWORD.test(value)) {
-        setErrors({ ...errors, [name]: MESSAGE_PASSWORD })
-      }
-      if (password !== e.target.value) {
-        setErrors({ ...errors, [name]: ERROR_PASSWORD_CONFIRM })
-      }
-      setPasswordConfirm(e.target.value)
-    }
-  }
+  const handleConfirmEyeClick = useCallback(() => {
+    setIsTypeConfirmPassword((isTypeConfirmPassword) => !isTypeConfirmPassword)
+  }, [])
 
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
     const isError = Object.keys(errors).some(
       (key) => errors[key as keyof typeof errors] !== ''
     )
-    if (user.id && password && !isError) {
-      patchPassword({ userId: user.id, password })
+    if (user.id && values.password && !isError) {
+      patchPassword({ userId: user.id, password: values.password })
       router.back()
     }
   }
@@ -90,11 +53,7 @@ const PasswordEditPage = () => {
             onChange={validate}
             placeholder={PLACEHOLDER_EDIT_PASSWORD}
           />
-          <ShowPasswordIcon
-            onClick={() => {
-              handleEyeClick(INPUT_PASSWORD)
-            }}
-          />
+          <ShowPasswordIcon onClick={handleEyeClick} />
           <InputMessage errorMessage={errors[INPUT_PASSWORD]} />
         </InputWrapper>
         <InputWrapper>
@@ -105,11 +64,7 @@ const PasswordEditPage = () => {
             onChange={validate}
             placeholder={PLACEHOLDER_EDIT_PASSWORD_CONFIRM}
           />
-          <ShowPasswordIcon
-            onClick={() => {
-              handleEyeClick(INPUT_PASSWORD_CONFIRM)
-            }}
-          />
+          <ShowPasswordIcon onClick={handleConfirmEyeClick} />
           <InputMessage errorMessage={errors[INPUT_PASSWORD_CONFIRM]} />
         </InputWrapper>
         <ChangePasswordButton onClick={handleSubmit}>완료</ChangePasswordButton>

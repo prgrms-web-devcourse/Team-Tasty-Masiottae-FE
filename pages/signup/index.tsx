@@ -1,8 +1,9 @@
 import styled from '@emotion/styled'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { Input, InputMessage, Button, ImageUploader } from '@components/common'
 import { BsEye } from 'react-icons/bs'
 import { useSignupMutation } from '@hooks/mutations/useSignupMutation'
+import { useCheckedValue } from '@hooks/queries/useCheckedValue'
 import axios from '@lib/axios'
 import {
   INPUT_EMAIL,
@@ -15,43 +16,16 @@ import {
   PLACEHOLDER_NICKNAME,
   PLACEHOLDER_PASSWORD,
   PLACEHOLDER_PASSWORD_CONFIRM,
-  MESSAGE_NICKNAME,
-  MESSAGE_PASSWORD,
-  ERROR_EMAIL,
   ERROR_PASSWORD_CONFIRM,
-  REGEX_EMAIL,
-  REGEX_NICKNAME,
-  REGEX_PASSWORD,
-  MAX_PASSWORD,
-  MAX_NICKNAME,
   MESSAGE_CHECK_AVAILABLE,
   AVAILABLE
 } from '@constants/inputConstants'
-
-interface SignUpValues {
-  image?: File | null
-  email: string
-  nickNameCheck: string
-  emailCheck: string
-  nickName: string
-  password: string
-  passwordConfirm: string
-}
-
-const initialValues = {
-  email: '',
-  nickName: '',
-  emailCheck: '',
-  nickNameCheck: '',
-  password: '',
-  passwordConfirm: ''
-}
+import useValidate from '@hooks/common/useUserValidate'
 
 const Signup = () => {
+  const { values, setValues, errors, setErrors, validate } = useValidate()
   const [isTypePassword, setIsTypePassword] = useState(false)
   const [isTypeConfirmPassword, setIsTypeConfirmPassword] = useState(false)
-  const [values, setValues] = useState<SignUpValues>(initialValues)
-  const [errors, setErrors] = useState<SignUpValues>(initialValues)
   const [isEmailCheck, setIsEmailCheck] = useState(false)
   const [isNickNameCheck, setIsNickNameCheck] = useState(false)
   const [checkSuccessText, setCheckSuccessText] = useState({
@@ -71,7 +45,7 @@ const Signup = () => {
         passwordConfirm !== ''
 
       const isError = Object.keys(errors).filter(
-        (key) => errors[key as keyof SignUpValues] !== ''
+        (key) => errors[key as keyof typeof errors] !== ''
       ).length
 
       if (password !== passwordConfirm) {
@@ -96,7 +70,7 @@ const Signup = () => {
         postSignup(values)
       }
     },
-    [errors, isEmailCheck, isNickNameCheck, postSignup, values]
+    [errors, setErrors, isEmailCheck, isNickNameCheck, postSignup, values]
   )
 
   const handleCheckEmailClick = async (
@@ -143,54 +117,18 @@ const Signup = () => {
     })
   }
 
-  const handleSignUpChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value, name } = e.target
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name } = e.target
+    validate(e)
+    setCheckSuccessText({ ...checkSuccessText, [name]: '' })
+    setIsEmailCheck(false)
+  }
 
-    if (name === INPUT_EMAIL) {
-      setErrors({ ...errors, [name]: '', [INPUT_EMAIL_CHECK]: '' })
-      if (!REGEX_EMAIL.test(value)) {
-        setErrors({ ...errors, [name]: ERROR_EMAIL })
-      }
-      setCheckSuccessText({ ...checkSuccessText, [name]: '' })
-      setIsEmailCheck(false)
-    }
-
-    if (name === INPUT_NICKNAME) {
-      setErrors({ ...errors, [name]: '', [INPUT_NICKNAME_CHECK]: '' })
-      e.target.value = value.replace(/\s/, '').slice(0, MAX_NICKNAME)
-
-      if (!REGEX_NICKNAME.test(value)) {
-        setErrors({ ...errors, [name]: MESSAGE_NICKNAME })
-      }
-      setCheckSuccessText({ ...checkSuccessText, [name]: '' })
-      setIsNickNameCheck(false)
-    }
-
-    if (name === INPUT_PASSWORD) {
-      setErrors({ ...errors, [name]: '' })
-      e.target.value = value.replace(/\s/, '').slice(0, MAX_PASSWORD)
-
-      if (!REGEX_PASSWORD.test(value)) {
-        setErrors({ ...errors, [name]: MESSAGE_PASSWORD })
-      }
-
-      if (values.passwordConfirm && values.passwordConfirm !== e.target.value) {
-        setErrors({ ...errors, [name]: ERROR_PASSWORD_CONFIRM })
-      }
-    }
-
-    if (name === INPUT_PASSWORD_CONFIRM) {
-      setErrors({ ...errors, password: '', [name]: '' })
-      e.target.value = value.replace(/\s/, '').slice(0, MAX_PASSWORD)
-
-      if (!REGEX_PASSWORD.test(value)) {
-        setErrors({ ...errors, [name]: MESSAGE_PASSWORD })
-      }
-      if (values.password !== e.target.value) {
-        setErrors({ ...errors, [name]: ERROR_PASSWORD_CONFIRM })
-      }
-    }
-    setValues({ ...values, [name]: e.target.value })
+  const handleNickNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name } = e.target
+    validate(e)
+    setCheckSuccessText({ ...checkSuccessText, [name]: '' })
+    setIsNickNameCheck(false)
   }
 
   const handleEyeClick = useCallback(() => {
@@ -218,7 +156,7 @@ const Signup = () => {
             }
             name={INPUT_EMAIL}
             placeholder={PLACEHOLDER_EMAIL}
-            onChange={handleSignUpChange}
+            onChange={handleEmailChange}
           />
           <ExistCheckButton height={7} onClick={handleCheckEmailClick}>
             중복 확인
@@ -244,7 +182,7 @@ const Signup = () => {
             }
             name={INPUT_NICKNAME}
             placeholder={PLACEHOLDER_NICKNAME}
-            onChange={handleSignUpChange}
+            onChange={handleNickNameChange}
           />
           <ExistCheckButton height={7} onClick={handleCheckNickNameClick}>
             중복 확인
@@ -268,7 +206,7 @@ const Signup = () => {
             isValid={errors[INPUT_PASSWORD] === ''}
             name={INPUT_PASSWORD}
             placeholder={PLACEHOLDER_PASSWORD}
-            onChange={handleSignUpChange}
+            onChange={validate}
           />
           <ShowPasswordIcon
             onClick={() => {
@@ -283,7 +221,7 @@ const Signup = () => {
             isValid={errors[INPUT_PASSWORD_CONFIRM] === ''}
             name={INPUT_PASSWORD_CONFIRM}
             placeholder={PLACEHOLDER_PASSWORD_CONFIRM}
-            onChange={handleSignUpChange}
+            onChange={validate}
           />
           <ShowPasswordIcon
             onClick={() => {
