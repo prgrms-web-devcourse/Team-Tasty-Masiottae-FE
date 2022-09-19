@@ -22,7 +22,6 @@ import {
 } from '@constants/inputConstants'
 import { useChangeImageMutation } from '@hooks/mutations/useChangeImageMutation'
 import { useChangeNickNameMutation } from '@hooks/mutations/useChangeNickNameMutation'
-import { useRouter } from 'next/router'
 
 const UserProfile = () => {
   const [isNameEditorOpen, setIsNameEditorOpen] = useState(false)
@@ -79,6 +78,10 @@ const UserProfile = () => {
   )
 
   const handleNicknameSubmit = useCallback(async () => {
+    if (nickName === user.nickName) {
+      setIsNameEditorOpen(false)
+      return
+    }
     const { data } = await axios.get(
       `/accounts/check?property=${INPUT_NICKNAME}&value=${nickName}`
     )
