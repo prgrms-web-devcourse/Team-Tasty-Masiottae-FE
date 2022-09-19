@@ -74,13 +74,14 @@ export const Header = () => {
       )}
       {pathname !== LOGIN_URL && (
         <InnerRight>
-          {token ? (
+          {token && pathname !== MYINFO_URL && (
             <Link href={MYINFO_URL}>
               <a>
-                <StyledUserIcon selected={pathname === MYINFO_URL} />
+                <StyledUserIcon />
               </a>
             </Link>
-          ) : (
+          )}
+          {!token && (
             <Link href={LOGIN_URL}>
               <a>
                 <StyledLoginIcon />
@@ -154,7 +155,6 @@ const InnerRight = styled.div`
 const StyledUserIcon = styled(FiUser)<IconType>`
   width: 3rem;
   height: 3rem;
-  color: ${(props) => props.selected && props.theme.color.mainPink};
   cursor: pointer;
 `
 const StyledLoginIcon = styled(FiLogIn)`
