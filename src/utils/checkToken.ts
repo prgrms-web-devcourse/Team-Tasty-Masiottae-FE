@@ -27,14 +27,11 @@ export const checkToken = async (config: AxiosRequestConfig) => {
     (moment(tastyToken_expire).diff(moment(), 'minutes') < 1 || !tastyToken) &&
     tastyRefreshToken
   ) {
-    const { data } = await axios.post(
-      `${process.env.NEXT_PUBLIC_API_URL}/re-issue`,
-      {
-        email: currentUser.email,
-        accessToken: tastyToken,
-        refreshToken: tastyRefreshToken
-      }
-    )
+    const { data } = await axios.post(`/api/re-issue`, {
+      email: currentUser.email,
+      accessToken: tastyToken,
+      refreshToken: tastyRefreshToken
+    })
     setToken(data)
     config.headers.Authorization = data.token
   } else {
