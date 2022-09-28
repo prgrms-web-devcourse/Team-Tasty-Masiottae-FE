@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react'
 import styled from '@emotion/styled'
 import { Menu } from '@interfaces'
 import { Modal, Avatar } from '@components/common'
-import { BiDotsVerticalRounded, BiTrash } from 'react-icons/bi'
 import { useDeleteMenuMutation } from '@hooks/mutations/useDeleteMenuMutation'
 import { useRouter } from 'next/router'
-import { BsFillPencilFill } from 'react-icons/bs'
-import { IoMdHeart } from 'react-icons/io'
 import { usePostLikeMutation } from '@hooks/mutations/usePostLikeMutation'
 import { NO_IMAGE } from '@constants/image'
+import { IoMdHeart } from 'react-icons/io'
+import { BsFillPencilFill } from 'react-icons/bs'
+import { BiDotsVerticalRounded, BiTrash } from 'react-icons/bi'
 
 interface Props {
   menu: Menu
@@ -20,6 +20,7 @@ const MenuDetail = ({ menu, userId }: Props) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isLogInModalOpen, setIsLogInModalOpen] = useState(false)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [isOwner, setIsOwner] = useState(false)
   const { mutate: deleteMenu } = useDeleteMenuMutation()
   const { mutate: postLike, isLoading } = usePostLikeMutation({
     menuId: menu.id
@@ -28,7 +29,8 @@ const MenuDetail = ({ menu, userId }: Props) => {
 
   useEffect(() => {
     setIsLoggedIn(!!userId)
-  }, [userId])
+    setIsOwner(menu.author.id === userId)
+  }, [menu.author.id, userId])
 
   const handleUserClick = (userId: number | null) => {
     if (!userId) {
@@ -102,7 +104,7 @@ const MenuDetail = ({ menu, userId }: Props) => {
             <FranchiseText>{menu.franchise.name} </FranchiseText>
             <Title>{menu.title}</Title>
           </LeftHeader>
-          <RightHeader guest={menu.author.id !== userId}>
+          <RightHeader guest={!isOwner}>
             {isLikeClicked ? (
               <Heart size={50} onClick={handleHeartClick}></Heart>
             ) : (
@@ -111,9 +113,7 @@ const MenuDetail = ({ menu, userId }: Props) => {
             <LikesCountText clicked={isLikeClicked} onClick={handleHeartClick}>
               <span>{menu.likes}</span>
             </LikesCountText>
-            {menu.author.id === userId && (
-              <Dots size={30} onClick={handleEditMenuClick} />
-            )}
+            {isOwner && <Dots size={30} onClick={handleEditMenuClick} />}
           </RightHeader>
         </Header>
 
