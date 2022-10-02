@@ -21,6 +21,11 @@ interface Data {
 
 const cookies = new Cookies()
 
+const defaultOptions = {
+  path: '/',
+  httpOnly: true
+}
+
 export const setCookie = (name: string, value: string, option?: any) => {
   cookies.set(name, value, { ...option })
 }
@@ -35,11 +40,11 @@ export const removeCookie = (name: string) => {
 
 export const setToken = ({ token, expirationDate }: Token) => {
   setCookie(TOKEN_KEY, token, {
-    path: '/',
+    ...defaultOptions,
     expires: new Date(expirationDate)
   })
   setCookie(TOKEN_EXPIRE_DATE, expirationDate, {
-    path: '/',
+    ...defaultOptions,
     expires: new Date(expirationDate)
   })
 }
@@ -61,23 +66,23 @@ export const getTokenData = () => {
 
 export const setTokenData = ({ accessToken, account, refreshToken }: Data) => {
   setCookie(TOKEN_KEY, accessToken.token, {
-    path: '/',
+    ...defaultOptions,
     expires: new Date(refreshToken.expirationDate)
   })
   setCookie(TOKEN_EXPIRE_DATE, accessToken.expirationDate, {
-    path: '/',
+    ...defaultOptions,
     expires: new Date(refreshToken.expirationDate)
   })
   setCookie(REFRESH_TOKEN_KEY, refreshToken.token, {
-    path: '/',
+    ...defaultOptions,
     expires: new Date(refreshToken.expirationDate)
   })
   setCookie(REFRESH_TOKEN_EXPIRE_DATE, refreshToken.expirationDate, {
-    path: '/',
+    ...defaultOptions,
     expires: new Date(refreshToken.expirationDate)
   })
   setCookie(CURRENT_USER, JSON.stringify(account), {
-    path: '/',
+    ...defaultOptions,
     expires: new Date(refreshToken.expirationDate)
   })
 }
