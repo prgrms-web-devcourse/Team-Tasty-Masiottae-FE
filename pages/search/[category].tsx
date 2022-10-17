@@ -27,7 +27,6 @@ const Search = () => {
   const router = useRouter()
   const id = parseInt(router.query.category as string)
   const urlOptions = convertQueryStringToObject(router.query)
-
   const [searchOptions, setSearchOptions] = useState<searchParams>({
     ...urlOptions,
     page: 1,

@@ -15,7 +15,6 @@ import {
   convertQueryStringToObject,
   createSearchOptionParameter
 } from '@utils/queryString'
-import { getLocalStorageItem, setLocalStorageItem } from '@utils/localStorage'
 import { SkeletonFranchiseInfo } from '@components/common/SkeletonFranchiseList'
 import { scrollRestore } from '@utils/scroll'
 
@@ -35,7 +34,6 @@ const UserMenu = () => {
   const router = useRouter()
   const id = parseInt(router.query.id as string)
   const urlOptions = convertQueryStringToObject(router.query)
-
   const [searchOptions, setSearchOptions] = useState<searchParams>({
     ...urlOptions,
     page: 1,

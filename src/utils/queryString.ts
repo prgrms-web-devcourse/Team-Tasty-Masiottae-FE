@@ -32,21 +32,27 @@ export const createSearchOptionParameter = (params: SearchFormOptions) => {
     params.tasteIdList.length > 0
       ? `&tasteIdList=${params.tasteIdList.join(',')}`
       : ''
-  }${params.option ? `&option=${params.option}` : '&option=my'}`
+  }${
+    params.option
+      ? `&option=${params.option}`
+      : params.accountId
+      ? '&option=my'
+      : ''
+  }`
 
   return qs
 }
 
 export const convertQueryStringToObject = (query: ParsedUrlQuery) => {
-  const { sort, tasteIdList, keyword, option } = query
-
+  const { sort, tasteIdList, keyword, option, id } = query
+  console.log(option, id)
   return {
     sort: typeof sort === 'string' ? sort : 'recent',
     tasteIdList:
       typeof tasteIdList === 'string'
         ? tasteIdList.split(',').map((val) => parseInt(val))
-        : undefined,
-    keyword: typeof keyword === 'string' ? keyword : undefined,
-    option: typeof option === 'string' ? option : 'my'
+        : [],
+    keyword: typeof keyword === 'string' ? keyword : '',
+    option: typeof option === 'string' ? option : id ? 'my' : ''
   }
 }
