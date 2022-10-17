@@ -12,7 +12,8 @@ export const useTasteList = () => {
     ['tasteList'],
     getTasteList,
     {
-      staleTime: Infinity
+      staleTime: Infinity,
+      cacheTime: Infinity
     }
   )
   return { tasteList: data, isLoading }

@@ -13,7 +13,8 @@ export const useFranchiseList = () => {
     ['franchises'],
     getFranchiseList,
     {
-      staleTime: Infinity
+      staleTime: Infinity,
+      cacheTime: Infinity
     }
   )
   return { franchiseList: data, isLoading }
