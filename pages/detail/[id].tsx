@@ -1,5 +1,4 @@
 import MenuDetail from '@components/detail/MenuDetail'
-import CommentInput from '@components/detail/CommentInput'
 import CommentList from '@components/detail/CommentList'
 import { useRouter } from 'next/router'
 import { useMenu } from '@hooks/queries/useMenu'
@@ -11,6 +10,7 @@ import { GetServerSidePropsContext } from 'next'
 import axios from 'axios'
 import { Menu } from '@interfaces'
 import PageTitle from '@components/common/PageTitle'
+import CommentForm from '@components/detail/CommentForm'
 
 const Detail = () => {
   const router = useRouter()
@@ -26,7 +26,7 @@ const Detail = () => {
         <>
           <PageTitle title={`맛이 어때 | ${menu.title}`} />
           <MenuDetail menu={menu} userId={user.id} />
-          <CommentInput menuId={menu.id} userId={user.id} />
+          <CommentForm menuId={menu.id} userId={user.id} />
         </>
       )}
       {isCommentListSuccess && (
