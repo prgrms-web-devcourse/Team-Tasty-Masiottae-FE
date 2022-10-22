@@ -178,37 +178,6 @@ const CommentWriteContainer = styled(Flex)`
   position: relative;
 `
 
-const Textarea = styled.textarea`
-  width: 100%;
-  height: 4.8rem;
-  min-height: 4.8rem;
-  font-size: 1.6rem;
-  border: 0.1rem solid ${({ theme }) => theme.color.borderBasic};
-  border-radius: 1rem;
-  padding: 1.4rem 6rem 1rem 1rem;
-  resize: none;
-
-  &:focus {
-    outline: none;
-    border: 0.1rem solid black;
-  }
-`
-
-const AddCommentButton = styled.button`
-  position: absolute;
-  bottom: 0.6rem;
-  right: 0.6rem;
-  width: 5rem;
-  height: 3.6rem;
-  font-weight: 700;
-  border: none;
-  border-radius: 1rem;
-  color: #f5f5f5;
-  background-color: black;
-  margin-left: -6rem;
-  cursor: pointer;
-`
-
 const CancelButton = styled(AiOutlineClose)`
   cursor: pointer;
 `
