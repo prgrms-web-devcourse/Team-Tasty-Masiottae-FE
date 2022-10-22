@@ -70,6 +70,10 @@ const CommentTextarea = forwardRef<TextareaHandle, Props>(
         return
       }
 
+      if (e.key === 'Enter' && textareaRef.current?.value === '') {
+        e.preventDefault()
+      }
+
       if (e.key === 'Enter' && e.shiftKey) {
         return
       } else if (e.key === 'Enter') {
