@@ -78,6 +78,7 @@ const CommentTextarea = forwardRef<TextareaHandle, Props>(
         return
       } else if (e.key === 'Enter') {
         addComment()
+        e.preventDefault()
       }
     }
 
