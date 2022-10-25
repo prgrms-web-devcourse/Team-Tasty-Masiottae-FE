@@ -1,10 +1,4 @@
-import React, {
-  ChangeEvent,
-  useCallback,
-  useEffect,
-  useRef,
-  useState
-} from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import styled from '@emotion/styled'
 import { User } from '@interfaces'
 import { Avatar, Modal } from '@components/common'
@@ -15,6 +9,7 @@ import { BsFillPencilFill } from 'react-icons/bs'
 import { useDeleteCommentMutation } from '@hooks/mutations/useDeleteCommentMutation'
 import { usePatchCommentMutation } from '@hooks/mutations/usePatchCommentMutation'
 import { AiOutlineClose } from 'react-icons/ai'
+import CommentTextarea, { TextareaHandle } from './CommentTextarea'
 
 interface Props {
   id: number
@@ -29,8 +24,8 @@ const CommentBox = ({ id, author, createdAt, comment, user }: Props) => {
   const [isEditing, setIsEditing] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedCommentId, setSelectedCommentId] = useState(0)
+  const textareaRef = useRef<TextareaHandle>(null)
   const [newComment, setNewComment] = useState(comment)
-  const textareaRef = useRef<HTMLTextAreaElement>(null)
   const { mutate: deleteComment } = useDeleteCommentMutation()
   const { mutate: patchComment } = usePatchCommentMutation()
 
@@ -47,28 +42,15 @@ const CommentBox = ({ id, author, createdAt, comment, user }: Props) => {
     router.push(`/user/${author.id}`)
   }
 
-  const handleCommentChange = useCallback(
-    (e: ChangeEvent<HTMLTextAreaElement>) => {
-      if (textareaRef.current === null) {
-        return
-      }
-
-      textareaRef.current.style.height = '4.8rem'
-      textareaRef.current.style.height = textareaRef.current.scrollHeight + 'px'
-
-      setNewComment(e.target.value)
-    },
-    []
-  )
-
-  const handleChangeButtonClick = () => {
+  const handleEditClick = (comment: string) => {
     patchComment(
       {
         commentId: selectedCommentId,
-        comment: newComment
+        comment
       },
       {
         onSuccess: () => {
+          setNewComment(comment)
           setIsEditing(false)
         }
       }
@@ -77,7 +59,6 @@ const CommentBox = ({ id, author, createdAt, comment, user }: Props) => {
 
   const handleCancelEditingClick = () => {
     setIsEditing(false)
-    setNewComment(comment)
   }
 
   const handleEditCommentClick = () => {
@@ -86,14 +67,9 @@ const CommentBox = ({ id, author, createdAt, comment, user }: Props) => {
   }
 
   useEffect(() => {
-    const element = textareaRef.current
-    if (!element) {
-      return
+    if (textareaRef.current) {
+      textareaRef.current.focus()
     }
-    const end = element.value.length
-
-    element.setSelectionRange(end, end)
-    element.focus()
   }, [isEditing])
 
   const handleDeleteCommentClick = () => {
@@ -122,15 +98,13 @@ const CommentBox = ({ id, author, createdAt, comment, user }: Props) => {
           {isEditing ? (
             <TextareaWrapper>
               <CommentWriteContainer>
-                <Textarea
+                <CommentTextarea
                   ref={textareaRef}
-                  value={newComment}
-                  maxLength={80}
-                  onChange={handleCommentChange}
+                  type="edit"
+                  defaultValue={comment}
+                  isLoggedIn={true}
+                  onAdd={handleEditClick}
                 />
-                <AddCommentButton onClick={handleChangeButtonClick}>
-                  수정
-                </AddCommentButton>
               </CommentWriteContainer>
               <CancelButton size={20} onClick={handleCancelEditingClick} />
             </TextareaWrapper>
@@ -204,37 +178,6 @@ const CommentWriteContainer = styled(Flex)`
   position: relative;
 `
 
-const Textarea = styled.textarea`
-  width: 100%;
-  height: 4.8rem;
-  min-height: 4.8rem;
-  font-size: 1.6rem;
-  border: 0.1rem solid ${({ theme }) => theme.color.borderBasic};
-  border-radius: 1rem;
-  padding: 1.4rem 6rem 1rem 1rem;
-  resize: none;
-
-  &:focus {
-    outline: none;
-    border: 0.1rem solid black;
-  }
-`
-
-const AddCommentButton = styled.button`
-  position: absolute;
-  bottom: 0.6rem;
-  right: 0.6rem;
-  width: 5rem;
-  height: 3.6rem;
-  font-weight: 700;
-  border: none;
-  border-radius: 1rem;
-  color: #f5f5f5;
-  background-color: black;
-  margin-left: -6rem;
-  cursor: pointer;
-`
-
 const CancelButton = styled(AiOutlineClose)`
   cursor: pointer;
 `
@@ -267,6 +210,7 @@ const Dots = styled(BiDotsHorizontalRounded)`
 const CommentText = styled.div`
   font-size: 1.6rem;
   word-break: break-all;
+  white-space: pre-wrap;
 `
 
 const IconWrapper = styled(Flex)`
