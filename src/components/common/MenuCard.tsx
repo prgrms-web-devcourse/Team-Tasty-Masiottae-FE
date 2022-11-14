@@ -34,16 +34,6 @@ const MenuCard = ({
     imageUrl = NO_IMAGE
   }
 
-  const [isObserved, setIsObserved] = useState(false)
-
-  const imageRef = useIntersectionObserver(
-    async (entry, observer) => {
-      observer.unobserve(entry.target)
-      setIsObserved(true)
-    },
-    { threshold: 0.5, rootMargin: '-65px 0px' }
-  )
-
   const handleClick = () => {
     if (typeof window === undefined) return
     setLocalStorageItem('scrollY', window.scrollY.toString())
@@ -51,7 +41,7 @@ const MenuCard = ({
 
   return (
     <CardContainer ref={divRef} onClick={handleClick}>
-      <Img src={isObserved ? imageUrl : NO_IMAGE} ref={imageRef} />
+      <Img src={imageUrl} />
       <CardInfo>
         <CardHeader>
           <Franchise>{franchise}</Franchise>
@@ -59,11 +49,7 @@ const MenuCard = ({
         </CardHeader>
         <CardFooter>
           <UserInfoWrapper>
-            <Avatar
-              size={2.4}
-              src={isObserved ? avatarImageUrl : undefined}
-              isLoading={false}
-            />
+            <Avatar size={2.4} src={avatarImageUrl} isLoading={false} />
             <Author>{author}</Author>
           </UserInfoWrapper>
           <PostInfoWrapper>
