@@ -7,7 +7,6 @@
 자신에게 딱 맞는 메뉴를 자유롭게 만들고, 공유하고, 찾아보세요! 
 
 ### 🔗 프로젝트 관련 링크
-> 🏠 [서비스 배포 사이트](https://team-tasty-masiottae-fe.vercel.app)
 - [맛이어때 팀 노션](https://backend-devcourse.notion.site/11-45b039d71121406ebde2397bb6551090)
 - [맛이어때 api 문서](http://13.125.177.126:8080/docs/index.html)
 - [맛이어때 FE rule book](https://prgrms.notion.site/1-RuleBook-188d2eddfe9a4bd68b2bbb3f961be1c3)
